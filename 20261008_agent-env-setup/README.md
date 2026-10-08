@@ -64,6 +64,20 @@ P1(windowa-execution-preflight / inventory-package-maintenance)は次回以降�
 | 3 | P1 Skills | windows-execution-preflight / inventory-package-maintenance を作成 |
 | 4 | 効果測定 | effect-metrics.md に記録テンプレ作成。導入前の基準値取りを開始 |
 
+### 6. MCP 一覧と使用方法
+
+| 名称 | 種別 | コマンド/URL | 主用途 | 使用手順・注意 |
+|---|---|---|---|---|
+| github | Remote | `https://api.githubcopilot.com/mcp/` | Copilot 由来の補助(コード提案) | `GITHUB_PAT` で認証。Kohden Code 側で自動接続される。|
+| context7 | Local | `npx -y @upstash/context7-mcp` | 最新ライブラリ公式ドキュメント取得 | 質問ごとに `context7_resolve-library-id` → `context7_query-docs` の順で呼び出す。APIキー不要。|
+| playwright | Local | `npx -y @playwright/mcp@latest` | ブラウザ操作(Playwright) | `playwright_browser_*` 系ツールでナビゲーションや操作を行う。初回は依存を自動インストール。|
+| brave-search | Local | `npx -y @brave/brave-search-mcp-server` | Brave Search API 経由のWeb検索 | `BRAVE_API_KEY` 必須。`firecrawl_search` 等とは別系統。|
+| postgres | Local | `npx -y @modelcontextprotocol/server-postgres ...` | DB 接続 | `enabled:false`。使う際は接続文字列と資格情報を用意し `enabled:true` へ変更。|
+| firecrawl | Local | `npx -y firecrawl-mcp` | Web/YouTube/X 取得、スクレイプ | 現在は keyless モード。スループットが必要なら `FIRECRAWL_API_KEY` を `.env` に登録。使用時は `firecrawl_search`, `firecrawl_scrape`, `firecrawl_parse` などを呼び出す。|
+| figma | Local | `npx -y figma-developer-mcp --stdio` | Figma API 操作 | `FIGMA_API_KEY` 必須。デザイン取得やノード情報抽出に使用。|
+
+共通の使い方: `~/.config/kohden-code/opencode.json` に登録済みなので、Kohden Code を再起動すると自動起動される。環境変数が必要な MCP( github / brave-search / firecrawl / figma / postgres )は `.env` または端末側環境変数に設定する。
+
 ## 未実施(意図的に保留)
 
 - FIRECRAWL_API_KEY 等の認証・キー設定
