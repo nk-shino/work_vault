@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "self-improvement": {
+      "source": "pskoett/pskoett-ai-skills",
+      "sourceType": "github",
+      "skillPath": "skills/self-improvement/SKILL.md",
+      "computedHash": "6fb904830c768ea84c96ab1450ad331255d1da9cdc59f6f6c4797a9d98a62a81"
+    }
+  }
+}
