@@ -1,5 +1,4 @@
 # Default workspace
-
 This is the default workspace. The rules below are a default starting point; adapt them to how the user actually works.
 
 - When starting a new topic, create a `YYYYMMDD_<topic>/` folder and work inside it

@@ -55,6 +55,15 @@ P1(windowa-execution-preflight / inventory-package-maintenance)は次回以降�
 - 人の追加指示回数 / コード再修正回数
 - 根拠不明の記述数 / 未検証完了表現の件数
 
+### 5. 段階的実行(2026-10-08 追加)
+
+| 段階 | 内容 | 状態 |
+|---|---|---|
+| 1 | 環境変数方針 | firecrawl はキーレスモードで scrape/search 可(レート制限あり)。キー取得時に `~/.config/kohden-code/.env` へ登録 |
+| 2 | MCP動作確認 | keyless scrape 動作確認済。Kohden Code 再起動後に firecrawl MCP が有効化される |
+| 3 | P1 Skills | windows-execution-preflight / inventory-package-maintenance を作成 |
+| 4 | 効果測定 | effect-metrics.md に記録テンプレ作成。導入前の基準値取りを開始 |
+
 ## 未実施(意図的に保留)
 
 - FIRECRAWL_API_KEY 等の認証・キー設定
