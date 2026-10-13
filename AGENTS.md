@@ -7,6 +7,7 @@ This is the default workspace. The rules below are a default starting point; ada
 - This folder is a git repository: commit your changes at each natural stopping point of the work without waiting for the user to ask. If git refuses to commit because `user.name`/`user.email` are unset, ask the user for their name and their company email address (`@mbN.nkc.co.jp`, where N is a single digit such as 1–5), then set them with `git config --global`
 - Maintain `.gitignore` appropriately for what the work creates: never commit installed dependencies or virtual environments such as `node_modules/` or `.venv/`
 - Work that belongs in its own repository fits better outside this workspace: suggest creating a separate folder elsewhere and opening it as a separate project in Kohden Code
+- Kohden Code が実行した内容は、日付ごとに実行ログとして個別に記録する。ログは `YYYYMMDD_<topic>/実行ログ_YYYYMMDD.md` に置き、「ユーザーの指示1件＝エントリ1件」として「指示/実施/成果物/状態(コミット番号含む)」を記す。既存の日のログがあればそこに追記する
 
 ## About this file
 
