@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}更新の競合 - 社内用語集{% endblock %}
+{% block main %}
+<h1>保存しませんでした：他の人が先に更新しています</h1>
+<p role="alert">{{ e }}</p>
+<p>あなたの変更は反映していません。現在の内容を確認し、必要なら編集をやり直してください。</p>
+{% if diff %}
+<h2>現在の内容（−）とあなたの入力（＋）の違い</h2>
+<pre class="diff">{% for line in diff %}<span class="{{ 'add' if line.startswith('+') else 'del' if line.startswith('-') else '' }}">{{ line }}</span>
+{% endfor %}</pre>
+{% endif %}
+<p><a href="{{ back }}">最新の内容で開き直す</a></p>
+{% endblock %}

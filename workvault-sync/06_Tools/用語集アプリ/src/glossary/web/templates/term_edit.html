@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}用語情報の編集 - 社内用語集{% endblock %}
+{% block main %}
+<h1>用語情報の編集：{{ t.headword }}</h1>
+{% if error %}<p class="error" role="alert">保存できませんでした：{{ error }}</p>{% endif %}
+<form method="post" action="/terms/{{ t.id }}/edit" class="busy-on-submit edit">
+  <input type="hidden" name="revision_number" value="{{ t.revision_number }}">
+  <label for="headword">見出し</label>
+  <input id="headword" name="headword" required value="{{ f.get('headword', t.headword) }}">
+  <label for="reading">読み</label>
+  <input id="reading" name="reading" value="{{ f.get('reading', t.reading) or '' }}">
+  <label for="english">英語</label>
+  <input id="english" name="english" value="{{ f.get('english', t.english) or '' }}">
+  <label for="abbreviation">略語</label>
+  <input id="abbreviation" name="abbreviation" value="{{ f.get('abbreviation', t.abbreviation) or '' }}">
+  <label for="status">状態</label>
+  <select id="status" name="status">
+    {% for st in ["draft", "active", "disputed"] %}<option value="{{ st }}" {% if st == f.get("status", t.status) %}selected{% endif %}>{{ label(st) }}</option>{% endfor %}
+  </select>
+  <label for="change_reason">編集理由（必須）</label>
+  <input id="change_reason" name="change_reason" required value="{{ f.get('change_reason', '') }}">
+  <p class="hint">編集を始めた時点の版：{{ t.revision_number }}。保存までに他の人が更新していたら、上書きせずに差分を表示します。</p>
+  <button type="submit">保存する</button>
+  <a href="/terms/{{ t.id }}">取り消して戻る</a>
+</form>
+{% endblock %}

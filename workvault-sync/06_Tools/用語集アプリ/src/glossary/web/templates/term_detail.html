@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}{{ d.term.headword }} - 社内用語集{% endblock %}
+{% block main %}
+<h1>{{ d.term.headword }} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
+<dl class="meta">
+  {% if d.term.reading %}<dt>読み</dt><dd>{{ d.term.reading }}</dd>{% endif %}
+  {% if d.term.english %}<dt>英語</dt><dd>{{ d.term.english }}</dd>{% endif %}
+  {% if d.term.abbreviation %}<dt>略語</dt><dd>{{ d.term.abbreviation }}</dd>{% endif %}
+  <dt>版</dt><dd>{{ d.term.revision_number }}（<a href="/history/term/{{ d.term.id }}">用語の履歴</a>）</dd>
+</dl>
+<p><a href="/terms/{{ d.term.id }}/edit">読み・英語・略語を編集</a> ／ <a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
+
+{% if d.relations.get("confused_with") %}
+<section class="confused" aria-labelledby="confused-h">
+  <h2 id="confused-h">⚠ 混同注意</h2>
+  <p>次の語と取り違えやすい。意味が違うので注意すること。</p>
+  <ul>{% for r in d.relations["confused_with"] %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a></li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+<h2>語義（{{ d.senses|length }}）</h2>
+{% if not d.senses %}
+<p class="empty">語義はまだありません。</p>
+{% endif %}
+{% for s in d.senses %}
+<article class="sense{% if s.status == 'disputed' %} disputed{% endif %}" aria-labelledby="sense-{{ s.id }}">
+  <h3 id="sense-{{ s.id }}">語義 {{ loop.index }}
+    <span class="badge st-{{ s.status }}">状態：{{ label(s.status) }}</span>
+    {% if s.context_tag %}<span class="tag">文脈：{{ s.context_tag }}</span>{% endif %}
+    <span class="src">出どころ：{{ label(s.source_type) }}</span>
+    <span class="src">{{ "自動採用" if s.adopted_by == "auto" else "人が採用" }}</span>
+  </h3>
+  {% if s.status == 'disputed' %}<p class="warn">この語義は係争中です。解釈が割れているので、確定するまで引用しないでください。</p>{% endif %}
+  <p class="definition">{{ s.definition }}</p>
+  {% if s.scope_note %}<p class="scope">適用範囲：{{ s.scope_note }}</p>{% endif %}
+  <h4>用例</h4>
+  <ul class="evidences">
+  {% for e in s.evidences %}
+    <li><q>{{ e.excerpt }}</q>
+      <small>{{ e.occurred_at|jst }} ／ 出典 {{ e.source_ref }}{% if e.masked %} ／ マスキング済み{% endif %}</small></li>
+  {% endfor %}
+  </ul>
+  <p><a href="/senses/{{ s.id }}/edit">この語義を編集</a> ／ <a href="/history/sense/{{ s.id }}">語義の履歴</a>（版 {{ s.revision_number }}）</p>
+  {% set sm = evals[s.id] %}
+  <section class="evaluate" aria-labelledby="ev-{{ s.id }}">
+    <h4 id="ev-{{ s.id }}">この定義を評価する（版 {{ s.revision_number }}）</h4>
+    <p class="hint">
+      {% if sm.unevaluated %}まだ評価はありません。{% if s.adopted_by == "auto" %}自動で採用された定義なので、読んだら評価してください。{% endif %}
+      {% else %}この版への評価：{% for k, n in sm.accuracy.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% if sm.accuracy and sm.usefulness %} ／ {% endif %}{% for k, n in sm.usefulness.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}
+      （押された回数です。評価した人は区別していないので、人数ではありません）{% endif %}
+      {% if sm.older %}旧版への評価 {{ sm.older }} 回は数えていません。{% endif %}
+    </p>
+    <form method="post" action="/senses/{{ s.id }}/evaluate" class="busy-on-submit ev-form">
+      <input type="hidden" name="revision_number" value="{{ s.revision_number }}">
+      <label for="ev-comment-{{ s.id }}">理由・修正案（任意）</label>
+      <input id="ev-comment-{{ s.id }}" name="comment" maxlength="400">
+      <div class="ev-buttons" role="group" aria-label="定義の正確性">
+        <span>正確性：</span>
+        <button type="submit" name="accuracy" value="correct">正しい</button>
+        <button type="submit" name="accuracy" value="needs_fix">修正が必要</button>
+        <button type="submit" name="accuracy" value="unsure">判断できない</button>
+      </div>
+      <div class="ev-buttons" role="group" aria-label="用語集としての有用性">
+        <span>有用性：</span>
+        <button type="submit" name="usefulness" value="useful">役に立つ</button>
+        <button type="submit" name="usefulness" value="not_useful">役に立たない</button>
+      </div>
+    </form>
+    {% if sm.comments %}
+    <ul class="ev-comments">{% for c in sm.comments[:5] %}<li>{{ c.created_at|jst }}　{{ label(c.accuracy) if c.accuracy else label(c.usefulness) }}：{{ c.comment }}</li>{% endfor %}</ul>
+    {% endif %}
+  </section>
+</article>
+{% endfor %}
+
+<h2>関連語</h2>
+{% set others = d.relations.items()|rejectattr(0, "equalto", "confused_with")|list %}
+{% if others %}
+{% for rtype, items in others %}
+<h3>{{ label(rtype) }}</h3>
+<ul>{% for r in items %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a> <small>（{{ r.method }}{% if r.score is not none %}、スコア {{ "%.2f"|format(r.score) }}{% endif %}）</small></li>{% endfor %}</ul>
+{% endfor %}
+{% else %}
+<p class="empty">関連語はまだありません。</p>
+{% endif %}
+
+<details>
+  <summary>関連語を追加する</summary>
+  <form method="post" action="/terms/{{ d.term.id }}/relations" class="busy-on-submit">
+    <label for="rel-type">関係</label>
+    <select id="rel-type" name="relation_type">
+      {% for rt in ["confused_with", "synonym", "abbrev_of", "related", "broader", "narrower"] %}<option value="{{ rt }}">{{ label(rt) }}</option>{% endfor %}
+    </select>
+    <label for="rel-other">相手の見出し（登録済みの語）</label>
+    <input id="rel-other" name="other" required>
+    <button type="submit">追加する</button>
+  </form>
+</details>
+
+{% if d.term.status != 'archived' %}
+<details>
+  <summary>この用語をアーカイブする</summary>
+  <form method="post" action="/terms/{{ d.term.id }}/archive" class="busy-on-submit">
+    <input type="hidden" name="revision_number" value="{{ d.term.revision_number }}">
+    <label for="arch-reason">理由（必須）</label>
+    <input id="arch-reason" name="change_reason" required>
+    <button type="submit">アーカイブする</button>
+  </form>
+</details>
+{% endif %}
+{% endblock %}

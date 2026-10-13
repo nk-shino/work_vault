@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# SPANISH
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Seleccionando un elemento para su descarga o instalación, acepta que (1) el código del software, los ejemplos, las actualizaciones y los arreglos (Código) están sujetos a los términos del acuerdo de licencia que acompañaba al programa o sistema, o estaba contenido en el mismo, para el que ha adquirido el Código y (2) previamente ha leído y aceptado estos términos. Es posible que algún software que seleccione muestre una licencia antes de su descarga, instalación o primera utilización del software. Debe aceptar estos términos para descargar o utilizar y utilizar el Código. Está autorizado a descargar o instalar o utilizar el Código excepto para actualizar un Programa o sistema bajo licencia válida para el que tiene una Prueba de titularidad válida.
+
+SUJETO A LAS GARANTÍAS ESTATUTORIAS QUE NO SE PUEDEN EXCLUIR, {LENOVO_UPPERCASE_TEXT} NO OFRECE NINGUNA GARANTÍA NI CONDICIÓN, NI EXPLÍCITA NI IMPLÍCITA, INCLUYENDO, PERO NO LIMITADA A, LAS GARANTÍAS O CONDICIONES DE MERCANTIBILIDAD IMPLÍCITAS, ADECUACIÓN A UN PROPÓSITO DETERMINADO Y NO INFRINGIMIENTO, EN RELACIÓN AL CÓDIGO O SOPORTE TÉCNICO, EN CASO DE QUE EXISTA.

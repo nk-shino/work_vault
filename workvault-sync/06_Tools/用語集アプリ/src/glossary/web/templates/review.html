@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}見直し - 社内用語集{% endblock %}
+{% block main %}
+<h1>見直し</h1>
+<p>登録された語義のうち、人の目が要りそうなものを並べます。評価は定義を書き換えません。直すときは各語義の「この語義を編集」から。</p>
+<nav class="review-kinds" aria-label="見直しの種類">
+  {% for k, text in kinds.items() %}
+  <a href="/review?kind={{ k }}" {% if k == kind %}aria-current="page"{% endif %}>{{ text }}（{{ counts[k] }}）</a>
+  {% endfor %}
+</nav>
+{% if not items %}
+<p class="empty">該当する語義はありません。</p>
+{% else %}
+<table>
+  <thead><tr><th scope="col">見出し</th><th scope="col">定義</th><th scope="col">採用</th><th scope="col">この版への評価（押された回数）</th></tr></thead>
+  <tbody>
+  {% for it in items %}
+    <tr>
+      <td><a href="/terms/{{ it.term.id }}#sense-{{ it.sense.id }}">{{ it.term.headword }}</a></td>
+      <td>{{ it.sense.definition[:60] }}{% if it.sense.definition|length > 60 %}…{% endif %}</td>
+      <td>{{ "自動" if it.sense.adopted_by == "auto" else "人" }}</td>
+      <td>{% if it.summary.unevaluated %}未評価{% else %}{% for k, n in it.summary.accuracy.items() %}{{ label(k) }} {{ n }} {% endfor %}{% for k, n in it.summary.usefulness.items() %}{{ label(k) }} {{ n }} {% endfor %}{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

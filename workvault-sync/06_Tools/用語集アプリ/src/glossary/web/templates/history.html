@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}履歴 - 社内用語集{% endblock %}
+{% block main %}
+<h1>{{ label(target_type) }}の履歴</h1>
+<p><a href="/terms/{{ owner.id if target_type == 'term' else owner.term_id }}">用語の詳細へ戻る</a></p>
+{% if not entries %}
+<p class="empty">履歴はありません。</p>
+{% endif %}
+<ol class="history">
+{% for h in entries|reverse %}
+  <li>
+    <h2>版 {{ h.revision.revision_number }}</h2>
+    <p>{{ h.revision.created_at|jst }} ／ 理由：{{ h.revision.change_reason }}</p>
+    {% if h.diff %}
+    <pre class="diff">{% for line in h.diff %}<span class="{{ 'add' if line.startswith('+') else 'del' if line.startswith('-') else '' }}">{{ line }}</span>
+{% endfor %}</pre>
+    {% else %}<p>内容の変化なし</p>{% endif %}
+  </li>
+{% endfor %}
+</ol>
+{% endblock %}

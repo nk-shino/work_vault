@@ -1,0 +1,19 @@
+
+UPDATE
+    [EGProKOHDEN-Warehouse].[dbo].T_在庫データ
+SET
+    ロケーションコード = 101,
+    ステータスコード = (
+        SELECT
+            ステータスコード
+        FROM
+            [EGProKOHDEN-MST].[dbo].M_ロケーション
+        WHERE
+            ロケーションコード = 101
+    ),
+    ラインNo = NULL,
+    設備No = NULL,
+    Z軸No = NULL,
+    更新日時 = GETDATE()
+WHERE
+    ロケーションコード = '73';

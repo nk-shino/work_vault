@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# GERMAN
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Durch das Herunterladen oder Installieren erklären Sie sich damit einverstanden, dass (1) der Softwarecode sowie die Muster, Updates und Fixes ("Code") den Bedingungen der Lizenzvereinbarung unterliegen, die dem Programm oder System, für das Sie den Code herunterladen, beigefügt war oder darin enthalten ist, und (2) dass Sie diese Bedingungen beim Erhalt des Programms gelesen und akzeptiert haben. Bei einigen Softwarepaketen wird vor dem Herunterladen, vor der Installation oder vor der ersten Nutzung der Software eine Lizenzvereinbarung angezeigt. Sie müssen die Bedingungen in dieser Lizenzvereinbarung akzeptieren, um den Code herunterladen oder installieren und anschließend nutzen zu können. Sie dürfen nur im Rahmen der Aktualisierung eines gültig lizenzierten Programms oder Systems, für das Sie einen gültigen Berechtigungsnachweis besitzen, Code herunterladen, installieren oder nutzen. 
+
+VORBEHALTLICH EINER GESETZLICHEN GEWÄHRLEISTUNG, DIE NICHT AUSGESCHLOSSEN WERDEN KANN, GIBT {LENOVO_UPPERCASE_TEXT} KEINE AUSDRÜCKLICHE ODER IMPLIZITE GEWÄHRLEISTUNG FÜR DIE MARKTFÄHIGKEIT, DIE EIGNUNG FÜR EINEN BESTIMMTEN ZWECK ODER DIE FREIHEIT VON RECHTEN DRITTER IN BEZUG AUF DAS PROGRAMM ODER DIE TECHNISCHE UNTERSTÜTZUNG.

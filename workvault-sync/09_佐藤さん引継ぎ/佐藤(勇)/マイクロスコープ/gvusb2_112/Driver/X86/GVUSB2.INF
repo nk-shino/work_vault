@@ -1,0 +1,625 @@
+;-------------------------------------------------------------------------------------------------------------------------------------------------------------------- INFOMATION
+[Version]
+Signature                             =                            "$CHICAGO$"	; FOR 95 & NT SYSTEMS
+Class                                 =                                 MEDIA	; MEDIA CLASS
+ClassGUID                             = {4D36E96C-E325-11CE-BFC1-08002BE10318}	; MEDIA CLASS GUID
+Provider                              =                        %PROVIDER.NAME%	; PROVIDER NAME
+DriverPackageDisplayName              =                         %PRODUCT.NAME%	; DRIVER PACKAGE DISPLAY NAME
+DriverVer                             =                 06/07/2021, 1.1.0.193	; INF VERSION
+CatalogFile                           =                            GVUSB2.CAT
+[Manufacturer]
+%MANUFACTURER.NAME%                   =                        ENTRY, NTamd64	; ASSIGN MODELS SECTION
+[ControlFlags]
+ExcludeFromSelect                     =                                     *	; 
+[DestinationDirs]
+DefaultDestDir                        =                                    11	; C:\WINDOWS\SYSTEM32
+GVUSB2.CopyApplications               =                                 16409	; ..\DESKTOP
+GVUSB2.CopyPropertyPages.X86          =                                    11	; C:\WINDOWS\SYSTEM32
+GVUSB2.CopyPropertyPages.X64          =                          10, SYSWOW64	; C:\WINDOWS\SYSWOW64
+GVUSB2.CopyDrivers                    =                  10, SYSTEM32\DRIVERS	; C:\WINDOWS\SYSTEM32\DRIVERS
+[SourceDisksNames]
+1                                     =                            %DISK.NAME%	;
+[SourceDisksFiles]
+GVUSB2.X86.SYS                        =                                     1	;
+GVUSB2.X64.SYS                        =                                     1	;
+GVUSB2.X86.AX                         =                                     1	;
+GVUSB2.X64.AX                         =                                     1	;
+GVUSB2.C86.AX                         =                                     1	;
+GVUSB2.C64.AX                         =                                     1	;
+
+;-------------------------------------------------------------------------------------------------------------------------------------------------------------------- MAIN ENTRY
+[ENTRY]
+%PRODUCT.GVUSB2.NAME% = GVUSB2.X86,  USB\VID_04BB&PID_0532 ; I-O DATA GV-USB2
+%PRODUCT.GVUSB2.NAME% = GVUSB2.X86, USB2\VID_04BB&PID_0532
+
+[ENTRY.NTamd64]
+%PRODUCT.GVUSB2.NAME% = GVUSB2.X64,  USB\VID_04BB&PID_0532 ; I-O DATA GV-USB2
+%PRODUCT.GVUSB2.NAME% = GVUSB2.X64, USB2\VID_04BB&PID_0532
+
+[GVUSB2.X86]
+Include       = KS.INF, KSCAPTUR.INF, WDMAUDIO.INF
+Needs         = KS.REGISTRATION, KSCAPTUR.REGISTRATION, WDMAUDIO.REGISTRATION
+AddReg        = GVUSB2.X86.AddReg, GVUSB2.AddReg
+CopyFiles     = GVUSB2.CopyDrivers, GVUSB2.CopyPropertyPages.X86, GVUSB2.CopyApplications
+RegisterDlls  = GVUSB2.RegisterDlls
+
+[GVUSB2.X86.NT]
+Include       = KS.INF, KSCAPTUR.INF, WDMAUDIO.INF
+Needs         = KS.REGISTRATION, KSCAPTUR.REGISTRATION.NT, WDMAUDIO.REGISTRATION.NT
+AddReg        = GVUSB2.X86.AddReg, GVUSB2.AddReg
+CopyFiles     = GVUSB2.CopyDrivers, GVUSB2.CopyPropertyPages.X86, GVUSB2.CopyApplications
+RegisterDlls  = GVUSB2.RegisterDlls
+
+[GVUSB2.X64]
+Include       = KS.INF, KSCAPTUR.INF, WDMAUDIO.INF
+Needs         = KS.REGISTRATION, KSCAPTUR.REGISTRATION, WDMAUDIO.REGISTRATION
+AddReg        = GVUSB2.X64.AddReg, GVUSB2.AddReg
+CopyFiles     = GVUSB2.CopyDrivers, GVUSB2.CopyPropertyPages.X86, GVUSB2.CopyPropertyPages.X64, GVUSB2.CopyApplications
+RegisterDlls  = GVUSB2.RegisterDlls
+
+[GVUSB2.X64.NT]
+Include       = KS.INF, KSCAPTUR.INF, WDMAUDIO.INF
+Needs         = KS.REGISTRATION, KSCAPTUR.REGISTRATION.NT, WDMAUDIO.REGISTRATION.NT
+AddReg        = GVUSB2.X64.AddReg, GVUSB2.AddReg
+CopyFiles     = GVUSB2.CopyDrivers, GVUSB2.CopyPropertyPages.X86, GVUSB2.CopyPropertyPages.X64, GVUSB2.CopyApplications
+RegisterDlls  = GVUSB2.RegisterDlls
+
+; ----------------------------------------------------------------------------------------------------------------------------------------------------------- HARDWARE RELATIONS
+[GVUSB2.X86.HW]
+
+[GVUSB2.X86.NT.HW]
+
+[GVUSB2.X64.HW]
+
+[GVUSB2.X64.NT.HW]
+
+; ------------------------------------------------------------------------------------------------------------------------------------------------------------------- INTERFACES
+[GVUSB2.X86.Interfaces]
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08 
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_CROSSBAR%,               %ANALOGX.CROXBAR.FILTER.GUID%,    GVUSB2.InterfaceC
+AddInterface = %KSCATEGORY_TVTUNER%,                %ANALOGX.TVTUNER.FILTER.GUID%,    GVUSB2.InterfaceD
+AddInterface = %KSCATEGORY_TVAUDIO%,                %ANALOGX.TVAUDIO.FILTER.GUID%,    GVUSB2.InterfaceE
+
+[GVUSB2.X86.NT.Interfaces]
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08 
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_CROSSBAR%,               %ANALOGX.CROXBAR.FILTER.GUID%,    GVUSB2.InterfaceC
+AddInterface = %KSCATEGORY_TVTUNER%,                %ANALOGX.TVTUNER.FILTER.GUID%,    GVUSB2.InterfaceD
+AddInterface = %KSCATEGORY_TVAUDIO%,                %ANALOGX.TVAUDIO.FILTER.GUID%,    GVUSB2.InterfaceE
+
+[GVUSB2.X64.Interfaces]
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08 
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_CROSSBAR%,               %ANALOGX.CROXBAR.FILTER.GUID%,    GVUSB2.InterfaceC
+AddInterface = %KSCATEGORY_TVTUNER%,                %ANALOGX.TVTUNER.FILTER.GUID%,    GVUSB2.InterfaceD
+AddInterface = %KSCATEGORY_TVAUDIO%,                %ANALOGX.TVAUDIO.FILTER.GUID%,    GVUSB2.InterfaceE
+
+[GVUSB2.X64.NT.Interfaces]
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.01%, GVUSB2.InterfaceA.01
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.02%, GVUSB2.InterfaceA.02
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.03%, GVUSB2.InterfaceA.03
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.04%, GVUSB2.InterfaceA.04
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.05%, GVUSB2.InterfaceA.05
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.06%, GVUSB2.InterfaceA.06
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.07%, GVUSB2.InterfaceA.07
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID.08%, GVUSB2.InterfaceA.08 
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_VIDEO%,                  %ANALOGX.CAPTURE.FILTER.GUID%,    GVUSB2.InterfaceA
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.01%, GVUSB2.InterfaceB.01
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.02%, GVUSB2.InterfaceB.02
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.03%, GVUSB2.InterfaceB.03
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.04%, GVUSB2.InterfaceB.04
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.05%, GVUSB2.InterfaceB.05
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.06%, GVUSB2.InterfaceB.06
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.07%, GVUSB2.InterfaceB.07
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID.08%, GVUSB2.InterfaceB.08
+AddInterface = %KSCATEGORY_CAPTURE%,                %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_AUDIO%,                  %ANALOGX.WAVEINX.FILTER.GUID%,    GVUSB2.InterfaceB
+AddInterface = %KSCATEGORY_CROSSBAR%,               %ANALOGX.CROXBAR.FILTER.GUID%,    GVUSB2.InterfaceC
+AddInterface = %KSCATEGORY_TVTUNER%,                %ANALOGX.TVTUNER.FILTER.GUID%,    GVUSB2.InterfaceD
+AddInterface = %KSCATEGORY_TVAUDIO%,                %ANALOGX.TVAUDIO.FILTER.GUID%,    GVUSB2.InterfaceE
+
+[GVUSB2.InterfaceA.01]
+AddReg = GVUSB2.InterfaceA.AddReg.01
+
+[GVUSB2.InterfaceA.AddReg.01]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.01%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.02]
+AddReg = GVUSB2.InterfaceA.AddReg.02
+
+[GVUSB2.InterfaceA.AddReg.02]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.02%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.03]
+AddReg = GVUSB2.InterfaceA.AddReg.03
+
+[GVUSB2.InterfaceA.AddReg.03]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.03%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.04]
+AddReg = GVUSB2.InterfaceA.AddReg.04
+
+[GVUSB2.InterfaceA.AddReg.04]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.04%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.05]
+AddReg = GVUSB2.InterfaceA.AddReg.05
+
+[GVUSB2.InterfaceA.AddReg.05]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.05%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.06]
+AddReg = GVUSB2.InterfaceA.AddReg.06
+
+[GVUSB2.InterfaceA.AddReg.06]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.06%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.07]
+AddReg = GVUSB2.InterfaceA.AddReg.07
+
+[GVUSB2.InterfaceA.AddReg.07]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.07%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA.08]
+AddReg = GVUSB2.InterfaceA.AddReg.08
+
+[GVUSB2.InterfaceA.AddReg.08]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME.08%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceA]
+AddReg = GVUSB2.InterfaceA.AddReg
+
+[GVUSB2.InterfaceA.AddReg]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CAPTURE.NAME%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.01]
+AddReg = GVUSB2.InterfaceB.AddReg.01
+
+[GVUSB2.InterfaceB.AddReg.01]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.01%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.02]
+AddReg = GVUSB2.InterfaceB.AddReg.02
+
+[GVUSB2.InterfaceB.AddReg.02]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.02%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.03]
+AddReg = GVUSB2.InterfaceB.AddReg.03
+
+[GVUSB2.InterfaceB.AddReg.03]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.03%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.04]
+AddReg = GVUSB2.InterfaceB.AddReg.04
+
+[GVUSB2.InterfaceB.AddReg.04]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.04%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.05]
+AddReg = GVUSB2.InterfaceB.AddReg.05
+
+[GVUSB2.InterfaceB.AddReg.05]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.05%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.06]
+AddReg = GVUSB2.InterfaceB.AddReg.06
+
+[GVUSB2.InterfaceB.AddReg.06]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.06%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.07]
+AddReg = GVUSB2.InterfaceB.AddReg.07
+
+[GVUSB2.InterfaceB.AddReg.07]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.07%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB.08]
+AddReg = GVUSB2.InterfaceB.AddReg.08
+
+[GVUSB2.InterfaceB.AddReg.08]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME.08%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceB]
+AddReg = GVUSB2.InterfaceB.AddReg
+
+[GVUSB2.InterfaceB.AddReg]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.WAVEIN.NAME%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceC]
+AddReg = GVUSB2.InterfaceC.AddReg
+
+[GVUSB2.InterfaceC.AddReg]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.CROSSBAR.NAME%
+HKR, , CLSID, , %KSXBAR.CLSID%
+
+[GVUSB2.InterfaceD]
+AddReg = GVUSB2.InterfaceD.AddReg
+
+[GVUSB2.InterfaceD.AddReg]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.TVTUNER.NAME%
+HKR, , CLSID, , %KSTVTUNE.CLSID%
+
+[GVUSB2.InterfaceE]
+AddReg = GVUSB2.InterfaceE.AddReg
+
+[GVUSB2.InterfaceE.AddReg]
+HKR, , FriendlyName, , %PRODUCT.ANALOGX.TVAUDIO.NAME%
+HKR, , CLSID, , %KSTVAUDIO.CLSID%
+
+[GVUSB2.InterfaceF]
+AddReg = GVUSB2.InterfaceF.AddReg
+
+[GVUSB2.InterfaceF.AddReg]
+HKR, , FriendlyName, , %PRODUCT.DIGITAL.CAPTURE.NAME%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+[GVUSB2.InterfaceG]
+AddReg = GVUSB2.InterfaceG.AddReg
+
+[GVUSB2.InterfaceG.AddReg]
+HKR, , FriendlyName, , %PRODUCT.DIGITAL.TVTUNER.NAME%
+HKR, , CLSID, , %KSPROXY.CLSID%
+
+; --------------------------------------------------------------------------------------------------------------------------------------------------------------------- SERVICES
+[GVUSB2.X86.NT.Services] 
+AddService = GVUSB2.X86, 0x00000002, GVUSB2.X86.NT.ServiceA
+
+[GVUSB2.X86.NT.ServiceA]
+DisplayName   = %SERVICE.NAME.X86%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_DEMAND_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\SYSTEM32\DRIVERS\GVUSB2.X86.SYS
+
+[GVUSB2.X64.NT.Services] 
+AddService = GVUSB2.X64, 0x00000002, GVUSB2.X64.NT.ServiceA
+
+[GVUSB2.X64.NT.ServiceA]
+DisplayName   = %SERVICE.NAME.X64%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_DEMAND_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\SYSTEM32\DRIVERS\GVUSB2.X64.SYS
+
+; ------------------------------------------------------------------------------------------------------------------------------------------------------------------- COPY FILES
+[GVUSB2.CopyDrivers]
+GVUSB2.X86.SYS, , , 0x00000004
+GVUSB2.X64.SYS, , , 0x00000004
+
+[GVUSB2.CopyPropertyPages.X86]
+GVUSB2.X86.AX , , , 0x00000004
+GVUSB2.X64.AX , , , 0x00000004
+GVUSB2.C86.AX , , , 0x00000004
+GVUSB2.C64.AX , , , 0x00000004
+
+[GVUSB2.CopyPropertyPages.X64]
+GVUSB2.X86.AX , , , 0x00000004
+GVUSB2.X64.AX , , , 0x00000004
+GVUSB2.C86.AX , , , 0x00000004
+GVUSB2.C64.AX , , , 0x00000004
+
+[GVUSB2.CopyApplications]
+
+[GVUSB2.RegisterDlls]
+
+; --------------------------------------------------------------------------------------------------------------------------------------------------------------------- REGISTRY
+[GVUSB2.X86.AddReg]
+HKR,,DevLoader,,*NTKERN
+HKR,,NTMPDriver,,GVUSB2.X86.SYS
+HKR,,HardwareConfig,1,1
+HKR,,USDClass,,"{0527D1D0-88C2-11D2-82C7-00C04F8EC183}"
+HKR,,PageOutWhenUnopened,3,01
+
+; ICopyProtNotifyProperty
+;
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, , , %CPNOTIFY.PROPERTY.INTERFACE.NAME%
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, , , GVUSB2.C86.AX
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, , , %CPNOTIFY.PROPERTY.INTERFACE.NAME%
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, IID, 1, 00,00,00,00, 00,00, 00,00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+; ICustomProperty
+;
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, , , %CUSTOM.PROPERTY.INTERFACE.NAME%
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, , , GVUSB2.X86.AX
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, , , %CUSTOM.PROPERTY.INTERFACE.NAME%
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, IID, 1, 9F,20,E5,D1, FD,68, 29,45, 0xBE, 0xE0, 0x5E, 0x7A, 0x1F, 0x47, 0x92, 0x11
+
+; CCustomPropertyPage
+;
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}, , , %CUSTOM.PROPERTY.PAGE.NAME%
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, , , GVUSB2.X86.AX
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaSets\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\PropertyPages\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}, , , %CUSTOM.PROPERTY.PAGE.NAME%
+
+[GVUSB2.X64.AddReg]
+HKR,,DevLoader,,*NTKERN
+HKR,,NTMPDriver,,GVUSB2.X64.SYS
+HKR,,HardwareConfig,1,1
+HKR,,USDClass,,"{0527D1D0-88C2-11D2-82C7-00C04F8EC183}"
+HKR,,PageOutWhenUnopened,3,01
+
+; ICopyProtNotifyProperty
+;
+HKCR,Wow6432Node\CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, , , %CPNOTIFY.PROPERTY.INTERFACE.NAME%
+HKCR,Wow6432Node\CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, , , GVUSB2.C86.AX
+HKCR,Wow6432Node\CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, ThreadingModel, , Both
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, , , %CPNOTIFY.PROPERTY.INTERFACE.NAME%
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, , , GVUSB2.C64.AX
+HKCR,CLSID\{868DE3D7-1ED1-4698-AF07-0A4B57662572}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, , , %CPNOTIFY.PROPERTY.INTERFACE.NAME%
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{868DE3D7-1ED1-4698-AF07-0A4B57662572}, IID, 1, 00,00,00,00, 00,00, 00,00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+; ICustomProperty
+;
+HKCR,Wow6432Node\CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, , , %CUSTOM.PROPERTY.INTERFACE.NAME%
+HKCR,Wow6432Node\CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, , , GVUSB2.X86.AX
+HKCR,Wow6432Node\CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, ThreadingModel, , Both
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, , , %CUSTOM.PROPERTY.INTERFACE.NAME%
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, , , GVUSB2.X64.AX
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, , , %CUSTOM.PROPERTY.INTERFACE.NAME%
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}, IID, 1, 9F,20,E5,D1, FD,68, 29,45, 0xBE, 0xE0, 0x5E, 0x7A, 0x1F, 0x47, 0x92, 0x11
+
+; CCustomPropertyPage
+;
+HKCR,Wow6432Node\CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}, , , %CUSTOM.PROPERTY.PAGE.NAME%
+HKCR,Wow6432Node\CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, , , GVUSB2.X86.AX
+HKCR,Wow6432Node\CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, ThreadingModel, , Both
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}, , , %CUSTOM.PROPERTY.PAGE.NAME%
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, , , GVUSB2.X64.AX
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}\InprocServer32, ThreadingModel, , Both
+HKLM,System\CurrentControlSet\Control\MediaSets\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}\PropertyPages\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}, , , %CUSTOM.PROPERTY.PAGE.NAME%
+
+[GVUSB2.AddReg]
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010011},Name,0,"Video Capture"
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010011},Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010111},Name,0,"Audio Capture"
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010111},Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010211},Name,0,"Analog Audio In"
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\{6F814BE9-9AF6-43CF-9249-C0345A010211},Display,1,00,00,00,00
+
+HKR,,AnalogCrossbarVideoInputProperty,          0x00010001,0x00000000 ; 0 = COMPOSITE
+HKR,,AnalogCrossbarAudioInputProperty,          0x00010001,0x00000002 ; 2 = LINE IN
+HKR,,AnalogVideoDecoderStandardProperty,        0x00010001,0x00000001 ; 1 = NTSC M / 16 = PAL B
+HKR,,AnalogTunerStandardProperty,               0x00010001,0x00000001 ; 1 = NTSC M / 16 = PAL B
+HKR,,AnalogTVAudioModeProperty,                 0x00010001,0x00000012 ; 2 = STEREO / 16 = LAN A
+HKR,,DigitalTunerCurrentFrequencyProperty,      0x00010001,0x00077DF8 ; 0x00077DF8 = 491000 KHZ
+HKR,,DigitalTunerBandwidthProperty,             0x00010001,0x00000006 ; 6 MHZ
+HKR,,CustomAnalogVideoDeinterlaceTypeProperty,  0x00010001,0x00000001 ; 0 = BOB / 1 = WEAVE / 2 = LOW MOTION / 3 = HIGH MOTION
+HKR,,CustomAnalogVideoDeinterlaceTypePropertyA, 0x00010001,0x00000001 ; 0 = BOB / 1 = WEAVE / 2 = LOW MOTION / 3 = HIGH MOTION
+HKR,,CustomAnalogAudioStereoSystemProperty,     0x00010001,0x00000002 ; 0 = A2 / 1 = NICAM / 2 = BTSC / 3 = EIAJ
+HKR,,CustomUsbSelectiveSuspendEnableProperty,   0x00010001,0x00000000 ; 0 = DISABLE / 1 = ENABLE
+
+; -------------------------------------------------------------------------------------------------------------------------------------------------------------------- UNINSTALL
+[GVUSB2.NT.Remove]
+DelReg         = GVUSB2.DelReg
+DelFiles       = GVUSB2.CopyDrivers, GVUSB2.CopyPropertyPages.X86, GVUSB2.CopyPropertyPages.X64, GVUSB2.CopyApplications
+UnregisterDlls = GVUSB2.RegisterDlls
+
+[GVUSB2.NT.Remove.Services] 
+DelService = GVUSB2.X86, 0x00000200
+DelService = GVUSB2.X64, 0x00000200
+
+[GVUSB2.DelReg]
+HKCR,Wow6432Node\CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}
+HKCR,Wow6432Node\CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}
+HKCR,CLSID\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}
+HKCR,CLSID\{15E3F6CE-F3DD-454A-8DEA-E4A380FCCB11}
+HKLM,System\CurrentControlSet\Control\MediaInterfaces\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}
+HKLM,System\CurrentControlSet\Control\MediaSets\{D1E5209F-68FD-4529-BEE0-5E7A1F479211}
+
+; -------------------------------------------------------------------------------------------------------------------------------------------------------------------- RESOURCES
+[Strings]
+PRODUCT.GVUSB2.NAME               = "I-O DATA GV-USB2"
+PRODUCT.NAME                      = "GV-USB2"
+PRODUCT.DIGITAL.CAPTURE.NAME      = "GV-USB2, Digital Capture"
+PRODUCT.DIGITAL.TVTUNER.NAME      = "GV-USB2, Digital TVTuner"
+PRODUCT.ANALOGX.CAPTURE.NAME      = "GV-USB2, Analog Capture"
+PRODUCT.ANALOGX.CROSSBAR.NAME     = "GV-USB2, Analog Crossbar"
+PRODUCT.ANALOGX.TVAUDIO.NAME      = "GV-USB2, Analog TVAudio"
+PRODUCT.ANALOGX.TVTUNER.NAME      = "GV-USB2, Analog TVTuner"
+PRODUCT.ANALOGX.WAVEIN.NAME       = "GV-USB2, Analog WaveIn"
+CPNOTIFY.PROPERTY.INTERFACE.NAME  = "GV-USB2, CopyProtNotify Property Interface"
+CUSTOM.PROPERTY.INTERFACE.NAME    = "GV-USB2, Custom Property Interface"
+CUSTOM.PROPERTY.PAGE.NAME         = "GV-USB2, Custom Property Page"
+SERVICE.NAME.X86                  = "GV-USB2, Service X86"
+SERVICE.NAME.X64                  = "GV-USB2, Service X64"
+MANUFACTURER.NAME                 = "I-O DATA DEVICE, INC."
+PROVIDER.NAME                     = "I-O DATA DEVICE, INC."
+DISK.NAME                         = "http://www.iodata.com/"
+DIGITAL.CAPTURE.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000011}"	;
+DIGITAL.TVTUNER.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000111}"	;
+ANALOGX.CAPTURE.FILTER.GUID.01    = "{6F814BE9-9AF6-43CF-9249-C03401000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.02    = "{6F814BE9-9AF6-43CF-9249-C03402000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.03    = "{6F814BE9-9AF6-43CF-9249-C03403000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.04    = "{6F814BE9-9AF6-43CF-9249-C03404000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.05    = "{6F814BE9-9AF6-43CF-9249-C03405000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.06    = "{6F814BE9-9AF6-43CF-9249-C03406000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.07    = "{6F814BE9-9AF6-43CF-9249-C03407000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID.08    = "{6F814BE9-9AF6-43CF-9249-C03408000211}"	;
+ANALOGX.CAPTURE.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000211}"	;
+ANALOGX.WAVEINX.FILTER.GUID.01    = "{6F814BE9-9AF6-43CF-9249-C03401000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.02    = "{6F814BE9-9AF6-43CF-9249-C03402000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.03    = "{6F814BE9-9AF6-43CF-9249-C03403000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.04    = "{6F814BE9-9AF6-43CF-9249-C03404000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.05    = "{6F814BE9-9AF6-43CF-9249-C03405000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.06    = "{6F814BE9-9AF6-43CF-9249-C03406000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.07    = "{6F814BE9-9AF6-43CF-9249-C03407000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID.08    = "{6F814BE9-9AF6-43CF-9249-C03408000311}"	;
+ANALOGX.WAVEINX.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000311}"	;
+ANALOGX.CROXBAR.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000411}"	;
+ANALOGX.TVTUNER.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000511}"	;
+ANALOGX.TVAUDIO.FILTER.GUID       = "{6F814BE9-9AF6-43CF-9249-C0345A000611}"	;
+KSPROXY.CLSID                     = "{17CCA71B-ECD7-11D0-B908-00A0C9223196}"	; KSPROXY.AX
+KSXBAR.CLSID                      = "{71F96460-78F3-11D0-A18C-00A0C9118956}"	; KSXBAR.AX
+KSTVAUDIO.CLSID                   = "{71F96462-78F3-11D0-A18C-00A0C9118956}"	; KSXBAR.AX
+KSTVTUNE.CLSID                    = "{266EEE40-6C63-11CF-8A03-00AA006ECB65}"	; KSTVTUNE.AX
+KSCATEGORY_CAPTURE                = "{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_VIDEO                  = "{6994AD05-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_AUDIO                  = "{33D9A762-90C8-11D0-BD43-00A0C911CE86}"
+KSCATEGORY_CROSSBAR               = "{A799A801-A46D-11D0-A18C-00A02401DCD4}"
+KSCATEGORY_TVAUDIO                = "{A799A802-A46D-11D0-A18C-00A02401DCD4}"
+KSCATEGORY_TVTUNER                = "{A799A800-A46D-11D0-A18C-00A02401DCD4}"
+KSCATEGORY_BDA_RECEIVER_COMPONENT = "{FD0A5AF4-B41D-11D2-9C95-00C04F7971E0}"
+KSCATEGORY_BDA_NETWORK_TUNER      = "{71985F48-1CA1-11d3-9CC8-00C04F7971E0}"
+SERVICE_KERNEL_DRIVER             = 1
+SERVICE_DEMAND_START              = 3
+SERVICE_ERROR_NORMAL              = 1
+SERVICE_ERROR_IGNORE              = 0
+PRODUCT.ANALOGX.CAPTURE.NAME.01   = "GVUSB2 USB, Analog Capture (#01)"
+PRODUCT.ANALOGX.CAPTURE.NAME.02   = "GVUSB2 USB, Analog Capture (#02)"
+PRODUCT.ANALOGX.CAPTURE.NAME.03   = "GVUSB2 USB, Analog Capture (#03)"
+PRODUCT.ANALOGX.CAPTURE.NAME.04   = "GVUSB2 USB, Analog Capture (#04)"
+PRODUCT.ANALOGX.CAPTURE.NAME.05   = "GVUSB2 USB, Analog Capture (#05)"
+PRODUCT.ANALOGX.CAPTURE.NAME.06   = "GVUSB2 USB, Analog Capture (#06)"
+PRODUCT.ANALOGX.CAPTURE.NAME.07   = "GVUSB2 USB, Analog Capture (#07)"
+PRODUCT.ANALOGX.CAPTURE.NAME.08   = "GVUSB2 USB, Analog Capture (#08)"
+PRODUCT.ANALOGX.WAVEIN.NAME.01    = "GVUSB2 USB, Analog WaveIn (#01)"
+PRODUCT.ANALOGX.WAVEIN.NAME.02    = "GVUSB2 USB, Analog WaveIn (#02)"
+PRODUCT.ANALOGX.WAVEIN.NAME.03    = "GVUSB2 USB, Analog WaveIn (#03)"
+PRODUCT.ANALOGX.WAVEIN.NAME.04    = "GVUSB2 USB, Analog WaveIn (#04)"
+PRODUCT.ANALOGX.WAVEIN.NAME.05    = "GVUSB2 USB, Analog WaveIn (#05)"
+PRODUCT.ANALOGX.WAVEIN.NAME.06    = "GVUSB2 USB, Analog WaveIn (#06)"
+PRODUCT.ANALOGX.WAVEIN.NAME.07    = "GVUSB2 USB, Analog WaveIn (#07)"
+PRODUCT.ANALOGX.WAVEIN.NAME.08    = "GVUSB2 USB, Analog WaveIn (#08)"

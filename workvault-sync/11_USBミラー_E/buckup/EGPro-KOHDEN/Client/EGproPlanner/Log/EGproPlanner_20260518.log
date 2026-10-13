@@ -1,0 +1,11 @@
+﻿<2026/05/18 15:03:30.289> USE 閉じるボタンクリック
+<2026/05/18 15:03:30.289> PRC 計画確認画面終了
+<2026/05/18 15:03:31.584> USE 計画確定ボタンクリック
+<2026/05/18 15:03:31.600> PRC 計画確定画面表示
+<2026/05/18 15:03:31.600> PRC 表示クリア
+<2026/05/18 15:03:31.600> PRC データ表示(一覧)
+<2026/05/18 15:03:31.600> SQL SELECT T_Plan_Sub.計画グループNo FROM ( SELECT 計画グループNo FROM [EGProKOHDEN-Plan].[dbo].T_計画データ_Sub GROUP BY 計画グループNo ) AS T_Plan_Sub LEFT OUTER JOIN [EGProKOHDEN-Plan].[dbo].T_計画グループデータ AS T_PlanGroup ON T_Plan_Sub.計画グループNo = T_PlanGroup.計画グループNo WHERE T_PlanGroup.計画グループNo IS NULL ORDER BY T_Plan_Sub.計画グループNo
+<2026/05/18 15:03:31.646> PRC データ表示(詳細)
+<2026/05/18 15:03:31.646> SQL SELECT   計画グループNo, 管理コード, 指図番号, ライン名称, 生産品番, ロット番号, 計画数量, 計画開始日時, 計画終了日時 FROM [EGProKOHDEN-Plan].[dbo].V_計画データ WHERE 計画グループNo = '250528-101' ORDER BY 計画グループNo, 管理コード
+<2026/05/18 15:03:33.097> USE 閉じるボタンクリック
+<2026/05/18 15:03:33.097> PRC 計画確定画面終了

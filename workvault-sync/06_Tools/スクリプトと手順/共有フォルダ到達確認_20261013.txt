@@ -1,0 +1,42 @@
+﻿==== nksv523 ====
+\\nksv523.ad.nkc.co.jp の共有リソース
+
+nksv523
+
+共有名            タイプ  使用  コメント                          
+
+-------------------------------------------------------------------------------
+Backup            Disk                                            
+LOG               Disk                                            
+NAS_Public        Disk          一般公開用                        
+naswebsite        Disk                                            
+USBCopy           Disk                                            
+USBHDD            Disk          Used for external USB HDDs only.  
+システム関係      Disk                                            
+第二工場実装課用  Disk          一般実装データ保存用              
+コマンドは正常に終了しました。
+
+==== nksv569 ====
+\\nksv569.ad.nkc.co.jp の共有リソース
+
+nksv569 server (Samba, Ubuntu)
+
+共有名  タイプ  使用  コメント  
+
+-------------------------------------------------------------------------------
+Share   Disk                    
+WWW     Disk                    
+コマンドは正常に終了しました。
+
+==== nksv1359 ====
+\\nksv1359.ad.nkc.co.jp の共有リソース
+
+NKSV1359 server (Samba, Ubuntu)
+
+共有名  タイプ  使用  コメント  
+
+-------------------------------------------------------------------------------
+share   Disk                    
+WWW     Disk                    
+コマンドは正常に終了しました。
+

@@ -1,0 +1,514 @@
+# 🧰 Web制作・AI開発向け ツール・素材集
+
+更新・公式情報確認日：2026-10-07
+個人開発の工程に沿って、Web制作・AI開発のツール、素材、選定条件を整理した資料。特定の企業・業界の要件は対象外。
+記載区分：
+
+*   確認済み：今回、公式料金ページ、規約、ドキュメントまたはリポジトリで確認した範囲。全プラン・全素材の確認を意味しない。
+    
+*   推奨・評価例：本資料の設計方針。製品の標準機能や実装済みの状態を示すものではない。
+    
+*   未確認：取得結果で確定できない条件、個別契約、個別素材、対象環境での動作等。
+    
+
+料金・モデル・無料枠・規約は変更される場合がある。確認日は資料の発効日とは異なる。契約・素材採用時点で対象条件を再確認する。通常の素材利用、再配布、API利用、AI学習利用は別条件として扱う。
+
+## 🗺️ 0. 工程と参照資料
+
+[MDN「Your first website」](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website)は、“start small”（小さく始める）と記載し、計画、素材収集、HTML・CSS・JavaScriptによる制作、公開の流れを示している。
+[MDN「What is accessibility?」](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/What_is_accessibility)は、開始時からのアクセシビリティ対応と早期・継続的なテストを推奨している（要約）。
+以下は両資料を参照し、AI開発、費用、運用を加えた工程例。個人開発の標準手順をそのまま引用したものではない。MVPは価値の検証に必要な最小限の機能を指す。
+| 順序 | 工程 | 主な対象 | 成果物の例 |
+| --- | --- | --- | --- |
+| 1 | 企画・要件整理 | 課題、利用者、MVP、AIの必要性 | 要件メモ、対象外機能、受入条件 |
+| 2 | 予算・技術構成の設計 | TCO、Web構成、モデルAPI、検索基盤 | 構成案、採用理由、概算費用、利用上限 |
+| 3 | 画面・コンテンツの設計 | 画面遷移、UI、配色、素材 | ワイヤーフレーム、画面状態一覧、素材台帳 |
+| 4 | データ・API・AI・安全性の詳細設計 | データ項目、権限、入出力、評価計画 | データ・API仕様、権限表、テスト項目 |
+| 5 | 実装・試作 | テンプレート、SDK、開発支援、CI | 入力から結果表示までの試作 |
+| 6 | 検証・改善 | 動作、権利、安全性、AI品質、費用 | テスト結果、修正事項、公開可否 |
+| 7 | 公開・リリース | 公開設定、稼働確認、復旧 | 公開URL、確認記録、復旧手順 |
+| 8 | 運用・継続改善 | 監視、保守、費用、モデル更新 | 改善項目、実測TCO、変更履歴 |
+
+設計・実装・検証は反復を前提とする。安全性、アクセシビリティ、権利、費用は全工程の確認対象。
+
+## 🎯 1. 企画・要件整理
+
+### 📝 1-1. 要件項目（推奨）
+
+*   対象利用者と解決対象の課題を記載する。
+    
+*   最初の開発対象はMVPに限定し、対象外の機能を別記する。
+    
+*   公開範囲、目標時期、作業時間、予算を定義する。
+    
+*   受入条件には主要操作の完了、応答品質、許容遅延、操作性、処理1件当たりの費用を含める。
+    
+*   取扱データ、外部送信先、権利・プライバシー上の制約を記載する。
+    
+*   アクセシビリティと安全性の目標を設定する。
+    
+*   代表入力と期待結果をテスト候補として保持する。
+    
+
+### 🤖 1-2. AIの導入範囲（推奨）
+
+| 構成 | 適用条件 | 評価項目 |
+| --- | --- | --- |
+| ルール・通常検索・既存API | 定型処理で要件を満たす場合 | AI導入時との費用・保守負担の比較 |
+| 単一モデル・単一処理 | 生成・分類等が必要な場合の初期構成 | 代表タスクの品質、遅延、費用 |
+| RAG | 更新文書の参照や根拠提示が必要な場合 | 検索方式、引用、根拠がない場合の応答 |
+| ワークフロー | 手順と分岐が定義されている場合 | アプリ側の処理制御、失敗時の復旧 |
+| エージェント | 状況に応じた手順・ツール選択が必要な場合 | 不確実性、実行回数、時間、費用、権限、承認 |
+
+初期構成は単一処理を基本とする。RAGやエージェントの採用は追加費用と評価結果に基づく。
+
+## 💰 2. 予算・技術構成の設計
+
+### 🧮 2-1. TCOと予算（推奨）
+
+| 費用区分 | 見積対象 |
+| --- | --- |
+| 制作・開発 | エディター・デザインツールの席料金、追加利用枠、素材ライセンス、制作・レビュー工数 |
+| モデル | 入出力、推論関連トークン、キャッシュ読込・書込、画像・音声、検索等の課金 |
+| RAG・エージェント | 文書取込、埋め込み生成・再生成、検索、DB、複数ステップ、再試行、評価用呼出し |
+| インフラ | API、ホスティング、ストレージ、転送、監視、バックアップ、開発・検証環境 |
+| 運用・移行 | 脆弱性対応、モデル更新、評価、障害対応、権利確認、データ移行、サービス移行、設備・電力 |
+
+> 月間TCO ≒ 固定の席・基盤費 ＋ 月間処理件数 × 1件当たりの平均変動費 ＋ 保守・評価・障害対応の工数費
+
+*   変動費には検索、複数回のモデル呼出し、再試行を含める。
+    
+*   入出力、画像・音声、キャッシュはそれぞれの課金単位で計算する。
+    
+*   推論関連トークンは出力料金との重複計上を避けるため、課金仕様を確認する。
+    
+*   試算対象は通常負荷、ピーク負荷、長文入力、失敗増加時とする。
+    
+*   個人開発の作業時間も工数費として比較対象に含める。
+    
+*   IDEの席料金、一般向けチャットアプリの契約、アプリ用モデルAPI料金は別枠で見積もる。
+    
+
+無料枠の確認項目は上限、商用利用、データ利用条件、速度、同時実行、休止、サポート、地域、エクスポート・移行条件。
+予算アラートは課金停止を保証しない。提供者側のハード上限は対象範囲と反映遅延を確認する。アプリ側の利用者別・期間別上限、最大出力長、最大ステップ数、タイムアウトは別途設計する。
+価格の記録項目：プラン、通貨、税、課金単位、月払／年払、地域、無料枠、超過料金、確認日、公式URL。
+
+### 💳 2-2. 代表プラン料金（確認済みの範囲）
+
+確認日：2026-10-07。金額は公式ページのUSD表示。年払いの月額換算は毎月請求される金額ではない。Webflowを除き、表中価格の税の扱いは今回未確認。日本向け請求額、為替、地域価格、決済手数料、既存契約への適用日は未確認。
+| サービス・プラン | 公式表示価格 | 請求・追加費用の注意 | 出典 |
+| --- | --- | --- | --- |
+| Figma Professional Full seat | USD 16／席／月相当 | 年払い。月払い契約は別価格。追加席の請求条件にも注意。 | [料金](https://www.figma.com/pricing)・[課金ガイド](https://help.figma.com/hc/en-us/articles/360041061034) |
+| Figma Professional Dev seat | USD 12／席／月相当 | 年払い。Full seatとは機能が異なる。 | [料金](https://www.figma.com/pricing) |
+| Figma Professional Collab seat | USD 3／席／月相当 | 年払い。席種別・AIクレジットの条件を確認。 | [料金](https://www.figma.com/pricing) |
+| GitHub Copilot Pro | USD 10／月 | 個人プラン。追加AI利用は別料金。 | [プラン](https://github.com/features/copilot/plans)・[課金](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-individuals) |
+| Cursor Individual（申込表記：Get Pro） | USD 20／月の表示 | 年払いの割引額とは区別。Agent等の利用枠・超過料金を確認。 | [料金](https://cursor.com/pricing) |
+| Cursor Teams | USD 40／利用者／月の表示 | 組織向け。請求周期と利用量条件は契約画面で確認。 | [料金](https://cursor.com/pricing) |
+| Webflow Basic Site plan | USD 15／サイト／月相当 | 年払い、税別。Workspace・席・追加機能は別枠で確認。 | [料金](https://webflow.com/pricing) |
+| Webflow Premium Site plan | USD 25／サイト／月相当 | 年払い、税別。既存契約への移行条件は別途確認。 | [料金](https://webflow.com/pricing) |
+| Coolors | 無料プランあり | Proの現行金額・請求周期は今回未確認。保存数等の機能制限あり。 | [料金](https://coolors.co/pricing) |
+| Font Awesome | Freeプランあり | Proの現行金額は今回未確認。年払い・月払いの利用許諾条件を確認。 | [プラン](https://fontawesome.com/plans) |
+
+GitHub Copilotの課金補足：公式Docsは2026-06-01から利用量ベースの課金へ移行したと記載。確認時のProは月1,500 AIクレジット（基本1,000＋Flex 500）。追加利用は1 AIクレジット＝USD 0.01。モデル・トークン量に依存するため、従来のPremium Request件数をそのまま費用計算に使わない。Flex枠の継続条件と追加課金の設定は契約時に再確認する。
+出典：[個人向け利用量ベース課金](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-individuals)／[課金方式の変更](https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/what-changed-with-billing)
+
+### 🧾 2-3. モデルAPI料金例（確認済みの範囲）
+
+確認日：2026-10-07。単位はUSD／100万トークン。通常処理の代表例であり、各社の最新・最安・推奨モデルを意味しない。入力と出力を別計算する。税・地域別請求額は未確認。
+| 提供元・モデル | 入力 | 出力 | 条件・出典 |
+| --- | --- | --- | --- |
+| OpenAI gpt-5.3-codex | 1.75 | 14.00 | Standard。キャッシュ入力は0.175。コード用途のモデル例。[料金](https://platform.openai.com/docs/pricing) |
+| Anthropic Claude Sonnet 4.6 | 3.00 | 15.00 | 通常料金。キャッシュ・Batchは別条件。[料金](https://www.anthropic.com/pricing) |
+| Google Gemini 3 Flash Preview | 0.75 | 4.50 | Standard Paid Tier。出力はthinking tokensを含む。Previewの変更・廃止リスクを確認。[料金](https://ai.google.dev/gemini-api/docs/pricing) |
+
+画像・音声、キャッシュ保持、検索・Grounding、ツール呼出し、Batch、優先処理等の料金は上表に含めていない。モデル間で同一品質・同一トークン数とは限らない。採用判断は対象タスクの品質・遅延・総費用の実測による。
+料金・モデル資料：[OpenAI API](https://developers.openai.com/api/docs/pricing)／[Anthropicモデル資料](https://docs.anthropic.com/en/docs/about-claude/models)／[Gemini API](https://ai.google.dev/gemini-api/docs/pricing)
+
+### ⚖️ 2-4. 選定基準（評価例）
+
+必須要件、利用規約、権利、データ条件を満たさない候補は評価対象外。同一の代表タスクで比較する。
+| 評価項目 | 配点例 |
+| --- | --- |
+| 品質 | 30 |
+| TCO | 25 |
+| 安全性・データ条件 | 20 |
+| 保守・移行性 | 15 |
+| UX・性能 | 10 |
+
+配点は用途に応じて変更する。一般ベンチマークのみで採否を判断しない。
+
+### 🏗️ 2-5. Web構成
+
+| 候補 | 用途 | 設計・確認項目 |
+| --- | --- | --- |
+| [Astro](https://docs.astro.build/en/concepts/why-astro/) | LP、ブログ、ドキュメント等 | 対話型UIの範囲。AI APIを利用する場合のサーバー実行環境。 |
+| [Next.js](https://nextjs.org/docs/app) | 認証・動的画面・サーバー処理を伴うReactアプリ | キャッシュ、実行環境、タイムアウト、転送、ホスティング費用。 |
+| [Vite](https://vite.dev/) + [React](https://react.dev/learn/creating-a-react-app) | SPA、バックエンドと分離したUI | Viteは開発・ビルドツール。ルーティング、認証、バックエンドは別途設計。 |
+
+設計方針（推奨）：
+
+*   静的サイトの構成は必要な機能に限定する。
+    
+*   秘密鍵を利用するAI API呼出しはサーバー側に配置する。
+    
+*   OSSの比較にも構築・更新・ホスティング・障害対応費を含める。
+    
+*   公開先は実行時間、DB、環境変数、転送量、移行方法で評価する。
+    
+
+### 🧠 2-6. AI・検索・外部接続
+
+| 区分 | 候補 | 選定条件 |
+| --- | --- | --- |
+| モデルAPI | [OpenAI](https://developers.openai.com/api/docs/pricing)、[Anthropic](https://docs.anthropic.com/en/docs/about-claude/models)、[Gemini API](https://ai.google.dev/gemini-api/docs/pricing) | 品質、遅延、構造化出力、画像対応、データ条件、利用制限、総費用。 |
+| API統合 | [AI SDK](https://ai-sdk.dev/docs/introduction)、各提供者の公式SDK | 共通化の必要性と固有機能への対応。SDK共通化後も機能・規約差は残る。 |
+| ローカル実行 | [Ollama](https://ollama.com/docs) | モデル別ライセンス、メモリ、計算資源、電力、保守。ローカル実行のみで安全性・低費用を判断しない。 |
+| 検索・RAG | [pgvector](https://github.com/pgvector/pgvector)、既存の全文検索 | 検索品質、件数、運用体制。専用ベクトルDB導入は必須ではない。 |
+| ツール接続 | [MCP](https://modelcontextprotocol.io/) | 接続方式の標準化の必要性。認可・信頼性は別途設計。通常のAPI接続も比較対象。 |
+
+## 🎨 3. 画面・コンテンツの設計
+
+### 🧭 3-1. 画面仕様（推奨）
+
+主要操作、画面遷移、情報の優先順位をワイヤーフレームに記載する。UIキット、配色、素材は画面構成に合わせて選定する。
+確認対象は実データ、空欄、読込中、エラー。表示・操作条件にはスマートフォンとキーボード操作を含める。
+
+### 🔎 3-2. デザイン参考サイト
+
+| サイト | 参照対象 | 留意事項 |
+| --- | --- | --- |
+| [Awwwards](https://www.awwwards.com/websites/) | サイト構成、インタラクション、視覚表現 | 受賞・掲載は速度やアクセシビリティの保証ではない。掲載物の無断商用転用を許諾するものではない。 |
+| [CSS Nectar](https://cssnectar.com/) | レイアウト、配色、スクロール、ホバー | 投稿サイトの権利は各権利者に残る。タッチ操作と実装負荷も評価対象。 |
+| [SiteInspire](https://www.siteinspire.com/) | 企業サイト、ポートフォリオ、ミニマルデザイン | 文字、余白、情報の優先順位を比較。閲覧者向けの包括的再利用許諾は未確認。 |
+| [Httpster](https://httpster.net/) | ブランド・クリエイティブサイト | 表現と操作性を分けて評価。閲覧者向けの包括的再利用許諾は未確認。 |
+| [Dribbble](https://dribbble.com/) | Dashboard、Admin、Data Visualization、Mobile App、Design System | 長文、欠損データ、エラー状態を確認。投稿者からサービスへの許諾は閲覧者への転用許諾ではない。 |
+
+掲載物の閲覧は再利用許諾を意味しない。画像・コード・デザインの転用時は権利者と個別条件を確認する。許諾不明の掲載物は参考にとどめ、複製・公開への利用を保留する。
+出典：[Awwwards Terms](https://www.awwwards.com/terms)／[CSS Nectar Terms](https://cssnectar.com/terms)／[SiteInspire About](https://www.siteinspire.com/about)／[Dribbble Terms](https://dribbble.com/terms)／[Dribbble Guidelines](https://dribbble.com/guidelines)
+
+### 🧩 3-3. UI・配色・フォント・アイコン
+
+ライセンス確認日：2026-10-07。個別素材・全バージョンの確認は未実施。
+| ツール | 用途 | 利用条件・確認項目 |
+| --- | --- | --- |
+| [Figma Community](https://www.figma.com/community) | UIキット、ワイヤーフレーム、プロトタイプ、テンプレート | 第三者リソースは作成者の許諾条件を確認。ファイル・プラグイン等の種別で条件が異なる。含まれる画像・フォントの権利は別。複製可と再配布可は別条件。 |
+| [Coolors](https://coolors.co/) | 配色の生成・比較 | パレットを制作物に利用する場合と、パレット自体を素材集等として販売・再配布する場合を区別。後者には禁止・制限あり。文字・背景のコントラストは別途検証。 |
+| [Google Fonts](https://fonts.google.com/) | Web・資料用フォント | オープンソースのフォント・アイコン。個別ライセンスを確認し、ファイル同梱・改変・再配布の条件に従う。転送量、外部配信への接続、セルフホスト、サブセット化も検討。 |
+| [Font Awesome](https://fontawesome.com/) | 操作アイコン、ナビゲーション | FreeのSVG/JSアイコンはCC BY 4.0、フォントはSIL OFL 1.1、その他コードはMIT。必要な表示・コメントを保持。Proとブランド商標は別途確認。 |
+| [Lucide](https://lucide.dev/) | 線画アイコン | 公式ページにはISCとFeather由来部分のMITを記載。対象版のLICENSEを確認し表示を保持。アイコンのみのボタンにはアクセシブルな名前を設定。 |
+
+AIへの実装仕様（推奨）：
+
+*   色、余白、書体、角丸はデザイントークンとして管理する。
+    
+*   コンポーネント名と画面状態の表記を統一する。
+    
+*   入力資料には画面仕様、受入条件、利用可能な部品、禁止事項を含める。
+    
+*   自動変換・AI生成コードもHTMLの意味構造、レスポンシブ対応、操作性のレビュー対象とする。
+    
+
+品質目標の例はWCAG 2.2のAA適合。自動検査のみでは適合を判断しない。キーボード、フォーカス、スクリーンリーダー、拡大表示は手動確認の対象。
+出典：[Figma Community Terms](https://www.figma.com/legal/community-terms)／[Figma Community licensing](https://help.figma.com/hc/en-us/articles/360042296374-Figma-Community-copyright-and-licensing)／[Figma Pricing](https://www.figma.com/pricing)／[Coolors Terms](https://coolors.co/terms-of-service)／[Coolors License](https://coolors.co/license)／[Google Fonts About](https://fonts.google.com/about)／[Google Fonts](https://developers.google.com/fonts)／[Font Awesome Free License](https://fontawesome.com/license/free)／[Lucide License](https://lucide.dev/license)／[W3C WCAG 2.2](https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22)
+
+### 🖼️ 3-4. 画像・写真・生成画像
+
+| ツール | 用途 | 利用条件・確認項目 |
+| --- | --- | --- |
+| [Unsplash](https://unsplash.com/) | ヒーロー画像、記事、資料、モックアップ | 通常ライセンスは無料の商用・非商用利用が可能で、クレジット不要。大幅な変更のない画像の販売や競合画像サービス構築等は禁止。人物・商標等の第三者権利は別。 |
+| [Pexels](https://www.pexels.com/) | 写真、映像、背景 | 通常は無料・クレジット不要で加工可能。未加工素材の再販売、ストックサービスへの再配布、商標への使用、人物・ブランドによる推奨の誤認等は禁止。 |
+| 生成画像サービス | コンセプト、背景、アイキャッチ、試作 | サービスを特定していないため、今回の料金・規約調査対象外。入力・出力条件はサービス・プランごとに確認。第三者権利の非侵害、独占性、人物・製品・ロゴの正確性は保証されない。 |
+
+API・AI学習利用：
+
+*   Unsplashの通常規約は、画像をAI・機械学習用データセットや人物識別技術に使うことを禁止する条項を含む。別途の明示許諾なく、通常ライセンスを学習許諾と解釈しない。
+    
+*   Unsplash APIにはホットリンク、撮影者・Unsplashへのリンク付きクレジット、ダウンロード相当イベント通知等の要件がある。通常ダウンロードとAPI利用を区別する。
+    
+*   Pexels API利用はAPI側の条件も確認する。今回、Pexels素材のAI学習利用を包括的に許諾する条件は確認していない。
+    
+
+素材台帳（推奨）：URL、作者、取得日、適用ライセンス、表示文、加工内容を保持する。生成画像はサービス名、モデル、生成日、入力素材の権利確認記録も対象。プロンプトに含める機密情報・個人情報は必要最小限とする。
+出典：[Unsplash License](https://unsplash.com/license)／[Terms](https://unsplash.com/terms)／[API Terms](https://unsplash.com/api-terms)／[API Documentation](https://unsplash.com/documentation)／[Pexels License](https://www.pexels.com/license)／[Pexels API](https://www.pexels.com/api/documentation)
+
+### 🎬 3-5. 動画・音楽素材
+
+| ツール | 用途 | 利用条件・確認項目 |
+| --- | --- | --- |
+| [Pexels Videos](https://www.pexels.com/videos/) | 紹介動画、操作デモ、Web背景 | 人物・ブランドの権利と再配布条件。背景動画は自動再生、容量、動きを減らす設定も確認。 |
+| [Mixkit](https://mixkit.co/) | 動画、BGM、効果音、テンプレート | 素材種別・個別ライセンスで条件が異なる。Stock Video Free Licenseは商用・非商用利用に対応。Restricted Licenseは個人の非商用利用向け。音楽はゲーム、テレビ・ラジオ、CD/DVD等の対象外用途を確認。 |
+| [Pixabay Music](https://pixabay.com/music/) | BGM、プレゼン動画、デモ | 通常は無料・帰属表示不要・改変可だが、素材単体の販売・再配布等は禁止。Content ID登録曲は正規利用でも申し立ての対象となる場合がある。対象曲の証明書・取得記録を保持。 |
+| [Free Stock Music](https://www.free-stock-music.com/) | 動画、広告・紹介コンテンツの音源 | 曲ごとにライセンスが異なる。CC BY曲は帰属表示が必要。CC BY-NC等の曲は商用用途に採用しない。クレジット不要の別ライセンス等は作曲者側の条件を確認。 |
+
+CCライセンスの区分：
+
+*   BY：適切なクレジット等が必要。
+    
+*   NC：非営利目的への制限がある。
+    
+*   ND：改変物の共有に制限がある。
+    
+*   SA：改変物の共有には同一・互換ライセンスの条件が適用される。
+    
+
+音楽と映像の同期は翻案に当たり得る。ND付き楽曲は音源自体を編集しない場合も利用条件の確認が必要。無料・ロイヤリティフリーは著作権放棄や無制限の利用を意味しない。
+Pixabayの要約は法的条件の全文に代わるものではない。人物、商標、プライバシー等の第三者権利は別途確認する。個別曲のContent ID登録状況、全素材の商用・学習・再配布許諾は未確認。
+出典：[Mixkit License](https://mixkit.co/license)／[Mixkit音楽](https://mixkit.co/license/modal/musicFree)／[Pixabay License Summary](https://pixabay.com/service/license-summary)／[Pixabay FAQ](https://pixabay.com/service/faq)／[Free Stock Music About](https://www.free-stock-music.com/about-us)／[Free Stock Music利用規約](https://www.free-stock-music.com/terms-of-use)／[Creative Commons](https://creativecommons.org/cc-licenses/)
+
+## 🔐 4. データ・API・AI・安全性の詳細設計
+
+4-1から4-3は設計要件の例。製品の標準機能や対象アプリの実装状況を示すものではない。4-4は公式規約・資料の確認結果。
+
+### 🗃️ 4-1. データ・API仕様（推奨）
+
+*   データ仕様には項目、型、関連、所有者、保持期間、削除方法を含める。
+    
+*   収集対象は機能に必要なデータに限定する。
+    
+*   API仕様には入出力、認証・認可、エラー、タイムアウト、再試行、重複実行防止を記載する。
+    
+*   AIの入力範囲、出力形式、回答を控える条件を定義する。
+    
+*   外部操作の承認条件を記載する。
+    
+*   評価セットは代表質問、根拠文書、回答不能の質問で構成する。
+    
+*   合格条件は実装前から定義し、変更履歴を保持する。
+    
+
+### 🛡️ 4-2. AI機能の技術要件（推奨）
+
+| 項目 | 要件 |
+| --- | --- |
+| 秘密鍵 | サーバー側のシークレット管理に保持。クライアント配布設定は対象外。 |
+| 認証・認可 | 利用者認証とサーバー側認可を適用。 |
+| 利用制限 | レート、入力長、最大出力長、実行回数に上限を設定。 |
+| 応答制御 | ストリーミング、タイムアウト、中止を処理。 |
+| 再試行 | 429等の対象エラー、上限回数、重複実行防止を定義。 |
+| 出力検証 | JSON Schema等による形式指定とサーバー側のスキーマ・値域検証。 |
+| 実行前検証 | 権限、URL、保存先、実行対象をアプリ側で検証。 |
+| 出力表示 | HTML・Markdown等は表示方法に応じたサニタイズを適用。 |
+| RAGの権限 | 文書ACL・テナント条件を検索段階に適用。 |
+| RAGの更新 | 文書の更新・削除を索引・キャッシュに反映。 |
+| 根拠提示 | 出典を保持し、根拠がない場合の応答を評価。 |
+| 外部ツール | 許可リストと最小権限を適用。 |
+| 外部操作の承認 | 公開・送信・削除・決済等は対象と引数の確認を必須とする。 |
+| 回帰評価 | プロンプト、モデル、検索設定、依存関係の変更を評価対象とする。 |
+| 監視 | 成功率、遅延、エラー、利用量、費用、検索・ツール呼出しを記録。 |
+| ログ | 全文保存の必要性を判断し、個人情報・秘密情報を削減・マスク。 |
+| 変更管理 | モデル、プロンプト、スキーマ、索引の版を保持。 |
+| 障害対応 | 段階リリース、ロールバック、代替モデルの検証を用意。 |
+
+補足：
+
+*   リクエスト中止時は対応可能な範囲で上流処理も中止する。発生済み料金の取消しは保証されない。
+    
+*   構造化出力は内容の正しさを保証しない。
+    
+*   モデルは認可の判断主体としない。
+    
+*   無制限のシェル・DB操作や長期資格情報はモデルに提供しない。
+    
+*   評価入力には拒否例、悪意ある入力、長文、多言語を含める。
+    
+*   代替モデルは機能、データ条件、費用を再評価する。
+    
+
+### 🧱 4-3. 未信頼入力（推奨）
+
+検索文書、Web、添付、ツール応答は未信頼データとして扱う。プロンプトインジェクション対策は指示とデータの分離、サーバー側認可、外部接続先制限、実行回数制限、承認を組み合わせる。検知やプロンプトのみで完全防御を保証しない。
+MCPサーバー、IDE拡張、CIの外部Actionは実行コードとして出所と権限を確認する。
+出典：[OpenAI Production best practices](https://platform.openai.com/docs/guides/production-best-practices)／[OpenAI Evals](https://platform.openai.com/docs/guides/evals)／[AI SDK Structured Data](https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data)／[Gemini Structured outputs](https://ai.google.dev/gemini-api/docs/structured-output)／[OWASP Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)／[NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+
+### 📄 4-4. 学習利用・保持条件（確認済みの範囲）
+
+確認日：2026-10-07。「学習に利用しない」は無保持、無審査、特定地域内処理を意味しない。利用者自身の契約・設定は未確認。
+| 対象 | 公式資料で確認した条件 | 残る確認事項 |
+| --- | --- | --- |
+| OpenAI API | ビジネス向けサービスの入力・出力は既定でモデル学習に使用しない。明示的なデータ共有への参加は別条件。 | エンドポイント別の保持・削除、ZDR対象、ログ、地域、契約例外。今回、全保持条件を網羅していない。 |
+| Anthropic商用サービス・API | Commercial Termsは顧客コンテンツを学習に使用しない旨を記載。API入出力は標準で受領・生成から30日以内に削除する案内。 | Files API等の機能、規約違反調査、法的義務、合意済みZDR等の例外。一般消費者向けClaudeの条件と混同しない。 |
+| Gemini API | Unpaid Servicesは入力・出力を製品・サービス改善等に使用する場合がある。Paid Servicesはプロンプト・応答を製品改善に使用しない旨を記載。 | 請求有効化、地域、機能による区分。Search／Maps Groundingには30日保持条件があるため個別確認。 |
+| GitHub Copilot個人プラン | 2026-04-24以降、Free／Pro／Pro+／Maxではオプトアウトしない限り入力・出力・コード断片・関連コンテキストをモデル改善に使用する場合がある。 | 設定「Allow GitHub to use my data for AI model training」を確認。Business／Enterpriseはこの個人向け取扱いの対象外。 |
+| Cursor | プライバシーポリシーには入力・提案の学習利用制限と、セキュリティレビュー、明示報告・同意等の例外を記載。 | Privacy Mode、プラン、接続先モデル提供者、保持・処理条件を個別確認。全設定で無保持とは判断しない。 |
+| Ollama | 公式FAQはローカル実行時のプロンプト・データをOllama側で見ないと説明。Cloudはサービス提供のため処理し、内容を保存・記録せず学習に使わないと説明。 | Cloudとローカルを区別。利用モデル、周辺アプリ・外部ツールの送信とログは別途確認。 |
+
+確認対象にはIDE、中継サービス、モデル提供者を含める。製品、契約主体、プラン、エンドポイント、設定、地域、再委託先ごとに条件を記録する。有料契約やAPI利用という区分だけでは判断しない。
+出典：[OpenAI data use](https://openai.com/policies/how-your-data-is-used-to-improve-model-performance)／[Anthropic Commercial Terms](https://www.anthropic.com/legal/commercial-terms)／[Anthropic保持条件](https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data)／[Gemini Terms](https://ai.google.dev/gemini-api/terms)／[Gemini Pricing](https://ai.google.dev/gemini-api/docs/pricing)／[Copilot個人設定](https://docs.github.com/en/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/managing-copilot-policies-as-an-individual-subscriber)／[Cursor Privacy](https://cursor.com/privacy)／[Cursor Privacy overview](https://cursor.com/privacy-overview)／[Ollama FAQ](https://docs.ollama.com/faq)
+
+## 💻 5. 実装・試作
+
+### 🧰 5-1. テンプレート・開発支援
+
+| ツール | 用途 | 利用条件・確認項目 |
+| --- | --- | --- |
+| [Made in Webflow](https://webflow.com/made-in-webflow) | 構成・レスポンシブ・演出の参考、サイト試作 | Cloneable表示のあるサイトが複製対象。外部素材の権利、公開・CMS・編集席のプラン、移行方法は別途確認。 |
+| [HTMLrev](https://htmlrev.com/) | HTML/CSS等のテンプレート、LP試作 | 一覧への掲載は個別ライセンスの保証ではない。元の配布先でライセンス、帰属表示、商用・再配布条件、保守状況、依存関係、追跡コードを確認。 |
+| [GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/plans-for-github-copilot) | 補完、質問、変更案の作成 | 料金は2-2、データ条件は4-4を参照。アプリ用API費用は別枠。 |
+| [Cursor](https://docs.cursor.com/en/account/pricing) | コード理解・変更・実装支援 | 料金は2-2、データ条件は4-4を参照。生成差分、依存追加、Privacy Modeが確認対象。 |
+
+Web構成とSDKは第2章の選定結果に基づく。pgvector・MCP等の追加は要件に応じて判断する。
+補足：[Webflow Cloneable](https://webflow.com/made-in-webflow/cloneable)／[HTMLrev HTML templates](https://htmlrev.com/free-html-templates.html)
+
+### 📜 5-2. OSSライセンス（確認済みの範囲）
+
+確認日：2026-10-07。公式リポジトリ・ライセンスページの確認結果。採用するリリース・ファイル・依存関係の条件は個別確認。動的なmain等へのリンクは特定版の証跡に代わるものではない。
+| 対象 | 確認内容 | 公式出典 |
+| --- | --- | --- |
+| Vercel AI SDK | Apache-2.0。接続先モデル・APIの利用条件は別。 | [LICENSE](https://github.com/vercel/ai/blob/main/LICENSE) |
+| Ollamaソフトウェア | MIT。配布・実行する学習済みモデルのライセンスは別。 | [LICENSE](https://github.com/ollama/ollama/blob/main/LICENSE) |
+| pgvector | PostgreSQL License。マネージドサービス等の契約は別。 | [LICENSE](https://github.com/pgvector/pgvector/blob/master/LICENSE) |
+| MCP仕様リポジトリ | ライセンス移行の記載あり。新規コード・仕様はApache-2.0、仕様以外の文書はCC BY 4.0。再許諾されていない既存部分にはMITが残る。SDK・サーバー全体を単一ライセンスとしない。 | [LICENSE](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/LICENSE) |
+| Astro | MIT。依存関係・素材・サービスは別。 | [LICENSE](https://github.com/withastro/astro/blob/main/LICENSE) |
+| Next.js | MIT。依存関係・ホスティングは別。 | [LICENSE](https://github.com/vercel/next.js/blob/canary/license.md) |
+| Vite | MIT。配布物に含まれる依存関係も確認。 | [LICENSE](https://github.com/vitejs/vite/blob/main/LICENSE) |
+| React | MIT。周辺ライブラリ・テンプレートは別。 | [LICENSE](https://github.com/facebook/react/blob/main/LICENSE) |
+
+ソフトウェア、学習済みモデル、データセット、生成物、ホスティングサービスを分けて記録する。OSSは権利放棄や無条件の再配布を意味しない。対象版のLICENSE・NOTICE等を保持する。
+
+### 🔧 5-3. 実装手順（推奨）
+
+1.  リポジトリ、実行手順、環境変数の設定例、依存ロックファイル、基本テストを用意する。
+    
+2.  入力、サーバー処理、結果表示を接続した最小構成を実装する。
+    
+3.  AIへの変更依頼は画面仕様と受入条件に基づく範囲に限定する。
+    
+4.  生成差分を確認してから次の変更に進む。
+    
+5.  認可、入出力検証、エラー、中止、利用制限を実装する。
+    
+6.  RAGは取込・検索・回答を分けて確認し、更新・削除・ACLも実装対象とする。
+    
+7.  型チェック、Lint、ユニット・統合テスト、ビルド、依存・秘密情報スキャンをCIに組み込む。
+    
+8.  必要なE2EテストとAI評価を追加する。
+    
+
+実際の秘密鍵はリポジトリに登録しない。パッケージ名の実在と出所を確認し、依存関係を固定する。生成コード・素材の利用条件は採用前の確認対象。CIシークレットには最小権限を適用し、外部Actionの出所と固定方法を確認する。
+出典：[GitHub Actions Security](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)
+
+## 🧪 6. 検証・改善
+
+### 📋 6-1. 検証項目（推奨）
+
+| 観点 | 確認対象 |
+| --- | --- |
+| 機能 | 主要操作、空欄、読込中、エラー、中止、タイムアウト、重複操作、保存・削除 |
+| UI・アクセシビリティ | 実機、画面幅、長文、コントラスト、キーボード、フォーカス、読み上げ、拡大、動きを減らす設定 |
+| 安全性 | 認可、他利用者データへのアクセス、検索ACL、秘密鍵漏えい、危険な出力、ツール承認、依存関係、入力攻撃 |
+| AI・RAG | 代表タスク、回答不能のケース、引用、検索精度、回答品質、悪意ある文書、変更時の回帰 |
+| 性能・費用 | 表示・応答時間、同時利用、長文、呼出し回数、再試行、1件当たり費用、上限・停止の動作 |
+| 権利・データ条件 | 素材・音源・フォント・生成コードの条件、クレジット、送信先ごとの保持・学習利用条件 |
+
+基準未達の項目は設計・実装の修正対象とする。AI機能の利用範囲拡大は小規模利用での費用、失敗率、遅延の評価後に判断する。
+
+### ✅ 6-2. 採用・公開前の確認票
+
+各項目の完了状態は対象プロジェクトで記録する。以下は未記入の確認票。
+
+- [ ] 無料・OSS・複製可の表示とは別に適用ライセンスを確認済み。
+- [ ] 作者表示、改変・再配布、人物・商標の条件を確認済み。
+- [ ] API・AI学習の利用条件と取得証跡を保持している。
+- [ ] 実データ、エラー状態、キーボード操作の検証が完了している。
+- [ ] 送信先ごとのデータ利用・保持条件と実際の設定を確認済み。
+- [ ] 認可、秘密鍵、検索ACL、ツール権限はアプリ側で管理している。
+- [ ] AI生成コード、依存関係、出力の検証が完了している。
+- [ ] 変更時の回帰評価を実行できる。
+- [ ] 席料金とAPI料金を分離し、年払い・月払い・従量課金を区別した見積がある。
+- [ ] 評価、再試行、DB、転送、運用工数が見積に含まれている。
+- [ ] 予算通知、停止、縮退、復旧の動作を確認済み。
+- [ ] 料金・モデル・ライセンス変更の確認担当と時期が決定している。
+
+## 🚀 7. 公開・リリース
+
+### 📦 7-1. 公開手順（推奨）
+
+1.  第2章の構成に対応する静的配信環境またはサーバー実行環境を準備する。
+    
+2.  環境別設定、秘密鍵、ドメイン、HTTPS、認証、公開範囲、利用上限を確認する。
+    
+3.  必要な権利表示とデータ取扱い説明を掲載する。
+    
+4.  限定した範囲で公開し、本番URLの主要操作、素材表示、API接続、エラー、認可、監視を確認する。
+    
+5.  前版への復旧手順を確認する。
+    
+6.  DB変更時は互換性、バックアップ、復元を確認する。
+    
+7.  公開時点のモデル、プロンプト、依存関係、設定、素材ライセンス記録を保持する。
+    
+
+秘密鍵を必要とするAI処理は静的配信のみでは構成せず、サーバー側の処理を用意する。
+参考：[GitHub Docs — Getting started with GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages)。リポジトリからのサイト公開例として参照。AI処理の実行環境は別途確認が必要。
+
+## 🔄 8. 運用・継続改善
+
+### 📈 8-1. 運用項目（推奨）
+
+*   成功率、遅延、エラー、利用量、費用、検索・ツール呼出しを監視する。
+    
+*   ログは必要な範囲に限定し、個人情報・秘密情報を削減・マスクする。
+    
+*   APIキーは環境・用途別に管理する。
+    
+*   異常な利用増加を検知対象とする。
+    
+*   予算超過時の機能制限、縮退、停止を用意する。
+    
+*   概算TCOを実測値で更新する。
+    
+*   モデル変更、キャッシュ、バッチ、入力削減は品質・遅延・データ条件の評価後に採用する。
+    
+*   キャッシュには権限分離と失効管理を適用する。
+    
+*   脆弱性、モデル廃止、API変更、料金・規約変更を定期確認する。
+    
+*   変更は回帰評価後に段階的に反映する。
+    
+*   文書の更新・削除を索引とキャッシュに反映する。
+    
+*   代替モデルは機能、データ条件、費用を再評価する。
+    
+*   利用者の反応を要件と改善項目に反映する。
+    
+*   未使用機能と不要な構成は削減の検討対象とする。
+    
+
+### 🗂️ 8-2. 権利・契約の記録（推奨）
+
+素材・モデル・OSSの取得元URL、取得日、対象ファイル／モデル名・版、ライセンス、帰属表示、商用利用・再配布条件、第三者権利、利用用途を保持する。
+料金はプラン、通貨、税、請求周期、従量単価、上限、購入画面の確認結果を記録する。規約不明・条件競合・許諾未確認の用途は、確認完了まで公開・再配布・学習投入を保留する。
+
+## 🔍 9. 編集記録・確認範囲
+
+2026-10-07：文体調整に続き、主要サービスの公式料金、素材規約、データ利用条件、OSSライセンスを再調査。確認内容を各工程に反映した。
+| 項目 | 今回の状態 |
+| --- | --- |
+| 工程順・技術要件 | 企画から運用までの8工程、既存ツール・素材、TCO、AI安全性要件、参照URLを維持。 |
+| 料金 | Figma、Copilot、Cursor、Webflowの代表プランと、OpenAI・Anthropic・GeminiのAPI例を追加。通貨、単位、請求周期、確認範囲を記載。 |
+| 素材ライセンス | Figma Community、Coolors、Google Fonts、Font Awesome、Lucide、Unsplash、Pexels、Mixkit、Pixabay、Free Stock Musicの条件を補足。 |
+| データ条件 | OpenAI、Anthropic、Gemini、Copilot、Cursor、Ollamaの学習・保持条件と例外を追記。 |
+| OSS | AI SDK、Ollama、pgvector、MCP、Astro、Next.js、Vite、Reactの公式ライセンス記載を確認。 |
+| 事実・推奨の区分 | 公式確認結果、設計要件、評価例、未記入の確認票を区別。 |
+| 文体点検 | 不要な太字・煽り・会話調を避け、用語を統一。見出しの絵文字は内容分類用。 |
+
+未確認事項：
+
+*   Coolors Pro、Font Awesome Proの現行金額・請求周期。
+    
+*   全プラン、全地域、日本向け請求額、税・為替、個別契約、既存契約への移行条件。
+    
+*   OpenAI API等の全エンドポイント・機能別の保持／削除／ZDR条件。
+    
+*   Cursorの各設定・各モデル提供者の具体的な保持条件と、利用者自身のPrivacy Mode設定。
+    
+*   個別のFigmaファイル、写真・動画・音源、HTMLrevテンプレート、学習済みモデル、依存関係の全ライセンス。
+    
+*   SiteInspire、Httpster掲載物の包括的な再利用許諾。
+    
+*   特定されていない生成画像サービスの料金・規約。
+    
+*   実機動作、性能、対象タスクのAI品質、見積と実請求の一致。
+    
+
+本資料は主要条件の調査記録であり、すべての掲載物の商用・再配布・AI学習利用が許諾済みという意味ではない。確認票の「確認済み」は完了時の記載例であり、各プロジェクトの検証完了を示さない。

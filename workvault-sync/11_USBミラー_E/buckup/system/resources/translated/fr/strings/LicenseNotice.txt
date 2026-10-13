@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# FRENCH
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+En sélectionnant un élément à télécharger ou à installer, vous reconnaissez que (1) le code logiciel, les modèles, les mises à jour et les correctifs (ci-après appelés Code) sont soumis aux dispositions de la licence qui accompagnait, ou qui était incluse dans, le Logiciel ou le système pour lequel vous avez obtenu le Code et que (2) vous avez pris connaissance de ces dispositions et les avez acceptées. Il peut arriver que certains des logiciels que vous sélectionnez affichent une licence avant leur téléchargement, leur installation ou leur première utilisation. Vous devez alors accepter les dispositions de la licence pour pouvoir télécharger ou installer et utiliser le Code. Vous n'êtes autorisé à télécharger, installer ou utiliser le Code que pour mettre à jour un Logiciel ou un système sous licence pour lequel vous possédez une Autorisation d'Utilisation du Logiciel valable.
+
+SOUS RESERVE DE TOUTE GARANTIE LEGALE QUI NE PEUT ETRE EXCLUE, {LENOVO_UPPERCASE_TEXT} NE FOURNIT AUCUNE GARANTIE OU CONDITION EXPLICITE OU IMPLICITE, Y COMPRIS, ET DE FACON NON LIMITATIVE, TOUTE GARANTIE OU CONDITION IMPLICITE D'APTITUDE A L'EXECUTION D'UN TRAVAIL DONNE, ET TOUTE GARANTIE EN NON-CONTREFACON CONCERNANT LE CODE OU LE SUPPORT TECHNIQUE, LE CAS ECHEANT.

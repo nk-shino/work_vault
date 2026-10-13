@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# PORTUGUESE-PORTUGAL
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Ao seleccionar um item para descarregar ou instalar, concorda que (1) o código do software, as amostras, as actualizações e a correcções (Código) estão sujeitos aos termos do acordo de licença que acompanham ou que estão contidos no programa ou no sistema para o qual está a obter o Código e que (2) leu previamente e aceita esses termos. É possível que algum software seleccionado apresente uma licença antes de ser efectuado o descarregamento ou a instalação ou antes de o software ser utilizado pela primeira vez. Tem de concordar com os respectivos termos para descarregar ou instalar e para utilizar o Código. Não está autorizado a descarregar, instalar nem a utilizar o Código excepto para actualização de um programa ou sistema validamente licenciado para o qual possua um comprovativo de propriedade válido. 
+
+SUJEITA A QUAISQUER GARANTIAS LEGAIS QUE NÃO POSSAM SER EXCLUÍDAS, A {LENOVO_UPPERCASE_TEXT} NÃO FORNECE GARANTIAS NEM CONDIÇÕES DE QUALQUER ESPÉCIE, QUER EXPLÍCITAS QUER IMPLÍCITAS, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS IMPLÍCITAS OU CONDIÇÕES DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM DETERMINADO FIM E NÃO INFRACÇÃO RELATIVAS AO CÓDIGO OU SUPORTE TÉCNICO, CASO EXISTAM.

@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# English
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+By selecting an item for download or install, you agree that (1) the software code, samples, updates, and fixes (Code) are subject to the terms of the license agreement which accompanied, or was contained in, the Program or system for which you are obtaining the Code and (2) you have previously read and accepted those terms. Some software you select may display a license prior to download, installation or first use of the software. You must agree to those terms to download or install and use the Code. You are not authorized to download or install or use the Code except to update a validly licensed Program or system for which you have a valid Proof of Entitlement.
+
+SUBJECT TO ANY STATUTORY WARRANTIES WHICH CAN NOT BE EXCLUDED, {LENOVO_UPPERCASE_TEXT} MAKES NO WARRANTIES OR CONDITIONS EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT, REGARDING THE CODE OR TECHNICAL SUPPORT, IF ANY.

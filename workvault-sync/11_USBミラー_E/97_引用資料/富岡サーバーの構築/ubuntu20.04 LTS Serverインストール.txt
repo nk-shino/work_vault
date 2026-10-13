@@ -1,0 +1,319 @@
+nksv559のLinux環境について(Ubuntu 20.04.3 LTS)
+
+							2022/01/21 J.Igarashi
+
+1. Ubuntu本体のインストール
+	－ブートデバイスをDVD-ROMドライブに設定、インストールDVDを起動
+	　(F2やF12を押すことでブートデバイスの選択に移行。)
+	　●Language (言語設定)
+		↑↓キーで English を選択し enter
+	　●Installer update available
+		何も入力せずに [ Done ] にカーソルがある状態で、enter
+		(最新版にインストーラをアップデートしない)
+	　●keyboard (キーボード配列)	
+		tabキーで  Layout:[  ]に移動、enter後↑↓キーで Japanese を選択
+		自動的に Variant:[ Japanese ] になるので、tabキーで [ Done ] に移動し、enter
+		([ Identify keyboard ]は操作が面倒)
+	　●Network connection (ネットワーク設定)
+		NICにより表示内容が異なる。適切な NIC に対して
+		【固定ipの場合】
+		ケーブルがつながれたNICの [ enp0s25 eth -   ] を選択し、enter
+		サブメニューで Edit IPv4 を↑↓キーで選択し、enter
+		ウィンドウが開いて IPv4 Method: [ Automatic (DHCP) ] となっているので、
+		↑↓キーで Manual を選択し、enter
+		ウィンドウが本Methodに対する設定値編集に変わって、以下を設定
+		Subnet:		172.25.201.0/24		を入力(セグメントアドレスをCIDR形式)
+		Address:	172.25.201.11		を入力(自ipアドレス)
+		Gateway:	172.25.201.254		を入力(デフォルトゲートウエイ)
+		Name servers:	172.30.30.2,172.24.1.2　を入力(DNS名。1stと2ndの間は " , ")
+		Search domains:	ad.nkc.co.jp	を入力(ドメイン名)
+		内容を確認して [ Save ]を↑↓キーで選択し、enter
+		画面が戻って、NIC表示の下に "Static" と共に ip アドレスが表示される。
+		【DHCPの場合】
+		NIC表示の下に "DHCP" と表示され、取得されたipアドレスが表示される。
+		tabキーで [ Done ] まで移動し、enter
+	　●Configure proxy (プロキシサーバの設定)
+		何も入力せずに [ Done ] にカーソルがある状態で、enter
+	　●Configure ubuntu archive mirror (ubuntuのミラーサーバの選択)
+		表示されたままで [ Done ] にカーソルがある状態で、enter
+	　●Guided storage configuration (HDDの設定)
+			Use an entire disk (全領域を使用) の ( ) にカーソルを合わせ、spaceバー
+				→ "X"が表示される
+			Set up this disk as an LVM group の [ ] にカーソルを合わせ、spaceバー
+				→ "X"が表示される
+			Encrypt the LVM group with LUKS の [ ] は空白のまま
+		内容を確認して [ Done ] にカーソルを移動させ、enter
+	　●Storage configration (設定の確認)
+		内容を確認して [ Done ] にカーソルがある状態で、enter
+		Confirm destructive action (破壊的操作の確認) が表示されたら
+		[ Continue ] にカーソルを移動して(カーソルが赤表示に変わり) enter
+	　●Profile setup (サーバ名、アカウントの設定)
+			Your name:		 	administrator を入力(ログイン後のプロンプトに表示される)
+			Your server's name:	nksv559 を入力
+			Pick a user name:	administrator を入力(ログインアカウント名に使用される)
+			Choose a password:	いつものパスワードを入力
+			Confirm your password:	パスワードを再入力
+		内容を確認して [ Done ] にカーソルを移動させ、enter
+	　●SSH setup (SSHサーバの設定)
+			Install OpenSSH server の [ ] にカーソルを合わせ、spaceバー
+				→ "X"が表示される
+			Import SSH identity: 以降は、何もしない。
+		内容を確認して [ Done ] にカーソルを移動させ、enter
+	　●Featured Server Snaps (追加のサーバ機能の設定)
+		何も入力せずに [ Done ] にカーソルを移動させ、enter
+
+	　………　インストールが始まる　………
+
+	　●Installation complete! (システムの再起動)
+		インストールが完了すると、最下段の表示が [ Reboot Now ] になるので、
+		インストールメディアを抜いて [ Reboot Now ] にカーソルを移動させ、enter
+		ブートが完了してコンソールにログインプロンプト( login: )が表示されたら、
+		'Pick a user name'、'Choose a password'で設定したアカウント、パスワードを入力し、
+		ログイン出来ることを確認。
+		このとき、ログインプロンプトのあとにcloud-init…のようなメッセージがいくつか表示される場合でも、
+		enter を入力すればログインプロンプトが再表示される。
+	－SSHリモートログインの確認
+		リモートPCからターミナルソフトを起動し、本サーバのipアドレス(またはサーバ名)を使って接続する。
+		login: が表示されたら、'Pick a user name'、'Choose a password' で設定した
+		アカウント、パスワードを入力し、ログイン出来ることを確認。
+	
+	　………　これ以降はリモートでの操作が可能　………
+
+	－起動時の cloud-init の抑制
+		ログイン状態で
+			sudo touch /etc/cloud/cloud-init.disabled
+		を実行して、/etc/cloud/ のディレクトリに、サイズ"0"のファイル cloud-init.disabled を作る。
+		(cloud-init は、クラウドサーバ上にubuntuをインストールする際の設定ユーティリティーと設定ファイル)
+	－最新へのアップデート
+		下記を入力して、完了後再起動する。
+			sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean を入力。
+			(パッケージリストの更新、適用、削除、キャッシュの削除を一度に実行)
+			処理途中、ディスク容量を喰うが進めてよいか？"Y/n"の入力を促されるので、"Y"を入力。
+			sudo reboot
+　	－その他の設定
+	　●タイムゾーンの変更
+		ログイン状態で
+		　　timedatectl
+		を実行して、タイムゾーンを確認。
+					   Local time: Fri 2022-01-21 07:54:48 JST
+				   Universal time: Fri 2022-01-21 07:54:48 UTC
+						 RTC time: Fri 2022-01-21 07:54:48
+						Time zone: Asia/Tokyo (JST, +0900)
+		System clock synchronized: yes
+					  NTP service: active
+				  RTC in local TZ: no
+		違っていれば、
+			sudo timedatectl set-timezone Asia/Tokyo
+		を実行してタイムゾーンを設定。
+	　●時刻同期先(ntp サーバ)の変更
+		ログイン状態で
+			systemctl status systemd-timesyncd.service
+		を実行して、ntpサーバを確認。
+			● systemd-timesyncd.service - Network Time Synchronization
+				Loaded: loaded (/lib/systemd/system/systemd-timesyncd.service; enabled; vendor preset: enabled)
+				Active: active (running) since Fri 2022-01-21 16:46:22 JST; 19min ago
+				Docs: man:systemd-timesyncd.service(8)
+			Main PID: 645 (systemd-timesyn)
+				Status: "Initial synchronization to time server 91.189.91.157:123 (ntp.ubuntu.com)."
+				Tasks: 2 (limit: 9316)
+				Memory: 2.0M
+				CGroup: /system.slice/systemd-timesyncd.service
+						mq645 /lib/systemd/systemd-timesyncd
+			
+			Jan 21 16:46:21 ubuntu-server systemd[1]: Starting Network Time Synchronization...
+			Jan 21 16:46:22 ubuntu-server systemd[1]: Started Network Time Synchronization.
+			Jan 21 16:46:22 ubuntu-server systemd-timesyncd[645]: Network configuration changed, trying to establish connection.
+			Jan 21 16:46:53 ubuntu-server systemd-timesyncd[645]: Initial synchronization to time server 91.189.91.157:123 (ntp.ubuntu.com).
+		ntpサーバが指定でない場合は、
+			sudo vi /etc/systemd/timesyncd.conf
+		を実行してファイルを以下のように編集する。
+			[Time]
+			NTP=ntp.hq.nkc.co.jp		←コメントアウト("#")を取り、= 以降に指定のURIを追加
+		( ntp.hq.nkc.co.jp は nkdc1.hq.nkc.co.jp のエイリアス)
+　　	システムを再起動させて反映させる。
+			sudo reboot
+	　　動作確認は、再度
+		　　systemctl status systemd-timesyncd.service
+		を実行する。
+
+2. nfs(network file system)クライアントのインストール
+	－nfsサーバ側の動作確認
+		サーバで以下を実行して、サービスの状態を確認する
+			systemctl status nfs-server
+		応答：
+			● nfs-server.service - NFS server and services
+			Loaded: loaded (/lib/systemd/system/nfs-server.service; enabled; vendor preset: enabled)
+			Active: active (exited) since Wed 2022-02-02 09:33:41 JST; 56min ago
+			Process: 27195 ExecStopPost=/usr/sbin/exportfs -f (code=exited, status=0/SUCCESS)
+			Process: 27192 ExecStopPost=/usr/sbin/exportfs -au (code=exited, status=0/SUCCESS)
+			Process: 27188 ExecStop=/usr/sbin/rpc.nfsd 0 (code=exited, status=0/SUCCESS)
+			Process: 27224 ExecStart=/usr/sbin/rpc.nfsd $RPCNFSDARGS (code=exited, status=0/SUCCESS)
+			Process: 27221 ExecStartPre=/usr/sbin/exportfs -r (code=exited, status=0/SUCCESS)
+			Main PID: 27224 (code=exited, status=0/SUCCESS)
+				Tasks: 0
+			Memory: 0B
+				CPU: 0
+			CGroup: /system.slice/nfs-server.service
+			
+			Feb 02 09:33:41 nksv560 systemd[1]: Starting NFS server and services...
+			Feb 02 09:33:41 nksv560 exportfs[27221]: exportfs: /etc/exports [1]: Neither 'subtree_check' or 'no_subtree_check' specified for export "172.25.201.0/24:/home/share".
+			Feb 02 09:33:41 nksv560 exportfs[27221]:   Assuming default behaviour ('no_subtree_check').
+			Feb 02 09:33:41 nksv560 exportfs[27221]:   NOTE: this default has changed since nfs-utils version 1.0.x
+			Feb 02 09:33:41 nksv560 systemd[1]: Started NFS server and services.
+	－リポジトリからnfs-commonのインストール
+		以下を実行して最新パッケージリストを取得ののちインストール
+			sudo apt update	&& sudo apt install nfs-common
+	－マウントディレクトリの作成(通常は /mnt/の配下に、マウント先ディレクトリ名として「サーバ名_公開フォルダパス名」とする)
+		以下を実行してマウント先ディレクトリを生成する
+			sudo mkdir -p /mnt/(マウント先ディレクトリ名)
+			例）sudo mkdir -p /mnt/nksv560_share
+	－サーバのディレクトリを自マウントディレクトリにマウントする。
+		自動マウントする場合には以下を実行して、ファイル/etc/fstabに記述する
+			sudo vi /etc/fstab
+		以下の内容をファイルに追加する
+			(マウント元リモートサーバ名):(公開ディレクトリパス) (マウント先ローカルディレクトリ) (プロトコル) (読み書き),(自動マウント) 0 0
+			例）nksv560.ad.nkc.co.jp:/home/share /mnt/nksv560_share nfs rw,auto 0 0
+		以下を実行してマウントさせる
+			sudo mount -a
+		一時的なマウントなら下記でも良い
+			sudo mount -t ～
+		マウントされていることを確認
+			ls -l /mnt/(マウント先ディレクトリ)
+
+3. NGINX(Webサーバプログラム)のインストール
+	－リポジトリからのインストール
+		以下を実行して最新パッケージリストを取得ののちインストール
+			sudo apt update	&& sudo apt install nginx
+		インストール完了時点でwebサーバが自動起動し、nginxのデフォルト画面がブラウザで表示できる。
+		または、以下を実行してステータスが確認できる。
+			systemctl status nginx
+		応答：
+			● nginx.service - A high performance web server and a reverse proxy server
+				Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset:>
+				Active: active (running) since Wed 2022-02-02 10:55:24 JST; 1min 50s ago
+				Docs: man:nginx(8)
+			Main PID: 21593 (nginx)
+				Tasks: 5 (limit: 9316)
+				Memory: 7.2M
+				CGroup: /system.slice/nginx.service
+						tq21593 nginx: master process /usr/sbin/nginx -g daemon on; master>
+						tq21594 nginx: worker process
+						tq21595 nginx: worker process
+						tq21596 nginx: worker process
+						mq21597 nginx: worker process
+			
+			Feb 02 10:55:24 ubuntu-server systemd[1]: Starting A high performance web serve>
+			Feb 02 10:55:24 ubuntu-server systemd[1]: Started A high performance web server>
+
+4. SSLリバースプロキシの構築
+	－sslディレクトリの生成
+		以下を実行してroot:rootのフォルダを作る。
+			sudo chmod 755 /etc/ssl/private		# 755にしないとmkdirできない
+			sudo mkdir /etc/ssl/private/newcert
+			sudo mkdir /etc/ssl/private/oldcert
+			sudo chown root:root /etc/ssl/private/*
+	－～.key(秘密鍵),～.csr(公開証明書署名要求)ファイルを生成する
+		以下を実行してファイルを生成する。
+			cd /etc/ssl/private/newcert/
+			sudo openssl req -new -newkey rsa:2048 -nodes -keyout server.key -out server.csr
+		要求されるパラメータを入力する
+			Country Name (2 letter code) [AU]:JP
+			State or Province Name (full name) [Some-State]:Tokyo
+			Locality Name (eg,city)[]:Shinjyuku-ku
+			Organization Name (eg, company) [Internet Widgeits Pty Ltd]:NIHON KOHDEN CORPORATION
+			Organization Unit Name (eg, section) []:Admin. Dept.
+			Common Name (e.g. server FQDN or YOUR name) []:nktomioka.nkc.co.jp
+			Email Address []:.
+			A challenge password []:.
+			An optional company name []:.
+		この結果で/etc/ssl/private/newcertディレクトリに生成される
+			server.key(秘密鍵ファイル)
+			server.csr(公開証明書署名要求ファイル)
+		のうち server.csr をCA(証明機関)に送付し、
+			～.crt(公開鍵ファイル)
+			～.ca-bundle(中間証明書ファイル)
+		を取得する。(nktomioka_nkc_co_jp.crt、同.ca-bundle は、SECTIGO(旧COMODO)から取得した場合のファイル名)
+	－または、生成済秘密鍵、発行済証明書を元サーバ(nksv560)から、以下のファイルをコピーする
+			nktomioka_nkc_co_jp.crt
+			nktomioka_nkc_co_jp.ca-bundle
+			server.key
+			(これらファイル群をコピーすることで、証明書は継続利用可能。)
+	－証明書を結合する
+		公開鍵・中間証明書の順にファイルを結合する
+			sudo cat nktomioka_nkc_co_jp.crt nktomioka_nkc_co_jp.ca-bundle > nktomioka_nkc_co_jp.pem
+		結果、以下のようなディレクトリ、ファイル構成となる。
+		ディレクトリ構成(グループ:オーナー、権限)
+		/etc/ssl(755)/private(711)/	nktomioka_nkc_co_jp.crt(644)			# サーバ証明書(CAから提供)
+				↑			↑		nktomioka_nkc_co_jp.ca-bundle(644)		# 中間証明書(CAから提供)
+			root:root	root:root	nktomioka_nkc_co_jp.pem(644)			# サーバ証明書+中間証明書
+									server.key(644)							# 秘密鍵(下記newcert/server.keyと同じ)
+									oldcert(655) /	nktomioka_nkc_co_jp.crt			# 旧サーバ証明書
+													nktomioka_nkc_co_jp.ca-bundle	# 旧中間証明書
+													server.key						# 旧秘密鍵
+									newcert(655) /	server.csr		# 生成された署名要求ファイル(中間認証機関に送る)
+													server.key		# 生成された秘密鍵
+	－設定ファイルの生成
+		/etc/nginx/site-available/default をバックアップしておく
+			sudo cp /etc/nginx/site-available/default /etc/nginx/site-available/default_bak
+		ファイル default を、以下を実行して修正する
+			sudo vi /etc/nginx/site-available/default
+		設定内容は以下のとおり
+			##
+			# Default server configuration (reverse proxy)
+			server {
+
+			# SSL configuration
+					listen 443 ssl default_server;						# ポート443についてのみ応答
+					listen [::]:443 ssl default_server;					# ip:portでも指定
+					server_name nktomioka.nkc.co.jp;					# 自URL
+
+			# SSL certificate
+					ssl_certificate /etc/ssl/private/nktomioka_nkc_co_jp.pem;	# 証明書ファイル
+					ssl_certificate_key /etc/ssl/private/server.key;	# 秘密鍵ファイル
+
+			# SSL comm
+					ssl_session_timeout 5m;								# セッションタイムアウト時間が5分
+					ssl_protocols TLSv1.2;								# TLSバージョン1.2以上を使用
+					ssl_ciphers HIGH:!aNULL:!MD5;						# 暗号化強度がHIGH(>128bit)、認証の無いものは使用不可、MD5 は使用しない。
+					ssl_prefer_server_ciphers on;						# 
+
+			# target location
+					location / {
+							proxy_pass http://nksv560.ad.nkc.co.jp/;	# proxy先URI
+							proxy_http_version 1.1;						# httpバージョン1.1以上
+							proxy_set_header Upgrade $http_upgrade;		# 
+							proxy_set_header Connection keep-alive;		# 
+							proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+							proxy_set_header Host $host;				# 
+							proxy_cache_bypass $http_upgrade;			# 
+					}
+			}
+		編集後、以下のコマンドで文法をチェックする
+			sudo nginx -t
+		応答：
+			nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+			nginx: configuration file /etc/nginx/nginx.conf test is successful
+			(証明書の結合順が違うとき)
+			nginx: [emerg] SSL_CTX_use_PrivateKey("/etc/ssl/private/server.key") failed (SSL: error:0B080074:x509 certificate routines:X509_check_private_key:key values mismatch)
+			nginx: configuration file /etc/nginx/nginx.conf test failed
+	－証明書の更新
+		約1年で証明書の有効期限が切れるので、その度ごとに ～.csr (署名要求ファイル)を認証機関に送り、証明書を取得する。
+		控えとして、旧証明書ファイルはすべて /etc/ssl/private/oldcert/ に移動し、以降は新規と同じ方法でふぁいるを配置する。
+	－nginxの再起動
+		以下を実行してnginxの再起動を行う
+			sudo systemctl restart nginx
+	ー動作の確認
+		ブラウザで以下のURLをアクセスし、接続が拒絶されることを確認する。
+			http://nksv559.ad.nkc.co.jp/ 
+		ブラウザで以下のURLをアクセスする
+			https://nksv559.ad.nkc.co.jp/ 
+		証明書名前が違うことが表示され、警告が表示されることを確認する。
+		さらに「強制的に接続」させると、URLアドレスに
+			nksv559.ad.nkc.co.jp
+		が表示されたまま、
+			nksv560.ad.nkc.co.jp/index.html
+		の内容が表示されるのを確認する。
+　		さらに、外部の確認サイトからSSLの稼働を確認する。
+		例）http://www.cman.jp/network/support/ssl.html
+		をアクセスして動作を確認する。
+	

@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# DUTCH
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Door een item te selecteren om te downloaden of te installeren, gaat u ermee akkoord dat (1) op de softwarecode, voorbeelden, updates en verbeteringen (Code) de voorwaarden van toepassing zijn van de licentieovereenkomst die is geleverd bij, of opgenomen in, het Programma of systeem waarvoor u de Code verkrijgt, en (2) u die voorwaarden hebt gelezen en ermee akkoord bent gegaan. Bij bepaalde software die u selecteert, kan er vóór het downloaden, installeren of voor het eerst gebruiken van die software een licentie worden afgebeeld. Om de Code te mogen downloaden of installeren en gebruiken, dient u akkoord te gaan met die voorwaarden. U bent niet geautoriseerd om de code te downloaden of te installeren of te gebruiken, tenzij die gebeurt voor een wettig in licentie gegevens Programma of systeem waarvoor u een geldig Bewijs van Gebruiksrecht hebt.
+
+AFGEZIEN VAN WETTELIJKE GARANTIES DIE NIET KUNNEN WORDEN UITGESLOTEN, GEEFT {LENOVO_UPPERCASE_TEXT} GEEN ENKELE GARANTIE, UITDRUKKELIJK NOCH STILZWIJGEND, MET INBEGRIP VAN, MAAR NIET BEPERKT TOT, DIE VAN HET VOORGENOMEN GEBRUIK, GESCHIKTHEID VOOR EEN BEPAALD DOEL EN HET NIET SCHENDEN VAN RECHTEN VAN DERDEN, MET BETREKKING TOT DE CODE OF DE TECHNISCHE ONDERSTEUNING, INDIEN VAN TOEPASSING.

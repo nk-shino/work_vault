@@ -1,0 +1,409 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>手順書・説明書 整形ツール</title>
+<style>
+  :root{
+    --navy:#1f3a5f; --blue:#2c5f8a; --line:#d5dce5; --bg:#f4f6f9;
+    --ink:#2b2f36; --sub:#5c6773; --ok:#2f7a52; --warn:#a8531f; --err:#a83232;
+  }
+  *{ box-sizing:border-box; }
+  body{ font-family:"BIZ UDPGothic","Meiryo",sans-serif; margin:0; background:var(--bg); color:var(--ink); font-size:14px; }
+  header{ background:#fff; border-bottom:1px solid var(--line); padding:16px 24px; }
+  header h1{ margin:0; font-size:18px; color:var(--navy); font-weight:700; }
+  header p{ margin:4px 0 0; font-size:12.5px; color:var(--sub); }
+  .wrap{ display:flex; gap:16px; padding:16px; flex-wrap:wrap; max-width:1200px; margin:0 auto; }
+  .panel{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; flex:1; min-width:340px; }
+  .panel h2{ font-size:13px; margin:0 0 12px; color:var(--navy); font-weight:700; display:flex; align-items:center; gap:8px; }
+  .step{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:var(--navy); color:#fff; font-size:11px; }
+  label,legend{ font-size:12.5px; }
+  textarea{ width:100%; height:240px; resize:vertical; padding:10px; border:1px solid var(--line); border-radius:6px; font-size:13px; line-height:1.7; font-family:"Consolas","BIZ UDPGothic",monospace; }
+  textarea:focus,select:focus,input:focus{ outline:2px solid var(--blue); outline-offset:1px; }
+  .drop{ border:1.5px dashed #a9bace; border-radius:6px; padding:12px; text-align:center; color:var(--sub); font-size:12.5px; margin-bottom:10px; cursor:pointer; background:#fafcfe; transition:.15s; }
+  .drop:hover{ background:#f0f5fb; }
+  .drop.drag{ background:#e6eef8; border-color:var(--blue); color:var(--navy); }
+  fieldset{ border:1px solid var(--line); border-radius:6px; margin:10px 0; padding:10px 12px; }
+  fieldset legend{ color:var(--navy); font-weight:700; padding:0 6px; }
+  .opts{ display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin:8px 0; }
+  .opts label{ display:flex; align-items:center; gap:7px; cursor:pointer; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; margin:10px 0; }
+  .field{ display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--sub); }
+  .field input,.field select{ padding:6px; border:1px solid var(--line); border-radius:5px; font-size:13px; color:var(--ink); }
+  .btns{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  button{ border:1px solid transparent; border-radius:5px; padding:9px 16px; font-size:13px; cursor:pointer; font-weight:700; transition:.12s; }
+  button:focus{ outline:2px solid var(--blue); outline-offset:2px; }
+  .primary{ background:var(--navy); color:#fff; }
+  .primary:hover{ background:#16324f; }
+  .secondary{ background:#fff; color:var(--navy); border-color:var(--line); }
+  .secondary:hover{ background:#f0f5fb; }
+  .accent{ background:var(--ok); color:#fff; }
+  .accent:hover{ background:#265f40; }
+  .accent:disabled{ background:#b9c4bd; cursor:not-allowed; }
+  .hint{ font-size:11.5px; color:var(--sub); margin-top:2px; }
+  #preview{ font-family:"BIZ UDPGothic","Meiryo",sans-serif; line-height:1.85; font-size:14px; padding:6px 2px; min-height:120px; }
+  #preview .doc-title{ font-size:22px; font-weight:700; color:var(--navy); margin:0 0 16px; }
+  #preview .h1{ font-size:17px; font-weight:700; color:var(--navy); border-bottom:2px solid var(--blue); padding-bottom:4px; margin:18px 0 9px; }
+  #preview .h2{ font-size:15px; font-weight:700; color:var(--blue); margin:13px 0 6px; }
+  #preview p{ margin:0 0 9px; }
+  #preview ul{ margin:0 0 9px; padding-left:22px; }
+  #preview li{ margin-bottom:4px; }
+  #preview table{ border-collapse:collapse; width:100%; margin:6px 0 13px; }
+  #preview th{ background:var(--blue); color:#fff; }
+  #preview td:first-child{ background:#eef3f9; }
+  #preview th,#preview td{ border:1px solid var(--line); padding:6px 8px; font-size:13px; text-align:left; vertical-align:top; }
+  .status{ font-size:12px; border-radius:5px; padding:8px 10px; margin-top:10px; border-left:3px solid var(--sub); background:#f6f7f9; color:var(--sub); }
+  .status.ok{ border-color:var(--ok); background:#eef6f1; color:var(--ok); }
+  .status.warn{ border-color:var(--warn); background:#fbf2ea; color:var(--warn); }
+  .status.err{ border-color:var(--err); background:#faecec; color:var(--err); }
+  .status ul{ margin:6px 0 0; padding-left:18px; }
+  .placeholder{ color:#9aa4af; }
+</style>
+</head>
+<body>
+<header>
+  <h1>手順書・説明書 整形ツール</h1>
+  <p>文章を読み込むと、装飾記号や絵文字を取り除き、見出しと連番を整えてWord形式で書き出します。</p>
+</header>
+
+<div class="wrap">
+  <div class="panel">
+    <h2><span class="step">1</span>原文を入力</h2>
+    <div id="dropZone" class="drop" tabindex="0" role="button" aria-label="テキストファイルを読み込む">
+      テキストファイルをここにドラッグ、またはクリックして選択
+    </div>
+    <input type="file" id="fileInput" accept=".txt,.text,text/plain" style="display:none">
+    <textarea id="input" aria-label="原文" placeholder="ここに文章を貼り付けるか、上の枠にファイルを読み込んでください。"></textarea>
+    <p class="hint">ショートカット: Ctrl+Enter で整形を実行します。</p>
+
+    <fieldset>
+      <legend>前処理</legend>
+      <div class="opts">
+        <label><input type="checkbox" id="optEmoji" checked>絵文字を削除する</label>
+        <label><input type="checkbox" id="optSpace" checked>不要な半角スペースを詰める</label>
+        <label><input type="checkbox" id="optPasted" checked>貼り付け由来のファイル名を削除</label>
+        <label><input type="checkbox" id="optRef" checked>参照元マーカーを削除</label>
+        <label><input type="checkbox" id="optTable" checked>タブ区切りを表に整形</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>見出しと連番</legend>
+      <div class="opts">
+        <label><input type="checkbox" id="optRenum" checked>見出しに連番を振り直す</label>
+        <label><input type="checkbox" id="optAutoHead" checked>番号なし見出しを推定する</label>
+      </div>
+      <div class="grid">
+        <div class="field">採番スタイル
+          <select id="numStyle">
+            <option value="dot">1. と 1-1.</option>
+            <option value="jp">第1章 と 1.1</option>
+            <option value="paren">(1) と (1-1)</option>
+          </select>
+        </div>
+        <div class="field">見出しとみなす最大文字数
+          <input type="number" id="headLen" value="30" min="10" max="60">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>書式</legend>
+      <div class="grid">
+        <div class="field">タイトル（空欄なら1行目）
+          <input type="text" id="titleInput" placeholder="自動で設定">
+        </div>
+        <div class="field">フォント
+          <select id="fontSel">
+            <option value="BIZ UDPGothic">BIZ UDPゴシック</option>
+            <option value="BIZ UDGothic">BIZ UDゴシック</option>
+            <option value="Meiryo">メイリオ</option>
+            <option value="Yu Gothic">游ゴシック</option>
+            <option value="MS PGothic">MS Pゴシック</option>
+          </select>
+        </div>
+        <div class="field">本文サイズ（pt）
+          <input type="number" id="sizeInput" value="10.5" step="0.5" min="8" max="16">
+        </div>
+        <div class="field">見出しの色
+          <select id="colorSel">
+            <option value="1F3A5F">ネイビー</option>
+            <option value="2F5F3A">グリーン</option>
+            <option value="7A2E2E">レッド</option>
+            <option value="4A2E5F">パープル</option>
+            <option value="333333">グレー</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="btns">
+      <button class="primary" id="btnRun">整形してプレビュー</button>
+      <button class="secondary" id="btnSample">サンプルを読み込む</button>
+      <button class="secondary" id="btnClear">入力をクリア</button>
+      <button class="secondary" id="btnSave">設定を保存</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="step">2</span>プレビューと書き出し</h2>
+    <div id="preview"><p class="placeholder">整形結果がここに表示されます。</p></div>
+    <div id="status" class="status">まだ整形していません。</div>
+    <div class="btns" style="margin-top:12px;">
+      <button class="accent" id="btnExport" disabled>Word（.docx）で書き出す</button>
+    </div>
+    <p class="hint">出力フォントは選択したものが既定になります。相手の端末に同じフォントが無い場合は別フォントに置き換わるため、配布時はPDF化を推奨します。</p>
+  </div>
+</div>
+
+<script>
+let parsedElements=[];
+let stats={emoji:0, removed:[], h1:0, h2:0, autoHead:0};
+
+const $=id=>document.getElementById(id);
+const SETTING_KEYS=['optEmoji','optSpace','optPasted','optRef','optTable','optRenum','optAutoHead','numStyle','headLen','fontSel','sizeInput','colorSel'];
+
+function saveSettings(){
+  const s={};
+  SETTING_KEYS.forEach(k=>{ const el=$(k); s[k]=el.type==='checkbox'?el.checked:el.value; });
+  try{ localStorage.setItem('fmtTool2',JSON.stringify(s)); setStatus('ok','設定を保存しました。次回もこの設定で起動します。'); }
+  catch(e){ setStatus('err','設定の保存に失敗しました。'); }
+}
+function loadSettings(){
+  try{ const raw=localStorage.getItem('fmtTool2'); if(!raw)return; const s=JSON.parse(raw);
+    SETTING_KEYS.forEach(k=>{ if(k in s){ const el=$(k); if(el.type==='checkbox')el.checked=s[k]; else el.value=s[k]; } });
+  }catch(e){}
+}
+
+const dropZone=$('dropZone'), fileInput=$('fileInput');
+dropZone.addEventListener('click',()=>fileInput.click());
+dropZone.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fileInput.click(); } });
+fileInput.addEventListener('change',e=>{ if(e.target.files[0])readFile(e.target.files[0]); });
+['dragenter','dragover'].forEach(ev=>dropZone.addEventListener(ev,e=>{ e.preventDefault(); dropZone.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev=>dropZone.addEventListener(ev,e=>{ e.preventDefault(); dropZone.classList.remove('drag'); }));
+dropZone.addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f)readFile(f); });
+function readFile(file){
+  if(!/\.(txt|text)$/i.test(file.name)){ setStatus('warn','テキストファイル（.txt）を選んでください。'); return; }
+  const rd=new FileReader();
+  rd.onload=()=>{ $('input').value=rd.result; dropZone.textContent='読み込み完了: '+file.name; run(); };
+  rd.onerror=()=>setStatus('err','ファイルの読み込みに失敗しました。');
+  rd.readAsText(file,'UTF-8');
+}
+
+function setStatus(kind,html){ const el=$('status'); el.className='status'+(kind?' '+kind:''); el.innerHTML=html; }
+
+function loadSample(){
+  $('input').value=
+`倉庫移動SQLとは何をしているのか
+結論を先に
+倉庫移動SQLは、在庫数を一切変更しない。
+現場の設備に載っていた部品リールの置き場所を、データベース上で一括して付け替えるだけである。
+処理の全体像
+現場部品リストを作成し、対象リールを絞り込む。
+移動先ロケーションコードを入力する。
+対象テーブル	更新内容
+T_在庫データ	ロケーションコードを付け替える
+ステータスコード	移動先に応じた状態へ変更する`;
+  run();
+}
+
+const PASTED_PATTERNS=[
+  /pasted[_\s\-]?text[_\s\-]?[0-9]*\.(?:txt|text)/gi,
+  /pasted[_\s\-]?text[_\s\-]?[0-9]{3,}/gi,
+  /tmp_sql\.txt(?:\+\d+)?/gi,
+];
+
+function stripEmoji(str){
+  const re=/(?:\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic}|[\u{1F3FB}-\u{1F3FF}])*)|[\u{1F1E6}-\u{1F1FF}]{1,2}|[\u2600-\u26FF\u2700-\u27BF]\uFE0F?/gu;
+  let n=0; const out=str.replace(re,()=>{ n++; return ''; }); stats.emoji+=n;
+  return out.replace(/[ \u00A0]{2,}/g,' ');
+}
+
+function preprocess(text){
+  const o={ space:$('optSpace').checked, pasted:$('optPasted').checked, ref:$('optRef').checked, emoji:$('optEmoji').checked };
+  stats={emoji:0, removed:[], h1:0, h2:0, autoHead:0};
+  const kept=[];
+  for(let raw of text.split(/\r?\n/)){
+    let l=raw;
+    if(o.emoji)l=stripEmoji(l);
+    if(o.pasted)PASTED_PATTERNS.forEach(re=>{ re.lastIndex=0; const m=l.match(re); if(m)m.forEach(x=>stats.removed.push(x.trim())); l=l.replace(re,''); });
+    if(o.ref)l=l.replace(/[（(]?\s*(参照元|貼り付けたテキスト)[^）)]*[）)]?/gi,m=>{ stats.removed.push(m.trim()); return ''; });
+    if(l.replace(/[ \u00A0\t]+/g,'').trim()==='')continue;
+    kept.push(l);
+  }
+  return {lines:kept, o};
+}
+
+function looksLikeHeading(t,max){
+  t=t.trim();
+  if(!t||t.length>max)return false;
+  if(/[。、．，]$/.test(t))return false;
+  if(/(する|した|される|できる|である|になる|ため|ので|こと|とおり|ない|ある)。?$/.test(t))return false;
+  if(/(について|の内容|の説明|の目的|とは|一覧|手順|概要|背景|対象|問題点|変更点|理由|必要性|前提|補足|注意|まとめ|位置づけ|方法|条件|範囲|定義|指摘)$/.test(t))return true;
+  if(/[)）】」』]$/.test(t))return true;
+  if(/[一-龥ァ-ヶー]$/.test(t)&&t.length<=max*0.7)return true;
+  return false;
+}
+
+function parse(){
+  const {lines,o}=preprocess($('input').value);
+  const max=parseInt($('headLen').value)||30;
+  const renum=$('optRenum').checked, autoHead=$('optAutoHead').checked, style=$('numStyle').value;
+  const manualTitle=$('titleInput').value.trim();
+  const els=[]; let titleSet=false; let tableBuf=[];
+  const flush=()=>{ if(tableBuf.length){ els.push({type:'table',rows:tableBuf.slice()}); tableBuf=[]; } };
+
+  for(let i=0;i<lines.length;i++){
+    let raw=lines[i], line=raw;
+    if(o.space)line=line.replace(/[ \u00A0]+/g,'');
+    const t=line.replace(/\t+/g,' ').trim();
+    if(!t)continue;
+    const cells=raw.split('\t').map(c=>o.space?c.replace(/[ \u00A0]+/g,''):c.trim()).filter(c=>c!=='');
+    if(raw.includes('\t')&&cells.length>=2&&$('optTable').checked){ tableBuf.push(cells); continue; } else flush();
+
+    if(!titleSet){ els.push({type:'title',text:manualTitle||t.replace(/^\d+[-－.\.．\s]*/,'')}); titleSet=true; continue; }
+    let m2=t.match(/^(\d+)[-－](\d+)[.\.．]?\s*(.*)$/); if(m2){ els.push({type:'h2',text:m2[3]||t}); continue; }
+    let m1=t.match(/^(\d+)[.\.．]\s*(.*)$/); if(m1){ els.push({type:'h1',text:m1[2]||t}); continue; }
+    if(/^[・•\-–oO○●]\s?/.test(t)){ els.push({type:'bullet',text:t.replace(/^[・•\-–oO○●]\s?/,'')}); continue; }
+    if(autoHead){
+      const next=lines[i+1]?lines[i+1].replace(/\t+/g,' ').trim():'';
+      const nextBody=next&&(next.length>max||/[。．]$/.test(next)||/^[・•\-–oO○●]/.test(next)||next.includes('\t'));
+      if(looksLikeHeading(t,max)&&nextBody){ els.push({type:'h1',text:t}); stats.autoHead++; continue; }
+    }
+    els.push({type:'p',text:t});
+  }
+  flush();
+
+  if(renum){
+    let a=0,b=0;
+    const fmt=(n1,n2)=>{ if(style==='jp')return n2?`${n1}.${n2} `:`第${n1}章 `; if(style==='paren')return n2?`(${n1}-${n2}) `:`(${n1}) `; return n2?`${n1}-${n2}. `:`${n1}. `; };
+    els.forEach(el=>{ if(el.type==='h1'){ a++;b=0; el.text=fmt(a,0)+el.text.replace(/^\d+[-－.\.．\s]*/,''); } else if(el.type==='h2'){ b++; el.text=fmt(a,b)+el.text.replace(/^\d+[-－.\.．\s]*/,''); } });
+  }
+  els.forEach(el=>{ if(el.type==='h1')stats.h1++; if(el.type==='h2')stats.h2++; });
+  return els;
+}
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function run(){
+  const src=$('input').value.trim();
+  if(!src){ setStatus('warn','原文が空です。文章を入力してください。'); $('btnExport').disabled=true; return; }
+  parsedElements=parse();
+  const color=$('colorSel').value, font=$('fontSel').value;
+  let html='';
+  parsedElements.forEach(el=>{
+    if(el.type==='title')html+=`<div class="doc-title">${esc(el.text)}</div>`;
+    else if(el.type==='h1')html+=`<div class="h1" style="color:#${color};border-color:#${color}">${esc(el.text)}</div>`;
+    else if(el.type==='h2')html+=`<div class="h2" style="color:#${color}">${esc(el.text)}</div>`;
+    else if(el.type==='p')html+=`<p>${esc(el.text)}</p>`;
+    else if(el.type==='bullet')html+=`<ul><li>${esc(el.text)}</li></ul>`;
+    else if(el.type==='table'){ html+='<table>'; el.rows.forEach((r,i)=>{ html+='<tr>'; r.forEach(c=>{ html+=i===0?`<th>${esc(c)}</th>`:`<td>${esc(c)}</td>`; }); html+='</tr>'; }); html+='</table>'; }
+  });
+  const pv=$('preview');
+  pv.style.fontFamily=`"${font}","Meiryo",sans-serif`;
+  pv.innerHTML=html||'<p class="placeholder">整形できる内容がありませんでした。</p>';
+
+  if(!parsedElements.length){ setStatus('warn','整形できる内容がありませんでした。'); $('btnExport').disabled=true; return; }
+
+  const uniq=[...new Set(stats.removed.filter(x=>x))];
+  const lines=[`見出し ${stats.h1} 件（うち推定 ${stats.autoHead} 件）、小見出し ${stats.h2} 件を検出しました。`];
+  if(stats.emoji)lines.push(`絵文字を ${stats.emoji} 件削除しました。`);
+  if(uniq.length)lines.push(`ファイル名・参照元マーカーを ${uniq.length} 件削除しました。`);
+  let inner=lines.map(x=>`<div>${x}</div>`).join('');
+  if(uniq.length)inner+=`<ul>${uniq.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+  setStatus('ok',inner);
+  $('btnExport').disabled=false;
+}
+
+function exportWord(){
+  if(!parsedElements.length){ setStatus('warn','先に整形を実行してください。'); return; }
+  const font=$('fontSel').value, color=$('colorSel').value;
+  const bodySz=Math.round((parseFloat($('sizeInput').value)||10.5)*2);
+  const X=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const R=(t,{b=false,sz=bodySz,c=null}={})=>{ let p=''; if(b)p+='<w:b/>'; p+=`<w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/>`; if(c)p+=`<w:color w:val="${c}"/>`; return `<w:r><w:rPr>${p}</w:rPr><w:t xml:space="preserve">${X(t)}</w:t></w:r>`; };
+  const P=(t,{b,sz,c,af=120,bul=false,bd=null}={})=>{ let pr=`<w:pPr><w:spacing w:after="${af}" w:line="288" w:lineRule="auto"/>`; if(bul)pr+='<w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>'; if(bd)pr+=`<w:pBdr><w:bottom w:val="single" w:sz="8" w:space="2" w:color="${bd}"/></w:pBdr>`; pr+='</w:pPr>'; return `<w:p>${pr}${R(t,{b,sz,c})}</w:p>`; };
+  let body='';
+  parsedElements.forEach(el=>{
+    if(el.type==='title')body+=P(el.text,{b:true,sz:36,c:'1F3A5F',af:240});
+    else if(el.type==='h1')body+=P(el.text,{b:true,sz:28,c:color,af:120,bd:color});
+    else if(el.type==='h2')body+=P(el.text,{b:true,sz:24,c:color,af:80});
+    else if(el.type==='p')body+=P(el.text,{af:120});
+    else if(el.type==='bullet')body+=P(el.text,{af:40,bul:true});
+    else if(el.type==='table'){
+      let tb='<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="5000" w:type="pct"/><w:tblBorders>';
+      ['top','left','bottom','right','insideH','insideV'].forEach(s=>{ tb+=`<w:${s} w:val="single" w:sz="4" w:space="0" w:color="D5DCE5"/>`; });
+      tb+='</w:tblBorders></w:tblPr>';
+      el.rows.forEach((r,ri)=>{ const h=ri===0; tb+='<w:tr>'; r.forEach((c,ci)=>{ const fill=h?'2C5F8A':(ci===0?'EEF3F9':null); const shd=fill?`<w:shd w:val="clear" w:color="auto" w:fill="${fill}"/>`:''; tb+=`<w:tc><w:tcPr>${shd}<w:vAlign w:val="center"/></w:tcPr><w:p><w:pPr><w:spacing w:after="40"/></w:pPr>${R(c,{b:h,c:h?'FFFFFF':null})}</w:p></w:tc>`; }); tb+='</w:tr>'; });
+      tb+='</w:tbl><w:p><w:pPr><w:spacing w:after="120"/></w:pPr></w:p>'; body+=tb;
+    }
+  });
+  const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
+  const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="${font}" w:eastAsia="${font}" w:hAnsi="${font}" w:cs="${font}"/><w:sz w:val="${bodySz}"/><w:szCs w:val="${bodySz}"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:line="288" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style><w:style w:type="table" w:styleId="TableGrid"><w:name w:val="Table Grid"/></w:style></w:styles>`;
+  const num=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:abstractNum w:abstractNumId="0"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/><w:lvlText w:val="&#8226;"/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="425" w:hanging="283"/></w:pPr></w:lvl></w:abstractNum><w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num></w:numbering>`;
+  const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/numbering.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"/></Types>`;
+  const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+  const drels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" Target="numbering.xml"/></Relationships>`;
+  const blob=makeZip([['[Content_Types].xml',ct],['_rels/.rels',rels],['word/_rels/document.xml.rels',drels],['word/document.xml',doc],['word/styles.xml',styles],['word/numbering.xml',num]]);
+  const title=(parsedElements[0]&&parsedElements[0].text)||'整形文書';
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=title.replace(/[\\\/:*?"<>|]/g,'_').slice(0,50)+'.docx'; a.click(); URL.revokeObjectURL(a.href);
+  setStatus('ok','Wordファイルを書き出しました。');
+}
+
+function makeZip(files){
+  const enc=new TextEncoder();
+  const ct=(()=>{ const t=[]; for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1); t[n]=c>>>0; } return t; })();
+  const crc=buf=>{ let c=0xFFFFFFFF; for(let i=0;i<buf.length;i++)c=ct[(c^buf[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; };
+  const chunks=[],central=[]; let off=0;
+  const u16=n=>[n&0xFF,(n>>8)&0xFF], u32=n=>[n&0xFF,(n>>8)&0xFF,(n>>16)&0xFF,(n>>24)&0xFF];
+  files.forEach(([name,content])=>{
+    const nb=enc.encode(name), d=enc.encode(content), c=crc(d);
+    const lo=[].concat(u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0),u32(c),u32(d.length),u32(d.length),u16(nb.length),u16(0));
+    chunks.push(new Uint8Array(lo),nb,d);
+    const ce=[].concat(u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(c),u32(d.length),u32(d.length),u16(nb.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(off));
+    central.push(new Uint8Array(ce),nb); off+=lo.length+nb.length+d.length;
+  });
+  let cs=0; central.forEach(c=>cs+=c.length);
+  const end=[].concat(u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cs),u32(off),u16(0));
+  return new Blob([...chunks,...central,new Uint8Array(end)],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}
+
+$('btnRun').addEventListener('click',run);
+$('btnSample').addEventListener('click',loadSample);
+$('btnClear').addEventListener('click',()=>{ $('input').value=''; $('preview').innerHTML='<p class="placeholder">整形結果がここに表示されます。</p>'; setStatus('','まだ整形していません。'); $('btnExport').disabled=true; dropZone.textContent='テキストファイルをここにドラッグ、またはクリックして選択'; });
+$('btnSave').addEventListener('click',saveSettings);
+$('btnExport').addEventListener('click',exportWord);
+$('input').addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){ e.preventDefault(); run(); } });
+
+loadSettings();
+</script>
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    

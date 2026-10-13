@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# SIMPLIFIED CHINESE
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+选择某项进行下载或安装即表明您同意（1）软件代码、样本、更新及修订（代码）符合您获取代码的程序或系统中随附或包含的许可证协议的条款，并且（2）您已事先阅读并接受这些条款。您选择的某个软件可能会在下载、安装或首次使用该软件前显示许可证。您必须同意这些条款以下载或安装并使用该代码。除非更新您具有的有效权利证明的有效许可的程序或系统，否则您无权进行下载、安装或使用该代码。
+
+除不可免除的强制性保证外，对于代码或技术支持（如果存在），{LENOVO_UPPERCASE_TEXT} 不附有任何（无论是明示的还是暗含的）保证或条件，包括但不限于暗含的有关适销和适用于某种特定用途以及非侵权的保证或条件。

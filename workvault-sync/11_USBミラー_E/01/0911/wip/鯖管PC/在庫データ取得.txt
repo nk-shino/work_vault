@@ -1,0 +1,16 @@
+SELECT
+    シリアル番号,
+    品番,
+    受入数,
+    在庫数,
+    ステータス名称,
+    ロケーション名称,
+    RIGHT('00' + CONVERT(varchar, 棚列), 2) + '-' + RIGHT('00' + CONVERT(varchar, 棚位置), 2) + '-' + RIGHT('00' + CONVERT(varchar, 段), 2) + '-' + RIGHT('00' + CONVERT(varchar, 位置), 2) AS 棚,
+    棚分類コードgw
+FROM
+    [EGProKOHDEN-Warehouse].[dbo].V_在庫データ
+WHERE
+    品番 LIKE '9000070257'
+OR  1 = 1
+ORDER BY
+    'シリアル番号'

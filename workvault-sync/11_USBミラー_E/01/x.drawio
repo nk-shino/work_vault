@@ -1,0 +1,344 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="EGPro差異調査フロー" id="egpro-flow-v2">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1400" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ========== タイトル ========== -->
+        <mxCell id="title" value="現場在庫 と EG-Pro 在庫 差異調査フロー&#xa;作成: 篠原 想詩（第二生産部 実装技術課）　2026-08-06" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="900" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========== 凡例 ========== -->
+        <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="80" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="凡例" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="85" width="240" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="✅ 確定済み（採用）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="110" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" value="⚠️ 注記（前提条件・落とし穴）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="145" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" value="⏳ 未確定（§10確認待ち）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="180" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" value="🔒 禁止事項" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="215" width="220" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ========== STEP 1: セットアップレポート取得 ========== -->
+        <mxCell id="s1" value="① セットアップレポート取得&#xa;EG-Proサーバー管理PC / NPM" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="90" width="280" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_note" value="⚠️ セットアップレポートとEG-Pro CSVは&#xa;必ず同日・同時刻に取得すること&#xa;（3日ズレで160件が照合不能・実測）" style="shape=callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;perimeter=calloutPerimeter;size=10;position=0.5;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="610" y="85" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- STEP 2: EG-Pro在庫CSV取得 -->
+        <mxCell id="s2" value="② EG-Pro在庫CSV取得&#xa;第二生産部生産一課一係ノートブック経由" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="185" width="280" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_note" value="⚠️ 0確認を含まないCSVを使うこと&#xa;確認方法: H列に「0確認」が含まれないか&#xa;=COUNTIF(H:H,&quot;*0確認*&quot;) が 0 なら正しい形式" style="shape=callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;perimeter=calloutPerimeter;size=10;position=0.5;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="610" y="180" width="260" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- STEP 3: 計算機へ貼付 -->
+        <mxCell id="s3" value="③ セットアップレポート計算機.xlsm へ貼付&#xa;[セットアップレポート]シート / [EGPro]シート" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="280" width="280" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_note" value="⚠️ EGProシートの列順は固定（変更禁止）&#xa;A:シリアル / B:品番 / C:受入数&#xa;D:在庫数 / E:ステータス / F:ロケーション / G:棚&#xa;⚠️ 貼付開始セルの正式位置は【要確認】" style="shape=callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;perimeter=calloutPerimeter;size=10;position=0.5;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="610" y="272" width="260" height="72" as="geometry" />
+        </mxCell>
+
+        <!-- STEP 4: XLOOKUP突合 -->
+        <mxCell id="s4" value="④ 品番コードをキーに XLOOKUP 突合&#xa;メインリール＋スプライシングリール 両方対象&#xa;→ ロケーション / 在庫数 / 受入数 を取得" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="375" width="280" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="s4_note" value="⚠️ スプライシングは&#xa;メイン側が先に消費されて消え&#xa;繋いだ側だけEG-Proに残るケースが多い&#xa;（実測: 突合率 65%→80%向上）" style="shape=callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;perimeter=calloutPerimeter;size=10;position=0.5;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="610" y="370" width="260" height="72" as="geometry" />
+        </mxCell>
+
+        <!-- STEP 5: #N/A切り分け -->
+        <mxCell id="s5" value="⑤ #N/A の切り分け（修正前に必須）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="480" width="280" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="s5_note" value="⚠️ #N/A は「在庫ゼロ」ではない&#xa;キー不一致（空白・桁数・全半角）による&#xa;偽エラーの可能性あり&#xa;→ 修正対象に混ぜる前に必ず切り分ける" style="shape=callout;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;align=left;perimeter=calloutPerimeter;size=10;position=0.5;direction=west;" vertex="1" parent="1">
+          <mxGeometry x="610" y="470" width="260" height="68" as="geometry" />
+        </mxCell>
+
+        <!-- 分岐: キー不一致 -->
+        <mxCell id="d_na" value="EG-Pro A列に&#xa;該当シリアルはあるか？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="315" y="555" width="250" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s5a" value="キー補正で解消&#xa;（空白トリム・桁数・全半角修正）&#xa;→ 真の差異ではない → 再突合" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="565" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 差異あり判断 -->
+        <mxCell id="d1" value="差異あり？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="660" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- 差異なし -->
+        <mxCell id="fin_ok" value="✅ 差異確認 終了" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="668" width="160" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- 不足部品リスト -->
+        <mxCell id="s6" value="⑥ 差異候補を抽出&#xa;#N/A（真）/ 在庫数0 / ロケーション空欄" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="765" width="280" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ========== 経路判断 ========== -->
+        <mxCell id="d2" value="差異の種類は？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="860" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- 経路A -->
+        <mxCell id="route_a_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="970" width="240" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="route_a_title" value="経路A：設備＋EG-Pro画面修正&#xa;【確定: PPTX準拠】" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="972" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ra1" value="シリアル確認・ラベル再発行" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="1005" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ra2" value="フィーダー情報削除（★先に実施）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="1042" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ra3" value="スプライシング解除" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="1079" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ra4" value="残数調整 → EG-Pro在庫編集 → 設備取付" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="1116" width="210" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 経路B -->
+        <mxCell id="route_b_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="970" width="240" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="route_b_title" value="⏳ 経路B：MES使用実績訂正&#xa;【§10確認待ち】" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="340" y="972" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rb1" value="EGPro使用実績訂正メンテツール.xlsm&#xa;指図番号（9桁）/ 区分（1=出庫/2=ロス）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="352" y="1005" width="216" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="rb2" value="出力先: \nksveai02\shr_P95PP00075\IF00075.csv" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="352" y="1054" width="216" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rb3" value="⚠️ MES連携は18:30（時刻厳守）&#xa;上書き保存（後優先・洗い替え）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="352" y="1091" width="216" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 経路C: 所在不明 -->
+        <mxCell id="route_c_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="620" y="970" width="240" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="route_c_title" value="経路C：所在不明処理&#xa;【手順の最終確定は要確認】" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="972" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rc1" value="全入庫後に所在不明リストを作成" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="632" y="1005" width="216" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rc2" value="現物の所在確認" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="632" y="1042" width="216" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rc3" value="見つからなければ リール消費マクロ へ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="632" y="1079" width="216" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rc3_note" value="⚠️ 座標クリック依存のため&#xa;環境差で誤動作の可能性あり" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="632" y="1116" width="216" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- 修正後 再照合 -->
+        <mxCell id="s7" value="⑦ 修正後 再照合&#xa;EG-Pro再出力 → 在庫数/ステータス/ロケーション確認&#xa;計算機で再突合 → #N/A・差異が消えているか確認" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1195" width="340" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- 差異ゼロ判断 -->
+        <mxCell id="d3" value="処理可能な差異ゼロ？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="345" y="1300" width="230" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- 完了 -->
+        <mxCell id="fin" value="✅ 差異修正 完了&#xa;未解決分は「所在不明」として明示" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1308" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 後工程 -->
+        <mxCell id="postproc" value="【後工程・本件対象外】&#xa;棚卸し説明表の作成" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1405" width="220" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ========== 系統B仮説パネル（ホワイトボード） ========== -->
+        <mxCell id="wb_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="400" width="360" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="wb_title" value="⏳ 系統B仮説（ホワイトボード）&#xa;「B列を直せば解決」説&#xa;—— §10確認1〜4で採否を確定する ——" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="940" y="405" width="360" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="wb1" value="Pana CIM セットアップレポート&#xa;（毎回取り直す）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="955" y="468" width="150" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="wb2" value="EG-Pro 在庫リスト&#xa;（現在の値）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1125" y="468" width="150" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="wb3" value="各製品群で突合&#xa;キー: 部品コード（品番）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="548" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wb4" value="不足部品リスト B列を上書き&#xa;製品a/b/c 何台製造&#xa;Aという部品は合計X個使う&#xa;→ 足りなければ出庫してリスト" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="623" width="240" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="wb_limit" value="❌ この方法の限界&#xa;・EG-ProのDBは変わらない（Excel内のみ）&#xa;・系統A（EG-Pro是正）との矛盾未解消&#xa;・恒久対応にはならない&#xa;→ §10 確認1〜4で採否を確定すること" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="955" y="720" width="320" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ========== 禁止事項パネル ========== -->
+        <mxCell id="ng_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="940" y="900" width="360" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ng_title" value="🔒 実行禁止（必ず確認してから）" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="940" y="903" width="360" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ng1" value="❌ Module1.main() → B列がR列で上書き・検証対象消滅" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="950" y="930" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ng2" value="❌ リール消費マクロ ゼロ確認() → EG-Pro在庫を座標クリックで自動削除" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="950" y="952" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ng3" value="❌ 強制移動.txt のSQL → 件数指定なし・ロケーション全件更新" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="950" y="974" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ng4" value="❌ AED xlsm の Power Query 更新 → 開くだけで2本が自動実行" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="950" y="996" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ng5" value="❌ 倉庫移動SQL の SSMS実行 → 承認手順が未確認" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1018" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ng6" value="🔒 EGProInventory.ini のSQL認証情報は平文 → 資料・図・Teamsに含めない" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1050" width="340" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ========== 矢印 ========== -->
+        <!-- s1→s2 -->
+        <mxCell id="e_s1s2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s1" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s2→s3 -->
+        <mxCell id="e_s2s3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s2" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s3→s4 -->
+        <mxCell id="e_s3s4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s3" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s4→s5 -->
+        <mxCell id="e_s4s5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s4" target="s5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s5→d_na -->
+        <mxCell id="e_s5dna" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s5" target="d_na">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d_na→s5a (キー不一致) -->
+        <mxCell id="e_dna_s5a" value="在る&#xa;（キー不一致）" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;exitX=0;exitY=0.5;" edge="1" parent="1" source="d_na" target="s5a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s5a→s4 (再突合ループ) -->
+        <mxCell id="e_s5a_s4" value="補正後&#xa;再突合" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="s5a" target="s4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="592" />
+              <mxPoint x="60" y="407" />
+              <mxPoint x="280" y="407" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- d_na→d1 (無い=真の差異) -->
+        <mxCell id="e_dna_d1" value="無い&#xa;（真の差異）" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="d_na" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d1→fin_ok (差異なし) -->
+        <mxCell id="e_d1_finok" value="なし" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;exitX=1;exitY=0.5;" edge="1" parent="1" source="d1" target="fin_ok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d1→s6 (差異あり) -->
+        <mxCell id="e_d1_s6" value="あり" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="d1" target="s6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s6→d2 -->
+        <mxCell id="e_s6d2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s6" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d2→route_a (設備・残数系) -->
+        <mxCell id="e_d2_ra" value="設備・残数系" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;exitX=0;exitY=0.5;" edge="1" parent="1" source="d2" target="route_a_bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d2→route_b (使用実績系) -->
+        <mxCell id="e_d2_rb" value="使用実績系" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;strokeWidth=2;dashed=1;" edge="1" parent="1" source="d2" target="route_b_bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d2→route_c (現物なし) -->
+        <mxCell id="e_d2_rc" value="現物なし" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;exitX=1;exitY=0.5;" edge="1" parent="1" source="d2" target="route_c_bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- 各経路→s7 -->
+        <mxCell id="e_ra_s7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="route_a_bg" target="s7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rb_s7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#b85450;strokeWidth=2;dashed=1;" edge="1" parent="1" source="route_b_bg" target="s7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rc_s7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="route_c_bg" target="s7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- s7→d3 -->
+        <mxCell id="e_s7_d3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="s7" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d3→fin (はい) -->
+        <mxCell id="e_d3_fin" value="はい" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;exitX=1;exitY=0.5;" edge="1" parent="1" source="d3" target="fin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- d3→s6 (いいえ・ループ) -->
+        <mxCell id="e_d3_s6" value="いいえ" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="d3" target="s6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="1332" />
+              <mxPoint x="210" y="792" />
+              <mxPoint x="280" y="792" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- fin→postproc (後工程・点線) -->
+        <mxCell id="e_fin_post" value="後工程" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#666666;strokeWidth=1;dashed=1;exitX=0.5;exitY=1;" edge="1" parent="1" source="fin" target="postproc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- s1_note→s1 接続線 -->
+        <mxCell id="e_n1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="s1_note" target="s1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="s2_note" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="s3_note" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="s4_note" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1;dashed=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="s5_note" target="s5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

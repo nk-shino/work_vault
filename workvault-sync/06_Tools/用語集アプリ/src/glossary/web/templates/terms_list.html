@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}用語一覧 - 社内用語集{% endblock %}
+{% block main %}
+<h1>用語一覧</h1>
+<form method="get" action="/terms" class="filters" role="search">
+  <label for="q">検索（見出し・読み・英語・略語）</label>
+  <input id="q" name="q" type="search" value="{{ q }}" accesskey="s">
+  <label for="tag">文脈タグ</label>
+  <select id="tag" name="tag">
+    <option value="">すべて</option>
+    {% for t in tags %}<option value="{{ t }}" {% if t == tag %}selected{% endif %}>{{ t }}</option>{% endfor %}
+  </select>
+  <label for="status">状態</label>
+  <select id="status" name="status">
+    <option value="">アーカイブ以外</option>
+    {% for s in statuses %}<option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ label(s) }}</option>{% endfor %}
+  </select>
+  <button type="submit">絞り込む</button>
+</form>
+
+<p>{{ result.total }} 件（{{ result.page }} / {{ result.pages }} ページ）</p>
+{% if result.items %}
+<table>
+  <thead><tr><th scope="col">見出し</th><th scope="col">読み</th><th scope="col">略語</th><th scope="col">状態</th></tr></thead>
+  <tbody>
+  {% for t in result.items %}
+    <tr>
+      <td><a href="/terms/{{ t.id }}">{{ t.headword }}</a></td>
+      <td>{{ t.reading or "" }}</td>
+      <td>{{ t.abbreviation or "" }}</td>
+      <td><span class="badge st-{{ t.status }}">{{ label(t.status) }}</span></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<nav aria-label="ページ送り" class="pager">
+  {% if result.page > 1 %}<a href="{{ page_url(result.page - 1) }}" rel="prev">前のページ</a>{% endif %}
+  {% if result.page < result.pages %}<a href="{{ page_url(result.page + 1) }}" rel="next">次のページ</a>{% endif %}
+</nav>
+{% else %}
+<p class="empty">条件に合う用語がありません。{% if not q and not tag and not status %}「用語を登録」から手で入れるか、提案キューで採用すると、ここに並びます。{% endif %}</p>
+{% endif %}
+{% endblock %}

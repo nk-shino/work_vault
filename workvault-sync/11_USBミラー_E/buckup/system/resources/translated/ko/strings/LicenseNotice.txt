@@ -1,0 +1,27 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# KOREAN
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+다운로드 또는 설치할 항목을 선택함으로써, 귀하는 (1) 소프트웨어 코드, 샘플, 업데이트 및 수정 사항(코드)에 귀하가 코드를 취득한 프로그램에 포함 또는 동봉된 라이센스 계약 조항이 적용되며 (2) 귀하가 라이센스 계약 조항을 읽고 승인했다는 데 동의하게 됩니다. 선택한 소프트웨어 중 일부는 소프트웨어를
+다운로드, 설치 또는 최초 사용하기 전에 라이센스를 표시할 수도 있습니다. 귀하가 본 코드를 다운로드 또는 설치 및 사용하기 위해서는 표시되는 라이센스 조항에 동의해야 합니다. 귀하가
+유효한 라이센스 증서를 취득한 프로그램 또는 시스템을 업데이트하는 경우를 제외하고 귀하는 본 코드를 다운로드, 설치 또는 사용할 수 없습니다.
+
+
+강행법규로 규정된 보증 사항을 제외하고, {LENOVO_UPPERCASE_TEXT}은(는) 본 코드나 기술 지원(해당하는 경우)에 대해 상품성 및 특정 목적에의 적합성에 대한 묵시적 보증 및 타인의 권리 비침해에 대한 보증을 포함하여(단, 이에 한하지 않음) 명시적이든 묵시적이든 어떠한 보증도 제공하지 않습니다.

@@ -1,0 +1,25 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# ITALIAN
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Selezionando un elemento per il download o per l'installazione, (1) si accetta che il codice programma, esempi, aggiornamenti e fix (Codice) sono soggetti alle clausole dell'accordo di licenza che accompagna, o è contenuto, nel Programma o sul sistema per cui si sta ottenendo il Codice e (2) tali clausole sono state lette e accettate. Quando si selezionano alcuni software, è possibile che la licenza venga visualizzata prima del download, dell'installazione o del primo utilizzo del software. E' necessario accettare tali clausole per eseguire il download, l'installazione e per utilizzare il codice. Non si è
+autorizzati ad eseguire il download, l'installazione o ad utilizzare il codice se non per aggiornare un programma di validità su licenza o un sistema di cui si possiede una prova di titolarità valida. 
+
+FATTO SALVO LE GARANZIE INDEROGABILI DI LEGGE, {LENOVO_UPPERCASE_TEXT} NON FORNISCE GARANZIE O DICHIARAZIONI DI ALCUN TIPO, ESPRESSE O IMPLICITE, INCLUSE, A TITOLO ESEMPLIFICATIVO, GARANZIE O CONDIZIONI IMPLICITE DI COMMERCIABILITÀ O IDONEITÀ PER UNO SCOPO PARTICOLARE, INCLUSE LE GARANZIE DI FUNZIONAMENTO ININTERROTTO, RELATIVE AL CODICE O AL SUPPORTO TECNICO, SE ESISTENTE.

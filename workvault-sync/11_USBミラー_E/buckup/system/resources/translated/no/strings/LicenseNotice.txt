@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# NORWEGIAN
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Ved å velge et element for nedlasting eller installering bekrefter du at (1) programvarekoden, eksemplene, oppdateringene og rettelsene (Koden) er underlagt betingelsene i lisensavtalen som fulgte med, eller var en del av, Programmet eller systemet som du henter Koden for, og (2) du tidligere har lest og akseptert disse betingelsene. Noe av programvaren du velger, viser kanskje en lisens før nedlasting, installering eller første gang den blir brukt. Du må akseptere disse betingelsene for å laste ned eller installere og bruke Koden. Du er ikke autorisert til å laste ned eller installere eller bruke Koden til noe annet formål enn å oppdatere et gyldig lisensiert Program eller system som du har et gyldig kjøpsbevis for.
+
+UTOVER EVENTUELLE LOVBESTEMTE GARANTIER SOM IKKE KAN FRAVIKES, GIR {LENOVO_UPPERCASE_TEXT} INGEN GARANTIER AV NOE SLAG, UTTRYKT ELLER UNDERFORSTÅTT, INKLUDERT, MEN IKKE BEGRENSET TIL, GARANTIER VEDRØRENDE SALGBARHET OG ANVENDELSE FOR ET BESTEMT FORMÅL, OG GARANTIER VEDRØRENDE IKKE-KRENKELSE, NÅR DET GJELDER KODEN ELLER EVENTUELL TEKNISK STØTTE.

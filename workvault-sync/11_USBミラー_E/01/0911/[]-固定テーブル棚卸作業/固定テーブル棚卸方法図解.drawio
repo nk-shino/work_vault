@@ -1,0 +1,714 @@
+<mxfile host="Electron" pages="6">
+  <diagram name="サマリ" id="NIKy0RaO6xb_dTD4b6-F">
+    <mxGraphModel dx="1469" dy="832" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="light-dark(#ffffff, #121212)" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-3" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="" vertex="1">
+          <mxGeometry height="482" width="560" x="20" y="318" as="geometry" />
+        </mxCell>
+        <mxCell id="CCdqwl7fozCQdPHhD4r5-1" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;解決する問題&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="280" x="30" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="v2v4egNoTJkWO972EJ33-1" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="270" y="39.5" as="sourcePoint" />
+            <mxPoint x="350" y="40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v2v4egNoTJkWO972EJ33-2" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="20" y="70" as="sourcePoint" />
+            <mxPoint x="20" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v2v4egNoTJkWO972EJ33-3" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=1;fontColor=#1A1A1A;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;EGProの在庫数を調整する方法&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;(PanaCIMに含まれるロス情報を&lt;span style=&quot;background-color: transparent;&quot;&gt;どのようにEGproに取り込んでいるか)&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="560" x="20" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="v2v4egNoTJkWO972EJ33-15" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;strong&gt;設備 → Pana-CIM → セットアップレポート → Excelマクロ → EG-Pro（ハンディ or SQL）&lt;/strong&gt;" vertex="1">
+          <mxGeometry height="30" width="496" x="673" as="geometry" />
+        </mxCell>
+        <mxCell id="WzJGld7loIb-5dt76O1I-1" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=1;rounded=0;fontColor=#1A1A1A;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;棚卸方法の具体的な手順&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="570" x="580" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="WzJGld7loIb-5dt76O1I-3" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=0;fontColor=#FF9933;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;在庫と一致していないため&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="560" x="20" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-4" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="20" y="372" as="sourcePoint" />
+            <mxPoint x="580" y="372" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 27px;&quot;&gt;概要&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="30" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#1A1A1A;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;EGProサーバー用PC、&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;[SSMS]&lt;span style=&quot;background-color: transparent;&quot;&gt;上の[T_在庫データ]をセットアップレポート計算&lt;/span&gt;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;マクロを経由した情報で上書きすることで解決する&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; font-size: 16px;&quot;&gt;可能性が最も高い。&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="77" width="530" x="35" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-9" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;align=left;" value="" vertex="1">
+          <mxGeometry height="482" width="560" x="590" y="318" as="geometry" />
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-10" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="590" y="372" as="sourcePoint" />
+            <mxPoint x="1150" y="372" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QpQGkxdAvD4j75rYqgGQ-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;概要&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="600" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="KK0F0n0zUXfUkdpNpTZj-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#1A1A1A;" value="&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;作業自体は2026/3月に一度引継ぎで実施済み。&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;ほとんどの情報は図解によりわかりやすくなったが、&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;現場情報に関する内容の部分は&lt;/span&gt;&lt;span style=&quot;font-size: 16px; background-color: transparent;&quot;&gt;資料に記載されている内容でしか&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px; background-color: transparent;&quot;&gt;把握できていないため、不確実性は残っている。&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 16px; background-color: transparent;&quot;&gt;作業自体は実行可能。&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="95" width="530" x="605" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="KK0F0n0zUXfUkdpNpTZj-7" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;shadow=0;fontColor=#FF9933;" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;現場作業の一部に不安があるため&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="570" x="580" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="FmVQlC-mEfoCe9QkU7lZ-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;竹淵さん&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="FmVQlC-mEfoCe9QkU7lZ-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;生産一課&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="580" y="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="1. 全体フロー" id="IBLcNCeMnRG--AwSe9RA">
+    <mxGraphModel dx="1784" dy="184" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="light-dark(#FFFFFF,#121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-1" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-29" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-2" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-46" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-3" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-48" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-4" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-5" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-27" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-6" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-52" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-30" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;あり&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.047" y="6" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-7" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-54" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-31" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;あり&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.0371" y="-15" as="geometry">
+            <mxPoint x="2" y="-6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-8" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-31" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;strokeWidth=2;" target="e8VhPcJbI0qX20TrIUXA-46" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;レポート再出力・再取込&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.0015" y="-19" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="904" y="2410.4" />
+              <mxPoint x="1214" y="2410.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-9" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-55" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-10" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-33" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-11" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-67" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-56" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;ハンディで倉庫入庫&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-12" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-56" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="e8VhPcJbI0qX20TrIUXA-34">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1376" y="3190.33" />
+              <mxPoint x="1214" y="3190.33" />
+              <mxPoint x="1214" y="3104.33" />
+              <mxPoint x="904" y="3104.33" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-13" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-67" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="e8VhPcJbI0qX20TrIUXA-57" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;棚卸し用倉庫へ移動&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.7557" y="-7" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1874.07" y="3248.87" />
+              <mxPoint x="1534.07" y="3248.87" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-14" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-57" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="e8VhPcJbI0qX20TrIUXA-68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-15" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-68" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-16" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-58" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-35">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1214" y="3523.5" />
+              <mxPoint x="1214" y="3437.67" />
+              <mxPoint x="904" y="3437.67" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-17" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-36" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-69" value="無い">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-18" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-69" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="e8VhPcJbI0qX20TrIUXA-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1874" y="3736" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-19" parent="1" style="swimlane;html=1;horizontal=1;startSize=34;fontSize=12;fontStyle=1;container=0;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;現場(実装機・カウンタ・ハンディ)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="2900" width="340" x="734" y="1076" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-20" parent="e8VhPcJbI0qX20TrIUXA-19" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;fontStyle=1;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;開始:固定テーブルの最終生産終了&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="296" x="12" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-21" parent="1" style="swimlane;html=1;horizontal=1;startSize=34;fontSize=12;fontStyle=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Pana-CIM&lt;/font&gt;" vertex="1">
+          <mxGeometry height="2900" width="280" x="1074" y="1076" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-23" parent="1" style="swimlane;html=1;horizontal=1;startSize=34;fontSize=12;fontStyle=1;container=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;事務PC(セットアップレポート計算マクロ)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="2900" width="360" x="1354" y="1076" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-24" parent="e8VhPcJbI0qX20TrIUXA-23" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;autosizeText=1;fontSize=6;align=left;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;セットアップレポート計算マクロがすること&lt;/b&gt;&lt;br&gt;セットアップレポート(材料バーコード)とEG-Pro在庫(シリアル番号)を完全一致で結合し、固定テーブルの現物とEG-Proの差異を照合する。&lt;br&gt;取込は SETUPREPORT_Import がUTF-8からSJISへ変換し、EG_Import と HAIRETSU_Import で在庫と配列を読む。&lt;br&gt;結果は計算結果_整形シート(A〜T列)に集約し、現場部品リストと倉庫移動SQLを生成する。&lt;/font&gt;" vertex="1">
+          <mxGeometry height="180" width="320" x="22" y="212.999979654948" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-57" parent="e8VhPcJbI0qX20TrIUXA-23" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;「倉庫移動SQL作成」を使用&lt;br&gt;移動先を入力 →「現場部品リスト作成」&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;(必ず実行)&lt;br&gt;→「倉庫移動SQL作成」でSQLを出力&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="316" x="22" y="2225" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-25" parent="1" style="swimlane;html=1;horizontal=1;startSize=34;fontSize=12;fontStyle=1;container=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;EG-Pro(在庫管理システム/サーバ)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="2900" width="319" x="1714" y="1076" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-26" parent="e8VhPcJbI0qX20TrIUXA-25" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;方法1(推奨・事務PC)&lt;/b&gt;&lt;br&gt;Get_EG_Tanaoroshi.cgi へアクセスし&lt;br&gt;在庫情報をダウンロード&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="235" x="33" y="655" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-27" parent="e8VhPcJbI0qX20TrIUXA-25" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;方法2(方法1不可時のみ)&lt;/b&gt;&lt;br&gt;EG-Proサーバ(ラック最左PC)で&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;SSMGを開き接続する。&lt;br&gt;新しいクエリ → SQL入力 → 実行 → 結果を名前を付けて保存&lt;br&gt;※ 実サーバのため慎重に作業&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="109" width="276" x="24" y="784" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-65" parent="e8VhPcJbI0qX20TrIUXA-25" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;3. EG-Pro在庫情報出力&lt;/b&gt;&lt;br&gt;方法1が使用できるか&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="276" x="28" y="551" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-70" edge="1" parent="e8VhPcJbI0qX20TrIUXA-25" source="e8VhPcJbI0qX20TrIUXA-65" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-26" value="はい">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-71" edge="1" parent="e8VhPcJbI0qX20TrIUXA-25" source="e8VhPcJbI0qX20TrIUXA-65" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-27" value="いいえ">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="303.1300000000001" y="605" />
+              <mxPoint x="303.1300000000001" y="749.27" />
+              <mxPoint x="170.06999999999994" y="749.27" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;1. 設備操作&lt;/b&gt;&lt;br&gt;① 配列が一致するJobを設備に読込&lt;br&gt;② 図1のボタン → ③ 図2の順に操作&lt;br&gt;※ 画面切替を確認しながらゆっくり/1人で実施&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="296" x="756" y="1226" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;対象のZ軸の現物を確認し&lt;br&gt;正しくセットアップされていることを確認&lt;br&gt;→ 設備操作をやり直す&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="296" x="756" y="2266" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;現物を確認し、つなぎ目が無いことを確認&lt;br&gt;Pana-CIMハンディでスプライシング解除&lt;br&gt;① 設備上でフィーダー情報削除&lt;br&gt;② スプライシング解除 → ③ セットアップ&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="296" x="756" y="2481" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;6. カウント前準備(ラベル貼り)&lt;/b&gt;&lt;br&gt;① テーブルを外しフィーダーから部品を取外し、&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;台車の同じ場所へ整列&lt;br&gt;② 赤枠シリアルのバーコードを再発行(はんだ冷蔵庫付近のPC)&lt;br&gt;③ 元のシールは剥がさず、上から仮止めで貼付&lt;br&gt;④「新品ではない」リールに青丸シールを貼付&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="296" x="756" y="2696" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;7. カウント実施(新リールカウンタ)&lt;/b&gt;&lt;br&gt;バーコードが1枚か2枚かを確認して分岐&lt;br&gt;※ 詳細はページ2&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;「カウント・取付の判断フロー」参照&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="318" x="745" y="2841" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-34" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;EG-Proハンディターミナルで入庫画面を開き&lt;br&gt;印刷したバーコードを上 → 下の順に読取&lt;/font&gt;" vertex="1">
+          <mxGeometry height="105" width="318" x="745" y="3166" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-35" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;出力された部品の所在を現物確認&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="296" x="756" y="3491" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-36" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;container=0;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;現物が存在するか&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="296" x="756" y="3576" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-37" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;10. 部品取り付け&lt;/b&gt;&lt;br&gt;バーコード枚数とスプライシングテープ長で分岐&lt;br&gt;※ 詳細はページ2&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;「1-3&lt;/font&gt;&lt;span style=&quot;font-size: 13px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;. カウント・取付の判断フロー」参照&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="296" x="756" y="3696" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-38" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;fontStyle=1;container=0;" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;棚卸し完了&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="296" x="756" y="3816" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-39" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-40" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-29" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;設備操作からやり直し&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-41" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-32" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-42" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-35" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-43" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-36" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-37" value="ある">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-44" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-37" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-45" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;設備情報がPana-CIMへ反映&lt;br&gt;(最後の設備操作から約10分待機)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="236" x="1096" y="1346" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;2. セットアップレポート出力&lt;/b&gt;&lt;br&gt;http://172.25.253.42/eplantview&lt;br&gt;&lt;/font&gt;&lt;span style=&quot;font-size: 12px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;・モジュール「材料照合」&lt;/span&gt;&lt;div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;・値&lt;/font&gt;&lt;span style=&quot;font-size: 12px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;「現在のセットアップレポート」&lt;/span&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;対象ライン・全設備を選択 → 適用 → ファイル保存&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="95" width="236" x="1096" y="1436" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-47" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-45" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-48" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;マクロの「セットアップレポート」へ読み込ませる&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="316" x="1376" y="1566" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-49" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;マクロの「EG-Pro在庫情報入力」へ読み込ませる&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="316" x="1376" y="1976" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b style=&quot;&quot;&gt;4. マクロ実行&lt;/b&gt;&lt;br&gt;① 配列情報を「配列情報入力」へ読込&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;(★固定マスタ)&lt;br&gt;② セットアップレポートと配列の対応表を入力&lt;br&gt;③ 固定グループ名を入力&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="316" x="1376" y="2066" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;④「セットアップ情報取得失敗リスト印刷」を実行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="316" x="1376" y="2181" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-52" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;container=0;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;対象部品があるか&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="316" x="1376" y="2266" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font&gt;&lt;b style=&quot;&quot;&gt;5. スプライシング切替失敗部品処理&lt;/b&gt;&lt;br&gt;①「スプライシング切り替え失敗部品リスト印刷」を実行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="316" x="1376" y="2381" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-54" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;container=0;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;対象部品があるか&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="316" x="1376" y="2481" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-55" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;③「スプライシング部品リスト印刷」を実行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="316" x="1376" y="2606" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;「手動入庫処理バーコード作成」を実行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="316" x="1376" y="3166" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;&lt;b style=&quot;&quot;&gt;9. EG-Pro所在不明リール処理&lt;/b&gt;&lt;br&gt;「所在不明リスト作成」を実行&lt;br&gt;※ 全てのフリー・固定部品の入庫処理完了後&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="316" x="1376" y="3486" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-59" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-49" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-60" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-50" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-61" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-51" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-62" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-52" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-53" value="なし">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-63" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-53" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-64" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-54" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-55" value="なし">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-66" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;8. 入庫処理(前処理)&lt;/b&gt;&lt;br&gt;生産計画アプリで「****-DMY」を選択&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;→&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 14px;&quot;&gt;生産開始 → キャンセル&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;→ ステータス「生産中」の部品シリアルが「外し」に切替わる&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="288" x="1736" y="2926" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-67" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;container=0;" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;入庫方式の選択&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="276" x="1736" y="3066" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-68" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;SSMGで出力SQLを実行し、&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;棚卸し用倉庫へ一括移動&lt;br&gt;※ EG-Proで&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;・在庫の変化&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;・更新数の一致 を必ず確認&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="95" width="299" x="1729" y="3371" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-69" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;align=left;spacingLeft=8;arcSize=8;container=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;リール消費を実施&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;(件数が多い場合はリール消費マクロ)&lt;br&gt;・0確認:そのまま消費&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;・ライン倉庫・外し:念のため探す&lt;br&gt;・&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ラベル発行:部品管理が処理&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;・借用:担当者へ連絡&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="123" width="276" x="1736" y="3576" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-72" edge="1" parent="1" source="e8VhPcJbI0qX20TrIUXA-66" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="e8VhPcJbI0qX20TrIUXA-67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-73" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;direction=south;horizontal=1;textDirection=vertical-lr;whiteSpace=wrap;fontSize=26;" value="&lt;span style=&quot;font-weight: 700; white-space: nowrap;&quot;&gt;固定テーブル 棚卸し方法 全体フロー&lt;/span&gt;" vertex="1">
+          <mxGeometry height="258" width="30" x="2043" y="1226" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-74" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;autosizeText=1;fontSize=19;align=left;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b style=&quot;&quot;&gt;倉庫移動SQL(idouSQL)の中身&lt;br&gt;&lt;/b&gt;&lt;br&gt;在庫数は変えない。&lt;br&gt;シリアル番号を条件に所在を付け替える。&lt;br&gt;ロケーションコードをA55へ入れる。値は対応表を参照(棚卸し用倉庫コード)、&lt;br&gt;ステータスはM_ロケーションから引き当て、&lt;br&gt;ラインNo・設備No・Z軸NoをNULL、更新日時をGETDATE()にする。&lt;br&gt;NULL化は、もうどの設備のどの軸にも載っていない状態に合わせるため。&lt;br&gt;マクロはDBへ流さず、テキストに書き出すだけ。実行は人手。&lt;/font&gt;" vertex="1">
+          <mxGeometry height="299" width="645" x="2045" y="2865" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-75" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;autosizeText=1;fontSize=16;align=left;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;&quot;&gt;トランザクションで何が安全になったか&lt;br&gt;&lt;/b&gt;&lt;br&gt;改修前はUPDATEで、実行した瞬間に確定し戻せなかった。&lt;br&gt;改修後はSET XACT_ABORT ONとBEGIN TRANで囲み、&lt;br&gt;T @@ROWCOUNTで更新件数を出す。&lt;br&gt;件数を見てCOMMITかROLLBACKを選べる。&lt;br&gt;安全になった点は三つ。確定前に件数を目視できる。&lt;br&gt;途中でエラーが出れば自動で巻き戻る。&lt;br&gt;更新前をバックアップ表へ退避するので確定後も切り戻しSQLで戻せる。&lt;br&gt;SQL本体のロジックは改修前と同一。&lt;br&gt;破壊的変更はない。&lt;/font&gt;" vertex="1">
+          <mxGeometry height="279" width="551" x="2048" y="3314" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-76" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="100" relative="1" width="100" as="geometry">
+            <mxPoint x="713.6700000000001" y="1875.33" as="sourcePoint" />
+            <mxPoint x="715" y="1103.56" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-77" parent="1" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#647687;strokeColor=#314354;fontSize=10;align=left;spacingLeft=6;verticalAlign=top;container=0;fontColor=#ffffff;" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;【凡例】&lt;br&gt;橙:現場作業&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;紫:システム操作&lt;br&gt;青:マクロ操作(事務PC)&lt;br&gt;赤:要注意(実データ直接更新)&lt;br&gt;黄:判断&lt;br&gt;赤破線:やり直しループ&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="268" width="480" x="214.5" y="1081" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-78" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;autosizeText=1;fontSize=6;align=left;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b style=&quot;&quot;&gt;EG-Pro在庫更新の流れ(仮説&lt;/b&gt;&lt;br&gt;設備の実搭載状態がPana-CIMへ上がり、そこからセットアップレポートとして出力される。計算マクロがこのレポートとEG-Pro在庫を突き合わせ、差異を洗い出す。&lt;br&gt;Pana-CIM側にしかない生産機のロス情報を、この経路でEG-Proの在庫へ反映していく。&lt;/font&gt;" vertex="1">
+          <mxGeometry height="235" width="463" x="223" y="1380" as="geometry" />
+        </mxCell>
+        <mxCell id="e8VhPcJbI0qX20TrIUXA-28" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#e1d5e7;strokeColor=#9673a6;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;autosizeText=1;fontSize=12;align=left;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;在庫CSVの形式の使い分け&lt;/b&gt;&lt;br&gt;棚卸しは &lt;br&gt;Get_EG_&lt;b&gt;Tanaoroshi&lt;/b&gt;.cgi(Tanaoroshi形式)を使う。&lt;br&gt;シリアル単位で所在を突き合わせるため。&lt;br&gt;不足部品リストのB列更新は &lt;br&gt;Get_EG_&lt;b&gt;Wherehouse.&lt;/b&gt;cgi(Wherehouse形式)を使う。&lt;br&gt;Tanaoroshiは6列目がステータスで在庫が全件0扱いになり、合計が壊れるため。&lt;br&gt;この二つを取り違えないこと。&lt;/font&gt;" vertex="1">
+          <mxGeometry height="218" width="447" x="2052" y="1690" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="1-2.棚卸データ経路図" id="IaEE8_LAl5Voryt-mAtu">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="826" background="light-dark(#FFFFFF,#121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F3864;" value="固定テーブル棚卸し データの出どころと結合キー、各処理が存在する理由" vertex="1">
+          <mxGeometry height="44" width="1500" x="50" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontColor=#333333;" value="棚卸しは、実装機に載ったままの部品の現物とEG-Proの在庫データを一致させるために行う。" vertex="1">
+          <mxGeometry height="30" width="2400" x="50" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=16;spacingTop=6;" value="&lt;b&gt;設備（実装機）&lt;/b&gt;&lt;br&gt;どのZ軸やスロットに、どのリールが載っているかを持つ。" vertex="1">
+          <mxGeometry height="90" width="440" x="75" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=16;spacingTop=6;" value="&lt;b&gt;Pana-CIM&lt;/b&gt;&lt;br&gt;設備側の生産管理システム。&lt;div&gt;設備操作から約10分で反映される。&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="440" x="75" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=16;spacingTop=6;" value="&lt;b&gt;セットアップレポートCSV（Pana-CIM出力）&lt;/b&gt;&lt;br&gt;主な列は、ライン名、ゾーン名、設備名、レーン、ステージ番号、Z、PU番号、スロット番号、&lt;br&gt;サブスロット番号のLとR、材料バーコード、部品番号、正規部品、ロット番号、ベンダー、&lt;br&gt;初期数量、部品取付時間、作業者、スプライシング、メインリール、スプライシングリール。&lt;br&gt;見出しは3行目にある。材料バーコードが9列、部品番号が10列、スプライシングリールが21列。" vertex="1">
+          <mxGeometry height="120" width="770" x="50" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=16;spacingTop=6;" value="&lt;b&gt;EG-Pro在庫CSV（EGProWhereHouse.csv、1リール1行）&lt;/b&gt;&lt;br&gt;列は、シリアル番号、品番、発注番号、入荷日時、受入数、在庫数、ステータス名称、&lt;br&gt;ロケーション名称、棚、棚分類コード、最終更新日時。&lt;br&gt;ステータスの実値は、貯蔵、生産中、生産終了、出庫、受入。&lt;br&gt;ロケーションの実値は、棚、設備L2、ハズシL2、2ライン倉庫、0確認L2。&lt;br&gt;3列目と4列目と11列目はCSV単体に見出しが無く、対応づけに推定が混じる。" vertex="1">
+          <mxGeometry height="136" width="700" x="1210" y="422" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=16;spacingTop=6;" value="&lt;b&gt;固定テーブル配列データ（★固定マスタ）&lt;/b&gt;&lt;br&gt;固定テーブル上の物理位置を決める元データ。&lt;br&gt;取込時にフィーダーセットアップの行より上を削除する。" vertex="1">
+          <mxGeometry height="98" width="560" x="1990" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=16;spacingTop=6;" value="&lt;b&gt;セットアップレポート計算機TEC56.xlsm 計算結果_整形シート（照合の中核、A〜T列）&lt;/b&gt;&lt;br&gt;8列のテーブル番号は 配列!A2*2 + 配列!C2 - 2。9列のZは 配列!D2 &amp;amp; IF(配列!E2=&quot;L&quot;,1,IF(配列!E2=&quot;R&quot;,2,0))。&lt;br&gt;10列が部品番号、12列がシリアル番号、13列がEGPro在庫、15列がスプライシングシリアル、16列がスプライシング側EGPro在庫、19列がスプライシング判定の◯。&lt;br&gt;20列目とA〜G列の正式な定義は未確認。" vertex="1">
+          <mxGeometry height="102" width="2000" x="50" y="666" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=16;spacingTop=6;" value="&lt;b&gt;結合キー、なぜ結合できるのか&lt;/b&gt;&lt;br&gt;セットアップレポートの材料バーコードとEG-Proのシリアル番号が同じ値を指すので、完全一致で結合する。&lt;br&gt;例として 9000070668 100101 と 581416B100019。&lt;br&gt;&lt;br&gt;部品の見方は3階層ある。&lt;br&gt;シリアル番号、すなわち材料バーコードはリール1本を一意に決める。&lt;br&gt;部品番号、すなわち品番は品目の単位で、複数リールをここで集約する。&lt;br&gt;正規部品とロット番号は列こそあるが、提供データでは空欄。&lt;br&gt;&lt;br&gt;スプライシングリールも同じくシリアル番号で照合し、別リールとして扱う。&lt;br&gt;材料バーコードとスプライシングリールを文字列連結してはいけない。&lt;br&gt;同一値なら1回だけ集計し、二重計上を避ける。&lt;br&gt;T付特採は別品番の別レコードで、先頭のTを機械的に除去しない。" vertex="1">
+          <mxGeometry height="292" width="620" x="50" y="838" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=16;spacingTop=6;" value="&lt;b&gt;下流① 現場部品リスト（GenbaList）&lt;/b&gt;&lt;br&gt;抽出条件は、10列の部品番号が非空、12列のシリアルが非空、8列のテーブル番号が14でないこと。&lt;br&gt;出力列は、テーブル番号、Z、部品番号、シリアル、スプライシングの●または●後側、EGPro在庫。&lt;br&gt;&lt;br&gt;なぜ存在するか。ここで作ったD列のシリアル一覧が、そのまま倉庫移動SQLのIN句になる。&lt;br&gt;このリストを作らずにSQL作成を押すと、対象が空か、前回の古いリストで更新してしまう。手順書に&lt;br&gt;必ず実行と書かれているのはこのため。&lt;br&gt;テーブル番号14を除外する理由は未確認。" vertex="1">
+          <mxGeometry height="252" width="700" x="730" y="838" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#F8CECC;strokeColor=#B85450;fontSize=16;spacingTop=6;" value="&lt;b&gt;下流② 倉庫移動SQL（idouSQL）&lt;/b&gt;&lt;br&gt;対象は [EGProKOHDEN-Warehouse].[dbo].T_在庫データ。&lt;br&gt;キーはシリアル番号 IN で、現場部品リストのD列を渡す。&lt;br&gt;更新は、ロケーションコードをマクロ実行!A55へ。値は対応表を参照して該当する棚卸し用倉庫コードを入れる。&lt;br&gt;ステータスコードは [EGProKOHDEN-MST].[dbo].M_ロケーション から引き当てる。&lt;br&gt;ラインNoと設備NoとZ軸NoはNULL、更新日時はGETDATE()にする。&lt;br&gt;&lt;br&gt;なぜNULLにするのか。このリールはもうどの設備のどの軸にも載っていないという状態にし、&lt;br&gt;物理的に設備からリールを降ろした事実と辻褄を合わせるため。&lt;br&gt;&lt;br&gt;なぜ存在するか。入庫処理にはハンディで1本ずつ読む方式もあるが、固定テーブルには数百本の&lt;br&gt;リールが載るため、DBを直接更新して一括で片付ける代替手段として用意された。&lt;br&gt;在庫数は変えない。したがってこの処理単体では差異は解消しない。" vertex="1">
+          <mxGeometry height="332" width="700" x="1670" y="828" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingRight=10;arcSize=8;container=0;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=16;spacingTop=6;" value="&lt;b&gt;下流③ 不足部品リスト作成 ver7.xlsm（不足部品計算シート）&lt;/b&gt;&lt;br&gt;B 取付済在庫は、VBAのmodEGProB列更新がEG-Pro在庫から書き戻す値。更新するのはこのB列だけ。&lt;br&gt;E 取付済在庫 = IF(OR(ISNA(XLOOKUP(F2,A:A,B:B)),ISERR(...)),0,XLOOKUP(F2,A:A,B:B))　　F 部品 = 配列!F2&lt;br&gt;I リール情報 = XLOOKUP(TEXT(F2,&quot;@&quot;),リール情報!A:A,リール情報!B:B)　　J スプライシング必要残数 = XLOOKUP(TEXT(F2,&quot;@&quot;),PartList!B:B,PartList!H:H)&lt;br&gt;K 使用数 = XLOOKUP(F2,使用数計算!F:F,使用数計算!E:E)　　L 不足数 = E2-K2-J2　　M 不足リール数 = IF(L2&amp;lt;0,ABS(ROUNDUP(L2/I2,0)),&quot;&quot;)&lt;br&gt;Q 差引在庫数 = IF(M2=&quot;&quot;,E2-K2,E2-K2+M2*I2)　　R 差引在庫数2 = IF(K2=0,E2,IF(M2=&quot;&quot;,E2-K2,E2-K2+M2*I2))&lt;br&gt;&lt;br&gt;なぜB列更新を新規に作ったのか。従来 main() は F列とR列を A列とB列へ値貼り付けしていた。つまり B から E、R、Bへと戻る&lt;br&gt;自己参照ループで、EG-Pro在庫が入る口がどこにも無かった。&lt;div&gt;さらにR列とL列に、ポッド落ちや実装失敗、スプライシングロスといったロスを差し引く項が一つも無く、&lt;br&gt;理論値が過大なまま繰り越されて誤差が構造的に累積していた。&lt;br&gt;実行順はEGPro連携のB列更新、Hojo、mainの順。mainを先に実行するとB列がR列で上書きされEG-Pro値が消える。実行前に A1:B560 を退避する。&lt;/div&gt;" vertex="1">
+          <mxGeometry height="269" width="2000" x="50" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="14" edge="1" parent="1" source="4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="15" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" target="6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="16" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=16;" target="9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="488" />
+              <mxPoint x="20" y="717" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="17" connectable="0" parent="16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=16;fontColor=#333333;" value="SETUPREPORT_Import、UTF-8からSJISへ変換" vertex="1">
+          <mxGeometry relative="1" x="-0.9" as="geometry">
+            <mxPoint x="103" y="102" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="18" edge="1" parent="1" source="7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" target="9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="19" connectable="0" parent="18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=16;fontColor=#333333;" value="EG_Import" vertex="1">
+          <mxGeometry relative="1" x="-0.55" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="20" edge="1" parent="1" source="8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=16;" target="9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2640" y="479" />
+              <mxPoint x="2640" y="717" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="21" connectable="0" parent="20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=16;fontColor=#333333;" value="HAIRETSU_Import" vertex="1">
+          <mxGeometry relative="1" x="-0.9" as="geometry">
+            <mxPoint x="114" y="111" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="22" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=16;" target="7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="23" connectable="0" parent="22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=16;fontColor=#333333;" value="材料バーコードとシリアル番号が一致" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="24" edge="1" parent="1" source="9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" target="11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="25" edge="1" parent="1" source="11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=16;" target="12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="26" connectable="0" parent="25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=16;fontColor=#333333;" value="D列のシリアルがIN句になる" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="41" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" edge="1" parent="1" source="10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;" target="13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="1-3. カウント・取付の判断フロー" id="tKChHmaKpXDKPXD-Othj">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="826" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F3864;" value="7. カウント実施(新リールカウンタ)の判断フロー" vertex="1">
+          <mxGeometry height="30" width="520" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="c00" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;fontStyle=1;" value="リールを手に取る" vertex="1">
+          <mxGeometry height="45" width="220" x="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c01" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" value="バーコードが2ヶついているか確認" vertex="1">
+          <mxGeometry height="70" width="280" x="170" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="c02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#D5E8D4;strokeColor=#82B366;" value="&lt;b&gt;バーコード1枚&lt;/b&gt;&lt;br&gt;従来どおり新リールカウンタでカウント&lt;br&gt;発行されたバーコードを貼付&lt;br&gt;部品は台車の元の位置へ戻す" vertex="1">
+          <mxGeometry height="90" width="250" x="20" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="c03" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#DAE8FC;strokeColor=#6C8EBF;" value="&lt;b&gt;バーコード2枚&lt;/b&gt;&lt;br&gt;① 仮止め側のバーコードを読込みカウント&lt;br&gt;(スプライシングテープの切れ目まで)&lt;br&gt;発行バーコードは適当な場所に貼付" vertex="1">
+          <mxGeometry height="80" width="290" x="340" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="c04" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#DAE8FC;strokeColor=#6C8EBF;" value="② 巻き戻さず、元々ついている方の&lt;br&gt;バーコードを読込む" vertex="1">
+          <mxGeometry height="55" width="290" x="330" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c05" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" value="青丸シールがついているか" vertex="1">
+          <mxGeometry height="70" width="250" x="360" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c06" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#D5E8D4;strokeColor=#82B366;" value="&lt;b&gt;青丸なし=新品リール&lt;/b&gt;&lt;br&gt;倉庫のカウントとは異なり&lt;br&gt;新品でもバーコードを&lt;br&gt;発行して貼付する" vertex="1">
+          <mxGeometry height="85" width="210" x="290" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c07" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#D5E8D4;strokeColor=#82B366;" value="&lt;b&gt;青丸あり=カウント対象&lt;/b&gt;&lt;br&gt;スプライシングテープの&lt;br&gt;切れ目を原点にカウントし&lt;br&gt;バーコードを発行・貼付" vertex="1">
+          <mxGeometry height="85" width="210" x="530" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c08" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;align=left;spacingLeft=8;arcSize=8;" value="&lt;b&gt;【要確認部品BOX行き】&lt;/b&gt;&lt;br&gt;・1枚しかないのにスプライシングされている&lt;br&gt;・2枚あるのにスプライシングされていない&lt;br&gt;→ その旨とテーブル番号を記載し、リールごと&lt;br&gt;  要確認部品BOXへ入れる" vertex="1">
+          <mxGeometry height="100" width="360" x="215" y="801" as="geometry" />
+        </mxCell>
+        <mxCell id="f01" edge="1" parent="1" source="c00" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f02" edge="1" parent="1" source="c01" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c02" value="1つ">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f03" edge="1" parent="1" source="c01" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c03" value="2つ">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f04" edge="1" parent="1" source="c03" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c04">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f05" edge="1" parent="1" source="c04" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c05">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f06" edge="1" parent="1" source="c05" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c06" value="なし">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f07" edge="1" parent="1" source="c05" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="c07" value="あり">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f08" edge="1" parent="1" source="c02" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="c08" value="1枚なのにスプライシングあり">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="145" y="851" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f09" edge="1" parent="1" source="c07" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c08" value="2枚なのにスプライシングなし">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="635" y="760" />
+              <mxPoint x="640" y="760" />
+              <mxPoint x="640" y="851" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F3864;" value="10. 部品取り付け方法の判断フロー" vertex="1">
+          <mxGeometry height="30" width="560" x="820" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="p00" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;fontStyle=1;" value="リールを手に取る" vertex="1">
+          <mxGeometry height="45" width="220" x="1000" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p01" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" value="バーコードが2ヶついているか確認" vertex="1">
+          <mxGeometry height="70" width="280" x="970" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="p02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#D5E8D4;strokeColor=#82B366;" value="&lt;b&gt;バーコード1枚&lt;/b&gt;&lt;br&gt;そのまま従来どおり&lt;br&gt;セットアップを実施" vertex="1">
+          <mxGeometry height="70" width="220" x="820" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="p03" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" value="&lt;b&gt;バーコード2枚&lt;/b&gt;&lt;br&gt;スプライシングテープが認識部を超えているか" vertex="1">
+          <mxGeometry height="90" width="300" x="1120" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="p04" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#D5E8D4;strokeColor=#82B366;" value="&lt;b&gt;長さ十分&lt;/b&gt;&lt;br&gt;そのままセットアップ&lt;br&gt;どちらのバーコードを&lt;br&gt;読んでもよい&lt;br&gt;剥がせる方は破棄" vertex="1">
+          <mxGeometry height="105" width="200" x="1070" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="p05" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#FFE6CC;strokeColor=#D79B00;" value="&lt;b&gt;長さ不足&lt;/b&gt;&lt;br&gt;スプライシング解除を実施&lt;br&gt;リール本体側のバーコードで&lt;br&gt;セットアップ&lt;br&gt;剥がれる方は回収BOXへ" vertex="1">
+          <mxGeometry height="105" width="210" x="1300" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="p06" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=center;arcSize=8;fillColor=#DAE8FC;strokeColor=#6C8EBF;" value="スプライシング済みのメッセージ表示を確認" vertex="1">
+          <mxGeometry height="40" width="440" x="1050" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" parent="1" style="text;html=1;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1F3864;" value="【例外パターン】確認画面の表示が想定と異なる場合" vertex="1">
+          <mxGeometry height="30" width="320" x="1020" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="x01" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#FFF2CC;strokeColor=#D6B656;" value="&lt;b&gt;1枚なのに確認画面が出る&lt;/b&gt;&lt;br&gt;・テープが無い → スプライシング解除を実施&lt;br&gt;・テープがある → そのまま取り付け&lt;br&gt; (バーコードが剥がれたものと想定)" vertex="1">
+          <mxGeometry height="80" width="330" x="820" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="x02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;align=left;spacingLeft=8;arcSize=8;" value="&lt;b&gt;2枚なのに確認画面が出ない(棚卸し完了前)&lt;/b&gt;&lt;br&gt;取り付けず、固定テーブル名とテーブル番号を&lt;br&gt;メモして事務側へ連絡する" vertex="1">
+          <mxGeometry height="80" width="340" x="1160" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="x03" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;align=left;spacingLeft=8;arcSize=8;fillColor=#FFF2CC;strokeColor=#D6B656;" value="&lt;b&gt;2枚なのに確認画面が出ない(棚卸し完了後)&lt;/b&gt;&lt;br&gt;・テープがある → スプライシングを実施。読む順番は「剥がれる方 → リール本体」&lt;br&gt;・テープが無い → そのまま取り付け。剥がれる方のバーコードは回収BOXへ" vertex="1">
+          <mxGeometry height="75" width="700" x="810" y="826" as="geometry" />
+        </mxCell>
+        <mxCell id="g01" edge="1" parent="1" source="p00" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g02" edge="1" parent="1" source="p01" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p02" value="1つ">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g03" edge="1" parent="1" source="p01" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p03" value="2つ">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g04" edge="1" parent="1" source="p03" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p04" value="十分">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g05" edge="1" parent="1" source="p03" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p05" value="不足">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g06" edge="1" parent="1" source="p04" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#444444;fontSize=10;" target="p06">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g07" edge="1" parent="1" source="p02" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.477;entryY=0.028;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=classic;endFill=1;" target="x01" value="1枚でも確認画面が出たら">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="970" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g08" edge="1" parent="1" source="p06" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="x02" value="2枚で確認画面が出ないとき">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1560" y="560" />
+              <mxPoint x="1560" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g09" edge="1" parent="1" source="x02" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#B85450;dashed=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="x03" value="完了後はこちら">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="3. 連絡経路サマリ" id="B3HMveJl201bway3mfJt">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="826" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vaCEMq3mymffcuNCgV-K-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#1F3864;" value="現場部品と在庫システム間の連絡経路（4系統）" vertex="1">
+          <mxGeometry height="44" width="900" x="30" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=14;" value="現場・実装機&lt;br&gt;（固定テーブル）" vertex="1">
+          <mxGeometry height="90" width="280" x="30" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=14;" value="Pana-CIM&lt;br&gt;セットアップレポート" vertex="1">
+          <mxGeometry height="90" width="280" x="450" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=14;" value="セットアップレポート&lt;br&gt;計算マクロ（事務PC）" vertex="1">
+          <mxGeometry height="90" width="300" x="870" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=14;" value="&lt;b&gt;EG-Pro&lt;/b&gt;&lt;br&gt;（在庫管理システム）" vertex="1">
+          <mxGeometry height="90" width="280" x="1390" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=14;" value="現物確認&lt;br&gt;Pana-CIMハンディ操作" vertex="1">
+          <mxGeometry height="90" width="280" x="30" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=14;" value="新リールカウンタ&lt;br&gt;バーコード再発行" vertex="1">
+          <mxGeometry height="90" width="280" x="30" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#FFE6CC;strokeColor=#D79B00;fontSize=14;" value="EG-Proハンディターミナル" vertex="1">
+          <mxGeometry height="90" width="280" x="30" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;spacingRight=10;arcSize=8;container=0;fillColor=#F8CECC;strokeColor=#B85450;fontSize=14;" value="倉庫移動SQL作成（idouSQL・改修後）&lt;br&gt;→ テキスト出力 → 人がSSMSで実行" vertex="1">
+          <mxGeometry height="90" width="300" x="1100" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-10" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-11" connectable="0" parent="vaCEMq3mymffcuNCgV-K-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=13;fontColor=#333333;" value="系統1：自動データ連携" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-12" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-13" connectable="0" parent="vaCEMq3mymffcuNCgV-K-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=13;fontColor=#333333;" value="レポート取込" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-14" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-15" connectable="0" parent="vaCEMq3mymffcuNCgV-K-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=13;fontColor=#333333;" value="照合結果" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-16" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-17" connectable="0" parent="vaCEMq3mymffcuNCgV-K-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=13;fontColor=#333333;" value="系統2：リスト出力→現場是正" vertex="1">
+          <mxGeometry relative="1" x="-0.72" as="geometry">
+            <mxPoint y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-18" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-19" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-20" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-21" connectable="0" parent="vaCEMq3mymffcuNCgV-K-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=13;fontColor=#333333;" value="系統3：人手入力による入庫" vertex="1">
+          <mxGeometry relative="1" x="-0.75" as="geometry">
+            <mxPoint y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-22" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#444444;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-23" edge="1" parent="1" source="vaCEMq3mymffcuNCgV-K-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#B85450;dashed=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="vaCEMq3mymffcuNCgV-K-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-24" connectable="0" parent="vaCEMq3mymffcuNCgV-K-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#FFFFFF;fontSize=14;fontStyle=1;fontColor=#B00020;" value="系統4：DB直接更新" vertex="1">
+          <mxGeometry relative="1" x="-0.85" as="geometry">
+            <mxPoint y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vaCEMq3mymffcuNCgV-K-25" parent="1" style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#FFF9B2;strokeColor=#D6B656;fontSize=15;align=left;verticalAlign=top;spacingLeft=10;spacingTop=4;spacingRight=8;container=0;" value="&lt;b&gt;各系統の性質&lt;/b&gt;&lt;br&gt;系統1（2.1〜2.5）：設備の実搭載状態をシステム側へ吸い上げる自動連携&lt;br&gt;系統2（2.6・2.7・2.10）：差異の原因を現場で是正する半自動＋人手&lt;br&gt;系統3（2.8・2.9.2）：実残数を人手でシステムへ登録&lt;br&gt;系統4（2.9.3）：大量移動時のデータベース直接更新&lt;br&gt;&lt;br&gt;&lt;b&gt;留意点&lt;/b&gt;&lt;br&gt;・系統2、3は紙リストとシール貼付、目視確認に依存&lt;br&gt;・2.5、2.6には結果が出なくなるまでの繰り返しループがある&lt;br&gt;・2.1の設備操作は1人で実施のため並行作業による短縮が不可&lt;br&gt;&lt;br&gt;&lt;b&gt;系統4について（2026-08 の idouSQL 改修で変化した点）&lt;/b&gt;&lt;br&gt;・改修前の「更新履歴が追いにくく、誤更新時の復旧が困難」は、&lt;br&gt;　バックアップ表への退避と切り戻しSQLの添付により緩和された&lt;br&gt;・BEGIN TRAN と @@ROWCOUNT 表示により、確定前に件数を確認して COMMIT / &lt;br&gt;　ROLLBACK を選べる&lt;br&gt;・DB上に実行者は残らない（更新日時 = GETDATE() のみ）。実行者の追跡性は本件の要&lt;br&gt;　件外とし、対応不要と判断（2026-08-24）&lt;br&gt;・WHERE句はシリアル番号のIN列挙のみで、現在ロケーションを条件にしていない" vertex="1">
+          <mxGeometry height="452" width="640" x="1590" y="260" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Q&amp;A" id="4M0ojBZ5zRPUBmaoWJvD">
+    <mxGraphModel dx="1469" dy="2001" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="F-saaVJu7e8puOP7ntBz-1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 在庫数は増減するか。&lt;br&gt;A. しない。idouSQLはロケーションすなわち所在を付け替えるだけで、在庫数の列には触れない。&lt;br&gt;あわせてラインNoと設備NoとZ軸NoをNULLにし、更新日時を実行時刻にする。&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;在庫数を変えないので、この処理だけでは現物とデータの差異そのものは解消しない。&lt;/span&gt;&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 実行後に間違いへ気づいたら戻せるか。&lt;br&gt;A. 戻せる。逃げ道は三段階ある。確定前なら、更新件数を@@ROWCOUNTで確認し、想定と違えばROLLBACKで取り消せる。実行途中でエラーが出た場合はXACT_ABORT ONによって自動で全体が巻き戻る。COMMITした後に気づいた場合は、&lt;br&gt;更新前にSELECT INTOで退避したバックアップ表から、末尾の切り戻しSQLで元の値を書き戻せる。いずれも人の操作が要る。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. COMMITとROLLBACKはどう選ぶか。&lt;br&gt;A. 更新件数を表示するところまで一度で実行し、更新件数が想定と一致すればCOMMITの行だけを選んで実行、&lt;br&gt;一致しなければROLLBACKの行だけを実行する。全文をもう一度実行するとUPDATEが二重に走るので避ける。&lt;br&gt;確定か取消の後は@@TRANCOUNTが0になったのを見てからクエリウィンドウを閉じる。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 流す前に現場で何を確認するか。&lt;br&gt;A. 現場部品リストを先に作り、D列に実データのシリアルが並んでいるのを目で見る。これを作らずに流すと、対象が見出し1件だけ、あるいは前回の古いリストのまま更新してしまう。実際に対象が見出しだけで実データが入らない出力が出たことがある。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 対象外のシリアルが混ざっていたらどうなるか。&lt;br&gt;A. そのシリアルも所在が書き換わる。WHERE句はシリアルの列挙だけで、今のロケーションを条件にしていないため、すでに別の場所へ動いたリールや借用中のリールが混じればそのまま更新される。トランザクションは流した後の取り消しには使えるが、入口の取り違えは防げないので、実行前のリスト目視でふさぐ。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 移動先コードは何を入れるか。&lt;br&gt;A. マクロ実行シートのA55に入れた値がそのまま移動先になる。マクロ実行シートのA55に入れた値がそのまま移動先になる。移動先は棚卸し用倉庫コードで、対応表を参照して該当する製品・ラインのコードをA55へ入れる。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 今回の改修でSQLの結果は変わるか。&lt;br&gt;A. 変わらない。所在の付け替え、M_ロケーションからのステータス引き当て、NULL化、シリアル列挙による絞り込みというSQL本体のロジックは改修の前後で同じ。足したのはUPDATEの周りの安全策で、入力チェック、確認ダイアログ、&lt;br&gt;バックアップ退避、トランザクション制御、切り戻しSQLのコメントにとどまる。破壊的変更はない。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. なぜCOMMITを自動化しないのか。&lt;br&gt;A. 件数を人が目視してから確定させるため。自動で確定させると、想定と違う件数でも確定してしまい、戻せる余地がなくなる。確定前に件数を見る一段を意図して残している。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 所在不明リールとは何か、どう見つけるか。&lt;br&gt;A. EG-Pro上のステータスが貯蔵以外のまま残っているリール。所在不明リスト作成マクロがステータスを基準に抽出する。&lt;br&gt;棚基準から貯蔵基準へ変えた理由と、その変更を決めた人は未確認。&lt;/p&gt;&lt;p dir=&quot;auto&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;div class=&quot;my-2&quot;&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot;&gt;Q. 別環境へ横展開しても同じSQLで動くか。&lt;br&gt;A. バックアップのSELECT INTOは管理者権限を持つ実行アカウントを前提にしている。権限のない環境へ持ち出す場合は、あらかじめ用意した固定テーブルへINSERTする方式へ差し替える。同一環境で従来どおり使う限り非互換は生じない。&lt;br&gt;&lt;/p&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1760" width="1280" x="10" y="-70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

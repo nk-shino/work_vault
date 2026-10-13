@@ -1,0 +1,8 @@
+{
+	"nodes":[
+		{"id":"6b0ca0479ff7d5ba","type":"text","text":"","x":141,"y":-214,"width":250,"height":60},
+		{"id":"2f2dee6716f9fe7d","type":"file","file":"佐藤さん引継ぎ/各種ログイン情報.md","x":-500,"y":-20,"width":2300,"height":900},
+		{"id":"ea6d1d68150f4653","type":"file","file":"佐藤さん引継ぎ/Pasted image 20260903090450.png","x":-500,"y":-360,"width":400,"height":288}
+	],
+	"edges":[]
+}

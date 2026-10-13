@@ -1,0 +1,225 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セットアップレポート計算機 ver2.0 レビュー依頼</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --sub:#555; --line:#d9d9d9; --bg:#fafafa;
+    --add:#e6f4ea; --add-bd:#34a853; --old:#fdecec; --old-bd:#d9534f; --accent:#1a56b0; --guide:#fff8e6; --guide-bd:#e0a800;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; color:var(--ink); line-height:1.9; margin:0; background:#fff; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px; margin:0 auto; padding:40px 32px 80px;}
+  header{border-bottom:3px solid var(--ink); padding-bottom:20px; margin-bottom:28px;}
+  h1{font-size:22px; margin:0 0 8px;}
+  .meta{color:var(--sub); font-size:13px; line-height:1.7;}
+  h2{font-size:16px; margin:36px 0 14px; padding-left:12px; border-left:5px solid var(--ink);}
+  p{margin:0 0 14px; font-size:14.5px;}
+  code{background:#eef1f5; padding:1px 6px; border-radius:4px; font-family:"Consolas","Menlo",monospace; font-size:13px;}
+  .lead{background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:18px 20px; font-size:14.5px;}
+  .callout{background:#eef4fd; border:1px solid #b9d2f5; border-radius:8px; padding:16px 18px; font-size:14px; margin:0 0 14px;}
+  .guide{background:var(--guide); border:1px solid var(--guide-bd); border-radius:8px; padding:18px 20px; margin:0 0 14px;}
+  .guide h3{margin:0 0 10px; font-size:15px;}
+  .steps{list-style:none; counter-reset:step; padding:0; margin:0;}
+  .steps li{counter-increment:step; position:relative; padding:8px 8px 8px 42px; font-size:14px; margin-bottom:6px;}
+  .steps li::before{content:counter(step); position:absolute; left:8px; top:8px; width:24px; height:24px; background:var(--guide-bd); color:#fff; border-radius:50%; text-align:center; line-height:24px; font-size:13px; font-weight:700;}
+  table{width:100%; border-collapse:collapse; margin:8px 0 20px; font-size:13.5px;}
+  th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  th{background:#f2f4f7; font-weight:600;}
+  .x{color:var(--old-bd); font-weight:600;}
+  .o{color:var(--add-bd); font-weight:600;}
+  .diff{border:1px solid var(--line); border-radius:8px; overflow:hidden; font-family:"Consolas","Menlo",monospace; font-size:12px; margin:8px 0 20px;}
+  .diff div{padding:3px 14px; white-space:pre-wrap; word-break:break-all;}
+  .diff .old{background:var(--old); border-left:3px solid var(--old-bd);}
+  .diff .add{background:var(--add); border-left:3px solid var(--add-bd);}
+  .diff .ctx{color:#555;}
+  .checklist{list-style:none; padding:0; margin:0;}
+  .checklist li{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; font-size:14px; background:#fff; display:flex; gap:12px; align-items:flex-start;}
+  .checklist input[type=checkbox]{width:20px; height:20px; margin-top:2px; flex-shrink:0; cursor:pointer;}
+  .checklist b{font-weight:600;}
+  .note{color:var(--sub); font-size:13px;}
+  .form-block{border:1px solid var(--line); border-radius:8px; padding:18px 20px; background:var(--bg);}
+  .field{margin-bottom:16px;} .field:last-child{margin-bottom:0;}
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:6px;}
+  .field input[type=text], .field textarea{width:100%; border:1px solid #b8c0cc; border-radius:6px; padding:10px 12px; font-size:14px; font-family:inherit; background:#fff;}
+  .field input[type=text]:focus, .field textarea:focus{outline:2px solid var(--accent); border-color:var(--accent);}
+  .field textarea{min-height:90px; resize:vertical;}
+  .radio-row{display:flex; gap:24px; flex-wrap:wrap; margin-top:4px;}
+  .radio-row label{display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;}
+  .radio-row input[type=radio]{width:18px; height:18px; cursor:pointer;}
+  .btnbar{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+  button{font-family:inherit; font-size:14px; padding:11px 20px; border-radius:8px; border:1px solid var(--accent); cursor:pointer;}
+  .btn-primary{background:var(--accent); color:#fff;} .btn-ghost{background:#fff; color:var(--accent);}
+  button:hover{opacity:.9;}
+  footer{margin-top:40px; padding-top:16px; border-top:1px solid var(--line); color:var(--sub); font-size:12px;}
+  @media print{.btnbar{display:none;} body{font-size:12px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>セットアップレポート計算機 ver2.0 レビュー依頼</h1>
+    <div class="meta">
+      依頼者 篠原 想詩　/　レビュー担当 倉林 様<br>
+      作成日 2026-09-07　/　対象 倉庫移動SQL生成処理 idouSQL
+    </div>
+  </header>
+
+  <p class="lead">
+    見ていただきたいのは、倉庫移動SQLを組み立てる idouSQL の一箇所です。原本と ver2.0 を突き合わせた結果、在庫データの取り込み、各種リストの印刷、所在不明リールの抽出、現場部品リストの作成といった処理はすべて原本と同一で、手が入ったのは idouSQL に限られます。確認はここに絞っていただければ足ります。
+  </p>
+
+  <div class="guide">
+    <h3>どこから見始めればよいか</h3>
+    <p style="margin-bottom:12px;">お忙しいなか恐縮です。次の順に進めていただくと、確認箇所を最短でたどれます。他のプロシージャは開く必要はありません。</p>
+    <ul class="steps">
+      <li>VBAエディタ（Alt+F11）で両ファイルを開き、<code>Sub idouSQL()</code> を検索する。原本・ver2.0とも、このプロシージャはコードの一番最後にあります（GenbaListの次）。</li>
+      <li>まず原本の idouSQL を見る。UPDATE文を組み立ててファイルに書き出し、そのまま開くだけの短い作りです（確認もバックアップもトランザクションもありません）。</li>
+      <li>次に ver2.0 の idouSQL を見る。原本と同じUPDATE本体の前後に、安全確認の処理が挿入されています。ver2.0では idouSQL の直前に AppendLine という短いヘルパーが1つ増えている点だけ先に把握しておくと読みやすくなります。</li>
+      <li>下の「生成SQLの違い」と「確認していただきたいこと」を照らしながら、追加された安全機構が意図どおり入っているかを見る。</li>
+      <li>確認し終えたら、末尾の記入欄に結果を入れて返送する。</li>
+    </ul>
+    <p style="margin:12px 0 0; font-size:13px; color:var(--sub);">idouSQL 以外は原本と ver2.0 で一致しているため、読み比べる必要はありません。まず idouSQL、それも「UPDATEの前後に何が足されたか」に注目してください。</p>
+  </div>
+
+  <div class="callout">
+    今回の改修は、原本にはなかった安全機構をまとめて追加したものです。原本の idouSQL は、確認画面もバックアップもトランザクションもなく、本番テーブルへのUPDATE文を生成してそのまま開いていました。ver2.0 はここに歯止めを何重にも入れています。危険性を増やす変更ではなく、逆に大きく減らす方向の改修です。
+  </div>
+
+  <h2>なぜ直したか</h2>
+  <p>
+    原本の倉庫移動SQLは、移動先ロケーションが空でも数字でなくてもそのまま埋め込み、対象が0件でも IN() という壊れたSQLを作り、内容を確認するメッセージも出さずにUPDATE文を書き出していました。バックアップもトランザクションもないため、間違ったSQLを実行すれば在庫データがそのまま書き換わり、元に戻す手立てもありません。この状態を放置すると、押し間違いや入力漏れがそのまま在庫の誤更新につながります。そこで、実行前に止める仕組みと、実行後に戻せる仕組みを入れることにしました。
+  </p>
+
+  <h2>何を変えたか</h2>
+  <p>
+    処理の骨格は同じまま、前後に安全確認を足しました。移動先ロケーションが空や非数値なら理由を出して止め、対象が0件でも止めます。シリアルに引用符が混ざっても壊れないよう二重化し、出力前に移動先と件数を見せて押し間違いを防ぎます。更新の前に対象行を日時付きのバックアップテーブルへ退避し、UPDATE本体はトランザクションで囲んで、件数を見てから確定か取り消しを選べるようにしました。あわせて未確定トランザクション数の表示と操作手順、切り戻し用SQLの雛形、完了時の注意メッセージを加えています。
+  </p>
+
+  <table>
+    <thead><tr><th>安全機構</th><th>原本</th><th>ver2.0</th></tr></thead>
+    <tbody>
+      <tr><td>移動先ロケーションの空欄・非数値チェック</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>移動対象0件のチェック</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>出力前の確認メッセージ</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>シリアルの引用符二重化</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>バックアップテーブルへの退避</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>トランザクション（確定・取消の制御）</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>更新件数・未確定トランザクション数の表示</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>切り戻し用SQLの生成</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>完了時の注意喚起メッセージ</td><td class="x">なし</td><td class="o">追加</td></tr>
+      <tr><td>取り込み・印刷・リスト作成の各処理</td><td colspan="2" style="text-align:center;">原本と ver2.0 で同一</td></tr>
+    </tbody>
+  </table>
+
+  <h2>生成SQLの違い</h2>
+  <div class="diff">
+    <div class="ctx">【原本】UPDATE文をそのまま生成して開くだけ</div>
+    <div class="old">- UPDATE [...].T_在庫データ SET ロケーションコード = (A55の値) ...</div>
+    <div class="old">- WHERE シリアル番号 IN(...);   （確認・バックアップ・トランザクションなし）</div>
+    <div class="ctx"> </div>
+    <div class="ctx">【ver2.0】前後に安全機構を追加</div>
+    <div class="add">+ SELECT * INTO [...].[移動前BK_日時] ... （更新前をバックアップ退避）</div>
+    <div class="add">+ SET XACT_ABORT ON; BEGIN TRAN;</div>
+    <div class="ctx">  UPDATE [...].T_在庫データ SET ロケーションコード = ..., 更新日時 = GETDATE()</div>
+    <div class="ctx">  WHERE シリアル番号 IN(...);</div>
+    <div class="add">+ SELECT @@ROWCOUNT AS 更新件数;   -- 想定件数と照合</div>
+    <div class="add">+ SELECT @@TRANCOUNT AS 未確定トランザクション数;</div>
+    <div class="add">+ -- 一致なら COMMIT TRAN、不一致なら ROLLBACK TRAN の行だけを実行</div>
+    <div class="add">+ -- 全文の再実行禁止。ウィンドウを閉じない。確定後は0を確認</div>
+    <div class="add">+ -- 切り戻し用UPDATE（バックアップから復元）の雛形を併せて出力</div>
+  </div>
+
+  <h2>確認していただきたいこと</h2>
+  <p class="note">追加した安全機構が意図どおり働き、原本より危険性が下がっていると言えるか、次の点を見てください。確認できた項目にチェックを入れてください。</p>
+  <ul class="checklist">
+    <li><input type="checkbox"><span><b>ロケーションの空欄・非数値チェックと0件チェック</b>が、壊れたSQLの生成を確かに止められている</span></li>
+    <li><input type="checkbox"><span><b>更新前のバックアップ退避</b>が、UPDATEより前に実行される順序になっている</span></li>
+    <li><input type="checkbox"><span><b>トランザクションの構造</b>が正しく、件数を見てから確定・取消を選べる作りになっている</span></li>
+    <li><input type="checkbox"><span><b>引用符の二重化</b>により、シリアルに特殊文字が混ざってもSQLが壊れない</span></li>
+    <li><input type="checkbox"><span><b>DBへ自動実行せず、人が確認して手で流す運用</b>が原本から変わっていない</span></li>
+  </ul>
+
+  <h2>確認結果の記入欄</h2>
+  <p class="note">下の欄に直接入力できます。記入後は入力内容をコピーするか、印刷・PDF保存で残してください。閉じると入力は消えます。</p>
+  <div class="form-block">
+    <div class="field">
+      <label>結論</label>
+      <div class="radio-row">
+        <label><input type="radio" name="result" value="問題なし・危険性は低減">問題なし。原本より危険性は下がっている</label>
+        <label><input type="radio" name="result" value="要修正">要修正（下欄に記載）</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>指摘・コメント</label>
+      <textarea id="comment" placeholder="気づいた点や修正してほしい箇所を記入してください"></textarea>
+    </div>
+    <div class="field">
+      <label>確認者</label>
+      <input type="text" id="reviewer" value="倉林" placeholder="お名前">
+    </div>
+    <div class="field">
+      <label>確認日（YYYY-MM-DD）</label>
+      <input type="text" id="date" placeholder="2026-09-__">
+    </div>
+    <div class="btnbar">
+      <button type="button" class="btn-primary" onclick="copyResult()">入力内容をコピー</button>
+      <button type="button" class="btn-ghost" onclick="window.print()">印刷 / PDF保存</button>
+    </div>
+  </div>
+
+  <footer>
+    本資料は原本（真の改修前）と ver2.0 のVBAソースの比較にもとづく。xlsm本体のシート数式やフォーム設定などコード以外の差分は含まない。
+  </footer>
+
+</div>
+
+<script>
+  function copyResult(){
+    var r = document.querySelector('input[name=result]:checked');
+    var text =
+      "セットアップレポート計算機 ver2.0 レビュー結果\n" +
+      "結論: " + (r ? r.value : "未選択") + "\n" +
+      "指摘・コメント: " + (document.getElementById('comment').value || "なし") + "\n" +
+      "確認者: " + document.getElementById('reviewer').value + "\n" +
+      "確認日: " + document.getElementById('date').value;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ alert("入力内容をコピーしました。メールやTeamsに貼り付けてください。"); },
+        function(){ fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); alert("入力内容をコピーしました。"); }
+    catch(e){ alert("コピーできませんでした。手動で選択してコピーしてください。"); }
+    document.body.removeChild(ta);
+  }
+</script>
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    

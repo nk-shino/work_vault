@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}用語を登録 - 社内用語集{% endblock %}
+{% block main %}
+<h1>用語を登録</h1>
+<p>同じ見出しの用語が既にあれば、その用語に語義を1つ足します。</p>
+{% if error %}<p class="error" role="alert">登録できませんでした：{{ error }}</p>{% endif %}
+<form method="post" action="/new" class="busy-on-submit edit">
+  <label for="headword">見出し（必須）</label>
+  <input id="headword" name="headword" required value="{{ f.get('headword', '') }}">
+  <label for="definition">定義（必須）</label>
+  <textarea id="definition" name="definition" rows="4" required>{{ f.get('definition', '') }}</textarea>
+  <label for="excerpt">用例（必須）：この語が実際に使われている文</label>
+  <textarea id="excerpt" name="excerpt" rows="3" required maxlength="400">{{ f.get('excerpt', '') }}</textarea>
+  <label for="source_ref">出典：どの資料・メールで見たか（空なら「手入力」）</label>
+  <input id="source_ref" name="source_ref" value="{{ f.get('source_ref', '') }}">
+  <label for="context_tag">文脈タグ</label>
+  <input id="context_tag" name="context_tag" value="{{ f.get('context_tag', '') }}">
+  <label for="scope_note">適用範囲の注記</label>
+  <textarea id="scope_note" name="scope_note" rows="2">{{ f.get('scope_note', '') }}</textarea>
+  <label for="reading">読み</label>
+  <input id="reading" name="reading" value="{{ f.get('reading', '') }}">
+  <label for="english">英語</label>
+  <input id="english" name="english" value="{{ f.get('english', '') }}">
+  <label for="abbreviation">略語</label>
+  <input id="abbreviation" name="abbreviation" value="{{ f.get('abbreviation', '') }}">
+  <button type="submit">登録する</button>
+  <a href="/terms">取り消して戻る</a>
+</form>
+{% endblock %}

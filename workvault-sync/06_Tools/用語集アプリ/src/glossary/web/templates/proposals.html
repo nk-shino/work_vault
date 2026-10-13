@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}提案キュー - 社内用語集{% endblock %}
+{% block main %}
+<h1>提案キュー</h1>
+<form method="get" action="/proposals" class="filters">
+  <label for="pstatus">状態</label>
+  <select id="pstatus" name="status">
+    <option value="" {% if not status %}selected{% endif %}>すべて</option>
+    {% for s in statuses %}<option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ label(s) }}</option>{% endfor %}
+  </select>
+  <button type="submit">表示</button>
+</form>
+<p>{{ total }} 件（{{ page }} / {{ pages }} ページ）</p>
+{% if not rows %}
+<p class="empty">{% if status == "pending" %}未処理の提案はありません。<code>python tasks.py import フォルダ</code> でメールや資料から候補を取り込めます。{% else %}該当する提案はありません。{% endif %}</p>
+{% endif %}
+{% for p, payload in rows %}
+<article class="proposal" aria-labelledby="p-{{ p.id }}">
+  <h2 id="p-{{ p.id }}">
+    {% if p.proposal_type in ("sense", "evidence") %}{{ payload.headword }}{% else %}{{ payload.from_headword }} ⇔ {{ payload.to_headword }}{% endif %}
+    <span class="badge">{{ label(p.proposal_type) }}</span>
+    <span class="badge st-{{ p.status }}">{{ label(p.status) }}</span>
+  </h2>
+  {% if p.decision_note %}<p class="decision">判定：{{ p.decision_note }}</p>{% endif %}
+  <p class="meta-line">スコア {{ "%.2f"|format(p.score) if p.score is not none else "—" }} ／ 生成元 {{ p.model_name }} ／ プロンプト版 {{ p.prompt_version }}</p>
+  {% if p.proposal_type == "evidence" %}
+    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
+  {% elif p.proposal_type == "sense" %}
+    <p class="definition">{{ payload.definition }}</p>
+    <p>文脈タグ：{{ payload.context_tag }}</p>
+    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.occurred_at[:16] if e.occurred_at else "" }} ／ {{ e.source_ref }}</small></li>{% endfor %}</ul>
+  {% else %}
+    <p>関係：{{ label(payload.relation_type) }}（{{ payload.method }}）</p>
+  {% endif %}
+  {% if p.status == "pending" %}
+  <div class="actions">
+    {% if p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME %}
+    <p class="hint">定義文はモック（仮の文）です。採用するなら「修正して採用」で定義を書いてください。</p>
+    {% else %}
+    <form method="post" action="/proposals/{{ p.id }}/accept" class="busy-on-submit">
+      <button type="submit">採用</button>
+    </form>
+    {% endif %}
+    <form method="post" action="/proposals/{{ p.id }}/reject" class="busy-on-submit">
+      <button type="submit">却下</button>
+    </form>
+    {% if p.proposal_type == "sense" %}<a href="/proposals/{{ p.id }}/edit">修正して採用…</a>{% endif %}
+  </div>
+  {% else %}
+  <p>処理：{{ p.reviewed_by or "画面から" }}（{{ p.reviewed_at|jst }}）</p>
+  {% endif %}
+</article>
+{% endfor %}
+<nav aria-label="ページ送り" class="pager">
+  {% if page > 1 %}<a href="/proposals?status={{ status }}&page={{ page - 1 }}" rel="prev">前のページ</a>{% endif %}
+  {% if page < pages %}<a href="/proposals?status={{ status }}&page={{ page + 1 }}" rel="next">次のページ</a>{% endif %}
+</nav>
+{% endblock %}

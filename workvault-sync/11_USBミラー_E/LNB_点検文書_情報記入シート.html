@@ -1,0 +1,656 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>点検文書 情報記入シート</title>
+<style>
+  :root{
+    --bg:#181818; --bg2:#1f1f1f; --card:#202020;
+    --border:#333; --border2:#3a3a3a; --line:#404040;
+    --text:#d6d6d6; --muted:#8a8a8a; --accent:#7a9bbf;
+    --input:#1a1a1a; --input-focus:#242424; --danger:#b86b6b;
+    --gap:12px; --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.7;font-size:14px;}
+  .wrap{max-width:1120px;margin:0 auto;padding:20px 20px 120px;}
+  .tool-tag{font-size:11px;color:var(--muted);letter-spacing:.4px;border:1px solid var(--border);
+    border-radius:4px;padding:3px 9px;display:inline-block;margin-bottom:14px;background:var(--bg2);}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;}
+  header.top h1{margin:0 0 6px;font-size:21px;font-weight:600;}
+  header.top p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.7;}
+  .steps{margin:12px 0 0;padding-left:20px;color:var(--muted);font-size:12px;line-height:1.9;}
+  .importbar{display:flex;align-items:center;gap:var(--gap);flex-wrap:wrap;background:var(--bg2);
+    border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin:16px 0 4px;}
+  .importbar span.desc{font-size:12px;color:var(--muted);}
+  section.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;}
+  .card-head{padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+  .card-head h2{margin:0;font-size:14.5px;font-weight:600;}
+  .card-head .arrow{color:var(--muted);transition:transform .2s;font-size:11px;}
+  .card-head.collapsed .arrow{transform:rotate(-90deg);}
+  .card-head .route{margin-left:auto;font-size:11px;color:var(--muted);text-align:right;}
+  .card-body{padding:14px 16px;}
+  .card-body.hidden{display:none;}
+  .note{color:var(--muted);font-size:12.5px;margin:0 0 12px;line-height:1.7;}
+
+  /* 均等化: 情報系テーブル共通 */
+  table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+  th,td{border:1px solid var(--border2);padding:0;text-align:left;vertical-align:top;overflow-wrap:anywhere;}
+  th{background:var(--bg2);color:var(--muted);font-weight:600;padding:7px 10px;font-size:12px;}
+  td.label{padding:7px 10px;color:var(--text);}
+  td.no{padding:7px 10px;color:var(--muted);width:52px;text-align:center;}
+  td.op{padding:0;text-align:center;width:56px;vertical-align:middle;}
+  /* 3列テーブルの列比を固定して均等化 */
+  table.t3 col.c-no{width:56px;}
+  table.t3 col.c-label{width:38%;}
+  table.t4 col.c-no{width:56px;}
+  table.t4 col.c-label{width:34%;}
+
+  textarea.cell{width:100%;border:none;background:transparent;color:var(--text);font-family:inherit;
+    font-size:13px;padding:7px 10px;resize:vertical;min-height:38px;line-height:1.6;outline:none;display:block;}
+  textarea.cell:focus,input.textcell:focus{background:var(--input-focus);box-shadow:inset 0 0 0 1px var(--accent);}
+  td:has(textarea.cell),td:has(input.textcell){background:var(--input);}
+  input.textcell{width:100%;border:none;background:transparent;color:var(--text);font-family:inherit;
+    font-size:13px;padding:7px 10px;outline:none;display:block;}
+
+  /* F表は横スクロール前提で列幅を固定し均等化 */
+  .ftable-wrap table{table-layout:auto;min-width:1500px;}
+  .ftable-wrap th,.ftable-wrap td{width:auto;}
+  .ftable-wrap col.c-no{width:52px;}
+  .ftable-wrap col.c-f{width:130px;}
+  .ftable-wrap col.c-op{width:56px;}
+  .ftable-wrap textarea.cell{min-height:44px;}
+
+  .checklist{list-style:none;margin:0;padding:0;}
+  .checklist li{display:flex;align-items:flex-start;gap:11px;padding:9px 12px;margin-bottom:7px;
+    background:var(--bg2);border:1px solid var(--border);border-radius:5px;}
+  .checklist input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;
+    min-width:18px;margin-top:2px;border:1px solid var(--muted);border-radius:3px;background:var(--input);
+    cursor:pointer;position:relative;}
+  .checklist input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent);}
+  .checklist input[type=checkbox]:checked::after{content:"✓";position:absolute;top:-2px;left:2px;
+    color:#181818;font-weight:700;font-size:13px;}
+  .checklist label{cursor:pointer;font-size:13.5px;}
+
+  .subgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--gap);}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;}
+  .field input{width:100%;background:var(--input);border:1px solid var(--border2);border-radius:4px;
+    color:var(--text);padding:7px 10px;font-family:inherit;font-size:13px;outline:none;}
+  .field input:focus{border-color:var(--accent);}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:1px solid var(--border2);
+    border-radius:4px;padding:6px 13px;background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;line-height:1.4;}
+  .btn:hover{border-color:var(--accent);}
+  .btn.small{padding:5px 12px;font-size:12px;margin-top:10px;}
+  .row-del{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;
+    cursor:pointer;border:1px solid var(--border2);border-radius:4px;background:var(--bg2);
+    color:var(--muted);font-size:16px;line-height:1;font-family:inherit;padding:0;}
+  .row-del:hover{border-color:var(--danger);color:var(--danger);}
+
+  .actionbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg2);
+    border-top:1px solid var(--line);padding:10px 20px;}
+  .actionbar .inner{max-width:1120px;margin:0 auto;width:100%;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .btn.primary{background:var(--accent);color:#141414;border-color:var(--accent);font-weight:600;padding:8px 18px;}
+  .save-status{font-size:12px;color:var(--muted);margin-left:auto;}
+  .toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:#2a2a2a;color:var(--text);border:1px solid var(--border2);padding:9px 18px;border-radius:5px;
+    font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:60;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .scroll-x{overflow-x:auto;}
+  hr{border:none;border-top:1px solid var(--border);margin:15px 0;}
+  .hidden-input{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tool-tag">点検文書 情報記入シート。読み込みと保存はmd。</div>
+
+  <header class="top">
+    <h1>点検文書 情報記入シート</h1>
+    <p>全欄が埋まった時点で、管理書と点検手順書（SOP）の本文に必要な情報が揃う。埋まらない欄は空欄のまま残し、末尾の未充足一覧に転記する。推測で埋めない。</p>
+    <ol class="steps">
+      <li>渡されたmdを「mdを読み込む」で開く。</li>
+      <li>各欄に記入し、充足判定にチェックを入れる。</li>
+      <li>下の「mdで保存」を押し、出てきたファイルを送り返す。</li>
+    </ol>
+    <div class="importbar">
+      <button class="btn" onclick="document.getElementById('mdfile').click()">mdを読み込む</button>
+      <input type="file" id="mdfile" accept=".md,.markdown,.txt" class="hidden-input" onchange="importMarkdown(event)">
+      <span class="desc" id="importInfo">受け取ったこのシートのmdを選ぶと、各欄へ流し込む。</span>
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>概要</h2></div>
+    <div class="card-body"><div class="subgrid">
+      <div class="field"><label>対象システム（PanaCIM または LNB。1システムにつき1部）</label><input class="save" data-key="ov_sys"></div>
+      <div class="field"><label>記入者</label><input class="save" data-key="ov_writer"></div>
+      <div class="field"><label>記入日</label><input class="save" data-key="ov_date"></div>
+      <div class="field"><label>版</label><input class="save" data-key="ov_ver"></div>
+    </div></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>A. 対象の定義</h2><span class="route">管理書「対象の定義」</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">A-1</td><td class="label">システム名（正式名称）</td><td><input class="textcell save" data-key="A1" value="LNB()"></td></tr>
+      <tr><td class="no">A-2</td><td class="label">管理対象のサーバ（名称、台数）</td><td><textarea class="cell save" data-key="A2"></textarea></td></tr>
+      <tr><td class="no">A-3</td><td class="label">管理対象の端末（名称、設置場所）</td><td><textarea class="cell save" data-key="A3"></textarea></td></tr>
+      <tr><td class="no">A-4</td><td class="label">管理対象のソフトウェア（名称）</td><td><textarea class="cell save" data-key="A4"></textarea></td></tr>
+      <tr><td class="no">A-5</td><td class="label">バージョン（不明なら「未指定」と記入）</td><td><textarea class="cell save" data-key="A5"></textarea></td></tr>
+      <tr><td class="no">A-6</td><td class="label">他システムと連携している箇所</td><td><textarea class="cell save" data-key="A6"></textarea></td></tr>
+      <tr><td class="no">A-7</td><td class="label">A-6 がある場合、どちらの文書に書くか</td><td><textarea class="cell save" data-key="A7"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>B. 保守範囲</h2><span class="route">管理書「保守範囲の境界」</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">B-1</td><td class="label">自社で対応する範囲</td><td><textarea class="cell save" data-key="B1"></textarea></td></tr>
+      <tr><td class="no">B-2</td><td class="label">ベンダーへ依頼する範囲</td><td><textarea class="cell save" data-key="B2"></textarea></td></tr>
+      <tr><td class="no">B-3</td><td class="label">ベンダー名</td><td><textarea class="cell save" data-key="B3"></textarea></td></tr>
+      <tr><td class="no">B-4</td><td class="label">ベンダーの連絡先</td><td><textarea class="cell save" data-key="B4"></textarea></td></tr>
+      <tr><td class="no">B-5</td><td class="label">ベンダーへの依頼方法（電話、メール、システム）</td><td><textarea class="cell save" data-key="B5"></textarea></td></tr>
+      <tr><td class="no">B-6</td><td class="label">保守契約の有無と契約上の対応時間帯</td><td><textarea class="cell save" data-key="B6"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>C. 体制</h2><span class="route">管理書「役割」</span></div>
+    <div class="card-body scroll-x"><table class="t4"><colgroup><col class="c-no"><col class="c-label"><col><col></colgroup><thead><tr><th>No</th><th>役割</th><th>氏名</th><th>不在時の代行者</th></tr></thead><tbody>
+      <tr><td class="no">C-1</td><td class="label">点検の実施者</td><td><input class="textcell save" data-key="C1a"></td><td><input class="textcell save" data-key="C1b"></td></tr>
+      <tr><td class="no">C-2</td><td class="label">記録の確認者</td><td><input class="textcell save" data-key="C2a"></td><td><input class="textcell save" data-key="C2b"></td></tr>
+      <tr><td class="no">C-3</td><td class="label">文書の承認者</td><td><input class="textcell save" data-key="C3a"></td><td><input class="textcell save" data-key="C3b"></td></tr>
+      <tr><td class="no">C-4</td><td class="label">異常時に停止判断を下す権限者</td><td><input class="textcell save" data-key="C4a"></td><td><input class="textcell save" data-key="C4b"></td></tr>
+      <tr><td class="no">C-5</td><td class="label">文書作成の担当者</td><td><input class="textcell save" data-key="C5a"></td><td class="label" style="color:var(--muted);text-align:center">—</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>D. 実施条件</h2><span class="route">管理書「頻度区分」「実施時間帯」</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">D-1</td><td class="label">日次点検の実施タイミングと締め時刻</td><td><textarea class="cell save" data-key="D1"></textarea></td></tr>
+      <tr><td class="no">D-2</td><td class="label">月次点検の実施タイミングと締め</td><td><textarea class="cell save" data-key="D2"></textarea></td></tr>
+      <tr><td class="no">D-3</td><td class="label">年次点検の実施タイミングと締め</td><td><textarea class="cell save" data-key="D3"></textarea></td></tr>
+      <tr><td class="no">D-4</td><td class="label">上記に当てはまらない点検（異常時のみなど）の有無</td><td><textarea class="cell save" data-key="D4"></textarea></td></tr>
+      <tr><td class="no">D-5</td><td class="label">点検を実施してよい時間帯</td><td><textarea class="cell save" data-key="D5"></textarea></td></tr>
+      <tr><td class="no">D-6</td><td class="label">稼働中に実施できない項目の有無</td><td><textarea class="cell save" data-key="D6"></textarea></td></tr>
+      <tr><td class="no">D-7</td><td class="label">休日、長期休暇中の実施有無</td><td><textarea class="cell save" data-key="D7"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>E. 接続と認証</h2><span class="route">SOP「作業前の確認」</span></div>
+    <div class="card-body scroll-x">
+      <p class="note">パスワードとトークンは書かない。E-5 には保管場所だけを書く。</p>
+      <table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">E-1</td><td class="label">実施場所（現地の端末か、遠隔接続か）</td><td><textarea class="cell save" data-key="E1"></textarea></td></tr>
+      <tr><td class="no">E-2</td><td class="label">接続先（ホスト名、URL、画面名）</td><td><textarea class="cell save" data-key="E2"></textarea></td></tr>
+      <tr><td class="no">E-3</td><td class="label">使用するアカウント名</td><td><textarea class="cell save" data-key="E3"></textarea></td></tr>
+      <tr><td class="no">E-4</td><td class="label">必要な権限</td><td><textarea class="cell save" data-key="E4"></textarea></td></tr>
+      <tr><td class="no">E-5</td><td class="label">認証情報の保管場所（値は書かない。保管場所のみ）</td><td><textarea class="cell save" data-key="E5"></textarea></td></tr>
+      <tr><td class="no">E-6</td><td class="label">接続に使うツールとバージョン</td><td><textarea class="cell save" data-key="E6"></textarea></td></tr>
+      <tr><td class="no">E-7</td><td class="label">実施端末のOS、ブラウザ</td><td><textarea class="cell save" data-key="E7"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>F. 点検項目</h2><span class="route">SOP「手順本体」「判定基準」</span></div>
+    <div class="card-body">
+      <p class="note">1項目につき1行。行が足りなければ追加し、不要な行は右端の削除で消す。頻度を先に決めず、実際に確認している事柄をすべて挙げてから頻度を振る。</p>
+      <div class="scroll-x ftable-wrap"><table id="fTable"><colgroup>
+        <col class="c-no"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-f"><col class="c-op">
+      </colgroup><thead><tr>
+        <th>No</th><th>項目名</th><th>頻度</th><th>手段</th><th>接続先・画面</th><th>操作の種別</th><th>取り消し可否</th><th>正常の基準</th><th>異常とみなす状態</th><th>異常時の一次対応</th><th>記録する内容</th><th>実施者</th><th>操作</th>
+      </tr></thead><tbody id="fBody"></tbody></table></div>
+      <button class="btn small" onclick="addFRow()">行を追加</button>
+      <hr>
+      <p class="note" style="margin-bottom:6px;">各欄の書き方</p>
+      <div class="scroll-x"><table class="t3"><colgroup><col class="c-no" style="width:120px"><col></colgroup><thead><tr><th>欄</th><th>書き方</th></tr></thead><tbody>
+        <tr><td class="label">頻度</td><td class="label">日次、月次、年次、随時のいずれかを記入</td></tr>
+        <tr><td class="label">手段</td><td class="label">画面の目視、コマンド実行、ログ確認のいずれかを記入。複数なら行を分ける</td></tr>
+        <tr><td class="label">操作の種別</td><td class="label">読み取りのみ、状態を変える、のどちらかを記入</td></tr>
+        <tr><td class="label">取り消し可否</td><td class="label">「状態を変える」の場合のみ記入。戻せるなら戻す方法も書く</td></tr>
+        <tr><td class="label">正常の基準</td><td class="label">数値または画面の状態で書く。「問題なければ」とは書かない</td></tr>
+        <tr><td class="label">異常とみなす状態</td><td class="label">何がどう見えたら異常かを書く</td></tr>
+        <tr><td class="label">記録する内容</td><td class="label">残す値、画面、出力を書く。残さないなら「記録なし」と書く</td></tr>
+      </tbody></table></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>G. 異常時の対応</h2><span class="route">管理書「異常時の経路」／SOP</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">G-1</td><td class="label">異常を検知したときの最初の連絡先</td><td><textarea class="cell save" data-key="G1"></textarea></td></tr>
+      <tr><td class="no">G-2</td><td class="label">連絡がつかない場合の次の連絡先</td><td><textarea class="cell save" data-key="G2"></textarea></td></tr>
+      <tr><td class="no">G-3</td><td class="label">実施者がその場で行ってよい対応</td><td><textarea class="cell save" data-key="G3"></textarea></td></tr>
+      <tr><td class="no">G-4</td><td class="label">実施者が行ってはいけない対応</td><td><textarea class="cell save" data-key="G4"></textarea></td></tr>
+      <tr><td class="no">G-5</td><td class="label">点検を中断して連絡する条件</td><td><textarea class="cell save" data-key="G5"></textarea></td></tr>
+      <tr><td class="no">G-6</td><td class="label">点検中にサービスが停止した場合の応急処置</td><td><textarea class="cell save" data-key="G6"></textarea></td></tr>
+      <tr><td class="no">G-7</td><td class="label">G-6 の参照先文書</td><td><textarea class="cell save" data-key="G7"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>H. 記録</h2><span class="route">管理書「記録の管理」／点検記録票</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">H-1</td><td class="label">現在の記録の残し方（紙、ファイル、システム）</td><td><textarea class="cell save" data-key="H1"></textarea></td></tr>
+      <tr><td class="no">H-2</td><td class="label">記録の保存先</td><td><textarea class="cell save" data-key="H2"></textarea></td></tr>
+      <tr><td class="no">H-3</td><td class="label">記録の様式（既存の様式があればその名称）</td><td><textarea class="cell save" data-key="H3"></textarea></td></tr>
+      <tr><td class="no">H-4</td><td class="label">保存期間</td><td><textarea class="cell save" data-key="H4"></textarea></td></tr>
+      <tr><td class="no">H-5</td><td class="label">記録票を SOP に内包するか、別紙にするか</td><td><textarea class="cell save" data-key="H5"></textarea></td></tr>
+      <tr><td class="no">H-6</td><td class="label">コマンド出力やスクリーンショットの保存先</td><td><textarea class="cell save" data-key="H6"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>I. 文書の様式</h2><span class="route">4文書共通</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">I-1</td><td class="label">社内に既存の SOP 様式があるか</td><td><textarea class="cell save" data-key="I1"></textarea></td></tr>
+      <tr><td class="no">I-2</td><td class="label">I-1 がある場合、様式名と入手先</td><td><textarea class="cell save" data-key="I2"></textarea></td></tr>
+      <tr><td class="no">I-3</td><td class="label">操作の種別、取り消し可否、中断条件の三欄を足せるか</td><td><textarea class="cell save" data-key="I3"></textarea></td></tr>
+      <tr><td class="no">I-4</td><td class="label">文書番号の付番規則</td><td><textarea class="cell save" data-key="I4"></textarea></td></tr>
+      <tr><td class="no">I-5</td><td class="label">SOP を頻度ごとに分けるか、一冊にまとめるか</td><td><textarea class="cell save" data-key="I5"></textarea></td></tr>
+      <tr><td class="no">I-6</td><td class="label">文書の保管場所</td><td><textarea class="cell save" data-key="I6"></textarea></td></tr>
+      <tr><td class="no">I-7</td><td class="label">改訂の見直し時期</td><td><textarea class="cell save" data-key="I7"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>J. 現状の扱い</h2><span class="route">文書化の方針</span></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">J-1</td><td class="label">実施者によってやり方が違う項目</td><td><textarea class="cell save" data-key="J1"></textarea></td></tr>
+      <tr><td class="no">J-2</td><td class="label">J-1 について、どれを正とするか</td><td><textarea class="cell save" data-key="J2"></textarea></td></tr>
+      <tr><td class="no">J-3</td><td class="label">J-2 を決める人</td><td><textarea class="cell save" data-key="J3"></textarea></td></tr>
+      <tr><td class="no">J-4</td><td class="label">手順としては存在するが実施していない項目</td><td><textarea class="cell save" data-key="J4"></textarea></td></tr>
+      <tr><td class="no">J-5</td><td class="label">J-4 の扱い（現状のまま書く、直して書く、課題として別記）</td><td><textarea class="cell save" data-key="J5"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>K. 期限</h2></div>
+    <div class="card-body scroll-x"><table class="t3"><colgroup><col class="c-no"><col class="c-label"><col></colgroup><thead><tr><th>No</th><th>記入欄</th><th>記入内容</th></tr></thead><tbody>
+      <tr><td class="no">K-1</td><td class="label">文書の完成期限（スケジュールリーダより）</td><td><textarea class="cell save" data-key="K1"></textarea></td></tr>
+      <tr><td class="no">K-2</td><td class="label">聞き取りの完了目標</td><td><textarea class="cell save" data-key="K2"></textarea></td></tr>
+      <tr><td class="no">K-3</td><td class="label">初版の作成目標</td><td><textarea class="cell save" data-key="K3"></textarea></td></tr>
+      <tr><td class="no">K-4</td><td class="label">レビューの実施日</td><td><textarea class="cell save" data-key="K4"></textarea></td></tr>
+      <tr><td class="no">K-5</td><td class="label">確定日</td><td><textarea class="cell save" data-key="K5"></textarea></td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>L. 充足判定</h2></div>
+    <div class="card-body">
+      <p class="note">全項目に記入があり、次の四つを満たせば文書化に着手できる。一つでも欠ける場合、その範囲の SOP は書けない。空欄のまま手順書を作らず、未充足一覧へ転記する。</p>
+      <ul class="checklist"><li><input type="checkbox" class="save chk" data-key="L1" id="L1"><label for="L1">F の全行で、正常の基準と異常とみなす状態の両方が埋まっている</label></li>
+      <li><input type="checkbox" class="save chk" data-key="L2" id="L2"><label for="L2">F の「状態を変える」行すべてに、取り消し可否が書かれている</label></li>
+      <li><input type="checkbox" class="save chk" data-key="L3" id="L3"><label for="L3">E-2 から E-5 が埋まっており、新人が自力で接続先へ到達できる</label></li>
+      <li><input type="checkbox" class="save chk" data-key="L4" id="L4"><label for="L4">G-1 と G-5 が埋まっており、異常時に止まる判断ができる</label></li></ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>M. 未充足一覧</h2></div>
+    <div class="card-body">
+      <p class="note">埋まらなかった欄を転記する。誰に聞けば埋まるかを書く。不要な行は右端の削除で消す。</p>
+      <div class="scroll-x"><table id="mTable"><colgroup><col style="width:14%"><col><col style="width:18%"><col style="width:14%"><col style="width:12%"><col class="c-op"></colgroup><thead><tr><th>欄番号</th><th>内容</th><th>確認先</th><th>確認予定日</th><th>埋まった日</th><th>操作</th></tr></thead><tbody id="mBody"></tbody></table></div>
+      <button class="btn small" onclick="addMRow()">行を追加</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>N. 記入欄と文書の対応</h2></div>
+    <div class="card-body scroll-x">
+      <p class="note">この対応表は転記の対応関係を示すもので、記入は不要。保存時にそのまま出力する。</p>
+      <table class="t3"><colgroup><col class="c-no" style="width:90px"><col style="width:30%"><col></colgroup><thead><tr><th>シートの欄</th><th>転記先の文書</th><th>転記先の章</th></tr></thead><tbody>
+        <tr><td class="label" style="text-align:center">A</td><td class="label">管理書</td><td class="label">対象の定義</td></tr>
+        <tr><td class="label" style="text-align:center">B</td><td class="label">管理書</td><td class="label">保守範囲の境界</td></tr>
+        <tr><td class="label" style="text-align:center">C</td><td class="label">管理書</td><td class="label">役割</td></tr>
+        <tr><td class="label" style="text-align:center">D</td><td class="label">管理書</td><td class="label">点検の頻度区分、実施時間帯</td></tr>
+        <tr><td class="label" style="text-align:center">E</td><td class="label">点検手順書</td><td class="label">作業前の確認</td></tr>
+        <tr><td class="label" style="text-align:center">F</td><td class="label">点検手順書</td><td class="label">手順本体、判定基準</td></tr>
+        <tr><td class="label" style="text-align:center">G</td><td class="label">管理書、点検手順書</td><td class="label">異常時の経路、異常時の一次対応、中断条件</td></tr>
+        <tr><td class="label" style="text-align:center">H</td><td class="label">管理書、点検記録票</td><td class="label">記録の管理</td></tr>
+        <tr><td class="label" style="text-align:center">I</td><td class="label">4文書共通</td><td class="label">表紙、文書番号、改訂履歴</td></tr>
+        <tr><td class="label" style="text-align:center">J</td><td class="label">文書化の作業方針</td><td class="label">本文には載せない</td></tr>
+        <tr><td class="label" style="text-align:center">K</td><td class="label">作業計画</td><td class="label">本文には載せない</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>O. 記入上の注意</h2></div>
+    <div class="card-body">
+      <ul style="margin:0;padding-left:20px;color:var(--text);font-size:13.5px;line-height:1.9;">
+        <li>分からない欄は空欄にする。それらしい値を書かない。</li>
+        <li>パスワードとトークンは書かない。E-5 に保管場所だけを書く。</li>
+        <li>F の項目は、業務名ではなく時間で思い出す。朝いちばんに開く画面、月初に開く画面という順で書き出す。</li>
+        <li>「見ればわかる」で済ませている項目は、何がどう見えたら異常かを F の該当欄に言葉で書く。</li>
+        <li>本シートは記入後も破棄せず、文書の改訂時に更新する。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head" onclick="toggle(this)"><span class="arrow">▼</span><h2>署名</h2></div>
+    <div class="card-body"><div class="subgrid">
+      <div class="field"><label>記入者署名</label><input class="save" data-key="sign_writer"></div>
+      <div class="field"><label>確認者署名</label><input class="save" data-key="sign_checker"></div>
+    </div></div>
+  </section>
+
+</div>
+
+<div class="actionbar"><div class="inner">
+  <button class="btn primary" onclick="saveMarkdown()">mdで保存</button>
+  <button class="btn" onclick="expandAll(true)">全て開く</button>
+  <button class="btn" onclick="expandAll(false)">全て閉じる</button>
+  <button class="btn" onclick="clearAll()">入力をクリア</button>
+  <span class="save-status" id="saveStatus">自動保存 待機中</span>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const STORAGE_KEY="inspection_sheet_v5";
+const F_COLS=11;      // F表の入力列数（No・操作を除く）
+const M_COLS=5;       // M表の入力列数（操作を除く）
+
+/* ---- 開閉 ---- */
+function toggle(head){head.classList.toggle("collapsed");head.nextElementSibling.classList.toggle("hidden");}
+function expandAll(open){document.querySelectorAll(".card-head").forEach(h=>{const b=h.nextElementSibling;
+  h.classList.toggle("collapsed",!open);b.classList.toggle("hidden",!open);});}
+
+/* ---- 行生成（関心事の分離：生成と束縛を分ける） ---- */
+function renumberF(){document.querySelectorAll("#fBody tr").forEach((tr,i)=>{tr.querySelector(".no").textContent="F-"+(i+1);});}
+
+function makeFRow(){const tr=document.createElement("tr");
+  const no=document.createElement("td");no.className="no";tr.appendChild(no);
+  for(let i=0;i<F_COLS;i++){const td=document.createElement("td");
+    const ta=document.createElement("textarea");ta.className="cell fcell";td.appendChild(ta);tr.appendChild(td);}
+  const op=document.createElement("td");op.className="op";
+  const b=document.createElement("button");b.className="row-del";b.type="button";b.title="この行を削除";b.textContent="×";
+  b.addEventListener("click",()=>delRow(tr,"f"));op.appendChild(b);tr.appendChild(op);
+  return tr;}
+
+function makeMRow(){const tr=document.createElement("tr");
+  for(let i=0;i<M_COLS;i++){const td=document.createElement("td");
+    const inp=document.createElement("input");inp.className="textcell mcell";td.appendChild(inp);tr.appendChild(td);}
+  const op=document.createElement("td");op.className="op";
+  const b=document.createElement("button");b.className="row-del";b.type="button";b.title="この行を削除";b.textContent="×";
+  b.addEventListener("click",()=>delRow(tr,"m"));op.appendChild(b);tr.appendChild(op);
+  return tr;}
+
+function bindRow(tr){tr.querySelectorAll("textarea,input").forEach(el=>el.addEventListener("input",saveLocal));}
+
+function addFRow(save=true){const tr=makeFRow();document.getElementById("fBody").appendChild(tr);
+  bindRow(tr);renumberF();if(save)saveLocal();return tr;}
+function addMRow(save=true){const tr=makeMRow();document.getElementById("mBody").appendChild(tr);
+  bindRow(tr);if(save)saveLocal();return tr;}
+
+/* ---- 削除（最終1行は残し、内容だけ消す） ---- */
+function delRow(tr,type){
+  const body=document.getElementById(type==="f"?"fBody":"mBody");
+  if(body.children.length<=1){
+    tr.querySelectorAll("textarea,input").forEach(el=>el.value="");
+    saveLocal();showToast("最後の1行は残す。内容を消去した");return;
+  }
+  tr.remove();
+  if(type==="f")renumberF();
+  saveLocal();showToast("行を削除した");
+}
+
+/* ---- 保存（localStorage） ---- */
+function collectData(){
+  const data={fields:{},f:[],m:[]};
+  document.querySelectorAll(".save").forEach(el=>{data.fields[el.dataset.key]=el.type==="checkbox"?el.checked:el.value;});
+  document.querySelectorAll("#fBody tr").forEach(tr=>{const a=[];tr.querySelectorAll(".fcell").forEach(c=>a.push(c.value));data.f.push(a);});
+  document.querySelectorAll("#mBody tr").forEach(tr=>{const a=[];tr.querySelectorAll(".mcell").forEach(c=>a.push(c.value));data.m.push(a);});
+  return data;
+}
+function saveLocal(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(collectData()));
+    document.getElementById("saveStatus").textContent="自動保存 "+new Date().toLocaleTimeString('ja-JP');
+  }catch(e){document.getElementById("saveStatus").textContent="自動保存 失敗";}
+}
+
+/* ---- 復元（初期1行を保証し、保存分だけ増やす。二重生成を防ぐ） ---- */
+function ensureRows(type,n){
+  const add=type==="f"?()=>addFRow(false):()=>addMRow(false);
+  const body=document.getElementById(type==="f"?"fBody":"mBody");
+  while(body.children.length<Math.max(1,n))add();
+}
+function restoreLocal(){
+  let d=null;
+  try{const raw=localStorage.getItem(STORAGE_KEY);if(raw)d=JSON.parse(raw);}catch(e){d=null;}
+  const fCount=d&&Array.isArray(d.f)?d.f.length:1;
+  const mCount=d&&Array.isArray(d.m)?d.m.length:1;
+  ensureRows("f",fCount);
+  ensureRows("m",mCount);
+  if(!d)return;
+  document.querySelectorAll(".save").forEach(el=>{const k=el.dataset.key;
+    if(!d.fields||!(k in d.fields))return;
+    if(el.type==="checkbox")el.checked=!!d.fields[k];else el.value=d.fields[k];});
+  (d.f||[]).forEach((a,r)=>{const tr=document.getElementById("fBody").children[r];
+    if(tr)tr.querySelectorAll(".fcell").forEach((c,i)=>c.value=a[i]||"");});
+  (d.m||[]).forEach((a,r)=>{const tr=document.getElementById("mBody").children[r];
+    if(tr)tr.querySelectorAll(".mcell").forEach((c,i)=>c.value=a[i]||"");});
+  renumberF();
+}
+
+/* ---- md 入出力ヘルパ ---- */
+function setVal(key,val){const el=document.querySelector(`[data-key="${key}"]`);if(el&&el.type!=="checkbox")el.value=val;}
+function v(key){const el=document.querySelector(`[data-key="${key}"]`);return el?(el.value||"").trim():"";}
+function esc(s){return (s||"").replace(/\|/g,"\\|").replace(/\n/g,"<br>");}
+function unesc(s){return (s||"").replace(/<br>/g,"\n").replace(/\\\|/g,"|").trim();}
+function splitRow(line){let s=line.trim();if(s.startsWith("|"))s=s.slice(1);if(s.endsWith("|"))s=s.slice(0,-1);
+  return s.split("|").map(x=>x.trim());}
+function isSep(cells){return cells.length>0&&cells.every(c=>/^:?-{2,}:?$/.test(c));}
+function clean(s){return (s||"").replace(/[()（）]/g,"").trim();}
+
+/* ---- md 読み込み ---- */
+function importMarkdown(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{parseMarkdown(e.target.result);document.getElementById("importInfo").textContent="読み込み完了 "+file.name;};
+  reader.onerror=()=>{showToast("読み込みに失敗した");};
+  reader.readAsText(file);ev.target.value="";
+}
+function parseMarkdown(text){
+  const lines=text.split(/\r?\n/);
+  lines.forEach(l=>{let m;
+    if((m=l.match(/対象システム\s*[:：]\s*(.*?)(?:\s*※|$)/)))setVal("ov_sys",clean(m[1]));
+    if((m=l.match(/記入者\s*[:：]\s*(.*?)(?:\s+記入日|$)/)))setVal("ov_writer",clean(m[1]));
+    if((m=l.match(/記入日\s*[:：]\s*(.*?)(?:\s+版|$)/)))setVal("ov_date",clean(m[1]));
+    if((m=l.match(/版\s*[:：]\s*(.*)$/))&&!l.includes("記入者"))setVal("ov_ver",clean(m[1]));
+    if((m=l.match(/記入者署名\s*[:：]\s*(.*?)(?:\s+確認者署名|$)/)))setVal("sign_writer",clean(m[1]));
+    if((m=l.match(/確認者署名\s*[:：]\s*(.*)$/)))setVal("sign_checker",clean(m[1]));
+  });
+  const threeKeys={};
+  ["A","B","D","E","G","H","I","J","K"].forEach(p=>{for(let i=1;i<=9;i++)threeKeys[`${p}-${i}`]=`${p}${i}`;});
+  lines.forEach(l=>{
+    if(!l.includes("|"))return;const c=splitRow(l);if(c.length<3||isSep(c))return;const no=c[0];
+    if(threeKeys[no]!==undefined)setVal(threeKeys[no],unesc(c[c.length-1]));
+    const cm=no.match(/^C-([1-5])$/);
+    if(cm&&c.length>=4){setVal(`C${cm[1]}a`,unesc(c[2]));if(c[3]!=="—")setVal(`C${cm[1]}b`,unesc(c[3]));}
+  });
+  const fRows=[];
+  lines.forEach(l=>{if(!l.includes("|"))return;const c=splitRow(l);if(isSep(c))return;
+    if(/^F-\d+$/.test(c[0]))fRows.push(c.slice(1,1+F_COLS).map(unesc));});
+  if(fRows.length){ensureRows("f",fRows.length);const body=document.getElementById("fBody");
+    fRows.forEach((r,i)=>{const tr=body.children[i];if(!tr)return;
+      tr.querySelectorAll(".fcell").forEach((cell,j)=>cell.value=r[j]||"");});renumberF();}
+  const lkeys=["L1","L2","L3","L4"];let li=0;
+  lines.forEach(l=>{const m=l.match(/^\s*-\s*\[( |x|X)\]/);
+    if(m&&li<4){const el=document.querySelector(`[data-key="${lkeys[li]}"]`);if(el)el.checked=(m[1].toLowerCase()==="x");li++;}});
+  let inM=false;const mRows=[];
+  for(const l of lines){
+    if(/^##\s*M\./.test(l)){inM=true;continue;}
+    if(inM&&/^##\s/.test(l))break;
+    if(inM&&l.includes("|")){const c=splitRow(l);if(isSep(c))continue;if(c[0]==="欄番号")continue;
+      if(c.some(x=>x!==""))mRows.push(c.slice(0,M_COLS).map(unesc));}
+  }
+  if(mRows.length){ensureRows("m",mRows.length);const body=document.getElementById("mBody");
+    mRows.forEach((r,i)=>{const tr=body.children[i];if(!tr)return;
+      tr.querySelectorAll(".mcell").forEach((cell,j)=>cell.value=r[j]||"");});}
+  saveLocal();showToast("mdを読み込んだ");
+}
+
+/* ---- md 保存 ---- */
+function saveMarkdown(){
+  const L=[];
+  L.push("# 概要","");
+  L.push(`対象システム:(${v("ov_sys")}) ※ PanaCIM または LNB。1システムにつき1部`);
+  L.push(`記入者:(${v("ov_writer")}) 記入日:(${v("ov_date")}) 版:(${v("ov_ver")})`,"");
+  L.push("本シートの全欄が埋まった時点で、管理書と点検手順書(SOP)の本文に必要な情報が揃う。");
+  L.push("埋まらない欄は空欄のまま残し、末尾の未充足一覧に転記する。推測で埋めない。","","---","");
+
+  const three=(head,rows)=>{
+    L.push(head,"","| No | 記入欄 | 記入内容 |","| --- | --- | --- |");
+    rows.forEach(r=>L.push(`| ${r[0]} | ${r[1]} | ${esc(v(r[2]))} |`));
+    L.push("","---","");
+  };
+  three("## A. 対象の定義 → 管理書「対象の定義」",[
+    ["A-1","システム名(正式名称)","A1"],["A-2","管理対象のサーバ(名称、台数)","A2"],
+    ["A-3","管理対象の端末(名称、設置場所)","A3"],["A-4","管理対象のソフトウェア(名称)","A4"],
+    ["A-5","バージョン(不明なら「未指定」と記入)","A5"],["A-6","他システムと連携している箇所","A6"],
+    ["A-7","A-6 がある場合、どちらの文書に書くか","A7"]]);
+  three("## B. 保守範囲 → 管理書「保守範囲の境界」",[
+    ["B-1","自社で対応する範囲","B1"],["B-2","ベンダーへ依頼する範囲","B2"],["B-3","ベンダー名","B3"],
+    ["B-4","ベンダーの連絡先","B4"],["B-5","ベンダーへの依頼方法(電話、メール、システム)","B5"],
+    ["B-6","保守契約の有無と契約上の対応時間帯","B6"]]);
+
+  L.push("## C. 体制 → 管理書「役割」","","| No | 役割 | 氏名 | 不在時の代行者 |","| --- | --- | --- | --- |");
+  [["C-1","点検の実施者","C1a","C1b"],["C-2","記録の確認者","C2a","C2b"],["C-3","文書の承認者","C3a","C3b"],
+   ["C-4","異常時に停止判断を下す権限者","C4a","C4b"],["C-5","文書作成の担当者","C5a",null]]
+   .forEach(r=>L.push(`| ${r[0]} | ${r[1]} | ${esc(v(r[2]))} | ${r[3]?esc(v(r[3])):"—"} |`));
+  L.push("","---","");
+
+  three("## D. 実施条件 → 管理書「頻度区分」「実施時間帯」",[
+    ["D-1","日次点検の実施タイミングと締め時刻","D1"],["D-2","月次点検の実施タイミングと締め","D2"],
+    ["D-3","年次点検の実施タイミングと締め","D3"],["D-4","上記に当てはまらない点検(異常時のみなど)の有無","D4"],
+    ["D-5","点検を実施してよい時間帯","D5"],["D-6","稼働中に実施できない項目の有無","D6"],
+    ["D-7","休日、長期休暇中の実施有無","D7"]]);
+  three("## E. 接続と認証 → SOP「作業前の確認」",[
+    ["E-1","実施場所(現地の端末か、遠隔接続か)","E1"],["E-2","接続先(ホスト名、URL、画面名)","E2"],
+    ["E-3","使用するアカウント名","E3"],["E-4","必要な権限","E4"],
+    ["E-5","認証情報の保管場所(値は書かない。保管場所のみ)","E5"],["E-6","接続に使うツールとバージョン","E6"],
+    ["E-7","実施端末のOS、ブラウザ","E7"]]);
+
+  L.push("## F. 点検項目 → SOP「手順本体」「判定基準」","");
+  L.push("| No | 項目名 | 頻度 | 手段 | 接続先・画面 | 操作の種別 | 取り消し可否 | 正常の基準 | 異常とみなす状態 | 異常時の一次対応 | 記録する内容 | 実施者 |");
+  L.push("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |");
+  document.querySelectorAll("#fBody tr").forEach((tr,i)=>{
+    const cells=[`F-${i+1}`];tr.querySelectorAll(".fcell").forEach(c=>cells.push(esc(c.value.trim())));
+    L.push("| "+cells.join(" | ")+" |");});
+  L.push("","---","");
+
+  three("## G. 異常時の対応 → 管理書「異常時の経路」/SOP「異常時の一次対応」「中断条件」",[
+    ["G-1","異常を検知したときの最初の連絡先","G1"],["G-2","連絡がつかない場合の次の連絡先","G2"],
+    ["G-3","実施者がその場で行ってよい対応","G3"],["G-4","実施者が行ってはいけない対応","G4"],
+    ["G-5","点検を中断して連絡する条件","G5"],["G-6","点検中にサービスが停止した場合の応急処置","G6"],
+    ["G-7","G-6 の参照先文書","G7"]]);
+  three("## H. 記録 → 管理書「記録の管理」/点検記録票",[
+    ["H-1","現在の記録の残し方(紙、ファイル、システム)","H1"],["H-2","記録の保存先","H2"],
+    ["H-3","記録の様式(既存の様式があればその名称)","H3"],["H-4","保存期間","H4"],
+    ["H-5","記録票を SOP に内包するか、別紙にするか","H5"],["H-6","コマンド出力やスクリーンショットの保存先","H6"]]);
+  three("## I. 文書の様式 → 4文書共通",[
+    ["I-1","社内に既存の SOP 様式があるか","I1"],["I-2","I-1 がある場合、様式名と入手先","I2"],
+    ["I-3","操作の種別、取り消し可否、中断条件の三欄を足せるか","I3"],["I-4","文書番号の付番規則","I4"],
+    ["I-5","SOP を頻度ごとに分けるか、一冊にまとめるか","I5"],["I-6","文書の保管場所","I6"],
+    ["I-7","改訂の見直し時期","I7"]]);
+  three("## J. 現状の扱い → 文書化の方針",[
+    ["J-1","実施者によってやり方が違う項目","J1"],["J-2","J-1 について、どれを正とするか","J2"],
+    ["J-3","J-2 を決める人","J3"],["J-4","手順としては存在するが実施していない項目","J4"],
+    ["J-5","J-4 の扱い(現状のまま書く、直して書く、課題として別記)","J5"]]);
+  three("## K. 期限",[
+    ["K-1","文書の完成期限(スケジュールリーダより)","K1"],["K-2","聞き取りの完了目標","K2"],
+    ["K-3","初版の作成目標","K3"],["K-4","レビューの実施日","K4"],["K-5","確定日","K5"]]);
+
+  L.push("## L. 充足判定","","全項目に記入があり、次の四つを満たせば文書化に着手できる。","");
+  const chk=k=>document.querySelector(`[data-key="${k}"]`).checked?"x":" ";
+  L.push(`- [${chk("L1")}] F の全行で、正常の基準と異常とみなす状態の両方が埋まっている`);
+  L.push(`- [${chk("L2")}] F の「状態を変える」行すべてに、取り消し可否が書かれている`);
+  L.push(`- [${chk("L3")}] E-2 から E-5 が埋まっており、新人が自力で接続先へ到達できる`);
+  L.push(`- [${chk("L4")}] G-1 と G-5 が埋まっており、異常時に止まる判断ができる`,"");
+  L.push("上の一つでも欠ける場合、その範囲の SOP は書けない。空欄のまま手順書を作らず、次の未充足一覧へ転記する。","","---","");
+
+  L.push("## M. 未充足一覧","","埋まらなかった欄を転記する。誰に聞けば埋まるかを書く。","");
+  L.push("| 欄番号 | 内容 | 確認先 | 確認予定日 | 埋まった日 |","| --- | --- | --- | --- | --- |");
+  let mCount=0;
+  document.querySelectorAll("#mBody tr").forEach(tr=>{
+    const cells=[];tr.querySelectorAll(".mcell").forEach(c=>cells.push(esc(c.value.trim())));
+    if(cells.some(x=>x!=="")){L.push("| "+cells.join(" | ")+" |");mCount++;}});
+  if(mCount===0)L.push("|  |  |  |  |  |");
+  L.push("","---","");
+
+  L.push("## N. 記入欄と文書の対応","","| シートの欄 | 転記先の文書 | 転記先の章 |","| --- | --- | --- |");
+  [["A","管理書","対象の定義"],["B","管理書","保守範囲の境界"],["C","管理書","役割"],
+   ["D","管理書","点検の頻度区分、実施時間帯"],["E","点検手順書","作業前の確認"],
+   ["F","点検手順書","手順本体、判定基準"],["G","管理書、点検手順書","異常時の経路、異常時の一次対応、中断条件"],
+   ["H","管理書、点検記録票","記録の管理"],["I","4文書共通","表紙、文書番号、改訂履歴"],
+   ["J","文書化の作業方針","本文には載せない"],["K","作業計画","本文には載せない"]]
+   .forEach(r=>L.push(`| ${r[0]} | ${r[1]} | ${r[2]} |`));
+  L.push("","---","");
+
+  L.push("## O. 記入上の注意","");
+  L.push("- 分からない欄は空欄にする。それらしい値を書かない。");
+  L.push("- パスワードとトークンは書かない。E-5 に保管場所だけを書く。");
+  L.push("- F の項目は、業務名ではなく時間で思い出す。朝いちばんに開く画面、月初に開く画面という順で書き出す。");
+  L.push("- 「見ればわかる」で済ませている項目は、何がどう見えたら異常かを F の該当欄に言葉で書く。");
+  L.push("- 本シートは記入後も破棄せず、文書の改訂時に更新する。","");
+  L.push(`記入者署名:(${v("sign_writer")}) 確認者署名:(${v("sign_checker")})`,"");
+
+  const md=L.join("\n");
+  const sys=(v("ov_sys")||"LNB").replace(/[\\\/:*?"<>|]/g,"")||"LNB";
+  const d=new Date();
+  const stamp=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const fname=`点検文書_情報記入シート_${sys}_${stamp}.md`;
+  const blob=new Blob([md],{type:"text/markdown;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fname;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  showToast("mdを保存した");
+}
+
+/* ---- その他 ---- */
+function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(showToast._t);showToast._t=setTimeout(()=>t.classList.remove("show"),2200);}
+function clearAll(){if(!confirm("入力内容をすべてクリアします。よろしいですか。"))return;
+  localStorage.removeItem(STORAGE_KEY);location.reload();}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  restoreLocal();
+  document.querySelectorAll(".save").forEach(el=>{
+    el.addEventListener(el.type==="checkbox"?"change":"input",saveLocal);});
+  document.getElementById("saveStatus").textContent="自動保存 準備完了";
+});
+</script>
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    

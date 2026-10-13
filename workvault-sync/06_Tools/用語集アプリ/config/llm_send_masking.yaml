@@ -1,0 +1,40 @@
+# LLM へ送る直前にだけかける、追加のマスキング（2026-10-02 起票の pending E 節、推奨案2）。
+#
+# 用語集の DB には、必要書類の URL・共有フォルダのパス・役割と一緒に出る人名を残している
+# （masking_rules.yaml の protect / role_*）。社内の誰でも見られる用語集に残す前提では正しいが、
+# 同じ文を社外の API へ送ると前提が変わる。送るかどうかは会社の規程の話で、一度送ると取り消せない。
+# そこで、送る文からだけ伏せる。DB の中身は変えない。
+#
+# 書き方は masking_rules.yaml と同じ。ここでは役割による「残す」指定（keep_*）は使わない。
+
+rules:
+  - name: url
+    type: regex
+    pattern: 'https?://[^\s<>"「」（）()]+'
+    token: '<URL>'
+
+  - name: share_path
+    type: regex
+    pattern: '\\\\[^\s<>"「」（）()]+'
+    token: '<PATH>'
+
+  - name: person_after_role_label
+    type: regex
+    # 「担当：雲居」「窓口は霧島」のように、役割の見出しの後ろに来る名前
+    pattern: '(?:担当|責任者|窓口|管理者)(?:者)?[ 　]*[:：は][ 　]*([一-龥々ァ-ヶー]{1,8}(?:[ 　][一-龥々ぁ-んァ-ヶー]{1,8})?)'
+    group: 1
+    token: '<PERSON>'
+
+  - name: person_honorific
+    type: regex
+    # masking_rules.yaml と同じ形。ただし役割があっても伏せる
+    pattern: '([一-龥々ァ-ヶー]{1,8}|(?<![ぁ-ん])[ぁ-ん]{2,4})(?=\s?(?:さん|さま|殿|くん|部長|課長|係長|主任|社長|様(?![々一-龥])|氏(?![一-龥])))'
+    group: 1
+    exclude: ['皆', 'みな', 'お客', '各位', 'お得意', 'ご担当者', '担当者', 'ご担当']
+    exclude_suffix: ['仕', '同', '模', '多', '異', '一', '有', '左', '斯']
+    token: '<PERSON>'
+
+  - name: person_pos
+    type: pos
+    pos: ['名詞', '固有名詞', '人名']
+    token: '<PERSON>'

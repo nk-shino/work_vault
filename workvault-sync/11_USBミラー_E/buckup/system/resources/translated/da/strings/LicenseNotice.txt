@@ -1,0 +1,24 @@
+###################################################################################
+# Lenovo System Update
+# January, 2006
+# Updated:
+# DANISH
+###################################################################################
+#
+# Translation notes
+#
+# 1. All lines beginning with the # character are comments.  Do not translate them.
+#    All remaining lines require translation.
+# 2. On translatable lines:
+#      a. The first word, up to the equal sign (=), is the string name used by the
+#        program.  Do not change it or the equal sign.
+#      b. The text following the equal sign needs to be translated.
+#      c. Translatable text may contain one or more substitution words.  These
+#         always begin with a { character followed by a digit (1-9) OR a string,
+#         and end with the } character. The substitution words should not be
+#         translated.
+#
+###################################################################################
+Ved at vælge et element til overførsel eller installation accepterer De, (1) at programkoden, eksempler, opdateringer og rettelser (Kode) er underlagt vilkårene i den licensaftale, der følger med eller er indeholdt i det program eller system, De har anskaffet Koden til, og (2) at De tidligere har læst og accepteret disse vilkår. Nogle af de programmer, De vælger, viser måske en licensaftale, som De skal acceptere, før De kan overføre, installere eller bruge programmet første gang. De skal acceptere disse vilkår for at kunne overføre eller installere og bruge Koden. De må ikke overføre eller installere eller bruge Koden, medmindre De opdaterer et program, som De har et gyldigt licensbevis til. 
+
+Bortset fra, hvad der måtte følge af ufravigelige lovbestemmelser, påtager {LENOVO_UPPERCASE_TEXT} sig ingen forpligtelser uanset kundens forventninger til Programmets egnethed eller anvendelse eller til eventuel teknisk support.

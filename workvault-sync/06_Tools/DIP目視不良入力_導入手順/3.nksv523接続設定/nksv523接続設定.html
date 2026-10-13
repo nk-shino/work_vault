@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社内サーバー（nksv523）接続手順</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic UI', 'Meiryo', sans-serif;
+            background: #f0f4f8;
+            color: #1a2332;
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0078d4, #005a9e);
+            color: white;
+            padding: 30px 36px;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        .content {
+            background: white;
+            padding: 32px 36px 40px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #0078d4;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 28px;
+            font-size: 0.92em;
+        }
+
+        .info-box strong {
+            color: #005a9e;
+        }
+
+        .step {
+            margin-bottom: 32px;
+            padding: 20px 24px;
+            background: #fafbfc;
+            border-radius: 12px;
+            border: 1px solid #e1e8ef;
+            position: relative;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .step-number {
+            background: #0078d4;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.05em;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1a2332;
+        }
+
+        .step-body {
+            margin-left: 52px;
+        }
+
+        .step-body p {
+            margin-bottom: 10px;
+        }
+
+        .screenshot {
+            margin: 14px 0;
+            text-align: center;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .screenshot figcaption {
+            font-size: 0.82em;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        .key-badge {
+            display: inline-block;
+            background: linear-gradient(180deg, #f5f5f5, #ddd);
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            padding: 2px 9px;
+            font-size: 0.88em;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 0 #bbb;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ===== コマンドボックス（修正版） ===== */
+        .cmd-wrapper {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .cmd-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 14px 90px 14px 18px; /* 右側はボタン分の余白 */
+            border-radius: 8px;
+            font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.88em;
+            overflow-x: auto;
+            word-break: break-all;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .cmd-label {
+            font-size: 0.78em;
+            color: #888;
+            margin-bottom: 2px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #333;
+            color: #ccc;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 4px 10px;
+            font-size: 0.78em;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none; /* ボタン自体は選択不可に */
+            z-index: 2;
+        }
+
+        .copy-btn:hover {
+            background: #555;
+            color: #fff;
+        }
+
+        .copy-btn.copied {
+            background: #2e7d32;
+            color: #fff;
+            border-color: #2e7d32;
+        }
+
+        .note {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 12px;
+            font-size: 0.9em;
+        }
+
+        .note::before {
+            content: '⚠ ';
+            font-weight: 700;
+        }
+
+        .note-info {
+            background: #e8f5e9;
+            border-left: 4px solid #43a047;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 12px;
+            font-size: 0.9em;
+        }
+
+        .note-info::before {
+            content: '✅ ';
+        }
+
+        .skip-badge {
+            display: inline-block;
+            background: #43a047;
+            color: white;
+            font-size: 0.75em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .arrow-flow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+            font-size: 0.92em;
+        }
+
+        .arrow-flow .flow-item {
+            background: #e3f2fd;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #0d47a1;
+        }
+
+        .arrow-flow .arrow {
+            color: #90a4ae;
+            font-weight: 700;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px dashed #ddd;
+            margin: 8px 0 16px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #90a4ae;
+            font-size: 0.82em;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .copy-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖥️ 社内サーバー（nksv523）接続手順書</h1>
+            <p>富岡（株）第二生産部 ― Windows 10 / 11 対応</p>
+        </header>
+
+        <div class="content">
+
+            <div class="info-box">
+                <strong>📌 この手順について：</strong><br>
+                社内ファイルサーバー <code>nksv523</code> に接続するための初回セットアップ手順です。<br>
+                所要時間：約 <strong>5〜10分</strong>（再起動が必要な場合はもう少しかかります）
+            </div>
+
+            <!-- ===== STEP 1 ===== -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">「Windowsの機能の有効化または無効化」を開く</div>
+                </div>
+                <div class="step-body">
+                    <p>スタートメニュー（画面左下の <span class="key-badge">⊞ Win</span> ボタン）を開き、<br>
+                    検索欄に <span class="highlight">Windows<span style="background:#ff6b6b; color:white; padding:0 3px; border-radius:3px; font-size:0.85em; margin:0 1px;" title="半角スペース">␣</span>の機能の有効化または無効化</span> と入力して選択します。</p>
+
+                    <div class="note">
+                        「Windows」のあとに<strong>半角スペース</strong>が必要です。全角スペースや詰めて入力すると検索にヒットしない場合があります。
+                    </div>
+
+                    <figure class="screenshot">
+                        <img src="images/step1_search.png" alt="スタートメニューで「Windowsの機能の有効化または無効化」を検索">
+                        <figcaption>▲ スタートメニューで検索した画面</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <!-- ===== STEP 2 ===== -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">SMB 1.0/CIFS クライアントを有効にする</div>
+                </div>
+                <div class="step-body">
+                    <p>「Windowsの機能」ウィンドウが開いたら、一覧から以下の項目を探してください。</p>
+                    <div class="arrow-flow">
+                        <span class="flow-item">SMB 1.0/CIFS ファイル共有のサポート</span>
+                        <span class="arrow">▶</span>
+                        <span class="flow-item">SMB 1.0/CIFS クライアント</span>
+                    </div>
+                    <p><span class="highlight">SMB 1.0/CIFS クライアント</span> に <strong>チェック（✔）を入れて</strong>、<br>
+                    「OK」ボタンを押してインストールを開始します。</p>
+
+                    <figure class="screenshot">
+                        <img src="images/step2_smb.png" alt="SMB 1.0/CIFS クライアントにチェックを入れる">
+                        <figcaption>▲ 赤丸の「SMB 1.0/CIFS クライアント」にチェックを入れる</figcaption>
+                    </figure>
+
+                    <div class="note-info">
+                        <strong>既にチェックが入っている場合</strong>は、この手順と次の手順3（再起動）は<strong>スキップ</strong>してください。<br>
+                        → そのまま <strong>手順4</strong> へ進んでください。
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 3 ===== -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">PCを再起動する <span class="skip-badge">手順2でスキップの場合は不要</span></div>
+                </div>
+                <div class="step-body">
+                    <p>インストール完了後、画面の指示に従って <strong>PCを再起動</strong> してください。</p>
+                    <div class="note">
+                        再起動しないと SMB 1.0 機能が有効になりません。<br>
+                        作業中のファイルがあれば、再起動前に必ず<strong>保存</strong>してください。
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 4 ===== -->
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">サーバーの資格情報を登録する</div>
+                </div>
+                <div class="step-body">
+                    <p><span class="key-badge">⊞ Win</span> ＋ <span class="key-badge">R</span> キーを同時に押して「ファイル名を指定して実行」を開きます。</p>
+                    <p>下記のコマンドを <strong>そのままコピー＆ペースト</strong> して「OK」を押してください。</p>
+
+                    <div class="cmd-label">▼ 入力するコマンド</div>
+                    <div class="cmd-wrapper">
+                        <div class="cmd-box" id="cmd1" data-cmd="cmd /c cmdkey /add:nksv523.ad.nkc.co.jp /user:nksv523.ad.nkc.co.jp\nksv523 /pass:nksv523">cmd /c cmdkey /add:nksv523.ad.nkc.co.jp /user:nksv523.ad.nkc.co.jp\nksv523 /pass:nksv523</div>
+                        <button type="button" class="copy-btn" data-target="cmd1" aria-label="コマンドをコピー">📋 コピー</button>
+                    </div>
+
+                    <div class="note">
+                        コマンドプロンプトが一瞬表示されてすぐ閉じますが、<strong>正常な動作</strong>です。<br>
+                        エラーが出なければ資格情報の登録は完了しています。
+                    </div>
+
+                    <div class="note-info" style="margin-top:10px;">
+                        これでサーバーへの接続準備は完了です！<br>
+                        エクスプローラーのアドレスバーに <code>\\nksv523.ad.nkc.co.jp</code> と入力すると接続できます。
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <h3 style="margin-bottom: 10px;">🔧 トラブルシューティング</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:0.9em;">
+                <thead>
+                    <tr style="background:#e8f4fd;">
+                        <th style="padding:10px 12px; text-align:left; border-bottom:2px solid #0078d4; width:40%;">症状</th>
+                        <th style="padding:10px 12px; text-align:left; border-bottom:2px solid #0078d4;">対処法</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">サーバーに接続できない</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">手順2でSMB 1.0/CIFSクライアントが有効になっているか確認。<br>有効化した場合はPCの再起動を忘れずに。</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">「アクセスが拒否されました」と表示される</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">手順4のコマンドを再度実行してください。<br>コピー時に余分なスペースが入っていないか確認。</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">コマンドがエラーになる</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eee;">コマンドの文字が途切れていないか確認してください。<br>全文を正しくコピーし直してください。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <footer>
+            富岡（株）第二生産部 実装技術課 ｜ 作成日：2026年4月17日
+        </footer>
+    </div>
+
+    <script>
+        // クリップボードへのコピー（fallback付き）
+        function copyToClipboard(text) {
+            // モダンAPI（HTTPS / localhost で利用可能）
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            }
+            // フォールバック：一時的なtextareaを使う
+            return new Promise((resolve, reject) => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.top = '-1000px';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                ta.setSelectionRange(0, ta.value.length);
+                try {
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    ok ? resolve() : reject(new Error('execCommand failed'));
+                } catch (e) {
+                    document.body.removeChild(ta);
+                    reject(e);
+                }
+            });
+        }
+
+        // 全てのコピーボタンに対してイベントを設定
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (!target) return;
+                // data-cmd属性を優先、無ければtextContent
+                const text = target.getAttribute('data-cmd') || target.textContent;
+
+                copyToClipboard(text).then(() => {
+                    const original = btn.textContent;
+                    btn.textContent = '✅ コピー済';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1800);
+                }).catch(err => {
+                    console.error('コピー失敗:', err);
+                    btn.textContent = '⚠ 失敗';
+                    setTimeout(() => { btn.textContent = '📋 コピー'; }, 1800);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

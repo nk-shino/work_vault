@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}エラー - 社内用語集{% endblock %}
+{% block main %}
+<h1>処理できませんでした</h1>
+<p class="error" role="alert">{{ message }}</p>
+<p><a href="javascript:history.back()">前の画面に戻る</a> ／ <a href="/terms">用語一覧へ</a></p>
+{% endblock %}

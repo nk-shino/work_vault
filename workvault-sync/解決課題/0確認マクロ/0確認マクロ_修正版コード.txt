@@ -1,0 +1,236 @@
+0確認マクロ ver.2 修正手順
+2026-09-28 更新
+
+このPCからxlsmのVBAは書き換えられない。Excel COM が未登録
+（REGDB_E_CLASSNOTREG 0x80040154）で、Excelを外から操作できないため。
+VBAバイナリを直接組み替える方法もあるが、独自圧縮の書き戻しで
+ブックを壊す確率のほうが高いので採らない。VBEで手作業になる。
+
+作業は3つ。【1】がインポート、【2】【3】が貼り付け。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ エラーは2つある
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+(A) PtrSafe が無い Declare
+    Module1 の126・127・130行目、Module2 の314行目。
+    79〜118行目は #If Win64 と PtrSafe で守られているのに、この4本だけ素のまま。
+    このPCの Excel は 64bit（EXCEL.EXE が C:\Program Files\ 配下）なので、
+    「'PtrSafe' 属性が必要です」でここが先に落ちる。
+
+(B) 同名の公開宣言が2つ
+    Type coordinate と GetCursorPos が Module1 と Module2 の両方にあり、
+    標準モジュールの既定は公開なので名前が衝突する。
+
+VBAはプロジェクト全体をコンパイルしてから実行する。
+どちらか一方でも残っていれば、CSV取り込みも消し込みも一切動かない。
+「取り込んでも0件」だったのは、0件だったのではなく実行されていなかったため。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【1】Module2 を入れ替える（インポート）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+同じフォルダの Module2_修正版.bas を使う。
+
+  1. VBE（Alt+F11）を開く
+  2. 左のツリーで Module2 を右クリック →「Module2 の解放」→ 保存は「いいえ」
+  3. メニュー [ファイル] →「ファイルのインポート」
+  4. Module2_修正版.bas を選ぶ
+
+(A)(B) の両方がこれで直る。ファイルは cp932 で保存してあるので日本語は化けない。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【2】Module1 の宣言部を差し替える
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Module1 の「'マウス」から mouse_event の宣言までを、下のブロックで置き換える。
+Const MOUSE_LEFTDOWN 以降はそのまま残す。
+
+- - - - - 置き換え前（現状・122〜137行あたり） - - - - -
+
+'マウス
+Type coordinate
+    x As Long
+    y As Long
+End Type
+Declare Function GetCursorPos Lib "user32" (lpPoint As coordinate) As Long
+Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+
+
+Declare Sub mouse_event Lib "user32" ( _
+ByVal dwFlags As Long, _
+Optional ByVal dx As Long, _
+Optional ByVal dy As Long, _
+Optional ByVal dwDate As Long, _
+Optional ByVal dwExtraInfo As Long)
+
+- - - - - 置き換え後 - - - - -
+
+'マウス
+' Private にするのは Module2 と名前が衝突するため。
+' PtrSafe の判定は Win64 ではなく VBA7 で見る。PtrSafe を解するかどうかは
+' ポインタ長ではなく VBA のバージョンで決まるため。
+Private Type coordinate
+    x As Long
+    y As Long
+End Type
+
+#If VBA7 Then
+    Private Declare PtrSafe Function GetCursorPos Lib "user32" (lpPoint As coordinate) As Long
+    Private Declare PtrSafe Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+    Private Declare PtrSafe Sub mouse_event Lib "user32" ( _
+    ByVal dwFlags As Long, _
+    Optional ByVal dx As Long, _
+    Optional ByVal dy As Long, _
+    Optional ByVal dwDate As Long, _
+    Optional ByVal dwExtraInfo As Long)
+#Else
+    Private Declare Function GetCursorPos Lib "user32" (lpPoint As coordinate) As Long
+    Private Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+    Private Declare Sub mouse_event Lib "user32" ( _
+    ByVal dwFlags As Long, _
+    Optional ByVal dx As Long, _
+    Optional ByVal dy As Long, _
+    Optional ByVal dwDate As Long, _
+    Optional ByVal dwExtraInfo As Long)
+#End If
+
+- - - - - ここまで - - - - -
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【3】Sheet1 の Input0_Click を差し替える
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+現行からの変更は2箇所だけ。判定ロジックは正しいので触っていない。
+
+  ・A列を先に消す      前回の取り込みのほうが件数が多いと、古い行が下に残る
+  ・Trim(cols(0))       29,246行のうち12,218行のシリアルが先頭に空白を持つ
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Private Sub Input0_Click()
+
+    Dim filePath As String
+    filePath = Application.GetOpenFilename("CSVファイル,*.csv")
+    If filePath = "False" Then Exit Sub
+
+    ' 前回の取り込みが残っていると件数が合わなくなる。B列は既存マクロの
+    ' 再開位置判定に使うので、消すのはA列だけにする。
+    Columns(1).ClearContents
+
+    ' --- ファイル全体を UTF-8 で一括読み込み（BOMは自動除去） ---
+    Dim st As Object
+    Set st = CreateObject("ADODB.Stream")
+    st.Charset = "UTF-8"
+    st.Open
+    st.LoadFromFile filePath
+    Dim allText As String
+    allText = st.ReadText(-1)   ' -1 = adReadAll ：全文を一度に読む
+    st.Close
+
+    ' --- 改行コードを自前で正規化してから行分割 ---
+    allText = Replace(allText, vbCrLf, vbLf)   ' CRLF → LF
+    allText = Replace(allText, vbCr, vbLf)     ' CR   → LF
+    Dim lines() As String
+    lines = Split(allText, vbLf)               ' LF で確実に行分割
+
+    Dim writeRow As Long
+    writeRow = 1
+
+    Dim i As Long
+    Dim cols() As String
+    Dim loc As String
+
+    For i = LBound(lines) To UBound(lines)
+        If Len(Trim(lines(i))) > 0 Then
+            cols = Split(lines(i), ",")
+            If UBound(cols) >= 7 Then
+                loc = Trim(cols(7))                 ' 8列目 ロケーション名称
+                If Left(loc, 3) = "0確認" And IsNumeric(cols(5)) Then
+                    If CLng(cols(5)) <= 9 Then
+                        ' EG-Proのシリアルは左に空白が入る。そのまま書くと
+                        ' リール消費画面の照合で一致しない。
+                        Cells(writeRow, 1).Value = Trim(cols(0))
+                        writeRow = writeRow + 1
+                    End If
+                End If
+            End If
+        End If
+    Next i
+
+    MsgBox writeRow - 1 & " 件を取り込みました。"
+
+End Sub
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【4】コンパイルを通す
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VBE の [デバッグ] → [VBAProject のコンパイル]。
+何も出なければ通っている。ここを飛ばして実行しないこと。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【5】直したあとに出るはずの数
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2026_09_25_113916_EGProWhereHouse.csv を同じ判定で機械的に流した結果。
+これと違う数が出たら、直し方か入力ファイルのどちらかが違う。
+
+  取り込み件数        5,848 件
+  メッセージの表示    「5848 件を取り込みました。」
+
+  ライン別            0確認(L3)  3,088
+                      0確認(L1)  1,422
+                      0確認(L2)  1,338
+
+  在庫数別            1個 1,913   2個 1,463   3個 778   4個 600   5個 325
+                      6個 301     7個 206     8個 170   9個  92
+
+  品番の種類          1,080
+  A列の1行目          160096C100792
+  A列の最終行(5848)   T9000031021100011
+
+在庫数1〜3個で4,154件、全体の71%。仕様書が書いている
+「切り替わりで残る数量は一つから三つ程度が多い」と一致する。
+
+シリアルの途中にある空白（例 9000071770 100007）は消さない。
+これはシリアルの一部で、Trim が落とすのは左右の空白だけ。
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【6】確認済みで、もう気にしなくてよいこと
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  引用符を含む行      0 / 29,246 行
+                      → Split(",") の素の分割で列はずれない。
+                        仕様書§10「品番や日時にカンマが混じりSplitが崩れた」は起きない
+
+  見出し行            1行目にある（シリアル番号,品番,…）
+                      → ただし Left("ロケーション名称",3) は "0確認" に一致しないので
+                        読み飛ばし処理が無くても実害なし
+
+  入力CSV             絞り込み済みではなく全件 29,246 行
+                      → エクスポート条件を松井さんに確認する必要はない
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【7】流す前に
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+取り込みはA列に書くだけなので取り消せる。消し込みは取り消せない。
+
+  1. 【1】〜【3】を直し、【4】でコンパイルを通す
+  2. 取り込みを実行し、5,848件と表示されるか見る
+  3. A列を目視する。1行目が 160096C100792 か。空白が残っていないか
+  4. B列が空のままか（値が入っていると途中再開になる）
+  5. 消し込みは少数から。全5,848件を一度に流さない
+
+ラベル消去は不可逆。ここだけは手順を飛ばさないこと。

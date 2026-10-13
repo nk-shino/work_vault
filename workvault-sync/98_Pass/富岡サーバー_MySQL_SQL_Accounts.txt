@@ -1,0 +1,42 @@
+username			password			accessibleDB/tbl		global/local priv
+****************** nksv560.ad.nkc.co.jp *****************
+ITS					ITS					gaia_vita.*				SELECT, INSERT, UPDATE, DELETE
+NKT_Acc				???					BOSS_DATA.*				ALL
+Ondotori_TR-702		ondotori			tomioka.dailyData		SELECT, INSERT, UPDATE, DELETE, DROP
+auth_user			M3L7NYfjYMnssbQB	tomioka.auth_mem*		SELECT, INSERT, UPDATE, DELETE
+bukan2020			bukan2020			Location_Address*		SELECT
+dwhuser				???					BOSS_DATA.*				SELECT, INSERT, UPDATE, DELETE, DROP
+em13609(茂木絵美)	em13609				orderNumber.*			SELECT
+haizen_viewer		8mSSqrIjzjbEuF2j	Location_Address.*		SELECT
+haizen_worker		haizen				Location_Address.*		SELECT, INSERT, UPDATE, DELETE, DROP
+itsVITA				its_vita			gaia_vita.*				SELECT, INSERT, UPDATE, DELETE
+jsystem_admin		tup1SMzA1VHxEFvM	Location_Address.*		ALL
+										information_schema		SELECT(system default)
+manager_bull		bulletin_mgtPass	tomioka.*				SELECT, INSERT, UPDATE, DELETE
+nkv330_user			nQN7kLCyPuuaf2eP	tomioka.nkv330*			SELECT, INSERT, UPDATE, DELETE
+no13792(岡野上)		no13792				orderNumber.*			SELECT, INSERT, UPDATE, DELETE
+										test.*					ALL
+orderNum_viewer		orderNumber			orderNumber.*			SELECT
+pcba_tester			hanseihin			orderNumber.*			SELECT, INSERT, UPDATE, DELETE
+process_mgt			7bcsHFk8P7VxRcFD	orderNumber.*			SELECT, INSERT, UPDATE, DELETE
+sashizu_entry		sashizu_nkt			orderNumber.*			SELECT, INSERT, UPDATE, DELETE, DROP
+										Location_Address.*		SELECT, INSERT, UPDATE, DELETE, DROP
+testuser			test				test.*					SELECT
+yk8937(河合由紀子)	yk8937				Location_Address.*		SELECT
+										TRNSQL.*				ALL
+										orderNumber.*			SELECT
+										test.test_table			DELETE, CREATE, DROP, INDEX, ALTER, CREATE VIEW, SHOW VIEW, TRIGGER
+
+
+****************** nksv567.ad.nkc.co.jp *****************
+seigi				seigi				ALL						ALL GLOBAL PREV
+seigi-test			seigi-test			PCBA_CHK_Data.*			SELECT
+testuser			test				test.*					ALL
+
+****************** nksv568.ad.nkc.co.jp *****************
+as12481(佐藤絢香)	kawamoto			orderNumber.*			SELECT, INSERT, UPDATE, DELETE
+sashizu_entry		sashizu_nkt			orderNumber.*			SELECT, INSERT, UPDATE, DELETE, DROP
+yt5378(時田雄一)		kawamoto			orderNumber.*			SELECT, INSERT, UPDATE, DELETE
+
+****************** nksv569.ad.nkc.co.jp *****************
+process_mgt			7bcsHFk8P7VxRcFD	orderNumber.*			SELECT, INSERT, UPDATE, DELETE, ALTER, DROP

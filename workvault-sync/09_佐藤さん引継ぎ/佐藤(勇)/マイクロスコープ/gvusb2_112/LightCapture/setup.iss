@@ -1,0 +1,27 @@
+[InstallShield Silent]
+Version=v7.00
+File=Response File
+[File Transfer]
+OverwrittenReadOnly=NoToAll
+[{5982DE66-98C4-4351-AADB-61EC2CAE0B94}-DlgOrder]
+Dlg0={5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdWelcome-0
+Count=4
+Dlg1={5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdAskDestPath2-0
+Dlg2={5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdStartCopy2-0
+Dlg3={5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdFinish-0
+[{5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdWelcome-0]
+Result=1
+[{5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdAskDestPath2-0]
+szDir=C:\Program Files\I-O DATA\LightCapture
+Result=1
+[{5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdStartCopy2-0]
+Result=1
+[Application]
+Name=LightCapture
+Version=1.00.0000
+Company=I-O DATA DEVICE,INC.
+Lang=0011
+[{5982DE66-98C4-4351-AADB-61EC2CAE0B94}-SdFinish-0]
+Result=1
+bOpt1=0
+bOpt2=0
