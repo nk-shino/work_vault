@@ -49,9 +49,9 @@ function RegisterUsb {
 }
 function VerifyUsb {
  $u=GetUsbIdentity;$marker=Join-Path $u.Root $MarkerName
- if(-not (Test-Path -LiteralPath $marker -PathType Leaf -ErrorAction Stop)){throw 'USB marker missing'}
- $text=[IO.File]::ReadAllText($marker,[Text.Encoding]::ASCII)
- if($text -notmatch '(?m)^RegistrationGuid=([0-9a-fA-F-]{36})$'){throw 'Registration GUID missing or malformed'};$script:RegistrationGuid=$Matches[1];if($text -notmatch '(?m)^DiskSerial=(.+)$' -or $Matches[1].Trim() -cne $u.Serial){throw 'USB disk serial does not match marker'};if($text -notmatch '(?m)^VolumeSerial=(.+)$' -or $Matches[1].Trim() -cne $u.VolumeSerial){throw 'USB volume serial does not match marker'}
+  if(-not (Test-Path -LiteralPath $marker -PathType Leaf -ErrorAction Stop)){throw 'USB marker missing'}
+  $text=[IO.File]::ReadAllText($marker,[Text.Encoding]::ASCII)
+  if($text -notmatch '(?m)^RegistrationGuid=([0-9a-fA-F-]{36})\r?$'){throw 'Registration GUID missing or malformed'};$script:RegistrationGuid=$Matches[1];if($text -notmatch '(?m)^DiskSerial=(.+?)\r?$' -or $Matches[1].Trim() -cne $u.Serial){throw 'USB disk serial does not match marker'};if($text -notmatch '(?m)^VolumeSerial=(.+?)\r?$' -or $Matches[1].Trim() -cne $u.VolumeSerial){throw 'USB volume serial does not match marker'}
  $script:Root=$u.Root;$script:UsbSerial=($u.Serial+' / '+$u.VolumeSerial)
 }
 function ValidateDependency {
