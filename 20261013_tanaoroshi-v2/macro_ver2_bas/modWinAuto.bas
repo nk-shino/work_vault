@@ -1,6 +1,6 @@
-Attribute VB_Name = "modWinAuto"
+﻿Attribute VB_Name = "modWinAuto"
 '==============================================================================
-' modWinAuto  ver.2.1  (2026-10-13)
+' modWinAuto  ver.2  (2026-10-05 改修・2026-10-13 検証前改善)
 '
 ' 相手アプリの窓を操作する層。Win32 API を触るのはこのモジュールだけ。
 ' ここを触る改修は、窓のつかみ方と送り方を変えるときだけにする。
@@ -172,7 +172,7 @@ End Sub
 
 '------------------------------------------------------------------ 窓をつかむ
 ' 指定したタイトルの窓を探してつかむ。見つからなければ timeoutMs まで待つ。
-' ver.2.1: 完全一致で見つからないときだけ、前方一致(タイトルの先頭)で探す。
+' ver.2: 完全一致で見つからないときだけ、前方一致(タイトルの先頭)で探す。
 ' 設定シートに書いたタイトルが完全一致なら、動きは ver.2 とまったく同じ。
 Public Function BindWindow(ByVal titleExact As String, _
                            ByVal timeoutMs As Long) As Boolean
@@ -264,7 +264,7 @@ End Function
 '------------------------------------------------------------------ タイトル
 ' つかんだ窓のタイトルを読む。前面の窓ではない。
 ' 窓が消えていれば空文字を返す。
-' ver.2.1: TitleOf と同じ手順だが、つかんだ窓に特化して短く書いた。
+' ver.2: TitleOf と同じ手順だが、つかんだ窓に特化して短く書いた。
 Public Function TargetTitle() As String
     If Not IsBound() Then Exit Function
     TargetTitle = TitleOf(mTarget)
