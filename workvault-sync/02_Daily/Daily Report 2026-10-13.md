@@ -6,7 +6,7 @@ tags:
   - daily
   - work-log
   - 2026/10
-status: WIP
+status: done
 ---
 
 > **本書は 2026-10-13 当日の記録から起こした。**
