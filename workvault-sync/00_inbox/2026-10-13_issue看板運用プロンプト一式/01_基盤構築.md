@@ -1,7 +1,7 @@
 ---
 type: prompt
 phase: draft
-status: draft
+status: verified
 project: issue-kanban-ops
 updated: 2026-10-13
 ---
