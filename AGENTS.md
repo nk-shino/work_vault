@@ -9,6 +9,15 @@ This is the default workspace. The rules below are a default starting point; ada
 - Work that belongs in its own repository fits better outside this workspace: suggest creating a separate folder elsewhere and opening it as a separate project in Kohden Code
 - Kohden Code が実行した内容は、日付ごとに実行ログとして個別に記録する。ログは `YYYYMMDD_<topic>/実行ログ_YYYYMMDD.md` に置き、「ユーザーの指示1件＝エントリ1件」として「指示/実施/成果物/状態(コミット番号含む)」を記す。既存の日のログがあればそこに追記する
 
+## Work_Vault リモートトラッキング運用
+
+- 保管庫 `C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault` は `workvault-sync/` ミラー経由で GitHub `nk-shino/work_vault`（Private）に追跡される
+- 同期は `scripts/vault-sync.ps1`（タスクスケジューラ `Vault-sync-commit-push` がログオン5分後＋毎日17:30に自動実行）。手動実行は `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\vault-sync.ps1 [-DryRun]`
+- Vault 側の変更を AI が検知したら同期を待たず手動同期してよい（`vault-sync.ps1` 実行→差分コミット→push まで自動）
+- GitHub issue は `scripts/github-issue.py`（起票）と `scripts/github-issue-close.py`（コメント付きクローズ）で操作する。gh CLI は未ログインだが git credential のトークンで API を叩ける。使い方: `python scripts/github-issue.py nk-shino/work_vault "<title>" <body.md>`
+- 100MB 超の2ファイル（`自動はんだ不良入力.zip`・`NPM-DGS.PDF`）は `.gitignore` 済み。履歴に再登録しないこと（push が拒否される）
+- `98_Pass`（認証情報）を含むためリポジトリは必ず Private 維持。public 化やスコープ拡大をしてはいけない
+
 ## About this file
 
 This file holds general rules for this workspace, not notes about the current task. When these rules do not fit how the user works, or an agent made a mistake or worked inefficiently, suggest updating them so things go better next time, and edit the file once the user agrees.
