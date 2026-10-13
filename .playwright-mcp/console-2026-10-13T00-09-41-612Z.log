@@ -1,0 +1,10 @@
+[     534ms] [INFO] BSSO Telemetry: {"result":"Error","error":"NoExtension","type":"ChromeSsoTelemetry","data":{},"traces":["BrowserSSO Initialized","Creating ChromeBrowserCore provider","Sending message for method CreateProviderAsync","Received message for method CreateProviderAsync","Error: ChromeBrowserCore error NoExtension: Extension is not installed."]} @ https://aadcdn.msauth.net/shared/1.0/content/js/BssoInterrupt_Core_8k_MLTH5HA-ha6OAu4vroQ2.js:17
+[     567ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://login.microsoftonline.com/favicon.ico:0
+[     690ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://aadcdn.msftauth.net/ests/2.1/content/cdnbundles/converged.v2.login.min_pzfy2abhlubh6bv_dyvwha2.css:0
+[     696ms] /aadcdn.msftauth.net/ests/2.1/content/cdnbundles/converged.v2.login.min_pzfy2abhlubh6bv_dyvwha2.css'], reloading from fallback CDN endpoint
+[     693ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://aadcdn.msftauth.net/shared/1.0/content/js/ConvergedLogin_PCore_IzVCgFbeIBqYh0ZIsL8czw2.js:0
+[     697ms] /aadcdn.msftauth.net/shared/1.0/content/js/ConvergedLogin_PCore_IzVCgFbeIBqYh0ZIsL8czw2.js'], reloading from fallback CDN endpoint
+[     693ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://aadcdn.msftauth.net/ests/2.1/content/cdnbundles/ux.converged.login.strings-ja.min_0duutdyvaum1havlgfnkca2.js:0
+[     698ms] /aadcdn.msftauth.net/ests/2.1/content/cdnbundles/ux.converged.login.strings-ja.min_0duutdyvaum1havlgfnkca2.js'], reloading from fallback CDN endpoint
+[    2860ms] [LOG] JQMIGRATE: Migrate is installed, version 3.3.2 @ https://aadcdn.msftauth.net/ests/2.1/content/cdnbundles/watsonsupportwithjquery.3.5.min_dc940oomzau4rsu8qesnvg2.js:4
+[    2867ms] [LOG] JQMIGRATE: Migrate is installed, version 1.4.1 @ https://aadcdn.msftauth.net/ests/2.1/content/cdnbundles/watsonsupportwithjquery.3.5.min_dc940oomzau4rsu8qesnvg2.js:7

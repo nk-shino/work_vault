@@ -1,0 +1,25 @@
+- generic [ref=f5e1]:
+  - generic:
+    - generic:
+      - generic:
+        - img "組織の背景画像" [ref=f5e2]
+        - generic [ref=f5e3]:
+          - generic [ref=f5e9]:
+            - img "組織のバナー ロゴ" [ref=f5e12]
+            - main [ref=f5e13]:
+              - generic [ref=f5e14]:
+                - generic "ss80751@ad.nkc.co.jp" [ref=f5e18]
+                - generic [ref=f5e20]:
+                  - heading "現時点ではこれにはアクセスできません" [level=1] [ref=f5e21]
+                  - generic [ref=f5e22]:
+                    - generic [ref=f5e23]: サインインは完了しましたが、このリソースへのアクセス条件を満たしていません。たとえば、管理者によって制限されているブラウザー、アプリ、または場所からアクセスしている可能性があります。
+                    - link "サインアウトして別のアカウントでサインインしてください" [active] [ref=f5e25] [cursor=pointer]:
+                      - /url: https://login.microsoftonline.com/ca9c2885-f052-48d0-98f2-4ee2bfc5cc07/reprocess?prompt=select_account&sosid=&ctx=rQQIABABBAABBgIAAAADAOz_BQD0_0V2b1N0c0FydGlmYWN0cxgAAAAAAHGcJE-1T3j3SfnrG8vD4Os5XDVIn5XjXSMGH7Lg9CcsE7bR4fYJKjBlRJ1bDzm7JOL0jR1f-mHKUruKVj-8r-bPP8WcCljMZYILBBJDD1WUOdSGoXHv3awehU4zQ6qwdIBRFkELVxCDt42ANA_f4NiP9TzYYEJ3fjNoltKY63hcrJaiH2wGLqNZSTnM6GIh7kjBjJ5V78f9dMm8WbMlasbCT42FU80AL8Hdfa2w8AvhT1YOFQfOEDJAe6OkqNVAEvF1LnOzDqCCLcc3Z5bwE3zI-S3PHWt_tRLv6swHq4wmdmwAYSjD4M3jpDz5v7d1yra0ywkzYaTHx8Qci-eRCN_w_1FZ8L4uJlzkBMM5wOaQcLJ016GV5C7-2adYbuwxViWYRf0vlIdEC_2mb1_K2lSgDH_sZ-Zi4fTwAxhjG4gan1nXkeKKyh189vFlCA5CYHfmikVr7brAl2lcg0j3P1o9uBJ0HCbADmP4f7rsvvQCzpzW1lLejPD8hRb8FHeGFWn4e2M2E7TfAhGkrnKadO0phvuT3VBqW_VvE_tDWG7Ue9LCrzqx96albYHNPWmurgU59vZq3FnTi4A_6p10Bqg_uLCm9w5yexEXLkIARkuPa_i2YHLpMFlQAFgXGGXe0jR9Xqmy9Co2TdT65ymt5nZOod5Sa4HXOq6DHWlzn_7kYsrE8rsS3TbrjoebsrKMnodUadDgZ8Avwk2scAgvxicHlSvL52xYbLgZ4-E0gJtrSAa73AaWvuJVn302AtM1yT9PkaiWY5pKfnt4jCTlpcLdSZoLKRWZyPQG_MRk6nHlUD910ggPW-3_OLYvX4f5ZmTM8DEe4WwCz4n1BP2vPKnHK-sahYSwxlZ83bF5JK7eVe3KDUoQ9ygao-6IGcBXKco9UevGHQGnx6QO1tOoLFtG9V0LB2JRVNMzl7EL1KFgDKyp2TQhLpmeJ9k4ogOwRG0ik7pYrWsGjrm3Mq4692SLTNIf2pwrlwmZRq8CXxq_mTYZj5BHhK0sQoa8poUrRTNA44NPgQUQKw6VN1aNB4xrX4kPk-5Wd8WrXineeR3vqaJPfJ70R3voyLRZSXw5z6lQNk26mJBZfJuGqA_uPtuLgXdMMxz73tLQYSHOg75FTa9ttyZKeazuP36FzkRxD9ges4RWqE65oT-nUIjf4YR6-mTppv5PTDQ2c9NwJlIyHW2nY_ENBOfW42Cg_Z3MjYNcUuUgtR90kDtOEgZ2f_9NgDKOLm2c-IOrhHtHUEncRl4rWs9lXeqPlcFdzWq2hRaIgaiTNaIs_lq17uM8fHJD_VXl8G6zbArZeS9NiNFyyH_ILGf3sySW-h45AbWqyrk-REznBzkjEqNYX_ZSgLOaJuO_Io5X3k6yR9oAYBSp2JOQczyxsdETVZ7Eve35WQgaUrFxZ4JPPiEzSNVYIoVTveox8idfKDCEVdz9jwV07ZVoITfGPGkrVSJzyHadNP6cgObtCIbhVk6Xq_jH2Rb4MG1yGiqa9tNqFkh6hgnbSV12UgIX2r6X6eh3d3eN59EeIsUdEWLHX3kIANYxmeF64Qpv6KcHL4edB599a285yXgyRz-wQBr2gYrU8ZblTCsn0mqegatZL6-1JJOMuO6goM888AlU004BiXyXn4BL9OyRu6wdJ76ntmnWv8HtqWTMrf2gMGQhLYyVDLEptKye_b4qZC5aH1_fO7QiBZZMdOXEsmBhadN9o2nbRBA1fWZs4S7bDAP6AQOP7yMl-O5Ro9IgSOPzdBKz_fo8Zk0wcqQRXawYwLjrktSjBS8gFS-rGNj_1DKGeY9BURVaKN-gEVA370KSRlcrgENSDgeJ0nEimRbGvuHIiSONQ9z3f5mlAdNV1l5chst-Xo8T96kj6YoHU_s07v2Rqy60-6d8dbUD0RFXAOSpghYm0fVzBDUw6xDbY_AE0ETyocSJX6SGWthXnwwJ7PZsn_mdXpf7ozOuSERCcmvK0
+                    - button "詳細については、ここをクリックします" [ref=f5e26] [cursor=pointer]: 詳細
+          - contentinfo [ref=f5e27]:
+            - generic [ref=f5e28]:
+              - link "利用規約" [ref=f5e29] [cursor=pointer]:
+                - /url: https://www.microsoft.com/ja/servicesagreement/
+              - link "プライバシーと Cookie" [ref=f5e30] [cursor=pointer]:
+                - /url: https://privacy.microsoft.com/ja/privacystatement
+              - button "詳細については、ここをクリックします" [ref=f5e31] [cursor=pointer]: ...
