@@ -18,6 +18,13 @@ This is the default workspace. The rules below are a default starting point; ada
 - 100MB 超の2ファイル（`自動はんだ不良入力.zip`・`NPM-DGS.PDF`）は `.gitignore` 済み。履歴に再登録しないこと（push が拒否される）
 - `98_Pass`（認証情報）を含むためリポジトリは必ず Private 維持。public 化やスコープ拡大をしてはいけない
 
+## 文書作成の言い回し(管理文書・報告書)
+
+- 管理文書・報告書・原稿を作成するとき、日常会話寄りの語や比喩表現を使わない。ビジネス標準の言い回しに置き換える
+- 例: 律速→ネック、動き出す→着手できる、飛ばす→省略する、打ち切る→切り上げる、手がかり→情報、勝手に→許可なく
+- 比喩(「異常を正常と読む文書」「道具です」等)は、意味が直接伝わる表現(「異常を正常と判断してしまう恐れ」「準備です」)に言い換える
+- 作成時に自己点検し、置換した語が残っていないか確認してから提出する
+
 ## About this file
 
 This file holds general rules for this workspace, not notes about the current task. When these rules do not fit how the user works, or an agent made a mistake or worked inefficiently, suggest updating them so things go better next time, and edit the file once the user agrees.
