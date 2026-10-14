@@ -178,6 +178,148 @@ def _style_table(ws, r0, nrows, ncols, header=True, widths=None):
 RESOLVED_FONT = Font(name=FONT_NAME, size=10, color="808080", strike=True)
 
 
+# =====================================================================
+# NR4030 様式モード(0494-913473 実装プログラム手順(DGS) の形式を完全再現)
+# 実測仕様(02_参照元/マウントプログラム(DGS)/様式分析 2026-10-14):
+# - ヘッダー枠: A1:V2「手 順 書」/ W2:AB2「管理番号」/ AC2:AT2 値欄 /
+#   AU2:AV2「頁」/ AW2:AZ2 値欄(印刷時フッタ&Pで付番) /
+#   A3:F3「型   名」/ G3:V3 値欄 / W3:AB3「工程番号」/ AC3:AZ3「－」/
+#   A4:F4「作業内容」/ G4:AZ4 題目(頭を全角スペース1字)
+# - 枠罫線: 外周 medium・内側 thin(黒)
+# - 行高: 行1=5.25pt/行2-4=33pt/本文=12.75pt
+# - 列幅: A=1.9(番号頭出し)/AZ=3.3/中間=既定(8.09)/BA以降=1.9
+# - フォント: Meiryo UI 16pt(A1)/10pt(枠・本文)
+# - 向き: 縦向き A4・スケール指定なし・約55行/頁
+# - 余白: 左0.87"/右0.51"/上0.59"/下0.79"
+# - フッタ: 左「　　NR4030」/中央「様式 NR4030-0300-A3」/右「&P」+右上「日本光電」
+# - 手動改ページ: 約55行ごと+「作業内容」ヘッダ(行4相当)を再掲
+# =====================================================================
+
+NR30_FONT_HDR = Font(name="Meiryo UI", size=16)
+NR30_FONT = Font(name="Meiryo UI", size=10)
+NR30_BORDER_NONE = Border()
+NR30_M = Side(style="medium")
+NR30_T = Side(style="thin")
+
+
+def _nr30_border(l=None, r=None, t=None, b=None):
+    return Border(left=l, right=r, top=t, bottom=b)
+
+
+def _nr30_header(ws, topic):
+    """NR4030 様式のヘッダー枠(A1:AZ4)を描く。topic=作業内容の題目。"""
+    # 列幅(実測値)
+    ws.column_dimensions["A"].width = 1.9
+    ws.column_dimensions["AZ"].width = 3.3
+    ws.column_dimensions["BA"].width = 1.9
+    ws.column_dimensions["BB"].width = 1.9
+    # 行高(実測値)
+    ws.row_dimensions[1].height = 5.25
+    for rr in (2, 3, 4):
+        ws.row_dimensions[rr].height = 33.0
+    # 結合
+    for rng in ("A1:V2", "W2:AB2", "AC2:AT2", "AU2:AV2", "AW2:AZ2",
+                "A3:F3", "G3:V3", "W3:AB3", "AC3:AZ3", "A4:F4", "G4:AZ4"):
+        ws.merge_cells(rng)
+    # 値と書式
+    c = ws["A1"]; c.value = "手 順 書"; c.font = NR30_FONT_HDR
+    c.alignment = Alignment(horizontal="center", vertical="top")
+    for ref, val in (("W2", "管理番号"), ("AU2", "頁"),
+                     ("A3", "型   名"), ("W3", "工程番号"),
+                     ("AC3", "－"), ("A4", "作業内容")):
+        c = ws[ref]; c.value = val; c.font = NR30_FONT
+        c.alignment = CENTER
+    c = ws["G4"]; c.value = "　" + topic; c.font = NR30_FONT
+    c.alignment = Alignment(horizontal="left", vertical="center")
+    # 枠罫線: 外周 medium・内側 thin(実測の罫線配置)
+    # 行2(管理番号/頁の帯): 上=medium 下=thin、帯内は thin 区切り
+    for col in range(23, 53):  # W..AZ
+        cell = ws.cell(2, col)
+        cell.border = _nr30_border(t=NR30_M, b=NR30_T,
+                                   l=NR30_T if col > 23 else NR30_M,
+                                   r=NR30_T if col < 52 else NR30_M)
+    for col in range(1, 23):  # A..V(手順書タイトル帯)
+        cell = ws.cell(2, col)
+        cell.border = _nr30_border(t=NR30_M, b=NR30_T,
+                                   l=NR30_M if col == 1 else NR30_T,
+                                   r=NR30_T if col < 22 else NR30_M)
+    # 行3(型名/工程番号): 上=medium(帯境) 下=thin
+    for col in range(1, 53):
+        cell = ws.cell(3, col)
+        cell.border = _nr30_border(t=NR30_M, b=NR30_T,
+                                   l=NR30_M if col == 1 else NR30_T,
+                                   r=NR30_T if col < 52 else NR30_M)
+    # 行4(作業内容/題目): 上=thin 下=medium(枠の締め)
+    for col in range(1, 53):
+        cell = ws.cell(4, col)
+        cell.border = _nr30_border(t=NR30_T, b=NR30_M,
+                                   l=NR30_M if col == 1 else NR30_T,
+                                   r=NR30_T if col < 52 else NR30_M)
+    # A1:V2 の帯枠
+    for col in range(1, 23):
+        ws.cell(1, col).border = _nr30_border(t=NR30_M,
+                                              l=NR30_M if col == 1 else None,
+                                              r=NR30_M if col == 22 else None)
+    ws.cell(2, 1).border = _nr30_border(l=NR30_M, t=NR30_M, b=NR30_T)
+    ws.cell(2, 22).border = _nr30_border(r=NR30_M, t=NR30_M, b=NR30_T)
+
+
+def _nr30_page_setup(ws):
+    """NR4030 様式の印刷設定(実測値)。"""
+    ws.page_setup.orientation = "portrait"
+    ws.page_setup.paperSize = 9
+    ws.page_margins.left = 0.8661417322834646
+    ws.page_margins.right = 0.5118110236220472
+    ws.page_margins.top = 0.5905511811023623
+    ws.page_margins.bottom = 0.7874015748031497
+    ws.oddFooter.left.text = "　　NR4030"
+    ws.oddFooter.center.text = "様式 NR4030-0300-A3"
+    ws.oddFooter.right.text = "\n&P\n日本光電"
+    ws.print_title_rows = "1:4"
+
+
+def _nr30_body_row(ws, r, num, text_lines, note=None):
+    """NR4030 様式の本文行: A列=手順番号「n．」、C列=本文、行高12.75pt。
+
+    text_lines: 本文(文字列 or 文字列リスト=1手順の複数行)。
+    note: 先頭に＊/※を付ける補足行の場合 True。
+    """
+    h = 12.75
+    if num is not None:
+        c = ws.cell(r, 1, f"{num}．")
+        c.font = NR30_FONT
+        c.alignment = Alignment(horizontal="left", vertical="center")
+    if text_lines:
+        if isinstance(text_lines, str):
+            text_lines = [text_lines]
+        for i, line in enumerate(text_lines):
+            c = ws.cell(r + i, 3, line)
+            c.font = NR30_FONT
+            c.alignment = Alignment(horizontal="left", vertical="center", wrap_text=False)
+    for i in range(max(1, len(text_lines) if text_lines else 1)):
+        ws.row_dimensions[r + i].height = h
+    return r + max(1, len(text_lines) if text_lines else 1)
+
+
+def _nr30_page_break(ws, r, topic):
+    """約55行ごとの改ページ+継続ヘッダ(作業内容+題目)を再掲する。"""
+    from openpyxl.worksheet.pagebreak import Break
+    ws.row_breaks.append(Break(id=r - 1))
+    # 継続ヘッダ: 行4相当(作業内容+題目)をコピー
+    hr = r
+    ws.cell(hr, 1, "作業内容").font = NR30_FONT
+    ws.cell(hr, 1).alignment = CENTER
+    ws.cell(hr, 7, "　" + topic).font = NR30_FONT
+    ws.cell(hr, 7).alignment = Alignment(horizontal="left", vertical="center")
+    for col in range(1, 53):
+        cell = ws.cell(hr, col)
+        cell.border = _nr30_border(t=NR30_M, b=NR30_M,
+                                   l=NR30_M if col == 1 else NR30_T,
+                                   r=NR30_T if col < 52 else NR30_M)
+    ws.row_dimensions[hr].height = 33.0
+    return hr + 2  # 本文はヘッダの1行あけから
+
+
 def _mark_resolved_rows(ws, r0, nrows, ncols):
     """「解決」を含む行を取り消し線+灰色にする(解決済みの視認性)。
 
@@ -191,11 +333,182 @@ def _mark_resolved_rows(ws, r0, nrows, ncols):
                 ws.cell(rr, cc).font = RESOLVED_FONT
 
 
+def _build_nr30(wb, title, sheets, version, authors, team_leader, meeting_notes=None):
+    """NR4030 様式モードの本体生成。
+
+    - 表紙シート(改訂履歴を含む: P1 相当。0494-913473 P1 の構成を再現)
+    - 目次シート(会議で削除決定の項目は「(削除)」付きで表示・リンクは保持)
+    - 本文シート(P2 相当: ヘッダー枠+「n．」手順+約55行改ページ)
+    meeting_notes: {シート名: 会議メモ文字列}。目次の当該行に注記を付ける。
+    """
+    import re
+
+    # ---- 表紙(P1 相当: 手順書タイトル+承認欄+変更履歴) ----
+    cover = wb.active
+    cover.title = "表紙"
+    cover.sheet_view.showGridLines = False
+    _nr30_header(cover, title + "／" + "ＺＺＺ－９００００")
+    _nr30_page_setup(cover)
+    # P1 はヘッダー枠の下に文書情報を置く(P2 と同一の様式枠で開始)
+    c = cover.cell(6, 3, "共通(操作)")
+    c.font = NR30_FONT
+    c = cover.cell(7, 3, title)
+    c.font = Font(name="Meiryo UI", size=14)
+    c = cover.cell(8, 3, "ＺＺＺ－９００００")
+    c.font = NR30_FONT
+    # 承認/検印/作成 欄(行10-15)
+    cover.cell(10, 5, "承 　認").font = NR30_FONT
+    cover.cell(10, 8, "検 　印").font = NR30_FONT
+    cover.cell(10, 11, "作　 成").font = NR30_FONT
+    cover.cell(12, 5, "承 認 日").font = NR30_FONT
+    cover.cell(13, 5, "作 成 日").font = NR30_FONT
+    cover.cell(12, 7, "－　　－").font = NR30_FONT
+    cover.cell(13, 7, "－　　－").font = NR30_FONT
+    cover.cell(14, 5, "初版枚数").font = NR30_FONT
+    cover.cell(14, 7, "（本文シート数で確定）").font = NR30_FONT
+    cover.cell(12, 11, "・".join(authors.split("、"))).font = NR30_FONT
+    cover.merge_cells("K12:O12")
+    # 変更履歴(行17以降: P1 の変更記号テーブルを再現)
+    rev = None
+    for name, blocks in sheets:
+        if name == "改訂履歴":
+            rev = blocks
+            break
+    hr = 17
+    cover.cell(hr, 2, "変更履歴").font = NR30_FONT_HDR
+    hr += 2
+    hdr = ["変更記号", "適用年月日", "変更を指示した書類の管理No.", "内　　容", "承認日／承認者", "担 当"]
+    for i, h in enumerate(hdr):
+        c = cover.cell(hr, 2 + i * 3, h)
+        c.font = NR30_FONT
+        c.alignment = CENTER
+        cover.merge_cells(start_row=hr, start_column=2 + i * 3, end_row=hr, end_column=4 + i * 3)
+    ws_rows = []
+    if rev:
+        for b in rev:
+            if b[0] == "table":
+                ws_rows = b[1]
+    for row in ws_rows[1:]:
+        hr += 1
+        # row = [版, 日付, 内容, 作成, 承認]
+        vals = [row[0] + "×", row[1], "－", str(row[2])[:80], "未", row[3]]
+        for i, v in enumerate(vals):
+            c = cover.cell(hr, 2 + i * 3, v)
+            c.font = NR30_FONT
+            c.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
+            cover.merge_cells(start_row=hr, start_column=2 + i * 3, end_row=hr, end_column=4 + i * 3)
+        cover.row_dimensions[hr].height = _needed_height(str(vals[3]), 40, line_pt=12.75, base=14)
+
+    # ---- 目次 ----
+    toc = wb.create_sheet("目次", 1)
+    toc.sheet_view.showGridLines = False
+    _nr30_header(toc, "目次")
+    _nr30_page_setup(toc)
+    tr = 6
+    n = 1
+    for name, blocks in sheets:
+        if name == "改訂履歴":
+            continue
+        c = toc.cell(tr, 3, f"{n}．")
+        c.font = NR30_FONT
+        c.alignment = Alignment(horizontal="right", vertical="center")
+        # 会議メモの反映: 削除決定は「(削除)」を表示、その他のメモは J 列に注記
+        display = name
+        note = None
+        if meeting_notes and name in meeting_notes:
+            note = meeting_notes[name]
+            if "削除" in note and "WIP" not in note:
+                display = name + "(削除)"
+            elif "WIP" in note:
+                display = name + "(WIP)"
+        c2 = toc.cell(tr, 4, display)
+        c2.font = Font(name="Meiryo UI", size=10, color="0563C1", underline="single")
+        c2.hyperlink = f"#'{name[:31].replace(chr(39), chr(39)*2)}'!A1"
+        if note:
+            c3 = toc.cell(tr, 10, note)
+            c3.font = NR30_FONT
+            c3.alignment = Alignment(horizontal="left", vertical="center")
+        toc.row_dimensions[tr].height = 12.75
+        tr += 1
+        n += 1
+
+    # ---- 本文シート(P2 相当) ----
+    for name, blocks in sheets:
+        if name == "改訂履歴":
+            continue
+        ws = wb.create_sheet(name[:31])
+        ws.sheet_view.showGridLines = False
+        _nr30_header(ws, name)
+        _nr30_page_setup(ws)
+        r = 6
+        for block in blocks:
+            kind = block[0]
+            if kind == "h":
+                # 見出し: 番号付き(NR4030 では本文と同サイズ・区別は番号体系)
+                c = ws.cell(r, 1, block[1])
+                c.font = Font(name="Meiryo UI", size=10, bold=True)
+                ws.row_dimensions[r].height = 12.75
+                r += 1
+            elif kind in ("note", "warn"):
+                lines = str(block[1]).split("\n")
+                for line in lines:
+                    prefix = "" if line.startswith(("＊", "※")) else ("＊" if kind == "note" else "※")
+                    c = ws.cell(r, 3, prefix + line)
+                    c.font = NR30_FONT
+                    ws.row_dimensions[r].height = 12.75
+                    r += 1
+            elif kind in ("table", "rows"):
+                data = block[1]
+                header_row = kind == "table"
+                for ri, trow in enumerate(data):
+                    if header_row and ri == 0:
+                        # テーブルヘッダ: 太字
+                        for ci, val in enumerate(trow):
+                            c = ws.cell(r, 1 if ci == 0 else 1 + ci * 2, val)
+                            c.font = Font(name="Meiryo UI", size=10, bold=True)
+                            c.alignment = CENTER
+                        ws.row_dimensions[r].height = 12.75
+                        r += 1
+                        continue
+                    first = str(trow[0]) if trow else ""
+                    m = re.match(r"^手順(\d+)$", first)
+                    if m:
+                        proc_no = int(m.group(1))
+                        r = _nr30_body_row(ws, r, proc_no, [str(v) for v in trow[1:] if v])
+                    else:
+                        # 項目: 値 形式 → C列に「項目：値」
+                        text = first + "：" + "／".join(str(v) for v in trow[1:] if v)
+                        c = ws.cell(r, 3, text)
+                        c.font = NR30_FONT
+                        ws.row_dimensions[r].height = 12.75
+                        r += 1
+                r += 1  # テーブル間の空行
+        # 約55行ごとの改ページ
+        from openpyxl.worksheet.pagebreak import Break
+        page_len = 0
+        for rr in range(6, r + 1):
+            page_len += 1
+            if page_len >= 55:
+                ws.row_breaks.append(Break(id=rr))
+                page_len = 0
+
+
 def build(path, title, sheets, revision, authors, team_leader, ref_format, version,
-          toc_title=None):
+          toc_title=None, nr30=False, meeting_notes=None):
+    """xlsx を生成する。
+
+    nr30=True で NR4030 様式モード(0494-913473 の形式を完全再現)。
+    meeting_notes: {シート名: 会議メモ} を目次へ反映(NR30 モードのみ)。
+    """
     wb = openpyxl.Workbook()
     cover = wb.active
     cover.title = "表紙"
+
+    if nr30:
+        _build_nr30(wb, title, sheets, version, authors, team_leader, meeting_notes)
+        wb.save(path)
+        print("saved:", path)
+        return
 
     # ---- 表紙 ----
     cover.sheet_view.showGridLines = False
