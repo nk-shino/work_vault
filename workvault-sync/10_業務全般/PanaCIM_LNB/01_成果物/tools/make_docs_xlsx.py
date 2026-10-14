@@ -170,6 +170,22 @@ def _style_table(ws, r0, nrows, ncols, header=True, widths=None):
             ws.cell(rr, 1).font = BODY_BOLD_FONT
 
 
+RESOLVED_FONT = Font(name=FONT_NAME, size=10, color="808080", strike=True)
+
+
+def _mark_resolved_rows(ws, r0, nrows, ncols):
+    """「解決」を含む行を取り消し線+灰色にする(解決済みの視認性)。
+
+    削除はしない(消すと同じ調査をやり直すため、md 正本の運用に揃える)。
+    判定はセル値に「解決」を含む行。ヘッダ行は対象外。
+    """
+    for rr in range(r0 + 1, r0 + nrows):
+        vals = [str(ws.cell(rr, cc).value or "") for cc in range(1, ncols + 1)]
+        if any("解決" in v for v in vals):
+            for cc in range(1, ncols + 1):
+                ws.cell(rr, cc).font = RESOLVED_FONT
+
+
 def build(path, title, sheets, revision, authors, team_leader, ref_format, version,
           toc_title=None):
     wb = openpyxl.Workbook()
@@ -357,6 +373,14 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     r += 1
                 # 行高はシート共通の列幅で実測決定する
                 _fit_row_heights(ws, range(r0, r), widths, base=16)
+                # ヘッダの太字・白文字を適用(行高計算のあとで上書きしない)
+                for cc in range(1, ncols + 1):
+                    hc = ws.cell(r0, cc)
+                    hc.fill = TABLE_HDR_FILL
+                    hc.font = TABLE_HDR_FONT
+                    hc.alignment = WRAP_CENTER
+                # 解決済み行(「解決」を含む)を取り消し線+灰色に
+                _mark_resolved_rows(ws, r0, len(data), ncols)
             elif kind == "rows":
                 data = block[1]
                 ncols = max(len(t) for t in data)

@@ -3,6 +3,7 @@
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from make_docs_xlsx import build, T
+from meeting_issues import kadai_blocks
 
 AUTHORS = "篠原、大塚、茂木、竹渕"
 LEADER = "茂木(絵)"
@@ -340,6 +341,7 @@ panacim_sheets += [
         ("h", "13-6 承認"),
         T(["実施者", "確認者", "管理責任者", "承認日", "備考"], [["", "", "", "", ""]]),
     ]),
+    ("会議課題一覧(一時)", kadai_blocks()),
     ("要確認事項一覧", [
         ("h", "14. 要確認事項一覧(2026-10-05 時点 + 2026-10-13 更新 + 2026-10-14 更新)"),
         ("note", "解決した項目は取り消し線で残す。消さない。消すと、同じ調査をやり直すことになる。"),

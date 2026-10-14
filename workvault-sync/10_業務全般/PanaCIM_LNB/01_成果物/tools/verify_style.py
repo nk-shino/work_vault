@@ -9,7 +9,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 FILES = ["..\\PanaCIM管理手順書_草案.xlsx", "..\\LNB管理手順書_草案.xlsx"]
 FONT = "游ゴシック"
 ALLOWED_FILLS = {"00D9E1F2", "00FFF2CC", "00FCE4D6", "004472C4"}
-ALLOWED_FONTCOLORS = {"00FFFFFF", "001F3864", "00595959", "00833C00", "00000000", None}
+ALLOWED_FONTCOLORS = {"00FFFFFF", "001F3864", "00595959", "00833C00", "00000000", "00808080", "000563C1", None}  # 808080=解決済み取消線/0563C1=ハイパーリンク
 
 problems = []
 for fname in FILES:
@@ -22,7 +22,13 @@ for fname in FILES:
                 if c.value is None and not (c.fill and c.fill.fgColor and c.fill.fgColor.rgb not in (None, "00000000")):
                     continue
                 f = c.font
-                fonts[(f.name, f.size, f.bold, f.color.rgb if f.color else None)] += 1
+                try:
+                    rgb = f.color.rgb if f.color else None
+                except (AttributeError, TypeError, ValueError):
+                    rgb = None
+                if rgb is not None and not isinstance(rgb, str):
+                    rgb = None  # theme色等の非str値は既定色扱い
+                fonts[(f.name, f.size, f.bold, rgb)] += 1
                 if c.fill and c.fill.patternType == "solid":
                     fills[c.fill.fgColor.rgb] += 1
     print(f"===== {fname} =====")
