@@ -25,6 +25,13 @@ This is the default workspace. The rules below are a default starting point; ada
 - 比喩(「異常を正常と読む文書」「道具です」等)は、意味が直接伝わる表現(「異常を正常と判断してしまう恐れ」「準備です」)に言い換える
 - 作成時に自己点検し、置換した語が残っていないか確認してから提出する
 
+## アカウント照合と記録検証（2026-10-14 導入・issue看板運用 04）
+
+- **アカウント照合は `task-account-router` スキル**（`~/.config/kohden-code/skills/task-account-router/SKILL.md`）で行う。コミット・push・issue・project 操作の前に、git 名義と gh ログインアカウント（本PCの既定 = 業務用 `nk-shino`）が期待値と一致するか確認する。一致しなければ作業を停止してユーザーに報告する（黙って続行しない）
+- **記録検証は `forced-logging` スキル**（`~/.config/kohden-code/skills/forced-logging/SKILL.md`）で行う。完了報告の前に、実行ログ（`YYYYMMDD_<topic>/実行ログ_YYYYMMDD.md`・指示1件=エントリ1件）が実際に書かれたかを確認する。ログ未記載のまま完了報告・コミットをしない
+- 失敗は `.learnings/ERRORS.md` に Pattern-Key 付きで記録する（Recurrence-Count>=2・resolved・別セッション発生の3条件を満たしたらスキル化を検討）
+- 上記の括書きの理由: このPCの git config は未設定で、名義が username/hostname から自動生成される（`篠原 想詩 <ss80751@ad.nkc.co.jp>`）。**noreply 名義での `--local` 設定が確定するまで、この節の既定に従う**
+
 ## About this file
 
 This file holds general rules for this workspace, not notes about the current task. When these rules do not fit how the user works, or an agent made a mistake or worked inefficiently, suggest updating them so things go better next time, and edit the file once the user agrees.
