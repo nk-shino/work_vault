@@ -1,1 +1,0 @@
-powershell -ExecutionPolicy Bypass -File .\IFIDA2I010_AutoBackup.ps1

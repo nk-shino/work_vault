@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-æŒ?å®šãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªé…ä¸‹ã?®ãƒ•ã‚©ãƒ«ãƒ€ãƒ»ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ã‚? Markdown ã«ã¾ã¨ã‚ã‚‹ã€?
-å‡ºåŠ›å?ˆãŒå­˜åœ¨ã™ã‚Œã°æ›´æ–°?¼ˆä¸Šæ›¸ãï¼‰ã€ãªã‘ã‚Œã°æ–°è¦ä½œæ?ã™ã‚‹ã€?
+Žw’èƒfƒBƒŒƒNƒgƒŠ”z‰º‚ÌƒtƒHƒ‹ƒ_Eƒtƒ@ƒCƒ‹ˆê——‚ð Markdown ‚É‚Ü‚Æ‚ß‚éB
+XV“úŽžEƒTƒCƒY‚à‹L˜^‚µAŒã‚ÌƒoƒbƒNƒAƒbƒv·•ª“¯Šú‚ÉŠˆ—p‚Å‚«‚é‚æ‚¤‚É‚·‚éB
+o—Íæ‚ª‘¶Ý‚·‚ê‚ÎXViã‘‚«jA‚È‚¯‚ê‚ÎV‹Kì¬‚·‚éB
 """
 
 import os
 from datetime import datetime
 
-# ==== è¨­å®? ====================================================
-# å¯¾è±¡ãƒ?ã‚£ãƒ¬ã‚¯ãƒˆãƒª?¼ˆæœ«å°¾ã« \ ã¯ä»˜ã‘ãªã? / å¿?ã? r"..." ã§å›²ã‚€?¼?
-TARGET_DIR = r"\\C:\Users\ss80751\OneDrive - NK\ƒhƒLƒ…ƒƒ“ƒg\Work_Vault"
+# ==== Ý’è ====================================================
+# ‘ÎÛƒfƒBƒŒƒNƒgƒŠi––”ö‚É \ ‚Í•t‚¯‚È‚¢j
+TARGET_DIR = r"\\nksv569.ad.nkc.co.jp\Share\mnt\DGS-SV\šŒÂlƒtƒHƒ‹ƒ_\ŽÂŒ´"
 
-# å‡ºåŠ›ã™ã‚? .md ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹?¼ˆâ??ãƒ•ã‚¡ã‚¤ãƒ«åã¾ã§æŒ?å®? / å¿?ã? r"..." ã§å›²ã‚€?¼?
-OUTPUT_MD = r"C:\Users\ss80751\OneDrive - NK\ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒ?\Work_Vault\00_inbox\ç¯?åŽŸãƒ•ã‚©ãƒ«ãƒ€ä¸€è¦§.md"
+# o—Í‚·‚é .md ƒtƒ@ƒCƒ‹‚ÌƒpƒXišƒtƒ@ƒCƒ‹–¼‚Ü‚ÅŽw’è‚·‚é‚±‚Æj
+OUTPUT_MD = r"C:\Users\ss80751\OneDrive - NK\ƒhƒLƒ…ƒƒ“ƒg\Work_Vault\00_inbox\ŽÂŒ´ƒtƒHƒ‹ƒ_ˆê——.md"
 # =============================================================
 
 
 def human_size(num_bytes):
-    """ãƒã‚¤ãƒˆæ•°ã‚’èª­ã¿ã‚?ã™ã„å˜ä½ã«å¤‰æ›"""
+    """ƒoƒCƒg”‚ð“Ç‚Ý‚â‚·‚¢’PˆÊ‚É•ÏŠ·"""
     for unit in ["B", "KB", "MB", "GB", "TB"]:
         if num_bytes < 1024:
             return f"{num_bytes:.1f} {unit}"
@@ -27,22 +28,22 @@ def human_size(num_bytes):
 
 def main():
     lines = []
-    lines.append("# ãƒ•ã‚¡ã‚¤ãƒ«ãƒ»ãƒ•ã‚©ãƒ«ãƒ€ä¸€è¦§")
+    lines.append("# ƒtƒ@ƒCƒ‹EƒtƒHƒ‹ƒ_ˆê——")
     lines.append("")
-    lines.append(f"- **å¯¾è±¡ãƒ?ã‚£ãƒ¬ã‚¯ãƒˆãƒª**: `{TARGET_DIR}`")
-    lines.append(f"- **å–å¾—æ—¥æ™?**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append(f"- **‘ÎÛƒfƒBƒŒƒNƒgƒŠ**: `{TARGET_DIR}`")
+    lines.append(f"- **Žæ“¾“úŽž**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append("")
 
     total_dirs = 0
     total_files = 0
 
     if not os.path.exists(TARGET_DIR):
-        print(f"[ã‚¨ãƒ©ãƒ¼] å¯¾è±¡ãƒ?ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“: {TARGET_DIR}")
-        print("ãƒ‘ã‚¹ã‚?ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯æŽ¥ç¶šã€ã‚¢ã‚¯ã‚»ã‚¹æ¨©ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€?")
+        print(f"[ƒGƒ‰[] ‘ÎÛƒfƒBƒŒƒNƒgƒŠ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ: {TARGET_DIR}")
+        print("ƒpƒX‚âƒlƒbƒgƒ[ƒNÚ‘±AƒAƒNƒZƒXŒ ‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B")
         return
 
-    # --- ãƒ?ãƒªãƒ¼æ§‹é€?ã‚»ã‚¯ã‚·ãƒ§ãƒ³ ---
-    lines.append("## ãƒ?ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹é€?")
+    # --- ƒcƒŠ[\‘¢ƒZƒNƒVƒ‡ƒ“ ---
+    lines.append("## ƒfƒBƒŒƒNƒgƒŠ\‘¢")
     lines.append("")
     lines.append("```text")
 
@@ -63,10 +64,10 @@ def main():
     lines.append("```")
     lines.append("")
 
-    # --- è©³ç´°ä¸€è¦§ã‚»ã‚¯ã‚·ãƒ§ãƒ³ ---
-    lines.append("## è©³ç´°ä¸€è¦§?¼ˆç›¸å¯¾ãƒ‘ã‚¹ãƒ»æ›´æ–°æ—¥æ™‚ã?»ã‚µã‚¤ã‚º?¼?")
+    # --- Ú×ˆê——ƒZƒNƒVƒ‡ƒ“iXV“úŽžEƒTƒCƒY•t‚« / ·•ª“¯Šú—pj---
+    lines.append("## Ú×ˆê——i‘Š‘ÎƒpƒXEXV“úŽžEƒTƒCƒYj")
     lines.append("")
-    lines.append("| ç¨®åˆ¥ | ç›¸å¯¾ãƒ‘ã‚¹ | æ›´æ–°æ—¥æ™? | ã‚µã‚¤ã‚º |")
+    lines.append("| Ží•Ê | ‘Š‘ÎƒpƒX | XV“úŽž | ƒTƒCƒY |")
     lines.append("| --- | --- | --- | --- |")
 
     for root, dirs, files in os.walk(TARGET_DIR):
@@ -78,7 +79,7 @@ def main():
             mtime = datetime.fromtimestamp(os.path.getmtime(root)).strftime("%Y-%m-%d %H:%M:%S")
         except Exception:
             mtime = "-"
-        lines.append(f"| ãƒ•ã‚©ãƒ«ãƒ€ | `{rel_folder}` | {mtime} | - |")
+        lines.append(f"| ƒtƒHƒ‹ƒ_ | `{rel_folder}` | {mtime} | - |")
 
         for f in sorted(files):
             full = os.path.join(root, f)
@@ -88,21 +89,25 @@ def main():
                 size = human_size(os.path.getsize(full))
             except Exception:
                 mtime, size = "-", "-"
-            lines.append(f"| ãƒ•ã‚¡ã‚¤ãƒ« | `{rel_path}` | {mtime} | {size} |")
+            lines.append(f"| ƒtƒ@ƒCƒ‹ | `{rel_path}` | {mtime} | {size} |")
 
-    # --- ã‚µãƒžãƒª ---
-    lines.insert(4, f"- **ãƒ•ã‚©ãƒ«ãƒ€æ•°**: {total_dirs} / **ãƒ•ã‚¡ã‚¤ãƒ«æ•°**: {total_files}")
+    # --- ƒTƒ}ƒŠ ---
+    lines.insert(4, f"- **ƒtƒHƒ‹ƒ_”**: {total_dirs} / **ƒtƒ@ƒCƒ‹”**: {total_files}")
 
-    # --- å‡ºåŠ›ï¼ˆå­˜åœ¨ã™ã‚Œã°æ›´æ–°?¼ãªã‘ã‚Œã°æ–°è¦ä½œæ?ï¼?---
+    # --- o—Íi‘¶Ý‚·‚ê‚ÎXV^‚È‚¯‚ê‚ÎV‹Kì¬j---
+    # o—ÍæƒtƒHƒ‹ƒ_‚ª‚È‚¯‚ê‚Îì¬
     os.makedirs(os.path.dirname(OUTPUT_MD), exist_ok=True)
+
+    # š ƒtƒ@ƒCƒ‹‚Ì‘¶Ýƒ`ƒFƒbƒNiXV or V‹Kì¬‚Ì”»’èj
     is_update = os.path.exists(OUTPUT_MD)
 
+    # "w" ƒ‚[ƒh‚Íu‘¶Ý‚·‚ê‚Îã‘‚«iXVjA‚È‚¯‚ê‚ÎV‹Kì¬v‚Ì—¼•û‚É‘Î‰ž
     with open(OUTPUT_MD, "w", encoding="utf-8") as fp:
         fp.write("\n".join(lines))
 
-    action = "æ›´æ–°?¼ˆä¸Šæ›¸ãï¼?" if is_update else "æ–°è¦ä½œæ??"
-    print(f"[å®Œäº?] {OUTPUT_MD} ã‚’{action}ã—ã¾ã—ãŸã€?")
-    print(f"ãƒ•ã‚©ãƒ«ãƒ€æ•°: {total_dirs} / ãƒ•ã‚¡ã‚¤ãƒ«æ•°: {total_files}")
+    action = "XViã‘‚«j" if is_update else "V‹Kì¬"
+    print(f"[Š®—¹] {OUTPUT_MD} ‚ð{action}‚µ‚Ü‚µ‚½B")
+    print(f"ƒtƒHƒ‹ƒ_”: {total_dirs} / ƒtƒ@ƒCƒ‹”: {total_files}")
 
 
 if __name__ == "__main__":

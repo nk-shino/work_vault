@@ -1,5 +1,0 @@
-#02:05AM everyday
-05 02 * * * cd /var/www/html/cgi/bom_diff/; perl copy_BOSS.cgi; 1>>./logs/cron_copy_BOSS.log 2>>./logs/cron-err_copy_BOSS.log
-#every 10 minutes
-*/10 * * * * cd /var/www/html/cgi/SMT_yojitsu; perl SMT_result.cgi; 1>>./logs/cron_SMT_result.log 2>>./logs/cron-err_SMT_result.log
-
