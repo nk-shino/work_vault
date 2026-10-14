@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile version="14.6.13" host="Electron">
+  <diagram id="p1" name="第一層_全体相関図">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="PanaCIM 確実構成図（第一層：全体相関図）" style="text;html=1;fontFamily=Meiryo;fontSize=26;align=center;verticalAlign=middle;fontColor=#1F2937;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="確定事項のみ記載。出典：公式資料・操作手順書 0494-912039(06)・会議記録。暫定・未確認の経路は含まない" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="equip" value="製造現場" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="320" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="mounter" value="実装機（設備）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#DFF0D8;strokeColor=#2E7D32;fontColor=#2E5A2E;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="equip">
+          <mxGeometry x="20" y="50" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="srvzone" value="サーバー環境" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="440" y="120" width="400" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="esxi" value="ESXi ホスト（172.25.253.45 /ui/）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#E9ECEF;strokeColor=#ADB5BD;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="srvzone">
+          <mxGeometry x="20" y="50" width="360" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="appctrl" value="PanaCIM サーバー
+CIMC-SV（仮想マシン）
+RHEL 6 64bit" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="esxi">
+          <mxGeometry x="30" y="50" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="cimc_sv_note" value="再起動の対象（月次：CIMC-SV）
+異常時：CIM-C/A PC・ESXi・CIMC-SV" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FDEDEC;strokeColor=#C0392B;fontColor=#922B21;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="esxi">
+          <mxGeometry x="30" y="190" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="display" value="表示系" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="900" y="160" width="320" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor" value="稼働モニタ
+（Pana-CIM から出力される表示）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="display">
+          <mxGeometry x="20" y="50" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="andon" value="アンドン
+（ラインの状態を表示する装置）
+異常時の判定対象（管理書 10-1）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="display">
+          <mxGeometry x="20" y="130" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" value="保存領域" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="900" y="420" width="320" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="backup" value="データベース完全バックアップ
+例：E:\BackUP_DB
+PANACIM_****_FULbak" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="storage">
+          <mxGeometry x="20" y="50" width="280" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="clients" value="操作・連携（Web / FA）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="160" width="360" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="cima" value="CIM-A PC（物理）
+VMware 管理画面への入口" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+          <mxGeometry x="20" y="50" width="320" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cimc" value="CIM-C PC（物理）
+異常時再起動で最初に止める対象" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+          <mxGeometry x="20" y="120" width="320" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lnb" value="LNB（FAパソコン）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+          <mxGeometry x="20" y="190" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dgs" value="NPM-DGS" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+          <mxGeometry x="20" y="250" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E7D32;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.6;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="mounter" target="appctrl">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="e1_lbl" value="稼働データの収集" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E7D32;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e1"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="appctrl" target="monitor">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="830" y="215" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="e2_lbl" value="表示を出力" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e2"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#82B366;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="appctrl" target="backup">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="650" y="520" /><mxPoint x="780" y="520" /><mxPoint x="780" y="505" /><mxPoint x="800" y="505" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="e3_lbl" value="バックアップ出力（FULbak）" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#82B366;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e3"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=2.5;startArrow=classic;endArrow=classic;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="cima" target="esxi">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="e4_lbl" value="Web操作" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#D6B656;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e4"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=2.5;startArrow=classic;endArrow=classic;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.7;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="cimc" target="esxi">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="e5_lbl" value="操作" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#D6B656;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e5"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#8A6D0B;strokeWidth=2.5;startArrow=classic;endArrow=classic;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.8;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="lnb" target="appctrl">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1220" y="440" /><mxPoint x="880" y="440" /><mxPoint x="880" y="400" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="e6_lbl" value="データ参照" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#8A6D0B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e6"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#8A6D0B;strokeWidth=2.5;startArrow=classic;endArrow=classic;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.9;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dgs" target="appctrl">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1260" y="470" /><mxPoint x="920" y="470" /><mxPoint x="920" y="420" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="e7_lbl" value="連携" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#8A6D0B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e7"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="andon" target="appctrl">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="840" y="320" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="e8_lbl" value="表示内容は Pana-CIM 由来" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e8"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="n1" value="確定事項の出典
+・CIMC-SV/ESXi/CIM-A/CIM-C：操作手順書 0494-912039(06) 再起動手順・管理書 第3章
+・LNB（FAパソコン）/NPM-DGS：PanaCIM-EE 外部インターフェース N7201A522J17 構成図
+・稼働モニタは Pana-CIM から出力：会議記録 第6章
+・アンドンと Pana-CIM の直接データ経路は未確認。アンドンは点検での判定対象として表示
+・Eg-Pro／Asprova は別チーム管理のため接続線なし（対象外の明示）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="440" y="580" width="800" height="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p2" name="事象別_アンドン・稼働モニタ異常">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" value="事象別切り分け図：アンドン異常時・稼働モニタ異常時（ここを見る／対処）" style="text;html=1;fontFamily=Meiryo;fontSize=24;align=center;verticalAlign=middle;fontColor=#922B21;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle2" value="対処はいずれも再起動（会議決定）。正常に動いている画面（TrueCase）を併記して比較する" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="detect" value="① 異常を検知（日次点検）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#FDECEC;strokeColor=#C0392B;fontColor=#922B21;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="380" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="andon_err" value="アンドン異常
+確認する場所：アンドンの表示
+色定義は管理書 10-1（要確認）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="detect">
+          <mxGeometry x="20" y="50" width="340" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_err" value="稼働モニタ異常
+確認する場所：稼働モニタの表示
+（会議では Power BI の言及あり・要確認）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="detect">
+          <mxGeometry x="20" y="150" width="340" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="compare" value="② 正常画面と比較" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#FEF9E7;strokeColor=#9A7D0A;fontColor=#7D6608;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="520" y="140" width="340" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="truecase" value="正常に動いている画面
+（TrueCase・添付画像14枚で比較）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FCF3CF;strokeColor=#8A6D0B;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="compare">
+          <mxGeometry x="20" y="50" width="300" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="act" value="③ 対処：再起動" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#EAF2FB;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="940" y="140" width="340" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="restart" value="再起動手順を実施
+管理書 第10章 10-4
+（異常時のサーバー再起動）
+※手順は本ファイル P4 を参照" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="act">
+          <mxGeometry x="20" y="50" width="300" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="verify" value="④ 再起動後の確認と記録" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#EAF7EE;strokeColor=#1E8449;fontColor=#1E5631;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="140" width="300" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="verify2" value="稼働モニタとアンドンの
+表示を確認（第6章 Step 1 と同じ状態）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="verify">
+          <mxGeometry x="20" y="50" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="record" value="記録：PC上のフォームへ入力
+（紙は使わない）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="verify">
+          <mxGeometry x="20" y="150" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.4;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="andon_err" target="truecase">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="f1_lbl" value="比較" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#C0392B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f1"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.6;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="monitor_err" target="truecase">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="480" y="290" /><mxPoint x="480" y="240" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="f2_lbl" value="比較" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#C0392B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f2"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#9A7D0A;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="truecase" target="restart">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="f3_lbl" value="判定後" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#9A7D0A;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f3"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="f4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="restart" target="verify2">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="f4_lbl" value="復旧確認" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f4"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="f5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="verify2" target="record">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="f5_lbl" value="記録" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#1E8449;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f5"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="n2" value="確定事項（会議記録 第6章・管理書 10-1）
+・記載する事象は「アンドン異常発生時」「稼働モニタ異常発生時」の2件。対処はいずれも再起動
+・稼働モニタは Pana-CIM から出力されている。表示だけで原因を断定しない
+・現時点で発生中の不具合はない。想定される不具合を先に書き出す方針" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="1580" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="異常時に「いじる」対象（10-4 手順で操作する機器）
+・CIM-C PC（最初に止める）　・ESXi ホスト（メンテナンスモード）　・CIM-A PC　・CIMC-SV（パワーオン）
+実施には停止判断者の承認が要る" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FDEDEC;strokeColor=#C0392B;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#922B21;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="600" width="1580" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p3" name="事象別_月次再起動">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" value="事象別切り分け図：月次再起動（定期管理・第7章）" style="text;html=1;fontFamily=Meiryo;fontSize=24;align=center;verticalAlign=middle;fontColor=#1F4E79;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle3" value="実施時期：月に一度、SMT点検日の朝。対象は CIMC-SV のみ。異常時の手順（10-4）とは別物。取り違えると生産を止める" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_1" value="Step 1
+Pana-CIM が動いていないことを確認
+（SMT点検日であることも確認）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s3_1" target="s3_2">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="s3_2" value="Step 2
+付き添う者を確保
+（一人で入らない。不可なら
+由美子または倉林へ）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="200" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s3_2" target="s3_3">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="s3_3" value="Step 3
+CIMC-SV を再起動
+スタート→再起動
+理由コード「その他（計画外）」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="720" y="200" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s3_3" target="s3_4">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="s3_4" value="Step 4
+再起動後の状態を確認
+稼働モニタ・アンドンの表示
+（第6章 Step 1 と同じ状態）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="200" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s3_4" target="s3_5">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="s3_5" value="記録
+チェックシート「再起動しましたか」
+月次の必須確認項目" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="200" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="target3" value="いじる対象：CIMC-SV（VMware 上の仮想マシン）
+ノートPC右隣の白枠モニタに表示。ESXiホスト画面のナビゲータから操作" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FDEDEC;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="700" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="f3t" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s3_3" target="target3">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="160" y="370" /><mxPoint x="430" y="370" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="f3t_lbl" value="操作対象" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#C0392B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="f3t"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="n3b" value="確定事項（会議記録 第3章・管理書 第7章）
+・実施条件：Pana-CIM が動いていないこと。動作中に再起動すると処理が中断する
+・異常発生時の随時再起動は従来どおり残る（定期と随時の二本立て）
+・随時再起動では SMT点検日の条件は適用しない
+・随時の再起動（異常時）は手順がまったく異なり全ラインを停止させる → P4 参照" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="540" width="1540" height="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p4" name="事象別_異常時再起動">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title4" value="事象別切り分け図：異常時のサーバー再起動（第10章 10-4）" style="text;html=1;fontFamily=Meiryo;fontSize=24;align=center;verticalAlign=middle;fontColor=#922B21;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle4" value="発動条件：生産時「生産情報が取得できません。」エラーで情報の取得ができない場合（操作手順書 0494-912039(06)）。全ラインの生産と作業を停止させる" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="trigger" value="発動条件
+「生産情報が取得できません。」
+エラー発生" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="260" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="approval" value="停止判断者の承認
+（実施には承認が要る）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FCF3CF;strokeColor=#8A6D0B;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="130" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stop_phase" value="第1段 停止（手順1〜6）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#FDECEC;strokeColor=#C0392B;fontColor=#922B21;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="720" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="st1" value="手順1
+全ラインの生産と作業を停止させる
+（ここから先は生産が止まる）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="stop_phase">
+          <mxGeometry x="20" y="50" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st2" value="手順2〜3
+CIM-C PC：シャットダウン
+（ペンギン写真を確認して画面を閉じる）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="stop_phase">
+          <mxGeometry x="360" y="50" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st4" value="手順4
+ESXi ホスト：メンテナンスモードへ変更" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="stop_phase">
+          <mxGeometry x="20" y="170" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st6" value="手順6
+CIM-A PC：シャットダウン" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="stop_phase">
+          <mxGeometry x="360" y="170" width="320" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="start_phase" value="第2段 起動（手順7〜14）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#EAF7EE;strokeColor=#1E8449;fontColor=#1E5631;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="860" y="280" width="780" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="st7" value="手順7〜8
+CIM-C/A PC の電源ON（3分待つ）
+CIM-A PC にログオン" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="start_phase">
+          <mxGeometry x="20" y="50" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st11" value="手順11
+ESXi：メンテナンスモードの終了
+（飛ばすと仮想マシンを起動できない）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="start_phase">
+          <mxGeometry x="400" y="50" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st12" value="手順12〜13
+CIMC-SV：パワーオン
+ユーザー・パスワード入力（Continue）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="start_phase">
+          <mxGeometry x="20" y="170" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="st14" value="手順14
+「Route Editer」を選択して起動完了" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="start_phase">
+          <mxGeometry x="400" y="170" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="g0" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="trigger" target="approval">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="g1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#8A6D0B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="approval" target="stop_phase">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="g1_lbl" value="承認後" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#8A6D0B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="g1"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="g2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="st2" target="st4">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="g3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="st4" target="st6">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="g4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="stop_phase" target="start_phase">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="g4_lbl" value="全停止のあとに起動へ" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#5D6D7E;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="g4"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="g5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="st7" target="st11">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="g6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="st11" target="st12">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="850" y="415" /><mxPoint x="850" y="490" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="g7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="st12" target="st14">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="n4" value="警告（確定事項・管理書 10-4）
+・手順6で終わりではない。手順6の時点では全部が止まった状態にあり、ここで中断すると生産を再開できない
+・メンテナンスモードの解除（手順11）を忘れると仮想マシンを起動できない
+・いじる対象：CIM-C PC、ESXi ホスト、CIM-A PC、CIMC-SV
+・本手順（異常時）と月次再起動（第7章）は手順がまったく別。取り違えないこと" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FDEDEC;strokeColor=#C0392B;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#922B21;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="620" width="1560" height="140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

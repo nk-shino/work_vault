@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile version="14.6.13" host="Electron">
+  <diagram id="l1" name="第一層_全体相関図">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ltitle" value="LNB 確実構成図（第一層：全体相関図）" style="text;html=1;fontFamily=Meiryo;fontSize=26;align=center;verticalAlign=middle;fontColor=#7D6608;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lsubtitle" value="確定事項のみ記載。出典：公式資料 N7201A670J06、接続先ショートカット（L1/L2/L3_LNB.url）、会議記録。iLNB との同一視はしていない" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="pana_ref" value="参照元（Pana-CIM 側）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="360" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="pana_srv" value="PanaCIM サーバー
+（CIMC-SV）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="pana_ref">
+          <mxGeometry x="20" y="50" width="320" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lnbmap" value="ESXi ナビゲータに「LNBマップ」表示
+→ LNB 構成確認の入口になりうる" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FCF3CF;strokeColor=#8A6D0B;fontColor=#7D6608;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="pana_ref">
+          <mxGeometry x="20" y="150" width="320" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lnb_zone" value="LNB（承認済み L1〜L3 端末＋稼働 LNB ソフト）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#FEF9E7;strokeColor=#9A7D0A;fontColor=#7D6608;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="520" y="120" width="620" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="L1 端末
+172.25.253.11:8080/lws/Login.do" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="20" y="50" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="L2 端末
+172.25.253.21:8080/lws/Login.do" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="320" y="50" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="L3 端末
+172.25.253.31:8080/lws/Login.do" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="20" y="150" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lnb_sw" value="LNB ソフト（LWS 経由の画面）
+通信：HTTP（暗号化なし）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="320" y="150" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="scanner" value="無線スキャナー
+「LNB接続状態」表示の確認対象" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="20" y="260" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="matching" value="部品照合設定
+（LNB設定の部品照合設定が必要）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="lnb_zone">
+          <mxGeometry x="320" y="260" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dgs_zone" value="バックアップ経路" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="160" width="400" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="dgs" value="DGS（経路に現れる系）
+位置づけは要確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="dgs_zone">
+          <mxGeometry x="20" y="50" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="exp" value="手作業のバックアップ
+ジョブを消す前に過去ジョブへ
+エクスポート→必要時にインポート" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#186A3B;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="dgs_zone">
+          <mxGeometry x="20" y="140" width="360" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="le1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=2;startArrow=classic;endArrow=classic;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="l1" target="lnb_sw">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="le2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=2;startArrow=classic;endArrow=classic;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="l2" target="lnb_sw">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="le2b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=2;startArrow=classic;endArrow=classic;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="l3" target="lnb_sw">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="le3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.7;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="lnb_sw" target="pana_srv">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="460" y="330" /><mxPoint x="460" y="320" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="le3_lbl" value="Pana-CIM データを参照" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="le3"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="le4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.3;entryY=1;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="scanner" target="lnb_sw">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="le4_lbl" value="接続状態を表示" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#1E8449;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="le4"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="le4b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.7;entryY=1;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="matching" target="lnb_sw">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+<mxCell id="le4b_lbl" value="照合の前提設定" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#1E8449;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="le4b"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="le5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#82B366;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="lnb_sw" target="dgs">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1200" y="340" /><mxPoint x="1200" y="280" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="le5_lbl" value="バックアップ（手作業）" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#82B366;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="le5"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="le6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#8A6D0B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="lnbmap" target="l1">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="470" y="355" /><mxPoint x="470" y="225" /></Array></mxGeometry>
+        </mxCell>
+<mxCell id="le6_lbl" value="構成確認の入口" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#8A6D0B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="le6"><mxGeometry x="0" y="0" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>        <mxCell id="lnote" value="確定事項の出典
+・接続先 L1/L2/L3：デスクトップショートカット（L1_LNB.url / L2_LNB.url / L3_LNB.url）から確認
+・LNB接続状態・部品照合設定：PanaCIM-EE 材料照合（サーバー無しタイプ）N7201A670J06（PDF通し19頁・66頁）
+・Pana-CIM データ参照・DGS バックアップ運用：会議記録 第5章・LNB管理書 §4/§8
+・Eg-Pro／Asprova は対象外（別チーム管理）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="580" width="1580" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="le7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#82B366;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dgs" target="exp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="l2" name="事象別_確認・バックアップ・再起動順序">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1120" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ltitle2" value="LNB 事象別：ここを見る／いじる対象" style="text;html=1;fontFamily=Meiryo;fontSize=24;align=center;verticalAlign=middle;fontColor=#7D6608;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lsubtitle2" value="点検項目の本体は聞き取り待ち（LNB管理書 §6）。以下は公式資料・会議記録で確定している範囲のみ" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="chk" value="日次確認の候補（聞き取りの出発点）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#EAF7EE;strokeColor=#1E8449;fontColor=#1E5631;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="500" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="chk1" value="LNB接続状態を確認する
+確認する場所：LNB 画面の「LNB接続状態」表示
+対象：無線スキャナーと LNB の接続状態
+操作の種別：読み取りのみ" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="chk">
+          <mxGeometry x="20" y="50" width="460" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="chk2" value="記録のしかた
+画面名と表示されていた文言をそのまま書く
+（「正常」「○」とは書かない）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5F5E3;strokeColor=#1E8449;fontColor=#186A3B;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="chk">
+          <mxGeometry x="20" y="190" width="460" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bk" value="バックアップ（DGS 経由の手作業）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#EAF2FB;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="480" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="bk1" value="いじる対象：L1 / L2 / L3 それぞれ
+DGS を介した手作業
+・ジョブを消す前に過去ジョブへエクスポート
+・必要時にインポートして戻す" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="bk">
+          <mxGeometry x="20" y="50" width="440" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="bk2" value="取得目的は特定できていない（慣習）。
+Pana-CIM で一括取得できないか検討中" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="bk">
+          <mxGeometry x="20" y="190" width="440" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="reboot" value="再起動の順序（確定した注意）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#FDECEC;strokeColor=#C0392B;fontColor=#922B21;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="140" width="440" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="rb1" value="LNB は Pana-CIM のデータを参照している
+→ 順序を誤ると参照先が無い状態で
+立ち上がる
+→ Pana-CIM より後に LNB を起動すること" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="reboot">
+          <mxGeometry x="20" y="50" width="400" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="rb2" value="LNB に定期再起動があるかは未確認。
+あるとしても Pana-CIM と同じ日に行ってよいかは別判断" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FADBD8;strokeColor=#C0392B;fontColor=#922B21;fontSize=12;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="reboot">
+          <mxGeometry x="20" y="190" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lf1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="chk1" target="bk1">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="lf2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="bk1" target="rb1">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="lf3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#1E8449;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="chk1" target="chk2">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="lf4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="bk1" target="bk2">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="lf5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#C0392B;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="rb1" target="rb2">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="lnote2" value="確定事項の出典
+・LNB接続状態：N7201A670J06 PDF通し19頁「③ LNB接続状態　無線スキャナーとLNBの接続状態を表示します」
+・部品照合設定：同 PDF通し66頁「無線スキャナーで部品照合機能を使用するには、LNB設定の部品照合設定を行う必要があります」
+・バックアップ運用・再起動順序：会議記録 第5章・LNB管理書 §7/§8
+・自社 L1〜L3 に同じ表示があるかは未確認（聞き取り待ち）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="1580" height="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
