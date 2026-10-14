@@ -270,6 +270,9 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
         ws.print_title_rows = "1:4"
 
         r = 6
+        # 本文ブロック用の幅辞書(A〜G の合計が横1ページの基準)
+        widths = {get_column_letter(i): body_widths[i - 1] for i in range(1, 8)}
+        full_width_chars = sum(body_widths) * 2  # マージ A:G の半角換算幅
         for block in blocks:
             kind = block[0]
             if kind == "h":
@@ -294,7 +297,9 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     ws.cell(r, cc).fill = NOTE_FILL
                     ws.cell(r, cc).border = BORDER
                 ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=7)
-                ws.row_dimensions[r].height = _row_height(block[1], 160, base=15)
+                # 備考は9ptのため行高の係数を下げる
+                ws.row_dimensions[r].height = _needed_height(
+                    block[1], full_width_chars, line_pt=12.5, base=15)
                 r += 1
             elif kind == "warn":
                 c = ws.cell(r, 1, block[1])
@@ -306,7 +311,7 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     ws.cell(r, cc).fill = WARN_FILL
                     ws.cell(r, cc).border = BORDER
                 ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=7)
-                ws.row_dimensions[r].height = _row_height(block[1], 150, base=15)
+                ws.row_dimensions[r].height = _needed_height(block[1], full_width_chars, base=15)
                 r += 1
             elif kind == "table":
                 data = block[1]
@@ -316,18 +321,39 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     for ci, val in enumerate(trow, start=1):
                         ws.cell(r, ci, val)
                     r += 1
-                _style_table(ws, r0, len(data), ncols, header=True)
+                # 列幅をテーブルの列数に合わせて配分する(視認性の核)
+                plan = COL_WIDTH_PLANS.get(ncols, [22] * ncols)
+                tbl_widths = {}
+                for ci in range(1, ncols + 1):
+                    col = get_column_letter(ci)
+                    ws.column_dimensions[col].width = plan[ci - 1]
+                    tbl_widths[col] = plan[ci - 1]
+                # 配分後の幅で行高を決める
+                _fit_row_heights(ws, range(r0, r), tbl_widths, base=16)
             elif kind == "rows":
                 data = block[1]
+                ncols = max(len(t) for t in data)
                 r0 = r
                 for trow in data:
                     for ci, val in enumerate(trow, start=1):
                         ws.cell(r, ci, val)
                     r += 1
-                _style_table(ws, r0, len(data), max(len(t) for t in data), header=False)
+                plan = COL_WIDTH_PLANS.get(ncols, [22] * ncols)
+                tbl_widths = {}
+                for ci in range(1, ncols + 1):
+                    col = get_column_letter(ci)
+                    ws.column_dimensions[col].width = plan[ci - 1]
+                    tbl_widths[col] = plan[ci - 1]
+                _style_table(ws, r0, len(data), ncols, header=False, widths=tbl_widths)
                 for rr in range(r0, r):
                     ws.cell(rr, 1).font = BODY_BOLD_FONT
             r += 1  # ブロック間の空行
+
+        # シート単位の最終監査: まだ行高が足りない行があれば補正する
+        residual = _audit_fit(ws, {get_column_letter(i): (ws.column_dimensions[get_column_letter(i)].width or 18)
+                                   for i in range(1, 8)})
+        for rr, actual, need in residual:
+            ws.row_dimensions[rr].height = need
 
     wb.save(path)
     print("saved:", path)
