@@ -35,7 +35,9 @@ if (-not (Test-Path -LiteralPath (Join-Path $RepoPath ".git"))) { throw "親リ�
 # 注意: .git はミラー側に作らない。追跡は親リポジトリ(kohden-code-workspace)が行う
 $xd = @(".obsidian", ".git", ".trash", ".tmp.drivedownload", ".tmp.driveupload")
 $roboArgs = @($VaultPath, $MirrorPath, "/MIR", "/R:1", "/W:1", "/NP", "/NFL", "/NDL", "/NJH")
-foreach ($d in $xd) { $roboArgs += @("/XD", (Join-Path $VaultPath $d)) }
+# 注意: /XD にフルパスを渡すと「そのパスのみ」除外になり、サブフォルダ内の同名フォルダ(.git など)が
+# 除外されずミラーに取り込まれる。フォルダ名を渡すことで全階層で一致させる。
+foreach ($d in $xd) { $roboArgs += @("/XD", $d) }
 
 Write-Host "== robocopy: Vault -> mirror =="
 & robocopy @roboArgs
