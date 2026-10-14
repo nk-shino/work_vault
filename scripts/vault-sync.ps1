@@ -46,26 +46,86 @@ Write-Host "robocopy exit=$rc (0-7 は正常)"
 # --- 2. 差分確認 (workvault-sync 配下のみ) ---
 git -C $RepoPath status --porcelain | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "git status 失敗" }
-$changes = @(git -C $RepoPath status --porcelain | Where-Object { $_ -match "workvault-sync" })
-if (-not $changes) {
+
+# workvault-sync/ は .gitignore 配下のため、status は追跡済みファイルの変更しか出ない。
+# 新規ファイルは ignored 扱いになるため、-om (others+modified, gitignore 適用) とは別に
+# 明示的な新規検出を行う。ただし以下は除外する:
+#   - ネスト git リポジトリの作業フォルダ (.git を含むもの) → gitlink になり push 不能
+#   - 100MB 超の除外対象2ファイル (自動はんだ不良入力.zip / NPM-DGS.PDF)
+#   - __pycache__ / *.pyc / .tmp.drive* / .bkp 等の生成物
+$nestedGit = @(Get-ChildItem -LiteralPath $MirrorPath -Recurse -Force -Directory -Filter ".git" -ErrorAction SilentlyContinue |
+    ForEach-Object { $_.FullName })
+$nestedPrefixes = @()
+foreach ($g in $nestedGit) {
+    $rel = $g.Substring($RepoPath.Length + 1).Replace("\", "/")
+    # 末尾の "/.git" を除去した作業ツリーの接頭辞 (スラッシュ区切りに統一)
+    $nestedPrefixes += $rel.Substring(0, $rel.Length - 5)
+}
+
+function Test-Excluded([string]$relPath) {
+    foreach ($p in $nestedPrefixes) { if ($relPath -eq $p -or $relPath.StartsWith($p + "/")) { return $true } }
+    if ($relPath -match "workvault-sync/11_USBミラー_E/buckup/15575/BK/自動はんだ不良入力\.zip$") { return $true }
+    if ($relPath -match "workvault-sync/09_佐藤さん引継ぎ/佐藤\(勇\)/DGS NPM 説明書/NPM-DGS\.PDF$") { return $true }
+    if ($relPath -match "(/|^)(__pycache__|\.tmp\.drive)(/|$)|\.egg-info(/|$)|\.pyc$|\.bkp$|/\.git") { return $true }
+    if ($relPath -match "workvault-sync/06_Tools/用語集アプリ/data/glossary\.db$") { return $true }
+    return $false
+}
+
+# 新規候補: ignored 含む全 untracked (-oi) から追跡済み差分 (-om) を引く
+$newCandidates = @(git -C $RepoPath ls-files -oi --exclude-standard -- "workvault-sync" |
+    Where-Object { $_ -notmatch "^workvault-sync" -or $true } |
+    ForEach-Object { $_ })
+# -oi --exclude-standard は gitignore を適用するため、gitignore 配下は出ない。
+# そこで --no-standard-excludes 相当として ignored も拾う: 実際は下の二段構え
+$tracked = @(git -C $RepoPath ls-files -- "workvault-sync")
+$trackedSet = @{}
+foreach ($t in $tracked) { $trackedSet[$t] = $true }
+
+$allFiles = @(git -C $RepoPath ls-files -o -- "workvault-sync") # gitignore 配下は出ない
+# gitignore を無視して新規を拾うには ls-files -oimo --exclude-standard では不十分。
+# PowerShell 側でミラーとインデックスを突合するのが確実。
+$indexRel = @{}
+foreach ($t in $tracked) { $indexRel[$t] = $true }
+
+$newFiles = @()
+Get-ChildItem -LiteralPath $MirrorPath -Recurse -Force -File -ErrorAction SilentlyContinue | ForEach-Object {
+    $rel = $_.FullName.Substring($RepoPath.Length + 1).Replace("\", "/")
+    if (-not $indexRel.ContainsKey($rel) -and -not (Test-Excluded $rel)) {
+        if ($_.Length -lt 95MB) { $newFiles += $rel }
+    }
+}
+# egg-info フォルダごと除外した場合のフォルダ扱い: egg-info 配下はファイル単位で除外済み
+
+$modFiles = @(git -C $RepoPath status --porcelain | Where-Object { $_ -match "workvault-sync" })
+if (-not $modFiles -and -not $newFiles) {
     Write-Host "== workvault-sync の差分なし。コミット・push はスキップ =="
     exit 0
 }
 
-Write-Host "== 差分 ($($changes.Count) 件) =="
-$changes | ForEach-Object { Write-Host $_ }
+$changes = @()
+foreach ($m in $modFiles) { $changes += $m }
+foreach ($n in $newFiles) { $changes += "A  $n" }
+
+Write-Host "== 差分 ($($changes.Count) 件 / 新規 $($newFiles.Count) 件) =="
+$changes | Select-Object -First 30 | ForEach-Object { Write-Host $_ }
+if ($changes.Count -gt 30) { Write-Host "... ほか $($changes.Count - 30) 件" }
 
 if ($DryRun) {
     Write-Host "== DryRun のため終了 =="
     exit 0
 }
 
-# --- 3. コミット (変更済み分は追跡対象なので通常の add が通る。新規除外判定は -f 不要) ---
+# --- 3. コミット (追跡済みの変更は add -u、新規は -f で強制追加) ---
 git -C $RepoPath add -u -- "workvault-sync"
 $addRc = $LASTEXITCODE
 if ($addRc -ne 0) {
-    # gitignore に完全一致する新規パスは追跡対象外として跳ねられる。既に追跡中のファイルは通る
-    Write-Host "git add -u exit=$addRc (新規除外ファイルはスキップ)"
+    Write-Host "git add -u exit=$addRc"
+}
+if ($newFiles.Count -gt 0) {
+    # gitignore 配下の新規は -f が要る。ただし除外判定済みのものだけ渡す
+    $newFiles | ForEach-Object { git -C $RepoPath add -f -- $_ }
+    if ($LASTEXITCODE -ne 0) { throw "git add -f (新規) 失敗" }
+    Write-Host "新規 $($newFiles.Count) 件を強制追加"
 }
 
 $date = Get-Date -Format "yyyy-MM-dd HH:mm"
