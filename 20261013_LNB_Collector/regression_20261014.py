@@ -14,8 +14,11 @@ pana = open(os.path.join(DOCS, "管理書.md"), encoding='utf-8').read()
 
 # ===== 1. 回帰: 前回の全検証項目 =====
 fm_lnb = lnb.split('---')[1]
-check("LNB: front matter 版0.9", "版: 0.9" in fm_lnb)
+check("LNB: front matter 版0.9以上", any(f"版: 0.{v}" in fm_lnb for v in range(9, 20)))
 check("LNB: 履歴に0.9", "| 0.9 | 2026-10-14 |" in lnb)
+check("LNB: 履歴に0.10", "| 0.10 | 2026-10-14 |" in lnb)
+check("LNB書: LNB正式名称", "Line Network Box」の略" in lnb)
+check("LNB書: DGS正式名称", "NPM-DGS（Data Generation System）" in lnb)
 fm_pana = pana.split('---')[1]
 check("PANA: front matter 版0.11以上", "版: 0.11" in fm_pana or "版: 0.12" in fm_pana)
 check("PANA: 履歴に0.11", "| 0.11 | 2026-10-14 |" in pana)
