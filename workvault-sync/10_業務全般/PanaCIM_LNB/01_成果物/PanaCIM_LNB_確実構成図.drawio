@@ -8,23 +8,26 @@
         <mxCell id="title" value="PanaCIM 確実構成図（第一層：全体相関図）" style="text;html=1;fontFamily=Meiryo;fontSize=26;align=center;verticalAlign=middle;fontColor=#1F2937;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="legend1" value="凡例：【サーバ】=サーバー(VM含む)／【端末(PC)】=作業員が操作するPC／【設備】=製造設備／【表示】=画面・表示装置／【保存領域】=ファイル保存場所。色: 青=サーバ・表示系／黄=PC・操作端末／緑=設備・データ保存" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontSize=12;align=left;spacingLeft=10;verticalAlign=middle;fontColor=#495057;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="96" width="1580" height="28" as="geometry" />
+        </mxCell>
         <mxCell id="subtitle" value="確定事項のみ記載。出典：公式資料・操作手順書 0494-912039(06)・会議記録。暫定・未確認の経路は含まない" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
           <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
         </mxCell>
         <mxCell id="equip" value="製造現場" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="60" y="160" width="320" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="mounter" value="実装機（設備）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#DFF0D8;strokeColor=#2E7D32;fontColor=#2E5A2E;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="equip">
+        <mxCell id="mounter" value="【設備】実装機" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#DFF0D8;strokeColor=#2E7D32;fontColor=#2E5A2E;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="equip">
           <mxGeometry x="20" y="50" width="280" height="60" as="geometry" />
         </mxCell>
         <mxCell id="srvzone" value="サーバー環境" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="440" y="120" width="400" height="420" as="geometry" />
         </mxCell>
-        <mxCell id="esxi" value="ESXi ホスト（172.25.253.45 /ui/）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#E9ECEF;strokeColor=#ADB5BD;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="srvzone">
+        <mxCell id="esxi" value="【サーバ(物理/ハイパーバイザ)】ESXi ホスト（172.25.253.45 /ui/）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#E9ECEF;strokeColor=#ADB5BD;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="srvzone">
           <mxGeometry x="20" y="50" width="360" height="340" as="geometry" />
         </mxCell>
-        <mxCell id="appctrl" value="PanaCIM サーバー
-CIMC-SV（仮想マシン）
+        <mxCell id="appctrl" value="【サーバ(VM)】PanaCIM サーバー
+CIMC-SV（ESXi 上の仮想マシン）
 RHEL 6 64bit" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="esxi">
           <mxGeometry x="30" y="50" width="300" height="110" as="geometry" />
         </mxCell>
@@ -35,11 +38,11 @@ RHEL 6 64bit" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColo
         <mxCell id="display" value="表示系" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="900" y="160" width="320" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="monitor" value="稼働モニタ
+        <mxCell id="monitor" value="【表示】稼働モニタ
 （Pana-CIM から出力される表示）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="display">
           <mxGeometry x="20" y="50" width="280" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="andon" value="アンドン
+        <mxCell id="andon" value="【表示装置】アンドン
 （ラインの状態を表示する装置）
 異常時の判定対象（管理書 10-1）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D9EAF7;strokeColor=#2E75B6;fontColor=#1F4E79;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="display">
           <mxGeometry x="20" y="130" width="280" height="70" as="geometry" />
@@ -47,7 +50,7 @@ RHEL 6 64bit" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColo
         <mxCell id="storage" value="保存領域" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="900" y="420" width="320" height="180" as="geometry" />
         </mxCell>
-        <mxCell id="backup" value="データベース完全バックアップ
+        <mxCell id="backup" value="【保存領域】データベース完全バックアップ
 例：E:\BackUP_DB
 PANACIM_****_FULbak" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#186A3B;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="storage">
           <mxGeometry x="20" y="50" width="280" height="90" as="geometry" />
@@ -55,18 +58,19 @@ PANACIM_****_FULbak" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;f
         <mxCell id="clients" value="操作・連携（Web / FA）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="1280" y="160" width="360" height="440" as="geometry" />
         </mxCell>
-        <mxCell id="cima" value="CIM-A PC（物理）
+        <mxCell id="cima" value="【端末(PC・物理)】CIM-A PC
 VMware 管理画面への入口" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
           <mxGeometry x="20" y="50" width="320" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="cimc" value="CIM-C PC（物理）
+        <mxCell id="cimc" value="【端末(PC・物理)】CIM-C PC
 異常時再起動で最初に止める対象" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
           <mxGeometry x="20" y="120" width="320" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="lnb" value="LNB（FAパソコン）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+        <mxCell id="lnb" value="【端末(PC)】LNB（FAパソコン）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
           <mxGeometry x="20" y="190" width="320" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="dgs" value="NPM-DGS" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
+        <mxCell id="dgs" value="【上位システム?】NPM-DGS
+物理位置は要確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#7D6608;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="clients">
           <mxGeometry x="20" y="250" width="320" height="50" as="geometry" />
         </mxCell>
         <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E7D32;strokeWidth=3;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.6;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="mounter" target="appctrl">
@@ -98,7 +102,8 @@ VMware 管理画面への入口" style="rounded=1;whiteSpace=wrap;html=1;fontFam
 ・LNB（FAパソコン）/NPM-DGS：PanaCIM-EE 外部インターフェース N7201A522J17 構成図
 ・稼働モニタは Pana-CIM から出力：会議記録 第6章
 ・アンドンと Pana-CIM の直接データ経路は未確認。アンドンは点検での判定対象として表示
-・Eg-Pro／Asprova は別チーム管理のため接続線なし（対象外の明示）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
+・Eg-Pro／Asprova は別チーム管理のため接続線なし（対象外の明示）
+・本図を PLM(ZZZ-90000) で閲覧できるかは大塚さんが対応中。解決後に図解を拡充する方針" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
           <mxGeometry x="440" y="580" width="800" height="130" as="geometry" />
         </mxCell>
       </root>
