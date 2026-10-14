@@ -164,6 +164,11 @@ def _style_table(ws, r0, nrows, ncols, header=True, widths=None):
     if widths is None:
         widths = {get_column_letter(cc): 24 for cc in range(1, ncols + 1)}
     _fit_row_heights(ws, range(r0, r0 + nrows), widths, base=16)
+    # 空欄の行(記入スペース)は手書きを想定して最低 24pt を確保する
+    for rr in range(r0 + 1, r0 + nrows):
+        has_value = any(ws.cell(rr, cc).value for cc in range(1, ncols + 1))
+        if not has_value and (ws.row_dimensions[rr].height or 0) < 24:
+            ws.row_dimensions[rr].height = 24
     # 2列テーブル(項目/内容形式)は1列目をラベルとして太字にする
     if ncols == 2:
         for rr in range(r0 + 1, r0 + nrows):
@@ -373,6 +378,11 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     r += 1
                 # 行高はシート共通の列幅で実測決定する
                 _fit_row_heights(ws, range(r0, r), widths, base=16)
+                # 空欄の行(記入スペース)は手書きを想定して最低 24pt を確保する
+                for rr in range(r0 + 1, r):
+                    has_value = any(ws.cell(rr, cc).value for cc in range(1, ncols + 1))
+                    if not has_value and (ws.row_dimensions[rr].height or 0) < 24:
+                        ws.row_dimensions[rr].height = 24
                 # ヘッダの太字・白文字を適用(行高計算のあとで上書きしない)
                 for cc in range(1, ncols + 1):
                     hc = ws.cell(r0, cc)
