@@ -145,6 +145,31 @@ def _audit_fit(ws, widths, min_row=6):
     return out
 
 
+def _style_table(ws, r0, nrows, ncols, header=True, widths=None):
+    """テーブルへ罫線・フォント・行高を適用する。
+
+    行高は _fit_row_heights(セル実測)で決める。widths は列→キャラクタ幅の辞書。
+    """
+    for rr in range(r0, r0 + nrows):
+        for cc in range(1, ncols + 1):
+            c = ws.cell(rr, cc)
+            c.border = BORDER
+            c.alignment = WRAP_TOP
+            if header and rr == r0:
+                c.fill = TABLE_HDR_FILL
+                c.font = TABLE_HDR_FONT
+                c.alignment = WRAP_CENTER
+            else:
+                c.font = BODY_FONT
+    if widths is None:
+        widths = {get_column_letter(cc): 24 for cc in range(1, ncols + 1)}
+    _fit_row_heights(ws, range(r0, r0 + nrows), widths, base=16)
+    # 2列テーブル(項目/内容形式)は1列目をラベルとして太字にする
+    if ncols == 2:
+        for rr in range(r0 + 1, r0 + nrows):
+            ws.cell(rr, 1).font = BODY_BOLD_FONT
+
+
 def build(path, title, sheets, revision, authors, team_leader, ref_format, version,
           toc_title=None):
     wb = openpyxl.Workbook()
@@ -270,8 +295,17 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
         ws.print_title_rows = "1:4"
 
         r = 6
-        # 本文ブロック用の幅辞書(A〜G の合計が横1ページの基準)
-        widths = {get_column_letter(i): body_widths[i - 1] for i in range(1, 8)}
+        # 列幅はシートごとに1度だけ決める(後続ブロックで上書きしない)。
+        # 基準はシート内テーブルの最大列数。h/note/warn は A:G マージのため影響を受けない
+        max_cols = 2
+        for block in blocks:
+            if block[0] in ('table', 'rows'):
+                max_cols = max(max_cols, max(len(t) for t in block[1]))
+        plan = COL_WIDTH_PLANS.get(max_cols, DEFAULT_BODY_WIDTHS[:max_cols])
+        for i, w in enumerate(plan, start=1):
+            ws.column_dimensions[get_column_letter(i)].width = w
+        widths = {get_column_letter(i): plan[i - 1] for i in range(1, max_cols + 1)}
+        body_widths = plan + [18] * (7 - len(plan)) if len(plan) < 7 else plan
         full_width_chars = sum(body_widths) * 2  # マージ A:G の半角換算幅
         for block in blocks:
             kind = block[0]
@@ -321,15 +355,8 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     for ci, val in enumerate(trow, start=1):
                         ws.cell(r, ci, val)
                     r += 1
-                # 列幅をテーブルの列数に合わせて配分する(視認性の核)
-                plan = COL_WIDTH_PLANS.get(ncols, [22] * ncols)
-                tbl_widths = {}
-                for ci in range(1, ncols + 1):
-                    col = get_column_letter(ci)
-                    ws.column_dimensions[col].width = plan[ci - 1]
-                    tbl_widths[col] = plan[ci - 1]
-                # 配分後の幅で行高を決める
-                _fit_row_heights(ws, range(r0, r), tbl_widths, base=16)
+                # 行高はシート共通の列幅で実測決定する
+                _fit_row_heights(ws, range(r0, r), widths, base=16)
             elif kind == "rows":
                 data = block[1]
                 ncols = max(len(t) for t in data)
@@ -338,13 +365,7 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
                     for ci, val in enumerate(trow, start=1):
                         ws.cell(r, ci, val)
                     r += 1
-                plan = COL_WIDTH_PLANS.get(ncols, [22] * ncols)
-                tbl_widths = {}
-                for ci in range(1, ncols + 1):
-                    col = get_column_letter(ci)
-                    ws.column_dimensions[col].width = plan[ci - 1]
-                    tbl_widths[col] = plan[ci - 1]
-                _style_table(ws, r0, len(data), ncols, header=False, widths=tbl_widths)
+                _style_table(ws, r0, len(data), ncols, header=False, widths=widths)
                 for rr in range(r0, r):
                     ws.cell(rr, 1).font = BODY_BOLD_FONT
             r += 1  # ブロック間の空行
