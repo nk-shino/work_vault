@@ -8,7 +8,7 @@
         <mxCell id="ltitle" value="LNB 確実構成図（第一層：全体相関図）" style="text;html=1;fontFamily=Meiryo;fontSize=26;align=center;verticalAlign=middle;fontColor=#7D6608;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="60" y="24" width="1600" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="lsubtitle" value="確定事項のみ記載。出典：公式資料 N7201A670J06、接続先ショートカット（L1/L2/L3_LNB.url）、会議記録。iLNB との同一視はしていない" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+        <mxCell id="lsubtitle" value="確定事項のみ記載。出典：公式資料 N7201A670J06、接続先ショートカット（L1/L2/L3_LNB.url）、会議記録、LWS 画面（2026-10-14・L1）。iLNB との同一視はしていない" style="text;html=1;fontFamily=Meiryo;fontSize=13;align=center;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
           <mxGeometry x="60" y="66" width="1600" height="26" as="geometry" />
         </mxCell>
         <mxCell id="pana_ref" value="参照元（Pana-CIM 側）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
@@ -52,7 +52,8 @@
         <mxCell id="dgs_zone" value="バックアップ経路" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="1240" y="160" width="400" height="240" as="geometry" />
         </mxCell>
-        <mxCell id="dgs" value="DGS（経路に現れる系）
+        <mxCell id="dgs" value="DGS（上位システム）
+172.25.253.10（Pingチェックで確認）
 位置づけは要確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=13;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="dgs_zone">
           <mxGeometry x="20" y="50" width="360" height="70" as="geometry" />
         </mxCell>
@@ -89,8 +90,11 @@
 ・接続先 L1/L2/L3：デスクトップショートカット（L1_LNB.url / L2_LNB.url / L3_LNB.url）から確認
 ・LNB接続状態・部品照合設定：PanaCIM-EE 材料照合（サーバー無しタイプ）N7201A670J06（PDF通し19頁・66頁）
 ・Pana-CIM データ参照・DGS バックアップ運用：会議記録 第5章・LNB管理書 §4/§8
+・DGS＝172.25.253.10（上位システム）：LWS の接続チェック（Pingチェック）画面・2026-10-14（L1）
+・再起動ボタン3種（LNB再起動／LNB-PC電源OFF／LNB-PCリブート）：LWS の LNB再起動ページ・2026-10-14（L1）
+・L1 生産設備 L1NPM-1〜7・SP70-1：LWS の LNB構成情報画面・2026-10-14（L1）
 ・Eg-Pro／Asprova は対象外（別チーム管理）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
-          <mxGeometry x="60" y="580" width="1580" height="120" as="geometry" />
+          <mxGeometry x="60" y="580" width="1580" height="160" as="geometry" />
         </mxCell>
         <mxCell id="le7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#82B366;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=11;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dgs" target="exp">
           <mxGeometry relative="1" as="geometry" />
@@ -168,8 +172,9 @@ Pana-CIM で一括取得できないか検討中" style="rounded=1;whiteSpace=wr
 ・LNB接続状態：N7201A670J06 PDF通し19頁「③ LNB接続状態　無線スキャナーとLNBの接続状態を表示します」
 ・部品照合設定：同 PDF通し66頁「無線スキャナーで部品照合機能を使用するには、LNB設定の部品照合設定を行う必要があります」
 ・バックアップ運用・再起動順序：会議記録 第5章・LNB管理書 §7/§8
+・再起動ボタン3種・設定情報バックアップ／リストア・DGS＝172.25.253.10：LWS 画面・2026-10-14（L1）
 ・自社 L1〜L3 に同じ表示があるかは未確認（聞き取り待ち）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#FEF9E7;strokeColor=#9A7D0A;strokeWidth=1.5;fontSize=12;align=left;spacingLeft=12;spacingRight=12;verticalAlign=middle;fontColor=#7D6608;arcSize=5;" vertex="1" parent="1">
-          <mxGeometry x="60" y="460" width="1580" height="130" as="geometry" />
+          <mxGeometry x="60" y="460" width="1580" height="150" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
