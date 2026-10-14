@@ -15,6 +15,14 @@
   - 表ヘッダ: 濃紺地 4472C4 + 白文字(参照性最優先)
 - 枠線: 罫線は薄灰で統一し、線の強弱でなく塗りで構造を示す
 - 印刷: A4横向き、1ページ幅に収める(現場での印刷運用を想定)
+
+視認性の原則(2026-10-14 改訂):
+- 行高は「セルごとの実測折り返し行数」から決める。テーブル内の最も高いセルに合わせ、
+  文字が切れる状態(下の行が見えない)を残さない
+- テーブルは列数に応じて列幅を配分する(固定幅の使い回しではなく、
+  1列目=項目(短)・最終列=本文(長)という内容の性質に合わせる)
+- 目次はハイパーリンクで各シートへ飛べるようにし、各シートの型名セルから目次へ戻れる
+- 折り返しの概算は Excel の実挙動に合わせ安全率を乗じる(禁則処理で早く折り返されるため)
 """
 import openpyxl
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
@@ -38,44 +46,103 @@ BODY_BOLD_FONT = Font(name=FONT_NAME, size=10, bold=True)
 LABEL_FONT = Font(name=FONT_NAME, size=10, bold=True, color="1F3864")
 TITLE_FONT = Font(name=FONT_NAME, size=20, bold=True, color="1F3864")
 SHEET_HDR_FONT = Font(name=FONT_NAME, size=12, bold=True)
+LINK_FONT = Font(name=FONT_NAME, size=10, color="0563C1", underline="single")
 
 WRAP_TOP = Alignment(wrap_text=True, vertical="top")
+WRAP_CENTER = Alignment(wrap_text=True, vertical="center")
 CENTER = Alignment(horizontal="center", vertical="center")
+
+# 列幅配分: テーブルの列数ごとの「1列目,2列目,...」の幅(キャラクタ単位)
+# 1列目は項目名(短め)、最終列は本文(長め)を受ける
+COL_WIDTH_PLANS = {
+    2: [26, 100],
+    3: [8, 30, 88],
+    4: [8, 24, 62, 32],
+    5: [6, 18, 46, 36, 26],
+    6: [6, 14, 34, 34, 28, 20],
+    7: [6, 12, 28, 30, 28, 22, 16],
+}
+DEFAULT_BODY_WIDTHS = [32, 95, 18, 18, 18, 18, 18]  # 本文ブロック(h/note/warn)用
+
+# 行高の係数: 10pt 游ゴシックの1行 = 13.5pt、+上下の余白4pt
+LINE_PT = 13.5
+PAD_PT = 4.0
+# 折り返し概算の安全率: Excel の実折り返しは概算より早く増える(禁則処理・プロポーショナル)
+WRAP_SAFETY = 1.06
+
+
+def _text_width(text):
+    """文字列の表示幅を半角=1・全角=2で概算する。"""
+    return sum(2 if ord(ch) > 0x2E80 else 1 for ch in str(text))
+
+
+def _wrapped_lines(text, width_chars):
+    """指定幅(半角換算)に収まる折り返し行数を概算する。"""
+    lines = 0
+    for part in str(text).split("\n"):
+        w = _text_width(part)
+        lines += max(1, -(-w * WRAP_SAFETY // width_chars))
+    return max(1, int(lines))
+
+
+def _needed_height(text, width_chars, base=None, line_pt=LINE_PT, pad=PAD_PT):
+    lines = _wrapped_lines(text, width_chars)
+    need = lines * line_pt + pad
+    if base:
+        need = max(need, base)
+    return round(need, 1)
 
 
 def _row_height(text, width_chars, base=14):
-    """概算の行数から行の高さを決める。"""
-    lines = 0
-    for part in str(text).split("\n"):
-        # 日本語は全角2文字扱いで概算
-        w = sum(2 if ord(ch) > 0x2E80 else 1 for ch in part)
-        lines += max(1, -(-w // width_chars))
-    return max(base, 13.5 * lines + 3)
+    """概算の行数から行の高さを決める(旧API・内部で _needed_height に委譲)。"""
+    return _needed_height(text, width_chars, base=base)
 
 
-def _style_table(ws, r0, nrows, ncols, header=True):
-    for rr in range(r0, r0 + nrows):
-        for cc in range(1, ncols + 1):
-            c = ws.cell(rr, cc)
-            c.border = BORDER
-            c.alignment = WRAP_TOP
-            if header and rr == r0:
-                c.fill = TABLE_HDR_FILL
-                c.font = TABLE_HDR_FONT
-                c.alignment = Alignment(wrap_text=True, vertical="center", horizontal="center")
-            else:
-                c.font = BODY_FONT
-    if header:
-        ws.row_dimensions[r0].height = _row_height(
-            max((str(ws.cell(r0, cc).value or "") for cc in range(1, ncols + 1)), key=len),
-            24, base=18)
-        for rr in range(r0 + 1, r0 + nrows):
-            longest = max((str(ws.cell(rr, cc).value or "") for cc in range(1, ncols + 1)), key=len)
-            ws.row_dimensions[rr].height = _row_height(longest, 48)
-        # 2列テーブル(項目/内容形式)は1列目をラベルとして太字にする
-        if ncols == 2:
-            for rr in range(r0 + 1, r0 + nrows):
-                ws.cell(rr, 1).font = BODY_BOLD_FONT
+def _cell_span_width(ws, cell, widths):
+    """マージ範囲の左上なら合計幅、単独セルなら自列幅。マージ範囲の非左上は None。"""
+    for m in ws.merged_cells.ranges:
+        if m.min_row <= cell.row <= m.max_row and m.min_col <= cell.column <= m.max_col:
+            if m.min_row == cell.row and m.min_col == cell.column:
+                return sum(widths[get_column_letter(cc)] for cc in range(m.min_col, m.max_col + 1))
+            return None
+    return widths[cell.column_letter]
+
+
+def _fit_row_heights(ws, row_range, widths, line_pt=LINE_PT, pad=PAD_PT, base=None):
+    """row_range 内の各行について、wrap 有効セルの実測から行高を決める。
+
+    テーブル/ブロック共通の唯一の行高決定経路。「文字が切れる」状態を排除する。
+    """
+    for r in row_range:
+        need = base or 14
+        for c in ws[r]:
+            if c.value is None:
+                continue
+            span = _cell_span_width(ws, c, widths)
+            if span is None:
+                continue
+            need = max(need, _needed_height(c.value, max(8, span * 2), line_pt=line_pt, pad=pad))
+        ws.row_dimensions[r].height = round(need, 1)
+
+
+def _audit_fit(ws, widths, min_row=6):
+    """行高不足の行を返す(検証用)。[(行, 実高, 必要高), ...]"""
+    out = []
+    need_by_row = {}
+    for row in ws.iter_rows(min_row=min_row):
+        for c in row:
+            if c.value is None or not c.alignment or not c.alignment.wrap_text:
+                continue
+            span = _cell_span_width(ws, c, widths)
+            if span is None:
+                continue
+            need = _needed_height(c.value, max(8, span * 2))
+            need_by_row[c.row] = max(need_by_row.get(c.row, 0), need)
+    for r, need in need_by_row.items():
+        actual = ws.row_dimensions[r].height or 14
+        if need > actual + 2:
+            out.append((r, actual, need))
+    return out
 
 
 def build(path, title, sheets, revision, authors, team_leader, ref_format, version,
@@ -122,6 +189,7 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
         r += 1
 
     # ---- 目次シート(既存様式に倣い、番号=シート対応で自動生成) ----
+    # ハイパーリンク付き: 目次→各シート、各シート→目次 の両方向
     toc = wb.create_sheet("目次", 1)
     toc.sheet_view.showGridLines = False
     toc.column_dimensions["A"].width = 8
@@ -139,19 +207,26 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
     for cellref in ("A3", "A4", "D3", "D4"):
         toc[cellref].border = BORDER
         toc[cellref].fill = HDR_FILL
+    toc["B5"] = "項目名を選ぶと該当シートへ移動します。各シートの「目次へ」から戻れます。"
+    toc["B5"].font = NOTE_FONT
     tr = 6
     n = 1
+    sheet_names = [s[0] for s in sheets if s[0] != "改訂履歴"]
     for sheet in sheets:
         name = sheet[0]
         if name == "改訂履歴":
             continue
         c = toc.cell(tr, 1, f"{n}.")
         c.font = BODY_FONT
-        c.alignment = Alignment(horizontal="right", vertical="top")
+        c.alignment = Alignment(horizontal="right", vertical="center")
+        c.border = BORDER
         c2 = toc.cell(tr, 2, name)
-        c2.font = BODY_FONT
-        toc.cell(tr, 1).border = BORDER
-        toc.cell(tr, 2).border = BORDER
+        c2.font = LINK_FONT
+        c2.alignment = Alignment(vertical="center")
+        c2.border = BORDER
+        # シート名の引用符をエスケープしてハイパーリンク化
+        c2.hyperlink = f"#'{name[:31].replace(chr(39), chr(39)*2)}'!A1"
+        toc.row_dimensions[tr].height = 16
         tr += 1
         n += 1
 
@@ -160,18 +235,14 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
         name, blocks = sheet[0], sheet[1]
         ws = wb.create_sheet(name[:31])
         ws.sheet_view.showGridLines = False
-        ws.column_dimensions["A"].width = 32
-        ws.column_dimensions["B"].width = 95
-        for col in "CDEFG":
-            ws.column_dimensions[col].width = 18
+        body_widths = DEFAULT_BODY_WIDTHS
+        for i, w in enumerate(body_widths, start=1):
+            ws.column_dimensions[get_column_letter(i)].width = w
 
         ws["A1"] = "手 順 書"
         ws["A1"].font = SHEET_HDR_FONT
-        ws["A1"].border = Border(bottom=Side(style="medium", color="1F3864"))
-        ws["D1"].border = Border(bottom=Side(style="medium", color="1F3864"))
-        ws["E1"].border = Border(bottom=Side(style="medium", color="1F3864"))
-        ws["F1"].border = Border(bottom=Side(style="medium", color="1F3864"))
-        ws["G1"].border = Border(bottom=Side(style="medium", color="1F3864"))
+        for col in "ABCDEFG":
+            ws[f"{col}1"].border = Border(bottom=Side(style="medium", color="1F3864"))
         ws["A3"] = "型   名"
         ws["A3"].font = BODY_BOLD_FONT
         ws["D3"] = "ZZZ-90000(仮)"
@@ -184,6 +255,11 @@ def build(path, title, sheets, revision, authors, team_leader, ref_format, versi
         ws["D3"].fill = ws["D4"].fill = HDR_FILL
         for cellref in ("A3", "A4", "D3", "D4"):
             ws[cellref].border = BORDER
+        # 目次へ戻るリンク(G3)
+        ws["G3"] = "目次へ"
+        ws["G3"].font = LINK_FONT
+        ws["G3"].alignment = Alignment(horizontal="right", vertical="center")
+        ws["G3"].hyperlink = "#目次!A1"
 
         # 印刷設定: A4横向き・1ページ幅
         ws.page_setup.orientation = "landscape"
