@@ -14,11 +14,11 @@ pana = open(os.path.join(DOCS, "管理書.md"), encoding='utf-8').read()
 
 # ===== 1. 回帰: 前回の全検証項目 =====
 fm_lnb = lnb.split('---')[1]
-check("LNB: front matter 版0.5", "版: 0.5" in fm_lnb)
-check("LNB: 履歴に0.5", "| 0.5 | 2026-10-14 |" in lnb)
+check("LNB: front matter 版0.9", "版: 0.9" in fm_lnb)
+check("LNB: 履歴に0.9", "| 0.9 | 2026-10-14 |" in lnb)
 fm_pana = pana.split('---')[1]
-check("PANA: front matter 版0.8", "版: 0.8" in fm_pana)
-check("PANA: 履歴に0.8", "| 0.8 | 2026-10-14 |" in pana)
+check("PANA: front matter 版0.11", "版: 0.11" in fm_pana)
+check("PANA: 履歴に0.11", "| 0.11 | 2026-10-14 |" in pana)
 for k in ["LNB再起動", "LNB-PC電源OFF", "LNB-PCリブート", "172.25.253.10", "SP70-1",
           "L1NPM-1", "設定情報リストア", "認証ID", "192.168.20.23"]:
     check("LNB書: 含む " + k, k in lnb)
