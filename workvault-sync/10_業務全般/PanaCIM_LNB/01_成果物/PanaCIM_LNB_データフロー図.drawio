@@ -31,16 +31,16 @@ E:\BackUP_DB　PANACIM_****_FULbak" style="rounded=1;whiteSpace=wrap;html=1;font
         <mxCell id="zone_unconf" value="未確認のデータ項目（取得元 要確認）" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#5D6D7E;fontColor=#566573;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
           <mxGeometry x="60" y="600" width="360" height="205" as="geometry" />
         </mxCell>
-        <mxCell id="b_parts" value="【データ】%s
-（取得元 要確認・宛先 Pana-CIM 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
+        <mxCell id="b_parts" value="【データ】部品情報
+（取得元 要確認・宛先 Pana-CIM 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=12;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
           <mxGeometry x="30" y="35" width="300" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="b_nozzle" value="【データ】%s
-（取得元 要確認・宛先 LNB 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
+        <mxCell id="b_nozzle" value="【データ】ノズルデータ
+（取得元 要確認・宛先 LNB 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=12;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
           <mxGeometry x="30" y="93" width="300" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="b_reader" value="【データ】%s
-（取得元 要確認・宛先 LNB 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=13;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
+        <mxCell id="b_reader" value="【データ】リーダーデータ
+（取得元 要確認・宛先 LNB 側）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fillColor=#F2F3F4;strokeColor=#5D6D7E;fontColor=#566573;fontSize=12;fontStyle=1;arcSize=10;verticalAlign=middle;spacingLeft=8;spacingRight=8;spacingTop=4;spacingBottom=4;" vertex="1" parent="zone_unconf">
           <mxGeometry x="30" y="151" width="300" height="48" as="geometry" />
         </mxCell>
         <mxCell id="zone_srv" value="サーバー環境" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Meiryo;startSize=34;fillColor=#F8F9FA;strokeColor=#CED4DA;fontColor=#495057;fontSize=15;fontStyle=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;rounded=1;arcSize=3;" vertex="1" parent="1">
@@ -71,12 +71,16 @@ LNB が参照するデータの保持元" style="rounded=1;whiteSpace=wrap;html=
           </mxGeometry>
         </mxCell>
         <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#2E75B6;strokeWidth=3;endArrow=blockThin;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.8;entryX=0;entryY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cimc_sv" target="andon">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="388" />
+              <mxPoint x="990" y="290" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e3_lbl" value="表示を出力（表示内容は Pana-CIM 由来。
-ただし直接経路は未確認）" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e3">
-          <mxGeometry x="-0.35" y="0" relative="1" as="geometry">
-            <mxPoint y="28" as="offset" />
+        <mxCell id="e3_lbl" value="表示を出力（未確認）" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#2E75B6;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e3">
+          <mxGeometry x="-0.54" y="0" relative="1" as="geometry">
+            <mxPoint y="-15" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#82B366;strokeWidth=3;endArrow=blockThin;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0;entryY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cimc_sv" target="backup_db">
@@ -92,10 +96,10 @@ LNB が参照するデータの保持元" style="rounded=1;whiteSpace=wrap;html=
             <mxPoint x="-30" y="16" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#B7950B;strokeWidth=3;endArrow=blockThin;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lnb" target="cimc_sv">
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#B7950B;strokeWidth=3;endArrow=blockThin;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.55;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lnb" target="cimc_sv">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1015" y="594" />
+              <mxPoint x="1015" y="580" />
               <mxPoint x="1015" y="359" />
             </Array>
           </mxGeometry>
@@ -162,7 +166,7 @@ LNB が参照するデータの保持元" style="rounded=1;whiteSpace=wrap;html=
             <mxPoint x="-235" y="0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=3;startArrow=classic;endArrow=classic;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.35;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cimc" target="esxi">
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=3;startArrow=classic;endArrow=classic;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.72;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cimc" target="esxi">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="870" y="403" />
@@ -174,17 +178,18 @@ LNB が参照するデータの保持元" style="rounded=1;whiteSpace=wrap;html=
             <mxPoint y="-12" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e9b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=3;startArrow=classic;endArrow=classic;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;entryX=0.8;entryY=0;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cima" target="esxi">
+        <mxCell id="e9b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;strokeColor=#D6B656;strokeWidth=3;startArrow=classic;endArrow=classic;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;entryX=1;entryY=0.18;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cima" target="esxi">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1350" y="288" />
-              <mxPoint x="880" y="288" />
+              <mxPoint x="1350" y="350" />
+              <mxPoint x="1040" y="350" />
+              <mxPoint x="1040" y="250" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e9b_lbl" value="Web 操作（VMware 管理画面から ESXi を操作）" style="edgeLabel;html=1;fontFamily=Meiryo;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#B7950B;labelBackgroundColor=#FFFFFF;fontStyle=1;" vertex="1" connectable="0" parent="e9b">
-          <mxGeometry x="0" y="0" relative="1" as="geometry">
-            <mxPoint y="-12" as="offset" />
+          <mxGeometry x="-0.4" y="0" relative="1" as="geometry">
+            <mxPoint y="14" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="u1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;dashed=1;dashPattern=8 6;strokeColor=#5D6D7E;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=11;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.85;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="b_parts" target="esxi">
