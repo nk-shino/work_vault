@@ -1,3 +1,11 @@
+---
+type: report
+phase: develop
+status: done
+project: 既存サイト改善
+updated: 2026-10-15
+---
+
 ﻿# Web制作・AI開発向け調査・検討記録
 
 - **作成日:** 2026年10月8日

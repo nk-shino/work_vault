@@ -1,3 +1,11 @@
+---
+type: note
+phase: develop
+status: active
+project: EGPro在庫修正
+updated: 2026-10-15
+---
+
 - RPA上でのEGPro在庫データ更新の有無
 	- RPA上では、PanaCIMデータ取得というシナリオが存在しているが、これはPanaCIMデータを取得しているのみであり、
 		在庫情報の記録や上書きといったイベントは登録されていなかったため、RPAは直接的に関与していないと考えられる。

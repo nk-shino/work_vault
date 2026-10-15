@@ -1,3 +1,11 @@
+---
+type: spec
+phase: develop
+status: waiting
+project: 既存サイト改善
+updated: 2026-10-15
+---
+
 # 既存Webアプリへの情報取り込み機能実装・実行指示書
 
 ## 1. 目的と進め方

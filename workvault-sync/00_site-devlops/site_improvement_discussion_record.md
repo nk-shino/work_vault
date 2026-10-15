@@ -1,3 +1,11 @@
+---
+type: report
+phase: develop
+status: waiting
+project: 既存サイト改善
+updated: 2026-10-15
+---
+
 # 既存サイト改善に関する調査・検討記録
 
 - 作成日：2026-10-08（Asia/Tokyo）
