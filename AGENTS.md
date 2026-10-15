@@ -15,6 +15,7 @@ This is the default workspace. The rules below are a default starting point; ada
 - 同期は `scripts/vault-sync.ps1`（タスクスケジューラ `Vault-sync-commit-push` がログオン5分後＋毎日17:30に自動実行）。手動実行は `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\vault-sync.ps1 [-DryRun]`
 - Vault 側の変更を AI が検知したら同期を待たず手動同期してよい（`vault-sync.ps1` 実行→差分コミット→push まで自動）。手順・検証・除外条件・トラブルシュートは **`vault-sync` スキル**（`~/.config/kohden-code/skills/vault-sync/SKILL.md`）に従う。同期後は `git ls-files` で新規が追跡に入ったか必ず検証する（2026-10-14、新規フォルダが無音で欠落した失敗 ERR-20261014-001 の再発防止）
 - GitHub issue は `scripts/github-issue.py`（起票）と `scripts/github-issue-close.py`（コメント付きクローズ）で操作する。gh CLI は未ログインだが git credential のトークンで API を叩ける。使い方: `python scripts/github-issue.py nk-shino/work_vault "<title>" <body.md>`
+- **issue 起票・看板(Project V2)への追加・Status 移動(Todo/In Progress/Done)・タスク完了時の Done 移動は `github-issue-board` スキル**（`~/.config/kohden-code/skills/github-issue-board/SKILL.md`）の統一手順で行う。全セッション共通。完了時は forced-logging による記録検証 → issue へ完了コメント → Done 移動の順。close はユーザーの確認後
 - 100MB 超の2ファイル（`自動はんだ不良入力.zip`・`NPM-DGS.PDF`）は `.gitignore` 済み。履歴に再登録しないこと（push が拒否される）
 - `98_Pass`（認証情報）を含むためリポジトリは必ず Private 維持。public 化やスコープ拡大をしてはいけない
 
