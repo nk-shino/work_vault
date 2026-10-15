@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-10-15T00:00:00.000Z" agent="KohdenCode" version="32.4.1" type="device">
+    <diagram id="p1" name="1_全体構成・目的">
+      <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+        <mxCell id="p1_title" value="Page1 分析対象4ファイルの全体構成と目的" style="text;html=1;fontFamily=Meiryo;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="24" width="1574" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_sub" value="対象: PanaCIM_LNB 配下の4ファイル(原本Read Only) ／ 出典: Excel内の記載と本日再実測(evidence/excel_facts.json)" style="text;html=1;fontFamily=Meiryo;fontSize=12;align=left;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+            <mxGeometry x="40" y="60" width="1574" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="g_dgs" value="DGS 実装プログラム手順書（様式 NR4030 系）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#3D6B99;fontColor=#24466B;" vertex="1" parent="1">
+            <mxGeometry x="40" y="110" width="720" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="g_draft" value="管理手順書 草案（会議中に手を加えたもの）" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#4E7A43;fontColor=#3E6134;" vertex="1" parent="1">
+            <mxGeometry x="800" y="110" width="814" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="F_P1" value="&lt;b&gt;0494-913473 実装プログラム手順(DGS)_P1.xls&lt;/b&gt;&lt;br&gt;役割: 表紙・変更履歴(付表1シート)&lt;br&gt;管理番号 0494-913473 ／ 頁 1/119&lt;br&gt;様式 NR4030-0100-A3 ／ 初版枚数 55枚" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#1F2937;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="60" y="160" width="340" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="F_P2" value="&lt;b&gt;0494-913473 実装プログラム手順(DGS)_P2.xlsx&lt;/b&gt;&lt;br&gt;役割: 本文 34シート&lt;br&gt;はじめに1 ／ フロー図4 ／ 個別手順29&lt;br&gt;様式 NR4030-0300-A3(フッタ)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#1F2937;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="420" y="160" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="F_PC" value="&lt;b&gt;PanaCIM管理手順書_草案(会議中に手を加えたもの).xlsx&lt;/b&gt;&lt;br&gt;文書名: Pana-CIM 管理手順書 ／ 版 0.11(草案・未検証)&lt;br&gt;16シート ／ 会議メモ(B1) 6件" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#1F2937;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="820" y="160" width="380" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="F_LN" value="&lt;b&gt;LNB管理手順書_草案(会議中に手を加えたもの).xlsx&lt;/b&gt;&lt;br&gt;文書名: LNB 管理手順書 ／ 版 0.9(草案・未検証)&lt;br&gt;19シート ／ 申し送り(認証情報)含む" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#1F2937;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="1220" y="160" width="374" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="P1_hist" value="P1: 表紙+変更履歴&lt;br&gt;変更記号 01→02→03(書替)&lt;br&gt;総枚数 93→118→119" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="60" y="310" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="P2_body" value="P2: 本文 34シート&lt;br&gt;① はじめに(目的/適用範囲)&lt;br&gt;② フロー図 4シート&lt;br&gt;③ 個別手順 29シート" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="240" y="310" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="P2_proc" value="個別手順: 手順番号「1．」+&lt;br&gt;「します」文体+スクショ154枚&lt;br&gt;実パス掲載 14/34シート" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="420" y="310" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_body" value="本文 9シート&lt;br&gt;目次/改訂履歴/目的と適用範囲(削除)&lt;br&gt;/用語/構成と管理情報/管理体制&lt;br&gt;/日次点検(WIP)/月次再起動&lt;br&gt;/バックアップ/復旧/異常時の対応" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="820" y="310" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_list" value="記録・一覧 7シート&lt;br&gt;チェックシート(月次・異常時)&lt;br&gt;/会議課題一覧(一時)&lt;br&gt;/要確認事項一覧" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1040" y="310" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_body" value="本文+定期管理&lt;br&gt;目次〜異常時の対応/定期管理&lt;br&gt;※PanaCIMに無い「定期管理」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1220" y="310" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_solo" value="LNB固有&lt;br&gt;申し送り(認証情報)&lt;br&gt;引用と部品照合&lt;br&gt;チェックシート(日次)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1420" y="310" width="174" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="N_style" value="&lt;b&gt;共通の様式基盤&lt;/b&gt;: 会議版草案の表紙は「様式の参考=操作手順書 0494-912039(06) 表紙(様式 NR4030-0100-A3)」と記載(DGS P1と同様式系)。型名欄は両草案とも「ZZZ-90000(仮)」で統一(仮番運用)。" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="520" width="1000" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="N_secret" value="&lt;b&gt;要留意(マスク表記)&lt;/b&gt;: DGS起動シート A12 に利用者名・パスワードの平文記載あり(本図ではマスク表記)。&lt;br&gt;両草案とも表紙に「認証情報=本文に書かない・値は別紙管理」と明記。" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1060" y="520" width="554" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="p1_018" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#3D6B99;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#24466B;align=center;verticalAlign=middle;" edge="1" parent="1" source="F_P1" target="P1_hist">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_019" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#3D6B99;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#24466B;align=center;verticalAlign=middle;" edge="1" parent="1" source="F_P2" target="P2_body">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_020" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#3D6B99;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#24466B;align=center;verticalAlign=middle;" edge="1" parent="1" source="F_P2" target="P2_proc">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="580" y="296" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_021" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="F_PC" target="PC_body">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_022" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="F_PC" target="PC_list">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1175" y="296" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_023" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="F_LN" target="LN_body">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p1_024" value="含む" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="F_LN" target="LN_solo">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1535" y="296" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="N_nav" value="詳細: Page2=シート内の内容構成 ／ Page3=ファイル・シート・項目の関係 ／ Page4=書式・図形・印刷 ／ Page5=不整合・未確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="630" width="1574" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="L_1" value="凡例: 青=DGS(様式系) ／ 緑=PanaCIM草案 ／ 茶=LNB草案 ／ 黒枠太線=ファイル ／ 灰=一覧・記録 ／ 赤=不整合・注意 ／ 点線=参照・未確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;align=left;spacingLeft=12;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontColor=#495057;arcSize=4;" vertex="1" parent="1">
+            <mxGeometry x="40" y="680" width="1574" height="26" as="geometry" />
+        </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+    <diagram id="p2" name="2_シート内の内容構成">
+      <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+        <mxCell id="p2_title" value="Page2 シート内の内容構成" style="text;html=1;fontFamily=Meiryo;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="24" width="1574" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p2_sub" value="左=DGS手順書(P2) ／ 中=PanaCIM草案 ／ 右=LNB草案 ／ 行番号r・セル番地は実測" style="text;html=1;fontFamily=Meiryo;fontSize=12;align=left;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+            <mxGeometry x="40" y="60" width="1574" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_intro" value="DGS_P2: はじめに(59行)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fontStyle=1;fillColor=#EDF2F7;strokeColor=#374151;fontColor=#1F2937;align=left;spacingLeft=12;verticalAlign=middle;" vertex="1" parent="1">
+            <mxGeometry x="40" y="100" width="320" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_intro2" value="r7【目的】SMTプログラム作成手順を示す。&lt;br&gt;r11【適用範囲】マウントデータから&lt;br&gt;SMTプログラム作成および関連作業" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="140" width="296" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_flow" value="DGS_P2: フロー図 4シート(図形主体)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fontStyle=1;fillColor=#EDF2F7;strokeColor=#374151;fontColor=#1F2937;align=left;spacingLeft=12;verticalAlign=middle;" vertex="1" parent="1">
+            <mxGeometry x="40" y="248" width="320" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_flow2" value="試作フロー(sp+cxn 17/16個)&lt;br&gt;設計変更_部品フロー(10/11)&lt;br&gt;設計変更_改版フロー(10/10)&lt;br&gt;新製品フロー(9/9)&lt;br&gt;&lt;br&gt;分岐=「新しい基板？」+YES/NO&lt;br&gt;遷移先=Z列「➡シート名」併記" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="288" width="296" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_proc" value="DGS_P2: 個別手順 29シート" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fontStyle=1;fillColor=#EDF2F7;strokeColor=#374151;fontColor=#1F2937;align=left;spacingLeft=12;verticalAlign=middle;" vertex="1" parent="1">
+            <mxGeometry x="40" y="460" width="320" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_proc2" value="手順番号「1．」全角読点+「します」文体&lt;br&gt;「」要素名・＊/※補足・完了条件&lt;br&gt;スクショ154枚を手順直下に1対1配置&lt;br&gt;例: マウントデータ作成 r6=手順1&lt;br&gt;     基板図番****-912345⇒912345_00" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="500" width="296" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_mtx" value="DGS_P2: 指示書作成、その他(487行)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fontStyle=1;fillColor=#EDF2F7;strokeColor=#374151;fontColor=#1F2937;align=left;spacingLeft=12;verticalAlign=middle;" vertex="1" parent="1">
+            <mxGeometry x="40" y="676" width="320" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_mtx2" value="r9 試作フェーズ別 添付資料マトリクス&lt;br&gt;行=添付資料9種 / 列=5フェーズ&lt;br&gt;(維持改良M**/コンセプト試作C-**/&lt;br&gt;量産試作UT,UR/量産維持R**)&lt;br&gt;セル値=必須/不要/条件付き" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="716" width="296" height="152" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_hist" value="DGS_P1: 変更履歴" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fontStyle=1;fillColor=#EDF2F7;strokeColor=#374151;fontColor=#1F2937;align=left;spacingLeft=12;verticalAlign=middle;" vertex="1" parent="1">
+            <mxGeometry x="40" y="884" width="320" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="DGS_hist2" value="変更記号 01×→02×→03×(全て書替)&lt;br&gt;適用=089/定期見直し&lt;br&gt;総枚数 93→118→119" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="924" width="296" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_group1" value="PanaCIM草案: 本文系" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#4E7A43;fontColor=#3E6134;" vertex="1" parent="1">
+            <mxGeometry x="400" y="100" width="400" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_terms" value="用語(§3)&lt;br&gt;語と意味の2列表" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="148" width="184" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_struct" value="構成と管理情報(§4)&lt;br&gt;4-1管理対象: CIMC-SV/ESXi/&lt;br&gt;CIM-C PC/CIM-A PC/&lt;br&gt;稼働モニタ/アンドン&lt;br&gt;4-2相関図: 粒度の基準" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="148" width="184" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_org" value="管理体制(§5)&lt;br&gt;管理責任者=茂木（由）・倉林&lt;br&gt;副=石井・茂木（絵）&lt;br&gt;実施/確認/承認=要確認&lt;br&gt;5-1作業時の制約" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="212" width="184" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_daily" value="日次点検(WIP)(§6)&lt;br&gt;Step1稼働状態/Step2&lt;br&gt;バックアップ結果/Step3&lt;br&gt;保存領域&lt;br&gt;項目ごとに6点" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="290" width="184" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_month" value="月次再起動(§7)&lt;br&gt;7-1実施条件〜7-6&lt;br&gt;引用元追従&lt;br&gt;Step1〜4(4Step構造)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="336" width="184" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_bk" value="バックアップ(§8)&lt;br&gt;8-1取得手順&lt;br&gt;8-2確定していないこと" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="394" width="184" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_rec" value="復旧(§9) 14行・枠のみ&lt;br&gt;異常時の対応(§10)&lt;br&gt;10-1色定義/10-2中断と&lt;br&gt;連絡/10-3不具合の記録&lt;br&gt;10-4サーバー再起動" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="440" width="184" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_rec2" value="10-4: 第1段停止(1〜6)&lt;br&gt;/第2段起動(7〜14)&lt;br&gt;+原文突合表(r39-49)&lt;br&gt;全14手順一致・差分3点" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="478" width="184" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_rec_doc" value="記録と文書管理(§11-12)&lt;br&gt;シート名に「削除決定済み。」&lt;br&gt;B1メモ「ページ自体不要。」&lt;br&gt;全項目=要確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="564" width="184" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_chk" value="チェックシート(月次・異常時)(§13)&lt;br&gt;13-2記録/13-3月次/13-4異常時&lt;br&gt;/13-5申し送り/13-6承認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="582" width="184" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_group2" value="PanaCIM草案: 記録・一覧系" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#4E7A43;fontColor=#3E6134;" vertex="1" parent="1">
+            <mxGeometry x="400" y="730" width="400" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_issues" value="会議課題一覧(一時)&lt;br&gt;A.9-30課題12件(達成度)&lt;br&gt;B.10-14決定9点&lt;br&gt;C.解決済み4件&lt;br&gt;「正本は管理書」の記載" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="412" y="770" width="184" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="PC_todo" value="要確認事項一覧&lt;br&gt;No.1〜26(解決済み2件)&lt;br&gt;r40「パスワードは&lt;br&gt;別データ。一元的に記載。」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="604" y="770" width="184" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_group1" value="LNB草案: 本文系" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#8A6D3B;fontColor=#6E552E;" vertex="1" parent="1">
+            <mxGeometry x="840" y="100" width="400" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_terms" value="用語(§3)&lt;br&gt;LNB/iLNB/LWS/L1-L3&lt;br&gt;/E-Link/GEM/PLC&lt;br&gt;/DGS(要確認)/アンドン&lt;br&gt;/CIMC-SV" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="148" width="184" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_daily" value="日次点検(§6)&lt;br&gt;「点検項目が未確定」&lt;br&gt;Step1 LNB接続状態(候補)&lt;br&gt;Step2以降=空欄" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1044" y="148" width="184" height="116" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_reg" value="定期管理(§7) 17行&lt;br&gt;バックアップ(§8) 18行&lt;br&gt;復旧(§9) 14行" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="286" width="184" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_abn" value="異常時の対応(§10)&lt;br&gt;33行" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1044" y="272" width="184" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_secret" value="申し送り(認証情報)(§15)&lt;br&gt;4事実: URLにパスワード&lt;br&gt;/HTTP平文/3ライン同一認証&lt;br&gt;/保管庫同期&lt;br&gt;先に決めること 4項&lt;br&gt;(値自体は本書にも未掲載)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="386" width="184" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_quote" value="引用と部品照合(§16)&lt;br&gt;付録A 原文引用&lt;br&gt;A-1 LNB接続状態&lt;br&gt;A-2 部品照合&lt;br&gt;A-3 システム構成&lt;br&gt;「自社L1〜L3への適用は&lt;br&gt;未確認」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1044" y="336" width="184" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_doc" value="記録と文書管理(§11-12)&lt;br&gt;全項目=要確認&lt;br&gt;期限表: 文書登録=&lt;br&gt;2026-12-28(月)&lt;br&gt;トライアル開始=&lt;br&gt;2027-01-05(火)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="544" width="184" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_chk" value="チェックシート(日次)(13-1)&lt;br&gt;「列名は仮」・L1/L2/L3列別&lt;br&gt;チェックシート(月次・&lt;br&gt;異常時)(13-2)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1044" y="494" width="184" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_note" value="目次の注記なし・リンク16本全有効&lt;br&gt;※(削除)表示なし" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="690" width="376" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_group2" value="LNB草案: 記録・一覧系" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#8A6D3B;fontColor=#6E552E;" vertex="1" parent="1">
+            <mxGeometry x="840" y="790" width="400" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_issues" value="会議課題一覧(一時)&lt;br&gt;A.12件/B.9点&lt;br&gt;C.解決済み&lt;br&gt;「正本は各管理書」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="852" y="830" width="184" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="LN_todo" value="要確認事項一覧 No.1〜20&lt;br&gt;「確認先」列あり&lt;br&gt;(現行実施者/ベンダー&lt;br&gt;/管理責任者)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1044" y="830" width="184" height="108" as="geometry" />
+        </mxCell>
+        <mxCell id="L_2" value="凡例: 青=DGS ／ 緑=PanaCIM草案 ／ 茶=LNB草案 ／ 灰=一覧・記録 ／ 赤=不整合・注意(WIP・削除決定済み等の現状) ／ 行番号r・セル番地は実測" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;align=left;spacingLeft=12;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontColor=#495057;arcSize=4;" vertex="1" parent="1">
+            <mxGeometry x="40" y="1010" width="1574" height="26" as="geometry" />
+        </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+    <diagram id="p3" name="3_ファイル・シート・項目の関係">
+      <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+        <mxCell id="p3_title" value="Page3 関係図" style="text;html=1;fontFamily=Meiryo;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="24" width="1574" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_sub" value="関係は「記載上の関係」と「実リンク(ハイパーリンク)」を区別して描画" style="text;html=1;fontFamily=Meiryo;fontSize=12;align=left;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+            <mxGeometry x="40" y="60" width="1574" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="R_P1" value="DGS_P1(表紙・変更履歴)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#374151;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="40" y="110" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R_P2" value="DGS_P2(本文34シート)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#374151;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="40" y="240" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R_flow" value="フロー図4シート&lt;br&gt;(Z列に「➡シート名」)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="340" width="260" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="R_proc" value="個別手順29シート&lt;br&gt;(マウントデータ作成/PLM照合/&lt;br&gt;ジョブ作成/SD作成/&lt;br&gt;指示書作成、その他…)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="432" width="260" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="R_parts" value="パーツ_マウンタ設定/&lt;br&gt;パーツ_その他設定" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FFFFFF;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="546" width="260" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="R_fx" value="数式15セル: G59=$G$4 等&lt;br&gt;(題目再掲の数式参照)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="634" width="260" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_009" value="同一文書番号0494-913473・様式NR4030共通" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#3D6B99;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#24466B;align=center;verticalAlign=middle;" edge="1" parent="1" source="R_P1" target="R_P2">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_010" value="Z列の➡記載(ハイパーリンクではない)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="R_flow" target="R_proc">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="R_PC" value="PanaCIM草案(版0.11)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#374151;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="420" y="110" width="480" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R_toc" value="目次(14項目)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="420" y="200" width="220" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="R_abn" value="異常時の対応(§10)&lt;br&gt;10-4=再起動手順(伏字)&lt;br&gt;+原文突合表(r39-49)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="700" y="200" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="R_month" value="月次再起動(§7)&lt;br&gt;Step1〜4" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="420" y="290" width="220" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="R_chk" value="チェックシート(月次・異常時)&lt;br&gt;13-3月次=§7対応&lt;br&gt;13-4異常時=§10-4対応" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="700" y="340" width="200" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="R_issues_pc" value="会議課題一覧(一時)&lt;br&gt;「正本は管理書」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="420" y="460" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="R_todo_pc" value="要確認事項一覧&lt;br&gt;No.1〜26" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F5F5F5;strokeColor=#6B7280;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="700" y="460" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_018" value="実リンク(有効11本)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="R_toc" target="R_month">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_019" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="R_toc" target="R_abn">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_020" value="§10-4出典=0494-912039(06)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="R_abn" target="R_P2">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="660" y="270" /><mxPoint x="360" y="270" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="R_LN" value="LNB草案(版0.9)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=14;fillColor=#FFFFFF;strokeColor=#374151;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+            <mxGeometry x="940" y="110" width="480" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R_toc_ln" value="目次(16項目・リンク16本全有効)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="940" y="200" width="220" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="R_secret_ln" value="申し送り(認証情報)(§15)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1180" y="200" width="220" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="R_issues_ln" value="会議課題一覧(一時)&lt;br&gt;「正本は各管理書」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="940" y="290" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="R_todo_ln" value="要確認事項一覧&lt;br&gt;No.17認証情報の保管場所&lt;br&gt;「§15を先に処理すること」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1180" y="290" width="220" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="R_quote_ln" value="引用と部品照合(§16)&lt;br&gt;付録A=公式資料の原文引用&lt;br&gt;「適用・設定状態は未確認」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="940" y="400" width="220" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_027" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="R_toc_ln" target="R_issues_ln">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_028" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#4E7A43;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontColor=#3E6134;" edge="1" parent="1" source="R_toc_ln" target="R_secret_ln">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_029" value="§14 No.17を先に処理(文字参照)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="R_secret_ln" target="R_todo_ln">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_030" value="併存(正本は管理書)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#B4552D;strokeWidth=1.5;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#8C3F20;" edge="1" parent="1" source="R_issues_pc" target="R_issues_ln">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="530" y="560" /><mxPoint x="910" y="560" /><mxPoint x="910" y="325" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="p3_031" value="管理書間で共通の未決項目" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#B4552D;strokeWidth=1.5;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#8C3F20;" edge="1" parent="1" source="R_todo_pc" target="R_todo_ln">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="800" y="590" /><mxPoint x="1440" y="590" /><mxPoint x="1440" y="330" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="R_style_note" value="様式の基盤: 会議版草案の表紙に「様式の参考=操作手順書0494-912039(06)(様式 NR4030-0100-A3)」の記載(DGS P1と同様式系)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="420" y="640" width="600" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_033" value="様式系の共通(NR4030-0100-A3)…Excel内の記載による関係" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="R_P1" target="R_PC">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="96" /><mxPoint x="660" y="96" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="L_3" value="凡例: 青実線=包含・同一文書 ／ 緑実線=ハイパーリンク(実測・移動で追従) ／ 灰点線=文字による参照(リンクではない) ／ 赤点線=矛盾・併存・未確定の関係" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;align=left;spacingLeft=12;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontColor=#495057;arcSize=4;" vertex="1" parent="1">
+            <mxGeometry x="40" y="800" width="1574" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="N_ref" value="注意: フロー図Z列の「➡」はハイパーリンクではなく文字記載(実測: P2のシート間ハイパーリンク=0件)。線種はこれを反映。" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="840" width="1574" height="40" as="geometry" />
+        </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+    <diagram id="p4" name="4_書式・図形・印刷">
+      <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+        <mxCell id="p4_title" value="Page4 書式・図形・印刷の構造(実測値のみ)" style="text;html=1;fontFamily=Meiryo;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="24" width="1574" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_sub" value="測定: openpyxl(page_setup/row_breaks/print_area/oddFooter)・drawing XML(sp/cxnSp/pic)実測" style="text;html=1;fontFamily=Meiryo;fontSize=12;align=left;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+            <mxGeometry x="40" y="60" width="1574" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="S_dgs" value="DGS_P2 様式(全34シート)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#3D6B99;fontColor=#24466B;" vertex="1" parent="1">
+            <mxGeometry x="40" y="110" width="500" height="396" as="geometry" />
+        </mxCell>
+        <mxCell id="S_dgs2" value="ヘッダー枠: A1:V2「手 順 書」(結合)&lt;br&gt;W2管理番号(値空)・AU2頁(値はフッタ&amp;P)&lt;br&gt;A3型名(AC3:AZ3=「－」)・A4作業内容+G4題目&lt;br&gt;外周medium・内側thin罫線&lt;br&gt;行高: r2-4=33pt/本文=12.8pt/r1=5.2pt&lt;br&gt;列幅A=1.9(手順番号用)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="158" width="476" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="S_dgs3" value="印刷: 縦向き33シート/横向き1(現場立ち合い)&lt;br&gt;スケール・fitToPage指定なし&lt;br&gt;余白 左0.87/右0.51/上0.59/下0.79(インチ)&lt;br&gt;フッタ: 左NR4030/中央様式 NR4030-0300-A3/右&amp;P&lt;br&gt;約55行ごとにrowBreaks(8シート)+ヘッダ再掲" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="310" width="476" height="118" as="geometry" />
+        </mxCell>
+        <mxCell id="S_dgs4" value="print_area設定: 3/34シートのみ&lt;br&gt;(ダミーコード採番/指示書作成、その他/現場立ち合い)&lt;br&gt;※未設定=印刷対象外ではない(設定未実施)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="440" width="476" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="S_shape" value="DGS_P2 図形・画像(実測)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#3D6B99;fontColor=#24466B;" vertex="1" parent="1">
+            <mxGeometry x="580" y="110" width="500" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="S_shape2" value="図形82個+コネクタ63個(32 drawing)&lt;br&gt;→ フロー図4シートに集中&lt;br&gt;画像448参照・xl/media 154ファイル&lt;br&gt;(PNG147+JPEG7)&lt;br&gt;DGS起動の画像アンカー行(0基点): 6/12/30/33/54&lt;br&gt;=手順直下配置(r6手順1/r12手順2に対応)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="592" y="158" width="476" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="S_draft" value="草案2書の様式(PanaCIM16/LNB19シート)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#4E7A43;fontColor=#3E6134;" vertex="1" parent="1">
+            <mxGeometry x="1120" y="110" width="494" height="348" as="geometry" />
+        </mxCell>
+        <mxCell id="S_draft2" value="簡易枠: A1「手 順 書」/A3型名/「ZZZ-90000(仮)」&lt;br&gt;/A4作業内容+D4シート題目/G3「目次へ」リンク&lt;br&gt;結合はA:G幅(対DGSのA:V幅)&lt;br&gt;列幅A=26.0(対DGS A=1.9)&lt;br&gt;罫線: 外周medium相当あり" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1132" y="158" width="470" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="S_draft3" value="印刷: 横向き14/16シート(PanaCIM)・17/19(LNB)&lt;br&gt;fitToWidth指定なし・print_area=0件(両書)&lt;br&gt;フッタ: 様式番号なし(DGSと相違)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1132" y="298" width="470" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="S_draft4" value="DGSとは「向き・結合幅・列幅・フッタ」が相違&lt;br&gt;(NR4030様式への移行は別途作業中の領域)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1132" y="394" width="470" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="S_cover" value="表紙様式の比較(矢印=「様式の参考」の記載に基づく関係)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#374151;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="530" width="1574" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="S_cover1" value="DGS_P1(付表1)&lt;br&gt;管理番号0494-913473/頁1/119&lt;br&gt;承認/検印/作成(3欄)&lt;br&gt;承認日/作成日/初版枚数55&lt;br&gt;変更履歴: 変更記号+書替+総枚数&lt;br&gt;+承認日/承認者+担当" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#D6E4F0;strokeColor=#3D6B99;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="578" width="480" height="148" as="geometry" />
+        </mxCell>
+        <mxCell id="S_cover2" value="PanaCIM草案・表紙&lt;br&gt;文書名/文書番号=ZZZ-90000(仮)/版0.11&lt;br&gt;対象システム=Pana-CIM&lt;br&gt;作成=4名/リーダー&lt;br&gt;承認・検印=要確認/作成日・承認日=要確認&lt;br&gt;様式の参考=0494-912039(06)&lt;br&gt;文書状態=草案・未検証/認証情報=別紙管理" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="560" y="578" width="480" height="148" as="geometry" />
+        </mxCell>
+        <mxCell id="S_cover3" value="LNB草案・表紙&lt;br&gt;文書名/文書番号=ZZZ-90000(要確認)/版0.9&lt;br&gt;対象システム=LNB&lt;br&gt;作成=4名/リーダー&lt;br&gt;承認・検印=要確認&lt;br&gt;文書状態=草案・未検証/認証情報=別紙管理" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#EFE9DC;strokeColor=#8A6D3B;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1080" y="578" width="480" height="148" as="geometry" />
+        </mxCell>
+        <mxCell id="p4_017" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="S_cover1" target="S_cover2">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p4_018" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="S_cover1" target="S_cover3">
+            <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="300" y="738" /><mxPoint x="1320" y="738" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="S_fx" value="数式の実体(数式参照の関係)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#6B7280;fontColor=#374151;" vertex="1" parent="1">
+            <mxGeometry x="40" y="780" width="500" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="S_fx2" value="DGS_P2で確認された数式は15セル全て「=$G$4」系&lt;br&gt;(パーツ_マウンタ設定 G59/G114/G169&lt;br&gt;パーツ_その他設定 G52/G106/G160/G214/G268/G322 等)&lt;br&gt;G4=題目(「パーツデータ作成ノウハウ（…）」)の再掲" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="828" width="476" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="S_fx3" value="草案2書: 数式0件(全て値+ハイパーリンクのみ実測)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="580" y="800" width="500" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="L_4" value="凡例: 青=DGS様式 ／ 緑=PanaCIM草案 ／ 茶=LNB草案 ／ 灰=数式・注記 ／ 赤=相違・注意 ／ 数値は全て実測(測定方法は図上部に記載)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;align=left;spacingLeft=12;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontColor=#495057;arcSize=4;" vertex="1" parent="1">
+            <mxGeometry x="40" y="960" width="1574" height="26" as="geometry" />
+        </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+    <diagram id="p5" name="5_不整合・未確認事項">
+      <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+        <mxCell id="p5_title" value="Page5 不整合・未確認事項(課題ID K-01〜K-14)" style="text;html=1;fontFamily=Meiryo;fontSize=26;fontStyle=1;align=left;verticalAlign=middle;fontColor=#1F2937;" vertex="1" parent="1">
+            <mxGeometry x="40" y="24" width="1574" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_sub" value="対象: 本日実測で判明した問題のみ ／ 改善提案は含まない ／ 詳細は根拠_関係対応表.md" style="text;html=1;fontFamily=Meiryo;fontSize=12;align=left;verticalAlign=middle;fontColor=#6B7280;" vertex="1" parent="1">
+            <mxGeometry x="40" y="60" width="1574" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="K_grp1" value="PanaCIM草案: 目次とシート名の不整合" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#4E7A43;fontColor=#3E6134;" vertex="1" parent="1">
+            <mxGeometry x="40" y="110" width="560" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="K_toc10" value="目次 B10「日次点検(削除)」&lt;br&gt;リンク先=&#x27;日次点検&#x27;!A1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="158" width="260" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_01" value="実シート名=「日次点検(WIP)」&lt;br&gt;→ リンク切れ" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="340" y="158" width="240" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_toc15" value="目次 B15「記録と文書管理(削除)」&lt;br&gt;リンク先=&#x27;記録と文書管理&#x27;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="226" width="260" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_02" value="実名=「記録と文書管理&lt;br&gt;(削除決定済み。)」→ リンク切れ" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="340" y="226" width="240" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_toc16" value="目次 B16「チェックシート(日次)」&lt;br&gt;リンク先=&#x27;チェックシート(日次)&#x27;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="294" width="260" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_03" value="リンク先シートが存在しない&lt;br&gt;(B1メモ「日時点検は不要」と&lt;br&gt;整合するが目次・リンクが残存)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="340" y="294" width="240" height="96" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_010" value="K-01" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#B4552D;strokeWidth=1.5;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#8C3F20;" edge="1" parent="1" source="K_toc10" target="K_01">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p5_011" value="K-02" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#B4552D;strokeWidth=1.5;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#8C3F20;" edge="1" parent="1" source="K_toc15" target="K_02">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p5_012" value="K-03" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#B4552D;strokeWidth=1.5;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#8C3F20;" edge="1" parent="1" source="K_toc16" target="K_03">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="K_grp2" value="削除決定と併存" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#B4552D;fontColor=#8C3F20;" vertex="1" parent="1">
+            <mxGeometry x="40" y="440" width="560" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="K_07" value="「記録と文書管理(削除決定済み。)」シートが残存&lt;br&gt;B1メモ「ページ自体不要。」+ 目次に(削除)表示" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="52" y="488" width="536" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="K_grp3" value="認証情報の扱い" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#B4552D;fontColor=#8C3F20;" vertex="1" parent="1">
+            <mxGeometry x="640" y="110" width="460" height="232" as="geometry" />
+        </mxCell>
+        <mxCell id="K_04" value="K-04: DGS起動 A12 に利用者名・&lt;br&gt;パスワードの平文記載&lt;br&gt;(本図ではマスク表記)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="652" y="158" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="K_10" value="K-10: LNB 申し送り(§15)&lt;br&gt;URL平文/HTTP/3ライン同一&lt;br&gt;認証(値は本書にも未掲載)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="880" y="158" width="208" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="K_pol" value="両草案とも表紙に&lt;br&gt;「認証情報=本文に書かない・値は別紙管理」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#DDEBD8;strokeColor=#4E7A43;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="652" y="280" width="436" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="p5_019" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="K_04" target="K_pol">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p5_020" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontFamily=Meiryo;fontSize=12;strokeColor=#6B7280;strokeWidth=1.2;dashed=1;labelBackgroundColor=#FFFFFF;fontColor=#4B5563;" edge="1" parent="1" source="K_10" target="K_pol">
+            <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="K_grp4" value="様式・印刷設定の相違" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#B4552D;fontColor=#8C3F20;" vertex="1" parent="1">
+            <mxGeometry x="640" y="372" width="460" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="K_05" value="K-05: DGS_P2のprint_area設定 3/34シートのみ" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="652" y="420" width="436" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="K_06" value="K-06: 草案2書のprint_area=0件・fitToWidthなし" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="652" y="464" width="436" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="K_07b" value="様式相違: 向き(縦vs横)/結合幅(A:V vs A:G)/&lt;br&gt;列幅(A=1.9 vs 26.0)/フッタ(様式番号有 vs 無)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="652" y="508" width="436" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K_grp5" value="表記の不一致" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#B4552D;fontColor=#8C3F20;" vertex="1" parent="1">
+            <mxGeometry x="1140" y="110" width="474" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="K_13" value="K-13: フロー図Z列の➡先と実シート名の不一致&lt;br&gt;➡「PCB編集、CSV出力」vs 実「PCB編集&amp;出力」&lt;br&gt;➡「指示書作成」vs 実「指示書作成、その他」" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1152" y="158" width="450" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="K_14" value="K-14: ➡遷移は文字記載のみ&lt;br&gt;(ハイパーリンク0件実測)のため&lt;br&gt;機械的な追跡は不可" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#FDE9E1;strokeColor=#B4552D;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="1152" y="254" width="450" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="K_grp6" value="未取得・未確認" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fontStyle=1;fillColor=none;verticalAlign=top;spacing=8;align=left;arcSize=3;strokeColor=#9CA3AF;fontColor=#4B5563;" vertex="1" parent="1">
+            <mxGeometry x="1140" y="372" width="474" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="K_08" value="K-08: 型名「ZZZ-90000(仮)」=仮番運用&lt;br&gt;(付番規則は両草案とも要確認の記載)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F3F4F6;strokeColor=#9CA3AF;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;dashed=1;" vertex="1" parent="1">
+            <mxGeometry x="1152" y="420" width="450" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="K_091112" value="K-09: 承認欄=要確認/改訂履歴の承認列=未&lt;br&gt;K-11: P1の罫線・フォント細部(xlrd限界)&lt;br&gt;K-12: ZZZ-90000と0494-913473の関係" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=13;fillColor=#F3F4F6;strokeColor=#9CA3AF;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;dashed=1;" vertex="1" parent="1">
+            <mxGeometry x="1152" y="488" width="450" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="K_note" value="全課題の根拠セル・確認状態の一覧は「根拠_関係対応表.md」を参照。K-01〜K-03/K-07/K-13/K-14=矛盾あり、K-04/K-08/K-10=Excel内記載の確認、K-05/K-06/K-14=構造の実測、K-09/K-11/K-12=未取得・未確認。" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;fillColor=#FBFBF8;strokeColor=#C9C4B4;fontColor=#1F2937;arcSize=6;spacing=8;spacingLeft=12;align=left;verticalAlign=top;" vertex="1" parent="1">
+            <mxGeometry x="40" y="620" width="1574" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="L_5" value="凡例: 赤=矛盾あり・注意 ／ 灰点線枠=未取得・未確認 ／ 緑=草案側の現状(対比用)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Meiryo;fontSize=12;align=left;spacingLeft=12;fillColor=#F8F9FA;strokeColor=#ADB5BD;fontColor=#495057;arcSize=4;" vertex="1" parent="1">
+            <mxGeometry x="40" y="700" width="1574" height="26" as="geometry" />
+        </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+</mxfile>

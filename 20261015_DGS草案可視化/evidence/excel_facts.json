@@ -1,0 +1,1159 @@
+{
+ "P1": {
+  "sheets": [
+   "付表1"
+  ],
+  "cells": {
+   "r1c13": "管理番号",
+   "r1c23": "頁",
+   "r1c24": "1/119",
+   "r2c4": "共通（操作） 　　　手 順 書",
+   "r3c4": "実装プログラム作成手順（ＤＧＳ）",
+   "r4c4": "ＺＺＺ－９００００",
+   "r6c15": "承 　認",
+   "r6c18": "検 　印",
+   "r6c21": "作　 成",
+   "r10c16": "承 認 日",
+   "r10c19": "－　　－",
+   "r11c16": "作 成 日",
+   "r11c19": "－　　－",
+   "r12c16": "初版枚数",
+   "r12c23": "枚",
+   "r14c1": "×",
+   "r15c1": "×",
+   "r16c1": "×",
+   "r17c1": "×",
+   "r18c1": "×",
+   "r19c1": "×",
+   "r20c1": "×",
+   "r21c1": "×",
+   "r22c1": "×",
+   "r23c1": "×",
+   "r24c1": "×",
+   "r25c1": "×",
+   "r26c1": "×",
+   "r27c1": "×",
+   "r28c1": "×",
+   "r29c1": "×",
+   "r30c1": "×",
+   "r31c1": "03×",
+   "r31c2": "書替",
+   "r31c11": "定期見直し",
+   "r32c1": "02×",
+   "r32c2": "書替",
+   "r32c11": "089",
+   "r33c1": "01×",
+   "r33c2": "書替",
+   "r33c11": "089",
+   "r34c1": "変更記号",
+   "r34c3": "適用年月日又\nは適用製造No",
+   "r34c7": "変更を指示\nした書類の\n管理No.",
+   "r34c11": "内　    　容",
+   "r34c18": "総枚数",
+   "r34c20": "承認日／承認者",
+   "r34c24": "担 当",
+   "r36c1": "NR4030",
+   "r36c11": "様式 NR4030-0100-A3",
+   "r36c23": "日本光電"
+  }
+ },
+ "P2": {
+  "sheets": [
+   {
+    "name": "はじめに",
+    "rows": 11,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "試作フロー",
+    "rows": 82,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "設計変更_部品フロー",
+    "rows": 47,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "設計変更_改版フロー",
+    "rows": 47,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "新製品フロー",
+    "rows": 42,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "マウントデータ作成",
+    "rows": 48,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "ダミーコード採番",
+    "rows": 133,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": true,
+    "row_breaks": 1,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "DGS起動",
+    "rows": 33,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "マウントデータ補正角度確認",
+    "rows": 335,
+    "cols": 68,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 3,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "DGS実装マウントデータ作成",
+    "rows": 144,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "実装補正マウントデータ作成",
+    "rows": 94,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "ダミーコードパーツ作成",
+    "rows": 171,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "改定番号確認",
+    "rows": 81,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "PCB新規作成",
+    "rows": 544,
+    "cols": 70,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 1,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パターンタイプ作成",
+    "rows": 143,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": ""
+   },
+   {
+    "name": "PCB流用作成",
+    "rows": 131,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パーツデータ作成",
+    "rows": 328,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "PCB編集&出力",
+    "rows": 288,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "PLM照合",
+    "rows": 80,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "ジョブ作成",
+    "rows": 355,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "SD作成",
+    "rows": 58,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "指示書作成、その他",
+    "rows": 487,
+    "cols": 54,
+    "orientation": "portrait",
+    "print_area": true,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "実装後",
+    "rows": 215,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 4,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "作業連絡",
+    "rows": 57,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "ノズル追加",
+    "rows": 41,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "CADマクロ",
+    "rows": 357,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "PLM設定",
+    "rows": 131,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "ソフト図番採番",
+    "rows": 183,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "その他",
+    "rows": 79,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "現場立ち合い",
+    "rows": 58,
+    "cols": 52,
+    "orientation": "landscape",
+    "print_area": true,
+    "row_breaks": 0,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パーツ_部品情報",
+    "rows": 210,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 3,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パーツ_梱包仕様",
+    "rows": 141,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 2,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パーツ_マウンタ設定",
+    "rows": 353,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 6,
+    "footer": "様式 NR4030-0300-A3"
+   },
+   {
+    "name": "パーツ_その他設定",
+    "rows": 474,
+    "cols": 52,
+    "orientation": "portrait",
+    "print_area": false,
+    "row_breaks": 4,
+    "footer": "様式 NR4030-0300-A3"
+   }
+  ],
+  "count": 34,
+  "transitions": {
+   "試作フロー": [
+    {
+     "cell": "Z17",
+     "text": "➡マウントデータ作成"
+    },
+    {
+     "cell": "Z22",
+     "text": "➡差分出力手順は別紙参照"
+    },
+    {
+     "cell": "Z27",
+     "text": "➡ダミーコードパーツ作成"
+    },
+    {
+     "cell": "Z32",
+     "text": "➡マウントデータ補正角度確認"
+    },
+    {
+     "cell": "Z37",
+     "text": "➡実装補正マウントデータ作成"
+    },
+    {
+     "cell": "Z42",
+     "text": "➡DGS実装マウントデータ作成"
+    },
+    {
+     "cell": "Z47",
+     "text": "➡PCB新規作成"
+    },
+    {
+     "cell": "Z52",
+     "text": "➡PLM照合"
+    },
+    {
+     "cell": "Z67",
+     "text": "➡ジョブ作成、SD作成"
+    },
+    {
+     "cell": "Z71",
+     "text": "➡ソフト登録手順は別紙参照"
+    },
+    {
+     "cell": "Z77",
+     "text": "➡指示書作成、その他"
+    },
+    {
+     "cell": "Z82",
+     "text": "➡指示書作成、その他"
+    }
+   ],
+   "設計変更_部品フロー": [
+    {
+     "cell": "Z17",
+     "text": "➡パーツデータ作成"
+    },
+    {
+     "cell": "Z22",
+     "text": "➡改定番号確認、PCB流用作成"
+    },
+    {
+     "cell": "Z27",
+     "text": "➡PCB編集、CSV出力"
+    },
+    {
+     "cell": "Z32",
+     "text": "➡PLM照合"
+    },
+    {
+     "cell": "Z42",
+     "text": "➡ジョブ作成、SD作成"
+    },
+    {
+     "cell": "Z47",
+     "text": "➡ソフト登録手順は別紙参照"
+    }
+   ],
+   "設計変更_改版フロー": [
+    {
+     "cell": "Z12",
+     "text": "➡改定番号確認、PCB流用作成"
+    },
+    {
+     "cell": "Z17",
+     "text": "➡CSV出力"
+    },
+    {
+     "cell": "Z21",
+     "text": "➡PLM照合"
+    },
+    {
+     "cell": "Z27",
+     "text": "➡PCB編集、CSV出力"
+    },
+    {
+     "cell": "Z32",
+     "text": "➡PLM照合"
+    },
+    {
+     "cell": "Z42",
+     "text": "➡ジョブ作成、SD作成"
+    },
+    {
+     "cell": "Z47",
+     "text": "➡ソフト登録手順は別紙参照"
+    }
+   ],
+   "新製品フロー": [
+    {
+     "cell": "Z12",
+     "text": "➡改定番号確認、PCB流用作成"
+    },
+    {
+     "cell": "Z17",
+     "text": "➡PCB編集、CSV出力"
+    },
+    {
+     "cell": "Z22",
+     "text": "➡PLM照合"
+    },
+    {
+     "cell": "Z32",
+     "text": "➡ジョブ作成、SD作成"
+    },
+    {
+     "cell": "Z37",
+     "text": "➡ソフト登録手順は別紙参照"
+    },
+    {
+     "cell": "Z42",
+     "text": "➡指示書作成、その他"
+    }
+   ]
+  },
+  "path_sheets": [
+   "マウントデータ作成",
+   "ダミーコード採番",
+   "マウントデータ補正角度確認",
+   "DGS実装マウントデータ作成",
+   "実装補正マウントデータ作成",
+   "PCB新規作成",
+   "パーツデータ作成",
+   "PCB編集&出力",
+   "PLM照合",
+   "SD作成",
+   "指示書作成、その他",
+   "実装後",
+   "ノズル追加",
+   "PLM設定"
+  ],
+  "formulas": [
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G59",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G114",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G169",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G222",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G270",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_マウンタ設定",
+    "cell": "G317",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G52",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G106",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G161",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G199",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G241",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G283",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G337",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G391",
+    "formula": "=$G$4"
+   },
+   {
+    "sheet": "パーツ_その他設定",
+    "cell": "G445",
+    "formula": "=$G$4"
+   }
+  ],
+  "print_area_sheets": [
+   "ダミーコード採番",
+   "指示書作成、その他",
+   "現場立ち合い"
+  ],
+  "secret_cell": {
+   "sheet": "DGS起動",
+   "cell": "A12",
+   "masked": true
+  },
+  "hyperlinks": 1,
+  "shapes": {
+   "drawing_files": 32,
+   "sp": 82,
+   "cxn": 63,
+   "pic": 448
+  },
+  "dgs_start_image_rows": [
+   "12",
+   "30",
+   "33",
+   "54",
+   "6"
+  ],
+  "dgs_start_drawing": "drawing7"
+ },
+ "PanaCIM": {
+  "sheets": [
+   {
+    "name": "表紙",
+    "rows": 15,
+    "cols": 2,
+    "B1_memo": null,
+    "landscape": false,
+    "print_area": false
+   },
+   {
+    "name": "目次",
+    "rows": 19,
+    "cols": 6,
+    "B1_memo": null,
+    "landscape": false,
+    "print_area": false
+   },
+   {
+    "name": "改訂履歴",
+    "rows": 19,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "目的と適用範囲",
+    "rows": 22,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "用語",
+    "rows": 19,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "構成と管理情報",
+    "rows": 22,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "管理体制",
+    "rows": 23,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "日次点検(WIP)",
+    "rows": 36,
+    "cols": 7,
+    "B1_memo": "点検項目は会議内容で決定する。次回打ち合わせ。日時は不要",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "月次再起動",
+    "rows": 57,
+    "cols": 7,
+    "B1_memo": "点検内容は打合せで確定する。次回打ち合わせ。",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "バックアップ",
+    "rows": 30,
+    "cols": 7,
+    "B1_memo": "次回打ち合わせまでに確認",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "復旧",
+    "rows": 14,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "異常時の対応",
+    "rows": 79,
+    "cols": 7,
+    "B1_memo": "パスワードはリストでシートにまとめる。データ別で→",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "記録と文書管理(削除決定済み。)",
+    "rows": 22,
+    "cols": 7,
+    "B1_memo": "ページ自体不要。",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "チェックシート(月次・異常時)",
+    "rows": 49,
+    "cols": 7,
+    "B1_memo": "日時点検は不要。点検手順書も同時に修正する。",
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "会議課題一覧(一時)",
+    "rows": 46,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "要確認事項一覧",
+    "rows": 40,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   }
+  ],
+  "toc_links": [
+   {
+    "cell": "B6",
+    "label": "目的と適用範囲(削除)",
+    "target": "目的と適用範囲",
+    "ok": true
+   },
+   {
+    "cell": "B7",
+    "label": "用語",
+    "target": "用語",
+    "ok": true
+   },
+   {
+    "cell": "B8",
+    "label": "構成と管理情報",
+    "target": "構成と管理情報",
+    "ok": true
+   },
+   {
+    "cell": "B9",
+    "label": "管理体制",
+    "target": "管理体制",
+    "ok": true
+   },
+   {
+    "cell": "B10",
+    "label": "日次点検(削除)",
+    "target": "日次点検",
+    "ok": false
+   },
+   {
+    "cell": "B11",
+    "label": "月次再起動",
+    "target": "月次再起動",
+    "ok": true
+   },
+   {
+    "cell": "B12",
+    "label": "バックアップ",
+    "target": "バックアップ",
+    "ok": true
+   },
+   {
+    "cell": "B13",
+    "label": "復旧",
+    "target": "復旧",
+    "ok": true
+   },
+   {
+    "cell": "B14",
+    "label": "異常時の対応",
+    "target": "異常時の対応",
+    "ok": true
+   },
+   {
+    "cell": "B15",
+    "label": "記録と文書管理(削除)",
+    "target": "記録と文書管理",
+    "ok": false
+   },
+   {
+    "cell": "B16",
+    "label": "チェックシート(日次)",
+    "target": "チェックシート(日次)",
+    "ok": false
+   },
+   {
+    "cell": "B17",
+    "label": "チェックシート(月次・異常時)",
+    "target": "チェックシート(月次・異常時)",
+    "ok": true
+   },
+   {
+    "cell": "B18",
+    "label": "会議課題一覧(一時)",
+    "target": "会議課題一覧(一時)",
+    "ok": true
+   },
+   {
+    "cell": "B19",
+    "label": "要確認事項一覧",
+    "target": "要確認事項一覧",
+    "ok": true
+   }
+  ],
+  "count": 16,
+  "cover": {
+   "r5": "Pana-CIM 管理手順書",
+   "r6": "ZZZ-90000(付番規則は要確認)",
+   "r7": "0.11(草案・未検証)",
+   "r8": "Pana-CIM",
+   "r9": "篠原、大塚、茂木、竹渕",
+   "r10": "茂木(絵)",
+   "r11": "要確認",
+   "r12": "要確認",
+   "r13": "操作手順書 0494-912039(06) 表紙(様式 NR4030-0100-A3)",
+   "r14": "草案・未検証。「要確認」は承認または実機確認が済んでいない事項を指す。",
+   "r15": "本文に書かない。値は別紙管理とし、保管先のみを示す。"
+  },
+  "last_rev": [
+   "0.11",
+   "2026-10-14",
+   "報告準備。§4-2 に図の読み方（種別ラベル・凡例）と PLM 閲覧問題の現状（"
+  ],
+  "B1_memos": [
+   [
+    "日次点検(WIP)",
+    "点検項目は会議内容で決定する。次回打ち合わせ。日時は不要"
+   ],
+   [
+    "月次再起動",
+    "点検内容は打合せで確定する。次回打ち合わせ。"
+   ],
+   [
+    "バックアップ",
+    "次回打ち合わせまでに確認"
+   ],
+   [
+    "異常時の対応",
+    "パスワードはリストでシートにまとめる。データ別で→"
+   ],
+   [
+    "記録と文書管理(削除決定済み。)",
+    "ページ自体不要。"
+   ],
+   [
+    "チェックシート(月次・異常時)",
+    "日時点検は不要。点検手順書も同時に修正する。"
+   ]
+  ]
+ },
+ "LNB": {
+  "sheets": [
+   {
+    "name": "表紙",
+    "rows": 15,
+    "cols": 2,
+    "B1_memo": null,
+    "landscape": false,
+    "print_area": false
+   },
+   {
+    "name": "目次",
+    "rows": 21,
+    "cols": 4,
+    "B1_memo": null,
+    "landscape": false,
+    "print_area": false
+   },
+   {
+    "name": "改訂履歴",
+    "rows": 17,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "目的と適用範囲",
+    "rows": 25,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "用語",
+    "rows": 18,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "構成と管理情報",
+    "rows": 39,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "管理体制",
+    "rows": 22,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "日次点検",
+    "rows": 42,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "定期管理",
+    "rows": 17,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "バックアップ",
+    "rows": 18,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "復旧",
+    "rows": 14,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "異常時の対応",
+    "rows": 33,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "記録と文書管理",
+    "rows": 32,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "チェックシート(日次)",
+    "rows": 25,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "チェックシート(月次・異常時)",
+    "rows": 37,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "会議課題一覧(一時)",
+    "rows": 51,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "要確認事項一覧",
+    "rows": 49,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "申し送り(認証情報)",
+    "rows": 23,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   },
+   {
+    "name": "引用と部品照合",
+    "rows": 35,
+    "cols": 7,
+    "B1_memo": null,
+    "landscape": true,
+    "print_area": false
+   }
+  ],
+  "toc_links": [
+   {
+    "cell": "B6",
+    "label": "目的と適用範囲",
+    "target": "目的と適用範囲",
+    "ok": true
+   },
+   {
+    "cell": "B7",
+    "label": "用語",
+    "target": "用語",
+    "ok": true
+   },
+   {
+    "cell": "B8",
+    "label": "構成と管理情報",
+    "target": "構成と管理情報",
+    "ok": true
+   },
+   {
+    "cell": "B9",
+    "label": "管理体制",
+    "target": "管理体制",
+    "ok": true
+   },
+   {
+    "cell": "B10",
+    "label": "日次点検",
+    "target": "日次点検",
+    "ok": true
+   },
+   {
+    "cell": "B11",
+    "label": "定期管理",
+    "target": "定期管理",
+    "ok": true
+   },
+   {
+    "cell": "B12",
+    "label": "バックアップ",
+    "target": "バックアップ",
+    "ok": true
+   },
+   {
+    "cell": "B13",
+    "label": "復旧",
+    "target": "復旧",
+    "ok": true
+   },
+   {
+    "cell": "B14",
+    "label": "異常時の対応",
+    "target": "異常時の対応",
+    "ok": true
+   },
+   {
+    "cell": "B15",
+    "label": "記録と文書管理",
+    "target": "記録と文書管理",
+    "ok": true
+   },
+   {
+    "cell": "B16",
+    "label": "チェックシート(日次)",
+    "target": "チェックシート(日次)",
+    "ok": true
+   },
+   {
+    "cell": "B17",
+    "label": "チェックシート(月次・異常時)",
+    "target": "チェックシート(月次・異常時)",
+    "ok": true
+   },
+   {
+    "cell": "B18",
+    "label": "会議課題一覧(一時)",
+    "target": "会議課題一覧(一時)",
+    "ok": true
+   },
+   {
+    "cell": "B19",
+    "label": "要確認事項一覧",
+    "target": "要確認事項一覧",
+    "ok": true
+   },
+   {
+    "cell": "B20",
+    "label": "申し送り(認証情報)",
+    "target": "申し送り(認証情報)",
+    "ok": true
+   },
+   {
+    "cell": "B21",
+    "label": "引用と部品照合",
+    "target": "引用と部品照合",
+    "ok": true
+   }
+  ],
+  "cover": {
+   "r5": "LNB 管理手順書",
+   "r6": "ZZZ-90000(付番規則は要確認)",
+   "r7": "0.9(草案・未検証)",
+   "r8": "LNB",
+   "r9": "篠原、大塚、茂木、竹渕",
+   "r10": "茂木(絵)",
+   "r11": "要確認",
+   "r12": "要確認",
+   "r13": "操作手順書 0494-912039(06) 表紙(様式 NR4030-0100-A3)",
+   "r14": "草案・未検証。「要確認」は承認または実機確認が済んでいない事項を指す。",
+   "r15": "本文に書かない。値は別紙管理とし、保管先のみを示す。"
+  },
+  "last_rev": [
+   "0.9",
+   "2026-10-14",
+   "報告準備。§4-4 に図の読み方（種別ラベル・凡例）と PLM 閲覧問題の現状（"
+  ],
+  "count": 19
+ }
+}
