@@ -106,9 +106,6 @@ web-saite
 「篠原」フォルダの最新化 → 現状把握完了（固有292件・182MB・内訳判明）。振り分けは GitHub issue #4 で承認待ち。
 
 ---
-用語集アプリに関連して、inventoryファイルの実行結果ログをドライブ上で共有した。（完了済み・記録は 06_Tools/ファイル台帳クローラー/）
-
-
 
 
 web-siteにて技術スタック: Next.js (App Router) + Hono + Drizzle ORM + TanStack Query v5。monorepo 構成（shared / backend / frontend）。の使用を検討する。
@@ -158,7 +155,6 @@ Todo.md読み込み時、実行が完了したら該当の記載をこのファ�
 （2026-10-13 実行: proposal の内容を GitHub nk-shino/work_vault の issue として起票済み（#2〜#4）。
 看板は Issues タブで確認。業務用のアカウントは nk-shino（社用業務用）。soushi.shinohara22 は生活用なので業務側の起票には使わない
 → 確認: 両方とも個人アカウントのため、業務用リポジトリ（work_vault, Private）に統一した。分ける必要が出た時点で見直す）
-
 
 
 （2026-10-13 消化済み・削除。「明日やること（水曜日13日）」分）
