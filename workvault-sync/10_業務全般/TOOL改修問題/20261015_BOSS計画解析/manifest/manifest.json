@@ -1,0 +1,51 @@
+{
+  "name": "20261015_BOSS計画解析",
+  "date": "2026-10-15",
+  "analysis_type": "static_only",
+  "target": {
+    "file": "Work_Vault/10_業務全般/TOOL改修問題/BOSS計画.xlsm",
+    "size_bytes": 1814805,
+    "modified": "2026-10-15T10:50:35",
+    "sha256": "266AEDE59C68D43D916A7F82D2243B596DB0716C47502A5ED870173A5345D043",
+    "modified_analysis_only": true
+  },
+  "environment": {
+    "os": "Windows 11 (10.0.26200) ja-JP",
+    "excel": "Microsoft 365 ProPlus 16.0.20326.20142 x86 (not launched)",
+    "python": "3.13.15",
+    "libraries": ["openpyxl 3.1.5", "pandas 3.0.6", "oletools 0.60.2"]
+  },
+  "deliverables": [
+    {"path": "README.md", "kind": "overview"},
+    {"path": "design/system_design.md", "kind": "design"},
+    {"path": "design/data_flow.mmd", "kind": "diagram_source"},
+    {"path": "dictionaries/sheets_dictionary.md", "kind": "dictionary"},
+    {"path": "dictionaries/procs_dictionary.md", "kind": "dictionary"},
+    {"path": "tests/test_report.md", "kind": "test_report"},
+    {"path": "manifest/manifest.json", "kind": "manifest"}
+  ],
+  "evidence": [
+    {"path": "evidence/vba_code_all.txt", "desc": "olevba抽出 VBA全1,765行（27ストリーム・25プロシージャ）"},
+    {"path": "evidence/pq_extract/Formulas_Section1.m", "desc": "Power Query M式3件"},
+    {"path": "evidence/pq_extract/full.zip", "desc": "DataMashup展開物一式"},
+    {"path": "evidence/structure_report.txt", "desc": "ブック構造・calcPr・sheets"},
+    {"path": "evidence/sheets_detail.txt", "desc": "シート詳細1-9"},
+    {"path": "evidence/sheets_detail2.txt", "desc": "シート詳細10-20・テーブル・定義名"},
+    {"path": "evidence/keys_check.txt", "desc": "キー一意性・日付整合"},
+    {"path": "evidence/boss_deep.txt", "desc": "BOSSシート深掘り（タイプ分布・日付逆転16行）"},
+    {"path": "evidence/pattern_check.txt", "desc": "Main削除フィルタ等価再現"},
+    {"path": "evidence/formulas_detail.txt", "desc": "数式統計・準備工数#N/A分布"},
+    {"path": "evidence/pq_check.txt", "desc": "customXml/接続棚卸し"}
+  ],
+  "workarea_scripts": "kohden-code-workspace/20261015_BOSS計画解析/scripts/ (inspect_*.py 11本, 再実行可)",
+  "findings_count": {"static_pass": 12, "warnings": 12, "dynamic_blocked": 9},
+  "security_notes": [
+    "平文資格情報はマスク表記に置換済み（計算シート図形/PQ接続）",
+    "evidence・成果物に資格情報を含まないことを確認（grep検査済み）",
+    "実データファイル（xlsm/accdb/xlsx）は成果物へ複製していない"
+  ],
+  "related_docs": [
+    "Work_Vault/10_業務全般/TOOL改修問題/20261008_TOOL容量確認_要件メモ.md",
+    "Work_Vault/10_業務全般/Job作成/容量確認とJob構成_TOOL.xlam仕様.md"
+  ]
+}

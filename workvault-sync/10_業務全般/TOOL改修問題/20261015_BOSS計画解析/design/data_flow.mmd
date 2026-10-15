@@ -1,0 +1,55 @@
+flowchart TD
+    subgraph 外部データ
+        A[指図情報全データ.xlsx<br/>nksv523 BOSSファイル置場]
+        B[(MySQL QCD<br/>CycleTime_Points)]
+        C[(MySQL scheduled<br/>unitInfo)]
+        D[(Access マスタ.accdb<br/>固定グループ)]
+        E[(部品リスト.accdb<br/>egproBOM × PartList)]
+    end
+
+    subgraph BOSS計画.xlsm
+        S14[BOSSシート<br/>指図10,171行]
+        S18[サイクルタイム<br/>1,269行]
+        S19[組取り数]
+        S17[グループ]
+        S9[試作シート]
+        S8[カスタム設定<br/>日程変更/追加/指図指定]
+        S7[設備停止予定]
+        S15[祝日]
+        S6[計算シート<br/>日付×グループ工数]
+        S3[トレイ]
+        S5[容量計算UI]
+        S4[準備工数<br/>XLOOKUP引用]
+        S16[メール<br/>グラフ19枚]
+        S13[job作成]
+    end
+
+    F[Outlook<br/>日報メール]
+
+    A -->|ImportBOSS<br/>全置換| S14
+    B -->|PQ RefreshAll| S18
+    C -->|PQ| S19
+    D -->|PQ| S17
+
+    S14 -->|日程修正/±730日削除/<br/>タイプ絞込 LA|ZP1x|ZP2x・非KV| S6
+    S9 -->|グループ割当/固定時間| S6
+    S7 -->|停止時間列| S6
+    S15 -->|休日判定| S6
+
+    S18 --> chkTime[chkTime<br/>数量×CT+600<br/>÷3600÷0.7]
+    S19 --> chkTime
+    S9 --> chkTime
+    chkTime --> S6
+
+    E -->|ADO/ACE16.0<br/>%TEMP%コピー経由| CalCapa[Cal_Capa<br/>90-3N / 300-other]
+    CalCapa -->|フリー容量/DBにBOM無し| S6
+    CalCapa --> S5
+    S5 -->|getBOSS_btn| S5
+
+    S6 --> S4
+    S4 --> S16
+    S6 --> S3
+    S16 --> F
+    S6 -->|一週間ちょい分のフリーとる| S13
+
+    R[RPA連携.txt Start] -.->|OK待ち→ImportBOSS→Main| S14
