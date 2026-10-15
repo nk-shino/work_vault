@@ -10,3 +10,6 @@ scripts/logs/
 .playwright-mcp/
 *.png
 !workvault-sync/**/*.png
+
+# Windows temp files accidentally placed in workspace
+AppData/
