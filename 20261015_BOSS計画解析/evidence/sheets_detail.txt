@@ -1,0 +1,66 @@
+sharedStrings: 14830
+
+=== [1] メンテナンスメモ (visible) dim=A1:C17 rows=17 cols=3 cells=36 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=シート', 'B1=メモ', 'C1=マクロ修正シュウセイ']
+
+=== [2] 過去データ (visible) dim=A1:V1020 rows=1020 cols=22 cells=20035 formulas=4 merges=0 hiddenRows=0
+  row1: ['A1=日付', 'B1=DBにBOM無し', 'C1=DBにサイクルタイム無し', 'D1=フリー容量', 'E1=フリー部品種類数', 'F1=フリー', 'G1=L1試作', 'H1=NKV', 'I1=L1停止時間', 'J1=L2試作', 'K1=TEC-5600', 'L1=TEC-1000', 'M1=送信機L2', 'N1=L2停止時間', 'O1=L3試作', 'P1=AED', 'Q1=L3停止時間', 'R1=送信機', 'S1=EMS-1000', 'T1=有鉛品目数']
+
+=== [3] トレイ (hidden) dim=A1:Q183 rows=183 cols=17 cells=693 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=日付', 'B1=DBにBOM無し', 'C1=DBにサイクルタイム無し', 'D1=フリー容量', 'E1=フリー部品種類数', 'F1=フリー', 'G1=L1試作', 'H1=NKV', 'I1=L1停止時間', 'J1=L2試作', 'K1=TEC-5600', 'L1=TEC-1000', 'M1=送信機_L2', 'N1=L2停止時間', 'O1=L3試作', 'P1=AED', 'Q1=L3停止時間']
+
+=== [4] 準備工数 (visible) dim=A1:AO1556 rows=1556 cols=41 cells=63772 formulas=1791 merges=0 hiddenRows=0
+  row1: ['B1=#N/A', 'C1=#N/A', 'D1=#N/A', 'E1=#N/A', 'F1=3ライン以外\n1Job\u300040分イガイフン', 'G1=3ライン47分フン', 'H1=30分フン', 'I1=1Job 20分フン', 'J1=1Job13分～14分フンフン', 'K1=実績データ\n16~21秒ジッセキビョウ', 'L1=直近2Jobの実績チョッキンジッセキ', 'M1=←の合計ゴウケイ', 'N1=45秒/1つビョウ', 'O1=1テーブル20分とするフン', 'Q1=None', 'R1=1テーブル20分とするフン', 'T1=ピック時間と合わせるジカンア', 'U1=ピックと同じ値オナアタイ', 'Y1=None', 'Z1=None', 'AA1=None', 'AB1=None', 'AC1=None', 'AD1=None', 'AE1=None', 'AF1=None', 'AG1=None', 'AH1=None', 'AI1=None', 'AJ1=None', 'AK1=None', 'AL1=None', 'AM1=None', 'AN1=None', 'AO1=None']
+  top functions: [('XLOOKUP', 1388), ('IF', 1052), ('SUM', 55), ('OR', 11), ('COUNTA', 11)]
+
+=== [5] 容量計算 (visible) dim=A1:Q56 rows=56 cols=17 cells=166 formulas=2 merges=0 hiddenRows=0
+  row1: ['A1=品目ヒンモク', 'B1=分類ブンルイ', 'C1=生産時間セイサンジカン', 'G1=BOSSから取得シュトク', 'I1=警告:複数サイクルタイムがあります｡上の行が優先されます｡']
+
+=== [6] 計算 (visible) dim=A1:U183 rows=183 cols=21 cells=1452 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=日付', 'B1=DBにBOM無し', 'C1=DBにサイクルタイム無し', 'D1=フリー容量', 'E1=フリー部品種類数', 'F1=フリー', 'G1=L1試作', 'H1=NKV', 'I1=L1停止時間', 'J1=L2試作', 'K1=TEC-5600', 'L1=TEC-1000', 'M1=送信機_L2', 'N1=L2停止時間', 'O1=L3試作', 'P1=AED', 'Q1=L3停止時間']
+
+=== [7] 設備停止予定 (visible) dim=A1:L261 rows=261 cols=12 cells=2109 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=日付ヒヅケ', 'B1=ライン', 'C1=分類ブンルイ', 'D1=設備セツビ', 'E1=内容ナイヨウ', 'F1=L1停止時間テイシジカン', 'G1=L2停止時間テイシジカン', 'H1=L3停止時間テイシジカン']
+
+=== [8] カスタム設定 (visible) dim=A1:S225 rows=225 cols=19 cells=183 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=品目ヒンモク', 'B1=変更前ヘンコウマエ', 'C1=変更後ヘンコウゴ', 'D1=←日程変更機能ニッテイヘンコウキノウ', 'K1=日程追加マクロ→ニッテイツイカ', 'L1=品目ヒンモク', 'M1=台数ダイスウ', 'N1=追加日ツイカビ', 'O1=生産頻度(オプション､半年ぐらい適当に日程生成､単位は日)セイサンヒンドハントシテキトウニッテイセイセイタンイニチ', 'Q1=指図指定日程変更→サシズシテイニッテイヘンコウ', 'R1=指図サシズ', 'S1=変更後ヘンコウゴ']
+
+=== [9] 試作 (visible) dim=A1:J20 rows=20 cols=10 cells=105 formulas=21 merges=0 hiddenRows=0
+  row1: ['A1=品目ヒンモク', 'B1=グループ', 'C1=固定生産時間コテイセイサンジカン', 'D1=組取り数クミトスウ', 'E1=実装予定ジッソウヨテイ', 'F1=温プロ基板作成オンキバンサクセイ', 'G1=温プロ取得オンシュトク', 'H1=実技確認ジツギカクニン', 'I1=1係確認カカリカクニン', 'J1=備考ビコウ']
+  top functions: [('XLOOKUP', 19), ('IF', 2), ('COUNTIF', 2)]
+
+=== [10] ←の使い方 (visible) dim=A1:H35 rows=35 cols=8 cells=280 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=None', 'B1=None', 'C1=None', 'D1=None', 'E1=None', 'F1=None', 'G1=None', 'H1=None']
+
+=== [11] Param (hidden) dim=A1:A2 rows=2 cols=1 cells=2 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=取得日時']
+
+=== [12] BOSS_Format (hidden) dim=A1:O1 rows=1 cols=15 cells=15 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=None', 'B1=None', 'C1=None', 'D1=None', 'E1=None', 'F1=None', 'G1=None', 'H1=None', 'I1=None', 'J1=None', 'K1=None', 'L1=None', 'M1=None', 'N1=None', 'O1=None']
+
+=== [13] job作成 (visible) dim=A1:AD10 rows=10 cols=30 cells=54 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=選択品目とのスロット共有率%(スロット数換算)', 'B1=選択品目と非共有のスロット数', 'C1=(A～C列は計画作成用)', 'D1=None', 'E1=None', 'F1=None', 'G1=None', 'H1=None', 'I1=None', 'J1=None', 'K1=None', 'L1=None', 'M1=温プロ基板おんきばん', 'N1=備考1ビコウ', 'O1=幅ハバ', 'P1=品目ヒンモク', 'Q1=指図サシズ', 'R1=台数ダイスウ', 'S1=着手チャクシュ', 'T1=完成カンセイ', 'U1=備考2ビコウ', 'V1=実装面ジッソウメン', 'W1=HDP', 'X1=BHDP', 'Y1=製造計画担当セイゾウケイカクタントウ', 'Z1=はんだ種タネ', 'AA1=社内シャナイ', 'AB1=品目名S無しヒンモクナ', 'AC1=None', 'AD1=None']
+
+=== [14] BOSS (visible) dim=A1:O10172 rows=10172 cols=15 cells=152580 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=指図', 'B1=品目', 'C1=アイコン', 'D1=指図タイプ', 'E1=MRP 管理者', 'F1=製造責任者', 'G1=プラント', 'H1=タイプ', 'I1=システムステータス', 'J1=バージョン', 'K1=品目テキスト', 'L1=目標数量', 'M1=単位', 'N1=基準開始日', 'O1=基準終了日']
+
+=== [15] 祝日 (visible) dim=A1:A71 rows=71 cols=1 cells=71 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=45253']
+
+=== [16] メール (visible) dim=A3:N47 rows=47 cols=14 cells=67 formulas=46 merges=0 hiddenRows=0
+  top functions: [('INDEX', 36), ('MATCH', 36), ('WORKDAY', 5), ('XLOOKUP', 3), ('TODAY', 2), ('TEXT', 1)]
+
+=== [17] グループ (visible) dim=A1:E107 rows=107 cols=5 cells=439 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=グループ名', 'B1=品目名', 'C1=ライン', 'D1=備考', 'E1=追加日']
+
+=== [18] サイクルタイム (visible) dim=A1:D1269 rows=1269 cols=4 cells=5059 formulas=1261 merges=0 hiddenRows=0
+  row1: ['B1=平均サイクルタイム(表裏合計)', 'C1=実装点数(表裏合計)', 'D1=1枚あたり平均サイクルタイム(表裏合計)マイ']
+  top functions: [('XLOOKUP', 1261)]
+
+=== [19] 組取り数 (visible) dim=A1:B3074 rows=3074 cols=2 cells=6148 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=typeID', 'B1=chldID']
+
+=== [20] 列設定 (visible) dim=A1:C11 rows=11 cols=3 cells=12 formulas=0 merges=0 hiddenRows=0
+  row1: ['A1=L1試作シサク', 'C1=ここに入力すると強制的に並び替わりますニュウリョクキョウセイテキナラカ']
+
+calcChain entries: 0

@@ -1,0 +1,1 @@
+Encoding for stdout is only cp932, will auto-encode text with utf8 before output

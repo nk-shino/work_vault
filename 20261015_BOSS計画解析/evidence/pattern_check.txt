@@ -1,0 +1,8 @@
+C:\Users\ss80751\kohden-code-workspace\20261015_BOSS計画解析\scripts\inspect_pattern.py:2: SyntaxWarning: invalid escape sequence '\d'
+  """BOSSシート指図タイプとコード条件の照合: reg.Pattern ^(LA|ZP1\d|ZP2\d)$ 対象外の行"""
+保持される行: {'ZP12': 128, 'ZP13': 99, 'LA': 2638, 'ZP21': 7212, 'ZP11': 94}
+削除される行タイプ×品目頭3字: {}
+合計: 10171 削除対象: 0 (KVを含む: 0)
+ZP21ユニーク品目数: 355
+カスタム設定R列の指図 1件のうちBOSSに存在: 1
+例: ['212131570']
