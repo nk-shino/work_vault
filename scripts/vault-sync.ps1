@@ -93,7 +93,9 @@ $newFiles = @()
 Get-ChildItem -LiteralPath $MirrorPath -Recurse -Force -File -ErrorAction SilentlyContinue | ForEach-Object {
     $rel = $_.FullName.Substring($RepoPath.Length + 1).Replace("\", "/")
     if (-not $indexRel.ContainsKey($rel) -and -not (Test-Excluded $rel)) {
-        if ($_.Length -lt 95MB) { $newFiles += $rel }
+        # 0バイトファイルは誤作成の空ファイルの可能性が高いため新規登録しない
+        # (実在する空ノートがある場合は手動で git add -f する)
+        if ($_.Length -gt 0 -and $_.Length -lt 95MB) { $newFiles += $rel }
     }
 }
 # egg-info フォルダごと除外した場合のフォルダ扱い: egg-info 配下はファイル単位で除外済み
