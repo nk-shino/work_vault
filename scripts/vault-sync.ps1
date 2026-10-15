@@ -93,9 +93,10 @@ $newFiles = @()
 Get-ChildItem -LiteralPath $MirrorPath -Recurse -Force -File -ErrorAction SilentlyContinue | ForEach-Object {
     $rel = $_.FullName.Substring($RepoPath.Length + 1).Replace("\", "/")
     if (-not $indexRel.ContainsKey($rel) -and -not (Test-Excluded $rel)) {
-        # 0バイトファイルは誤作成の空ファイルの可能性が高いため新規登録しない
-        # (実在する空ノートがある場合は手動で git add -f する)
-        if ($_.Length -gt 0 -and $_.Length -lt 95MB) { $newFiles += $rel }
+        # 0バイトの未追跡ファイルは毎回候補に上がるため警告して除外する
+        # (追跡したい場合は手動で git add -f する: 2026-10-15 autonomous-development-guide.md)
+        if ($_.Length -eq 0) { Write-Host "[警告] 0バイトの新規候補をスキップ: $rel" }
+        elseif ($_.Length -lt 95MB) { $newFiles += $rel }
     }
 }
 # egg-info フォルダごと除外した場合のフォルダ扱い: egg-info 配下はファイル単位で除外済み
