@@ -1,0 +1,233 @@
+{
+ "schema_version": "3.0",
+ "run_id": "run-20261016-kashima-hikikomi-01",
+ "delivery_revision": "R1",
+ "artifact_id": "art-source",
+ "content_revision": "R1",
+ "limitations": [
+  "VBAソースはvbaProject.binから復号した静的解析であり、マクロ実行による動作確認は実施していない。",
+  "段取り予定.xlsx(SharePoint)と差分チェックシステム(http://172.25.253.60/)は今回直接確認していない。",
+  "nksv523側コピーとのp-code差異は確認したが、その生成要因(保存環境差)は未確認。"
+ ],
+ "sources": {
+  "state": "complete",
+  "scope": "ユーザー指定の対象ブックおよび、対象ブックから参照が確認できた外部資料(直接確認分)。",
+  "limitations": [
+   "分析対象範囲は16シート全体と、参照先の直接確認分に限定する。"
+  ],
+  "items": [
+   {
+    "source_id": "SRC-01",
+    "identity": "差分確認マクロver2.3a.xlsm (Work_Vault保管版)",
+    "access": "direct",
+    "input_id": "IN-01",
+    "inspection_ids": [
+     "INS-01",
+     "INS-02",
+     "INS-03"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "16シート全てのセル値・数式(読み取り)",
+     "条件付き書式",
+     "シート色・印刷設定",
+     "図形2件・画像2件",
+     "VBA全モジュール(復号)"
+    ],
+    "unverified_scope": [
+     "マクロ実行時の動作",
+     "数式再計算結果の現時点値",
+     "外部接続の実動作"
+    ],
+    "version_or_hash": "sha256:75974ce5e332d8ddc3b4fb777add4004f9fb2df95a5c695775b7087e5f7307d6"
+   },
+   {
+    "source_id": "SRC-02",
+    "identity": "差分確認マクロver2.3a.xlsm (\\nksv523\\...\\マクロ等 版)",
+    "access": "direct",
+    "input_id": "IN-02",
+    "inspection_ids": [
+     "INS-04"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "シート構成",
+     "sabun A列173行",
+     "差分1数式",
+     "計画1-6 A列",
+     "BOM作成",
+     "VBA Module1/tools/指図入力/S1_1/S1_2"
+    ],
+    "unverified_scope": [
+     "p-code差異の要因"
+    ],
+    "version_or_hash": "sha256:52ecbcccbcf216a78e607a66f64f1fce50f166372ad24fbf76dd9ef60156df7b"
+   },
+   {
+    "source_id": "SRC-03",
+    "identity": "sabun.csv (\\nksv523\\第二工場実装課用\u0001係用\\Job作成\\sabun.csv)",
+    "access": "direct",
+    "input_id": "IN-03",
+    "inspection_ids": [
+     "INS-05"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "先頭行の形式",
+     "行数200行",
+     "更新日時2026-10-16 08:27"
+    ],
+    "unverified_scope": [
+     "生成元CGIの内部"
+    ],
+     "version_or_hash": "sha256:7b1679d488b2635f86527bf3d182440942b93a0143160a59d20a530efe001db4"
+   },
+   {
+    "source_id": "SRC-04",
+    "identity": "差分確認手順書.xlsx",
+    "access": "direct",
+    "input_id": "IN-04",
+    "inspection_ids": [
+     "INS-06"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "3シートの手順テキスト"
+    ],
+    "unverified_scope": [
+     "手順の実機検証"
+    ],
+     "version_or_hash": "sha256:28b6b0d3b52db271990446e5acd52a9376821b0195576fc863b223be16d2b11f"
+   },
+   {
+    "source_id": "SRC-05",
+    "identity": "TOOL.xlam (差分確認関係モジュール)",
+    "access": "direct",
+    "input_id": "IN-05",
+    "inspection_ids": [
+     "INS-07"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "SabunMeisai/ReadHenkouHinmoku関数"
+    ],
+    "unverified_scope": [
+     "他モジュール多数の全解析"
+    ],
+     "version_or_hash": "sha256:0e5eea8e99ab5aa136fc8784f9854d778baf8b82cc552bbfaafe06cf1fdbad8d"
+   },
+   {
+    "source_id": "SRC-06",
+    "identity": "JOB作成関連マクロ.xlsm",
+    "access": "direct",
+    "input_id": "IN-06",
+    "inspection_ids": [
+     "INS-08"
+    ],
+    "report_input_ids": [],
+    "analyzed_scope": [
+     "openMacro(TOOL.xlam起動)"
+    ],
+    "unverified_scope": [],
+     "version_or_hash": "sha256:8bfb712bdfa256c058e44a694f910ae7979cae99cc2ff33312f9884819f3e3f8"
+   },
+   {
+    "source_id": "SRC-07",
+    "identity": "段取り予定.xlsx (SharePoint)",
+    "access": "unavailable",
+    "input_id": null,
+    "inspection_ids": [],
+    "report_input_ids": [
+     "IN-01"
+    ],
+    "analyzed_scope": [],
+    "unverified_scope": [
+     "シート構成・job作成シートの実体"
+    ],
+    "version_or_hash": null
+   },
+   {
+    "source_id": "SRC-08",
+    "identity": "差分チェックシステム (http://172.25.253.60/, sashizu.cgi)",
+    "access": "unavailable",
+    "input_id": null,
+    "inspection_ids": [],
+    "report_input_ids": [
+     "IN-01",
+     "IN-04"
+    ],
+    "analyzed_scope": [],
+    "unverified_scope": [
+     "システム実体"
+    ],
+    "version_or_hash": null
+   }
+  ]
+ },
+ "inspections": [
+  {
+   "inspection_id": "INS-01",
+   "input_id": "IN-01",
+   "scope": "差分確認マクロver2.3a.xlsm 16シートのセル値・数式・書式",
+   "method": "openpyxl 3.1.5 による読み取り専用解析",
+   "outcome": "inspected",
+   "record": "全16シートの使用範囲・数式・条件付き書式・シート色を取得。2026-10-16実施。"
+  },
+  {
+   "inspection_id": "INS-02",
+   "input_id": "IN-01",
+   "scope": "vbaProject.bin",
+   "method": "olefile + MS-OVBA圧縮展開の自前実装",
+   "outcome": "inspected",
+   "record": "19モジュール中16を復号しテキスト化。残り5(ThisWorkbook/Sheet1等の空実装含む)も確認。"
+  },
+  {
+   "inspection_id": "INS-03",
+   "input_id": "IN-01",
+   "scope": "パッケージ構造(customUI/printerSettings/drawings/docProps)",
+   "method": "zipエントリ列挙とXML解析",
+   "outcome": "inspected",
+   "record": "customUI14.xml(差分チェックタブ)・printerSettings15件・図形4個(画像2)を確認。"
+  },
+  {
+   "inspection_id": "INS-04",
+   "input_id": "IN-02",
+   "scope": "nksv523版のシート・数式・VBA主要モジュール",
+   "method": "openpyxl + vbaProject.bin復号による比較",
+   "outcome": "inspected",
+   "record": "セル内容はBOM作成!B15のみ相違。VBAはソース同一・Module1のp-codeのみ相違。"
+  },
+  {
+   "inspection_id": "INS-05",
+   "input_id": "IN-03",
+   "scope": "sabun.csv",
+   "method": "先頭行・行数・ハッシュ取得",
+   "outcome": "inspected",
+   "record": "200行・CP932・ヘッダ無し。対象ブック内のsabunシート(173行)とは別スナップショット。"
+  },
+  {
+   "inspection_id": "INS-06",
+   "input_id": "IN-04",
+   "scope": "差分確認手順書.xlsx 3シート",
+   "method": "openpyxl による読み取り",
+   "outcome": "inspected",
+   "record": "2021-12-21版。手順の流れを確認。"
+  },
+  {
+   "inspection_id": "INS-07",
+   "input_id": "IN-05",
+   "scope": "TOOL.xlam 差分確認関係モジュール",
+   "method": "vbaProject.bin復号",
+   "outcome": "inspected",
+   "record": "SabunMeisai: BOSS/SMTの数量差分を品目名_差分明細.xlsxへ出力する処理を確認。"
+  },
+  {
+   "inspection_id": "INS-08",
+   "input_id": "IN-06",
+   "scope": "JOB作成関連マクロ.xlsm",
+   "method": "vbaProject.bin復号",
+   "outcome": "inspected",
+   "record": "openMacroのみ。TOOL.xlamをReadOnlyで開くランチャー。"
+  }
+ ]
+}

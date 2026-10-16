@@ -1,0 +1,113 @@
+{
+ "schema_version": "3.0",
+ "run_id": "run-20261016-kashima-hikikomi-01",
+ "delivery_revision": "R1",
+ "artifact_id": "art-issues",
+ "content_revision": "R1",
+ "limitations": [],
+ "issues": {
+  "state": "complete",
+  "scope": "今回の分析で確認した不整合・未確認の全件。",
+  "limitations": [],
+  "items": [
+   {
+    "issue_id": "ISS-01",
+    "description": "Work_Vault版とnksv523版でBOM作成!B15の品目名が不一致(UR-4567 vs UR-4658)。",
+    "severity": "medium",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-03",
+     "OBJ-14"
+    ],
+    "evidence_ids": [
+     "EV-021"
+    ],
+    "impact": "どちらが最新の作業状態か判断できない。片方だけの更新で差異が残る。"
+   },
+   {
+    "issue_id": "ISS-02",
+    "description": "nksv523版のModule1 p-codeが相違(ソース同一)。",
+    "severity": "info",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-08",
+     "OBJ-14"
+    ],
+    "evidence_ids": [
+     "EV-022"
+    ],
+    "impact": "保存環境(Excelバージョン/保護状態)の違いで生成され得るが要因は未確認。動作差は確認されていない。"
+   },
+   {
+    "issue_id": "ISS-03",
+    "description": "ブック内sabunシート(173行・6/30以前)と sabun.csv(200行・10/16)の指図集合が不一致。",
+    "severity": "info",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-02",
+     "OBJ-09"
+    ],
+    "evidence_ids": [
+     "EV-023",
+     "EV-011"
+    ],
+    "impact": "シート内容は直近取込時点のスナップショット。現行の差分状況はCSV/システム側で確認する必要がある。"
+   },
+   {
+    "issue_id": "ISS-04",
+    "description": "差分1-5のJ列にNG(計6指図)があるが保存状態のハイパーリンクは0件。",
+    "severity": "low",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-04"
+    ],
+    "evidence_ids": [
+     "EV-016",
+     "EV-027"
+    ],
+    "impact": "NG時に差分NGにリンク貼るがイベント等で再実行されれば付く。保存時点で未実行の可能性。"
+   },
+   {
+    "issue_id": "ISS-05",
+    "description": "計画2の230-264行D列に旧データ残骸(2024-02のタイムスタンプ16件)。",
+    "severity": "low",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-05"
+    ],
+    "evidence_ids": [
+     "EV-017"
+    ],
+    "impact": "S1_2の変更イベントはA列基準で消去するため残る。誤読の恐れは小さいが整理対象。"
+   },
+   {
+    "issue_id": "ISS-06",
+    "description": "名前定義 _xlpm.s が #NAME? で残存。",
+    "severity": "info",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-01"
+    ],
+    "evidence_ids": [
+     "EV-020"
+    ],
+    "impact": "LET関数引数名由来の副産物。動作への影響は確認していない。"
+   },
+   {
+    "issue_id": "ISS-07",
+    "description": "段取り予定.xlsx・差分チェックシステムの実体は今回未確認。",
+    "severity": "info",
+    "status": "open",
+    "affected_object_ids": [
+     "OBJ-10",
+     "OBJ-11"
+    ],
+    "evidence_ids": [
+     "EV-005",
+     "EV-024"
+    ],
+    "impact": "連携先の仕様変更があった場合に本ブック側で検知できない。"
+   }
+  ]
+ }
+}
