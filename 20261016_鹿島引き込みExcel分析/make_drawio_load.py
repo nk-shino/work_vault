@@ -35,13 +35,13 @@ def mono(nid, x, y, w, h, label, fill="#FFFFFF", stroke="#666666", fs=13):
 def plain(nid, x, y, w, h, label, fs=11, align="left"):
     add(f'<mxCell id="{nid}" value="{lbl(label)}" style="text;html=1;fontSize={fs};fontColor={C_TEXT};align={align};verticalAlign=top;whiteSpace=wrap;spacing=2;" vertex="1" parent="1"><mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
 
-def region(nid, x, y, w, h, header, tint, color):
-    add(f'<mxCell id="{nid}" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor={tint};strokeColor={color};strokeWidth=1.5;dashed=1;verticalAlign=top;" vertex="1" parent="1"><mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
-    add(f'<mxCell id="{nid}_h" value="{lbl(header)}" style="rounded=0;whiteSpace=wrap;html=1;fillColor={color};strokeColor={color};fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1"><mxGeometry x="{x}" y="{y}" width="{w}" height="34" as="geometry"/></mxCell>')
+def region(nid, x, y, w, h, header, tint, color, fs=15):
+    add(f'<mxCell id="{nid}" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor={tint};strokeColor={color};strokeWidth=2;dashed=0;verticalAlign=top;" vertex="1" parent="1"><mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
+    add(f'<mxCell id="{nid}_h" value="{lbl(header)}" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor={color};strokeColor={color};fontColor=#FFFFFF;fontSize={fs};fontStyle=1;align=left;spacingLeft=14;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="{x}" y="{y}" width="{w}" height="40" as="geometry"/></mxCell>')
 
 def edge(eid, src, dst, label="", color="#666666", dashed=False, sw=1.5, fs=10):
     d = ";dashed=1" if dashed else ""
-    add(f'<mxCell id="{eid}" value="{esc(label)}" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor={color};strokeWidth={sw};fontSize={fs};fontColor={C_TEXT};labelBackgroundColor=#FFFFFF;{d}" edge="1" parent="1" source="{src}" target="{dst}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+    add(f'<mxCell id="{eid}" value="{lbl(label)}" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor={color};strokeWidth={sw};fontSize={fs};fontColor={C_TEXT};labelBackgroundColor=#FFFFFF;{d}" edge="1" parent="1" source="{src}" target="{dst}"><mxGeometry relative="1" as="geometry"/></mxCell>')
 
 def gterm(nid, x, y, wterm, wtxt, term, desc, color):
     node(nid + "_t", x, y, wterm, 44, term, "#FFFFFF", color, fs=11, bold=True)
@@ -79,13 +79,13 @@ node("L1_BOM", 40, 440, 240, 74, "差分確認マクロ BOM作成シート\nE=CT
 
 # middle processes
 region("L1_R1", 350, 110, 330, 110, "処理1 スロット容量判定", TINT["blue"], BLUE[1])
-mono("L1_F1", 366, 152, 298, 54, "Σフィーダーサイズ ≤ 390\n(90 + 300)", "#FFFFFF", BLUE[1], fs=12)
+mono("L1_F1", 366, 158, 298, 54, "Σフィーダーサイズ ≤ 390\n(90 + 300)", "#FFFFFF", BLUE[1], fs=12)
 
 region("L1_R2", 350, 250, 330, 110, "処理2 時間負荷計算", TINT["green"], GREEN[1])
-mono("L1_F2", 366, 292, 298, 54, "工数(h)=(数量×CT+600)\n÷3600 ÷0.7", "#FFFFFF", GREEN[1], fs=12)
+mono("L1_F2", 366, 298, 298, 54, "工数(h)=(数量×CT+600)\n÷3600 ÷0.7", "#FFFFFF", GREEN[1], fs=12)
 
 region("L1_R3", 350, 390, 330, 110, "処理3 Asprova割付け", TINT["purple"], PURPLE[1])
-mono("L1_F3", 366, 432, 298, 54, "作業時間=数量×sp÷製造効率\n+段取10m → カレンダー内へ", "#FFFFFF", PURPLE[1], fs=12)
+mono("L1_F3", 366, 438, 298, 54, "作業時間=数量×sp÷製造効率\n+段取10m → カレンダー内へ", "#FFFFFF", PURPLE[1], fs=12)
 
 node("L1_CSV", 40, 560, 240, 50, "DGS出力CSV\n(サイクルタイム/部品/フィーダー/ノズル)", *YELLOW, fs=10)
 
@@ -122,7 +122,7 @@ subtitle("L2_ST", "実行タイミング: ジョブ作成時(TOOL.xlam 部品確
 
 region("L2_R", 40, 90, 1090, 600, "処理1 スロット容量判定", TINT["blue"], BLUE[1])
 
-plain("L2_SH", 56, 134, 280, 22, "手順", fs=13)
+plain("L2_SH", 56, 146, 280, 22, "手順", fs=13)
 steps = [
     "① 品目ごとに部品リスト.accdbから\n部品名・ノズル・フィーダーサイズを取得\n(egproBOM×PartList / 部品は重複なく1回)",
     "② ノズル欄に1000超の番号がある部品を\n3ノズルヘッド用として集計を分離",
@@ -130,21 +130,21 @@ steps = [
     "④ 上限と比較\n3ノズルヘッド用 90 / その他 300 / 合計 390",
     "⑤ 空きスロットを表示\n【ALL】x/390・3Noz x/90・Other x/300",
 ]
-yy = 160
+yy = 172
 for i, s in enumerate(steps):
     node(f"L2_S{i}", 56, yy, 290, 66, s, "#FFFFFF", BLUE[1], fs=10, extra="align=left;spacing=6;")
     yy += 74
 
-plain("L2_FH", 380, 134, 340, 22, "計算ロジック", fs=13)
-mono("L2_F1", 380, 160, 340, 74, "必要スロット(3Nzl)\n  = Σフィーダーサイズ(ノズル>1000の部品)\n必要スロット(Other)\n  = Σフィーダーサイズ(上記以外)", "#FFFFFF", BLUE[1], fs=11)
-mono("L2_F2", 380, 246, 340, 66, "判定: 3Nzl ≤ 90\n      Other ≤ 300\n      合計 ≤ 390", "#FFFFFF", BLUE[1], fs=11)
-mono("L2_F3", 380, 324, 340, 96, "テーブル禁止推奨数 T:\n非共有スロット ≥ 150×0.8(=120) → T+1\n   以下 180/210/240/270 で同様に+1\n優先度: T8 > T6 > T4 > T2 > T10", "#FFFFFF", BLUE[1], fs=11)
-plain("L2_FN", 380, 432, 340, 60, "Tは「他ジョブと共有しない部品」が増えたとき、使うべきでないテーブル数の推奨。スロット本体の合否判定には0.8は関与しない。", fs=10)
+plain("L2_FH", 380, 146, 340, 22, "計算ロジック", fs=13)
+mono("L2_F1", 380, 172, 340, 74, "必要スロット(3Nzl)\n  = Σフィーダーサイズ(ノズル>1000の部品)\n必要スロット(Other)\n  = Σフィーダーサイズ(上記以外)", "#FFFFFF", BLUE[1], fs=11)
+mono("L2_F2", 380, 258, 340, 66, "判定: 3Nzl ≤ 90\n      Other ≤ 300\n      合計 ≤ 390", "#FFFFFF", BLUE[1], fs=11)
+mono("L2_F3", 380, 336, 340, 96, "テーブル禁止推奨数 T:\n非共有スロット ≥ 150×0.8(=120) → T+1\n   以下 180/210/240/270 で同様に+1\n優先度: T8 > T6 > T4 > T2 > T10", "#FFFFFF", BLUE[1], fs=11)
+plain("L2_FN", 380, 444, 340, 60, "Tは「他ジョブと共有しない部品」が増えたとき、使うべきでないテーブル数の推奨。スロット本体の合否判定には0.8は関与しない。", fs=10)
 
-node("L2_DB", 380, 506, 340, 60, "照会先DB\n\\\\nksv523...\\Job作成\\部品リスト.accdb\negproBOM(品目→部品) × PartList(部品→サイズ)", *YELLOW, fs=10)
+node("L2_DB", 380, 518, 340, 60, "照会先DB\n\\\\nksv523...\\Job作成\\部品リスト.accdb\negproBOM(品目→部品) × PartList(部品→サイズ)", *YELLOW, fs=10)
 edge("L2_E9", "L2_DB", "L2_F1", "照会", BLUE[1])
 
-plain("L2_GH", 760, 134, 360, 22, "計算ロジック内の言葉の説明", fs=13)
+plain("L2_GH", 760, 146, 360, 22, "計算ロジック内の言葉の説明", fs=13)
 gt = [
     ("フィーダーサイズ", "部品1種が供給装置(フィーダー)で\n占める幅。PartListが保持"),
     ("ノズル番号>1000", "3ノズルヘッド機の専用部品の目印。\nこの番号で集計を分ける"),
@@ -152,12 +152,12 @@ gt = [
     ("非共有スロット", "選択品目群が他ジョブと共有しない\n部品のスロット数(専用分)"),
     ("0.8", "テーブル禁止判定だけに使う安全率。\n150〜270に乗算した値と比較"),
 ]
-yy = 160
+yy = 172
 for i, (t, d) in enumerate(gt):
     gterm(f"L2_G{i}", 760, yy, 110, 240, t, d, BLUE[1])
     yy += 52
 
-node("L2_O", 56, 560, 290, 66, "結果の使われ方\nBOSS取込時は計算シートの「フリー容量」列へ書込。\n空きが負(オーバー)なら載せ替えが必要。", *GRAY, fs=10)
+node("L2_O", 56, 572, 290, 66, "結果の使われ方\nBOSS取込時は計算シートの「フリー容量」列へ書込。\n空きが負(オーバー)なら載せ替えが必要。", *GRAY, fs=10)
 
 srcnote("L2_SRC", 56, 636, 1074, "出所: TOOL.xlam BuhinKakunin_ADO(tool_vba.txt:3759-3944・表示:3939-3942) / BOSS計画.xlsm Cal_Capa(vba_code_all.txt:573-663) / テーブル禁止判定 x=0.8(tool_vba.txt:3921-3927)")
 page_end()
@@ -169,35 +169,35 @@ subtitle("L3_ST", "BOSS計画.xlsm chkTime / getBOSS_btn。サイクルタイム
 
 region("L3_R", 40, 90, 1090, 600, "処理2 時間負荷計算", TINT["green"], GREEN[1])
 
-plain("L3_FH", 56, 134, 560, 22, "計算ロジック(メイン)", fs=13)
-mono("L3_F1", 56, 160, 560, 56, "工数(h) = ( ①数量 × ②CT + ③600秒 ) ÷ ④3600 ÷ ⑤0.7", "#FFFFFF", GREEN[1], fs=14)
-mono("L3_F2", 56, 228, 560, 60, "⑤の方向に注意: ÷0.7 は工数を約1.43倍に膨らませる。\n×0.7(縮める)の実装はコード内に存在しない。", "#FFFFFF", RED[1], fs=11)
+plain("L3_FH", 56, 146, 560, 22, "計算ロジック(メイン)", fs=13)
+mono("L3_F1", 56, 172, 560, 56, "工数(h) = ( ①数量 × ②CT + ③600秒 ) ÷ ④3600 ÷ ⑤0.7", "#FFFFFF", GREEN[1], fs=14)
+mono("L3_F2", 56, 240, 560, 60, "⑤の方向に注意: ÷0.7 は工数を約1.43倍に膨らませる。\n×0.7(縮める)の実装はコード内に存在しない。", "#FFFFFF", RED[1], fs=11)
 
-plain("L3_CH", 56, 300, 560, 22, "②CT(サイクルタイム)の決め方", fs=13)
-node("L3_C1", 56, 326, 260, 60, "MySQL QCD.CycleTime_Points\nから品目×表裏ごとに\n最新10指図を取得", *YELLOW, fs=10)
-node("L3_C2", 356, 326, 120, 60, "CT<28 →\n28に補正", *YELLOW, fs=10)
-node("L3_C3", 496, 326, 120, 60, "表裏それぞれ\n平均", *YELLOW, fs=10)
-node("L3_C4", 356, 398, 260, 44, "表+裏を合計=品目のCT", *YELLOW, fs=10)
+plain("L3_CH", 56, 312, 560, 22, "②CT(サイクルタイム)の決め方", fs=13)
+node("L3_C1", 56, 338, 260, 60, "MySQL QCD.CycleTime_Points\nから品目×表裏ごとに\n最新10指図を取得", *YELLOW, fs=10)
+node("L3_C2", 356, 338, 120, 60, "CT<28 →\n28に補正", *YELLOW, fs=10)
+node("L3_C3", 496, 338, 120, 60, "表裏それぞれ\n平均", *YELLOW, fs=10)
+node("L3_C4", 356, 410, 260, 44, "表+裏を合計=品目のCT", *YELLOW, fs=10)
 edge("L3_E1", "L3_C1", "L3_C2", "", GREEN[1])
 edge("L3_E2", "L3_C2", "L3_C3", "", GREEN[1])
 edge("L3_E3", "L3_C3", "L3_C4", "", GREEN[1])
 
-plain("L3_AH", 56, 456, 560, 22, "CTがDBに無い品目の代替ロジック", fs=13)
-mono("L3_F3", 56, 482, 560, 96, "組取り数あり: 数量 ÷ 組取り数 × 56(量産)/75(試作) + 600\n組取り数なし: 数量 × 56(量産)/75(試作) + 600\nどちらも無い: 数量 × 28 + 600 → ★印でリストに残す", "#FFFFFF", GREEN[1], fs=11)
+plain("L3_AH", 56, 468, 560, 22, "CTがDBに無い品目の代替ロジック", fs=13)
+mono("L3_F3", 56, 494, 560, 96, "組取り数あり: 数量 ÷ 組取り数 × 56(量産)/75(試作) + 600\n組取り数なし: 数量 × 56(量産)/75(試作) + 600\nどちらも無い: 数量 × 28 + 600 → ★印でリストに残す", "#FFFFFF", GREEN[1], fs=11)
 
-plain("L3_SH", 656, 134, 460, 22, "手順(集約まで)", fs=13)
+plain("L3_SH", 656, 146, 460, 22, "手順(集約まで)", fs=13)
 sst = [
     "⑥ 品目ごとに工数を算出(上記ロジック)",
     "⑦ 計算シートに日付×グループで書込\n(フリー/L1-L3試作/TEC-5600/TEC-1000/送信機/AED)",
     "⑧ グループごとの停止時間と合算し\n日次の枠と照合",
     "※ 同じ数式が getBOSS_btn にも重複実装\n(ソース内に「超注意」の注記あり)",
 ]
-yy = 160
+yy = 172
 for i, s in enumerate(sst):
     node(f"L3_S{i}", 656, yy, 460, 54, s, "#FFFFFF", GREEN[1], fs=10, extra="align=left;spacing=6;")
     yy += 62
 
-plain("L3_GH", 656, 412, 460, 22, "計算ロジック内の言葉の説明", fs=13)
+plain("L3_GH", 656, 424, 460, 22, "計算ロジック内の言葉の説明", fs=13)
 gt = [
     ("① 数量", "指図の生産台数(MySQL scheduled\nliveOrder.orderQty)"),
     ("② CT", "1台当たりの実績生産秒数。\n最新10指図の平均。DGS最速値ではない"),
@@ -207,7 +207,7 @@ gt = [
     ("組取り数", "1回の部品組取りで生産できる台数。\nMySQL scheduled.unitInfo.chldID"),
     ("28秒", "CTの下限。短すぎる実績値の補正。\n処理3のBOMシートと共通の規則"),
 ]
-yy = 438
+yy = 450
 for i, (t, d) in enumerate(gt):
     gterm(f"L3_G{i}", 656, yy, 96, 358, t, d, GREEN[1])
     yy += 34
@@ -222,25 +222,25 @@ subtitle("L4_ST", "「超えない」は事前の合否判定ではなく、カ�
 
 region("L4_R", 40, 90, 1090, 600, "処理3 Asprova割付け", TINT["purple"], PURPLE[1])
 
-plain("L4_FH", 56, 134, 560, 22, "計算ロジック", fs=13)
-mono("L4_F1", 56, 160, 560, 56, "作業時間 = ①数量 × ②sp ÷ ③製造効率 + ④段取10m", "#FFFFFF", PURPLE[1], fs=14)
-mono("L4_F2", 56, 228, 560, 60, "②sp = CT ÷ 面数(表裏)\n   BOM作成シートN列 =($E$15/$F$15)&\"sp\" (単位 sp=秒/個)", "#FFFFFF", PURPLE[1], fs=11)
-mono("L4_F3", 56, 300, 560, 60, "③製造効率 = UseBomInst_ProductionFactor\n   SMT 0.7 / 外観検査 0.5 → 0.7なら実時間の約1.43倍を計上", "#FFFFFF", PURPLE[1], fs=11)
+plain("L4_FH", 56, 146, 560, 22, "計算ロジック", fs=13)
+mono("L4_F1", 56, 172, 560, 56, "作業時間 = ①数量 × ②sp ÷ ③製造効率 + ④段取10m", "#FFFFFF", PURPLE[1], fs=14)
+mono("L4_F2", 56, 240, 560, 60, "②sp = CT ÷ 面数(表裏)\n   BOM作成シートN列 =($E$15/$F$15)&\"sp\" (単位 sp=秒/個)", "#FFFFFF", PURPLE[1], fs=11)
+mono("L4_F3", 56, 312, 560, 60, "③製造効率 = UseBomInst_ProductionFactor\n   SMT 0.7 / 外観検査 0.5 → 0.7なら実時間の約1.43倍を計上", "#FFFFFF", PURPLE[1], fs=11)
 
-plain("L4_WH", 56, 376, 560, 22, "割付けの流れ", fs=13)
-node("L4_W1", 56, 402, 170, 66, "製造BOM\n(テーブル要素)\nBOMシートから手作業で追加", "#FFFFFF", PURPLE[1], fs=10)
-node("L4_W2", 254, 402, 170, 66, "オーダー(指図)\n数量・期日", *YELLOW, fs=10)
-node("L4_W3", 452, 402, 164, 66, "作業時間を計算\n(上記ロジック)", "#FFFFFF", PURPLE[1], fs=10)
-node("L4_W4", 452, 496, 164, 66, "資源カレンダーの\n空きへ割付け", "#FFFFFF", PURPLE[1], fs=10)
-node("L4_W5", 254, 496, 170, 66, "入らない場合\n順延 / 代替資源へ", *GRAY, fs=10)
+plain("L4_WH", 56, 388, 560, 22, "割付けの流れ", fs=13)
+node("L4_W1", 56, 414, 170, 66, "製造BOM\n(テーブル要素)\nBOMシートから手作業で追加", "#FFFFFF", PURPLE[1], fs=10)
+node("L4_W2", 254, 414, 170, 66, "オーダー(指図)\n数量・期日", *YELLOW, fs=10)
+node("L4_W3", 452, 414, 164, 66, "作業時間を計算\n(上記ロジック)", "#FFFFFF", PURPLE[1], fs=10)
+node("L4_W4", 452, 508, 164, 66, "資源カレンダーの\n空きへ割付け", "#FFFFFF", PURPLE[1], fs=10)
+node("L4_W5", 254, 508, 170, 66, "入らない場合\n順延 / 代替資源へ", *GRAY, fs=10)
 edge("L4_E1", "L4_W1", "L4_W3", "", PURPLE[1])
 edge("L4_E2", "L4_W2", "L4_W3", "", PURPLE[1])
 edge("L4_E3", "L4_W3", "L4_W4", "", PURPLE[1])
 edge("L4_E4", "L4_W4", "L4_W5", "収まらないとき", PURPLE[1], dashed=True)
 
-plain("L4_N1", 56, 580, 560, 60, "BOM作成シートの共通規則: E列CTは28秒下限(13行目注記「28秒以下は、28で入れる」)。\n処理2のパワークエリと同じ28秒。CTの転記経路(手作業/リンク)は今回未確認。", fs=10)
+plain("L4_N1", 56, 592, 560, 60, "BOM作成シートの共通規則: E列CTは28秒下限(13行目注記「28秒以下は、28で入れる」)。\n処理2のパワークエリと同じ28秒。CTの転記経路(手作業/リンク)は今回未確認。", fs=10)
 
-plain("L4_GH", 656, 134, 460, 22, "計算ロジック内の言葉の説明", fs=13)
+plain("L4_GH", 656, 146, 460, 22, "計算ロジック内の言葉の説明", fs=13)
 gt = [
     ("① 数量", "指図の生産台数"),
     ("② sp(秒/個)", "1個当たりの製造時間=CT÷面数。\n表裏2面ならCTを2で割る"),
@@ -250,7 +250,7 @@ gt = [
     ("資源カレンダー", "装置ごとの稼働可能時間枠。\nここに入る範囲でしか作業を置かない"),
     ("順延・代替資源", "収まらない作業を後ろの日へずらす、\nまたは別の資源に割り替える調整"),
 ]
-yy = 160
+yy = 172
 for i, (t, d) in enumerate(gt):
     gterm(f"L4_G{i}", 656, yy, 120, 334, t, d, PURPLE[1])
     yy += 60
