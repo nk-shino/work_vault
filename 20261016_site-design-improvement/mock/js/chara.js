@@ -7,14 +7,15 @@ const chips = Array.from(document.querySelectorAll(".chip[data-aff]"));
 let items = [];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const text = (s) => esc(s ?? "（未記録）");
 
 function render(list) {
   grid.innerHTML = list
     .map(
       (c) => `<li class="card">
-        <div class="plate" role="img" aria-label="肖像は準備中">${esc(c.name)}・題箋</div>
-        <p class="name" style="margin:0">${esc(c.name)}</p>
-        <p class="role" style="margin:0">${esc(c.role)}／${esc(c.affiliation)}</p>
+        <div class="plate" role="img" aria-label="肖像は準備中">${text(c.name)}・題箋</div>
+        <p class="name" style="margin:0">${text(c.name)}</p>
+        <p class="role" style="margin:0">${text(c.role)}／${text(c.affiliation)}</p>
       </li>`
     )
     .join("");
