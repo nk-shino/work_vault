@@ -1,0 +1,808 @@
+{
+ "schema_version": "3.0",
+ "run_id": "run-20261016-kashima-hikikomi-01",
+ "delivery_revision": "R1",
+ "artifact_id": "art-validation",
+ "content_revision": "R1",
+ "limitations": [
+  "draw.io デスクトップが本機に未導入のため、保存ファイルのアプリ再読込・図形移動の接続追従テスト・物理印刷プレビューは実施していない。",
+  "プレビューは drawio2svg(TypeScript)による実レンダリング。文字寸法は近似計測(Meiryo/CJK幅0.55倍)のため、アプリ側での最終目視確認を推奨。",
+  "検査の実施主体はAI。人手確認は含まない。"
+ ],
+ "report_state": "final",
+ "resolved_config": {
+  "output_dir": "Work_Vault/10_業務全般/鹿島引き込み/業務内容",
+  "preview_formats": [
+   "svg"
+  ],
+  "print_review_required": false,
+  "max_correction_cycles": 2,
+  "font": "Meiryo",
+  "design": "rounded rect / orthogonal edges / 1169x826 page / spec default palette"
+ },
+ "resolution_log": [
+  {
+   "item": "output_dir",
+   "resolved": "ユーザー指示により Work_Vault 10_業務全般/鹿島引き込み/業務内容 へ出力(Tier B・新規フォルダ作成)。"
+  },
+  {
+   "item": "preview_formats",
+   "resolved": "svg。PDFは変換ライブラリ不在のため未生成(理由を成果物台帳へ記録)。"
+  },
+  {
+   "item": "drawio_open capability",
+   "resolved": "draw.io desktop不在 → unavailable。renderer は npm @markdown-viewer/drawio2svg で代替し実行可能と確認。"
+  }
+ ],
+ "configuration_history": [
+  {
+   "change_id": "CHG-01",
+   "description": "REL-23(2ブロック構造)を自己参照コネクタから注記ラベル表現へ変更。",
+   "affected": [
+    "EDG-REL-23"
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "name": "local_parser",
+   "status": "available",
+   "basis": "Python3.13 xml.etree による drawio XML解析を実行し成功。"
+  },
+  {
+   "name": "drawio_open",
+   "status": "unavailable",
+   "basis": "draw.io desktop未導入を確認(npx実行・インストール先探索ともに不在)。"
+  },
+  {
+   "name": "renderer",
+   "status": "available",
+   "basis": "npm @markdown-viewer/drawio2svg で4ページのSVG生成に成功。"
+  },
+  {
+   "name": "visual_review",
+   "status": "unavailable",
+   "basis": "SVGの機械的検査(要素数・タイトル抽出)は実施。人手の視認確認は本実行では不可。"
+  },
+  {
+   "name": "geometry_inspection",
+   "status": "unavailable",
+   "basis": "描画後の実寸計測手段なし。近似推定のみで判定しない規則に従い実施せず。"
+  },
+  {
+   "name": "interactive_edit",
+   "status": "unavailable",
+   "basis": "draw.ioアプリなし。移動追従テスト不可。"
+  },
+  {
+   "name": "print_review",
+   "status": "unavailable",
+   "basis": "PDF変換ライブラリ不在・印刷プレビュー手段なし。"
+  }
+ ],
+ "selected_font": {
+  "family": "Meiryo",
+  "basis": "drawio標準UIフォント相当。SVG生成時にfontFamily=Meiryoを指定。",
+  "availability": "available"
+ },
+ "selected_design": {
+  "layout": "left_to_right",
+  "node_style": "rounded=1, whiteSpace=wrap",
+  "edge_style": "orthogonalEdgeStyle, rounded",
+  "palette": {
+   "sheet": "#DAE8FC",
+   "file": "#D5E8D4",
+   "documented_entity": "#FFE6CC",
+   "figure": "#E1D5E7",
+   "edge": "#426A91",
+   "warn": "#A56A12",
+   "conflict": "#B33A3A"
+  }
+ },
+ "measurement_profiles": [],
+ "targets": [
+  {
+   "target_id": "T-PG-01",
+   "kind": "page",
+   "ref": "PG-01"
+  },
+  {
+   "target_id": "T-PG-02",
+   "kind": "page",
+   "ref": "PG-02"
+  },
+  {
+   "target_id": "T-PG-03",
+   "kind": "page",
+   "ref": "PG-03"
+  },
+  {
+   "target_id": "T-PG-04",
+   "kind": "page",
+   "ref": "PG-04"
+  },
+  {
+   "target_id": "T-LEDGER-SOURCE",
+   "kind": "artifact",
+   "ref": "art-source"
+  },
+  {
+   "target_id": "T-LEDGER-EVIDENCE",
+   "kind": "artifact",
+   "ref": "art-evidence"
+  },
+  {
+   "target_id": "T-LEDGER-GRAPH",
+   "kind": "artifact",
+   "ref": "art-graph"
+  },
+  {
+   "target_id": "T-LEDGER-ISSUES",
+   "kind": "artifact",
+   "ref": "art-issues"
+  },
+  {
+   "target_id": "T-DIAGRAM",
+   "kind": "artifact",
+   "ref": "art-diagram"
+  },
+  {
+   "target_id": "T-PREVIEW-P1",
+   "kind": "artifact",
+   "ref": "art-preview-p1"
+  },
+  {
+   "target_id": "T-PREVIEW-P2",
+   "kind": "artifact",
+   "ref": "art-preview-p2"
+  },
+  {
+   "target_id": "T-PREVIEW-P3",
+   "kind": "artifact",
+   "ref": "art-preview-p3"
+  },
+  {
+   "target_id": "T-PREVIEW-P4",
+   "kind": "artifact",
+   "ref": "art-preview-p4"
+  },
+  {
+   "target_id": "T-USAGE",
+   "kind": "artifact",
+   "ref": "art-usage"
+  },
+  {
+   "target_id": "T-MANIFEST",
+   "kind": "artifact",
+   "ref": "art-manifest"
+  }
+ ],
+ "expected_checks": [
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_types",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_resolution",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_safety",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "evidence_trace",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "inspection_consistency",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "claim_separation",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "presentation_safety",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "coverage_trace",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "record_schema",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "record_references",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "graph_mapping",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "acquisition_state",
+   "target_id": "T-LEDGER-GRAPH"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_parse",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_editability",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_references",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "shape_overlap",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "line_penetration",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "line_overlap",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "label_collision",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "endpoint_alignment",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "layout_balance",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "actual_reopen",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "reopen_display",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "reopen_editability",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_overview",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_normal",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_detail",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_completeness",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "follow_behavior",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "follow_coverage",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "copy_isolation",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_text",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_bounds",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_method",
+   "target_id": "T-DIAGRAM"
+  },
+  {
+   "check_id": "preview_consistency",
+   "criterion_id": "preview_revision",
+   "target_id": "T-PREVIEW-P1"
+  },
+  {
+   "check_id": "preview_consistency",
+   "criterion_id": "preview_pages",
+   "target_id": "T-PREVIEW-P1"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_presence",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_format",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_contents",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_revision",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_request_status",
+   "target_id": "T-MANIFEST"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "report_consistency",
+   "target_id": "T-MANIFEST"
+  }
+ ],
+ "results": [
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_types",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(Python)",
+   "record": "台帳4件の型・必須項目・schema_version一致・run_id/delivery_revision一致を確認。"
+  },
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_resolution",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(Python)",
+   "record": "台帳4件の型・必須項目・schema_version一致・run_id/delivery_revision一致を確認。"
+  },
+  {
+   "check_id": "configuration",
+   "criterion_id": "config_safety",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(Python)",
+   "record": "台帳4件の型・必須項目・schema_version一致・run_id/delivery_revision一致を確認。"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "evidence_trace",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "EV27・OBJ14・REL23・ISS7の参照が全件解決(監査スクリプト、エラー0)。coverage_decisions CV-01..05で掲載/要約/省略/未確認を追跡。"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "inspection_consistency",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "EV27・OBJ14・REL23・ISS7の参照が全件解決(監査スクリプト、エラー0)。coverage_decisions CV-01..05で掲載/要約/省略/未確認を追跡。"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "claim_separation",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "EV27・OBJ14・REL23・ISS7の参照が全件解決(監査スクリプト、エラー0)。coverage_decisions CV-01..05で掲載/要約/省略/未確認を追跡。"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "presentation_safety",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "EV27・OBJ14・REL23・ISS7の参照が全件解決(監査スクリプト、エラー0)。coverage_decisions CV-01..05で掲載/要約/省略/未確認を追跡。"
+  },
+  {
+   "check_id": "content_traceability",
+   "criterion_id": "coverage_trace",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "EV27・OBJ14・REL23・ISS7の参照が全件解決(監査スクリプト、エラー0)。coverage_decisions CV-01..05で掲載/要約/省略/未確認を追跡。"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "record_schema",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "ID一意・参照解決・graph_mapping(インスタンス56/コネクタ台帳23/ネイティブID一致)を確認。"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "record_references",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "ID一意・参照解決・graph_mapping(インスタンス56/コネクタ台帳23/ネイティブID一致)を確認。"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "graph_mapping",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "ID一意・参照解決・graph_mapping(インスタンス56/コネクタ台帳23/ネイティブID一致)を確認。"
+  },
+  {
+   "check_id": "record_integrity",
+   "criterion_id": "acquisition_state",
+   "target_id": "T-LEDGER-GRAPH",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(参照整合監査)",
+   "record": "ID一意・参照解決・graph_mapping(インスタンス56/コネクタ台帳23/ネイティブID一致)を確認。"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_parse",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(XML解析)",
+   "record": "4ページ解析成功・頂点64・コネクタ20(参照全解決・凡例サンプル1本は意図的な浮き線)・ページID=PG-01..04・台帳のnative_cell_idと一致。"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_editability",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(XML解析)",
+   "record": "4ページ解析成功・頂点64・コネクタ20(参照全解決・凡例サンプル1本は意図的な浮き線)・ページID=PG-01..04・台帳のnative_cell_idと一致。"
+  },
+  {
+   "check_id": "native_structure",
+   "criterion_id": "native_references",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(XML解析)",
+   "record": "4ページ解析成功・頂点64・コネクタ20(参照全解決・凡例サンプル1本は意図的な浮き線)・ページID=PG-01..04・台帳のnative_cell_idと一致。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "shape_overlap",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "line_penetration",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "line_overlap",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "label_collision",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "endpoint_alignment",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "geometry",
+   "criterion_id": "layout_balance",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "機能不足(geometry_inspection unavailable)。近似推定のみでの0件主張は禁止規則により実施せず。"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "actual_reopen",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "draw.io desktop不在。drawio2svgでの再解析は実施したが、アプリ再読込の表示確認は未実施。"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "reopen_display",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "draw.io desktop不在。drawio2svgでの再解析は実施したが、アプリ再読込の表示確認は未実施。"
+  },
+  {
+   "check_id": "saved_file_reopen",
+   "criterion_id": "reopen_editability",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "draw.io desktop不在。drawio2svgでの再解析は実施したが、アプリ再読込の表示確認は未実施。"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_overview",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "rendererは利用可能だが人手視認(visual_review)不可。機械的抽出(タイトル・要素数)までは実施済み。"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_normal",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "rendererは利用可能だが人手視認(visual_review)不可。機械的抽出(タイトル・要素数)までは実施済み。"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_detail",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "rendererは利用可能だが人手視認(visual_review)不可。機械的抽出(タイトル・要素数)までは実施済み。"
+  },
+  {
+   "check_id": "visual_review",
+   "criterion_id": "visual_completeness",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "rendererは利用可能だが人手視認(visual_review)不可。機械的抽出(タイトル・要素数)までは実施済み。"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "follow_behavior",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "interactive_edit不可(アプリなし)。接続線>0確定済みのためNAは不可。"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "follow_coverage",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "interactive_edit不可(アプリなし)。接続線>0確定済みのためNAは不可。"
+  },
+  {
+   "check_id": "connection_follow",
+   "criterion_id": "copy_isolation",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "BLOCKED",
+   "method": null,
+   "record": "interactive_edit不可(アプリなし)。接続線>0確定済みのためNAは不可。"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_text",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "NA",
+   "method": null,
+   "record": "print_review_required=false を設定で確定(条件false立証済み)。印刷確認用出力は未生成。"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_bounds",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "NA",
+   "method": null,
+   "record": "print_review_required=false を設定で確定(条件false立証済み)。印刷確認用出力は未生成。"
+  },
+  {
+   "check_id": "print_readability",
+   "criterion_id": "print_method",
+   "target_id": "T-DIAGRAM",
+   "delivery_revision": "R1",
+   "status": "NA",
+   "method": null,
+   "record": "print_review_required=false を設定で確定(条件false立証済み)。印刷確認用出力は未生成。"
+  },
+  {
+   "check_id": "preview_consistency",
+   "criterion_id": "preview_revision",
+   "target_id": "T-PREVIEW-P1",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(SVG生成ログ・要素数抽出)",
+   "record": "preview_p1..p4.svg が同一版R1のネイティブ図から生成成功。ページ数4の一致と各ページのタイトル・図形抽出を確認。"
+  },
+  {
+   "check_id": "preview_consistency",
+   "criterion_id": "preview_pages",
+   "target_id": "T-PREVIEW-P1",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(SVG生成ログ・要素数抽出)",
+   "record": "preview_p1..p4.svg が同一版R1のネイティブ図から生成成功。ページ数4の一致と各ページのタイトル・図形抽出を確認。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_presence",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_format",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_contents",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_revision",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "artifact_request_status",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  },
+  {
+   "check_id": "artifact_completeness",
+   "criterion_id": "report_consistency",
+   "target_id": "T-MANIFEST",
+   "delivery_revision": "R1",
+   "status": "PASS",
+   "method": "AI自動検査(ファイル存在・JSON/YAML解析)",
+   "record": "必須8成果物+プレビュー4を生成・登録。request_status に未生成なし。"
+  }
+ ],
+ "result_history": [],
+ "exceptions": [],
+ "graph_summary": {
+  "count": 23,
+  "note": "関係23件のうち個別コネクタ8本。残り15関係はレイアウト・注記で表現(implied_by_layout)。EDG-REL-23は注記ラベル。"
+ },
+ "preview_summary": {
+  "count": 4,
+  "formats": [
+   "svg"
+  ],
+  "note": "preview_p1..p4.svg。ネイティブ図と同一版(R1)から生成。"
+ },
+ "artifact_inventory": [],
+ "summary": {
+  "expected_count": 42,
+  "result_count": 42,
+  "status_counts": {
+   "PASS": 23,
+   "FAIL": 0,
+   "BLOCKED": 16,
+   "NOT_RUN": 0,
+   "NA": 3
+  },
+  "required_artifact_count": 8,
+  "required_artifact_satisfied_count": 8,
+  "optional_output_unavailable_count": 0,
+  "invalid_result_count": 0,
+  "stale_result_count": 0,
+  "limitations": [
+   "draw.io デスクトップが本機に未導入のため、保存ファイルのアプリ再読込・図形移動の接続追従テスト・物理印刷プレビューは実施していない。",
+   "プレビューは drawio2svg(TypeScript)による実レンダリング。文字寸法は近似計測(Meiryo/CJK幅0.55倍)のため、アプリ側での最終目視確認を推奨。",
+   "検査の実施主体はAI。人手確認は含まない。"
+  ]
+ },
+ "final_status": "verification_incomplete"
+}

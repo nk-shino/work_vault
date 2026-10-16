@@ -1,0 +1,400 @@
+{
+ "schema_version": "3.0",
+ "run_id": "run-20261016-kashima-hikikomi-01",
+ "delivery_revision": "R1",
+ "artifact_id": "art-evidence",
+ "content_revision": "R1",
+ "limitations": [
+  "全根拠はSRC-01〜SRC-06の直接確認に基づく。SRC-07/08は引用の事実まで。"
+ ],
+ "evidence": {
+  "state": "complete",
+  "scope": "対象ブックと直接確認した関連資料の全根拠。",
+  "limitations": [],
+  "items": [
+   {
+    "evidence_id": "EV-001",
+    "source_id": "SRC-01",
+    "location": "xl/workbook.xml / docProps/app.xml",
+    "summary": "16シート(sabun, BOM作成, 差分1-6, 計画1-6, 差分x, 計画x)。sabun/差分x/計画xは非表示、計画xは実質空。",
+    "basis": "format_or_shape",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-03",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-002",
+    "source_id": "SRC-01",
+    "location": "customUI/customUI14.xml",
+    "summary": "リボンタブ「差分チェック」: 内容クリア/差分データ取込/S1-S6/input(do_prepare)/output の6グループ。",
+    "basis": "format_or_shape",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-03",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-003",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin Module1 差分データ取込",
+    "summary": "CSV取込処理。Asprova.exe存在時はファイル選択ダイアログ、無い場合は \\nksv523...\\sabun.csv を既定読込。sabunシート(S0_1)へ9列で一括書込後、差分NGにリンク貼るを呼ぶ。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-004",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin Module1 差分NGにリンク貼る",
+    "summary": "差分*シートのJ列がNGの行(2-100行)へ http://nksv1359.ad.nkc.co.jp/cgi/bom_diff/sashizu.cgi?sashizu=<指図>&sts=0 のハイパーリンクを設定。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-005",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin 指図入力 do_prepare",
+    "summary": "段取り予定.xlsx(job作成シート)から正規表 ^\\d{6}-[0-9A-Z]\\d[1-3]$ でジョブ名セルを識別し、各ジョブの指図(Offset(,3)列)を差分1..nシートA列へ転記。7件超は差分x/計画xを複製して差分7..を生成。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-006",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin Module1 output",
+    "summary": "全「差分」シートを getDic() で「計画」ペアとし、差分チェック<番号>.csv をブックと同フォルダへ出力(outputcsv 11列)。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-007",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin Module1 SashizuClearButton",
+    "summary": "delExSheets(7番以上の動的シート削除)後、全差分シートA列2行目以降をクリア・sabunSetCF再適用。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-008",
+    "source_id": "SRC-01",
+    "location": "S1_2 ほか全計画シートモジュール Worksheet_Change",
+    "summary": "計画シート変更時に A列が空になるまで C列へ =IF(AND(ISNA(MATCH(A,差分n!A:A,0)),B=\"\"),\"はい\",\"いいえ\") を自動再生成。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-009",
+    "source_id": "SRC-01",
+    "location": "S1_1 ほか全差分シートモジュール Worksheet_Change",
+    "summary": "差分シート変更時にセル書式クリア後、差分NGにリンク貼るを再実行。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-010",
+    "source_id": "SRC-01",
+    "location": "vbaProject.bin tools getDic/delExSheets/sabunTemplate/sabunSetCF/prepare",
+    "summary": "シート名「差分n/計画n」ペア辞書生成・7番以上削除・差分シートの数式テンプレート(B..J列2-100行)と条件付き書式(DONE=緑/NG=赤)の再構築。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-02",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-011",
+    "source_id": "SRC-01",
+    "location": "sabun!A1:I173",
+    "summary": "差分元データ173行(指図/担当/品目コード/PCB名/台数/指図登録日/製造開始日/完成予定日/タイプ/差分)。タイプ: ZP21=169, ZP56=2, ZP11=1, ZP12=1。差分列: OK100/NG10/DONE16/空47。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-012",
+    "source_id": "SRC-01",
+    "location": "sabun!C列",
+    "summary": "品目コードは先頭にアポストロフィ付き文字列(例 'UR-4658)として格納(数式解釈防止)。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-013",
+    "source_id": "SRC-01",
+    "location": "差分1!A1:J100 ほか差分2-6",
+    "summary": "見出し行+2行目以降に数式。B..J列 =INDEX(sabun!X:X,MATCH($A2,sabun!$A:$A,0))。D列のみ =LET(s,REGEXREPLACE(C,\"S-\",\"\"),REGEXREPLACE(s,\"([^\\d])-\",\"$1\")) で品目コードからPCB名を整形。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-014",
+    "source_id": "SRC-01",
+    "location": "計画1!A1:C107 ほか計画2-6",
+    "summary": "A列=指図番号(手入力/貼付), B列=完了日時(m/d/yy h:mm), C列=「はい/いいえ」自動判定数式。計画1のみ107行でA列107件、計画6は67行。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-015",
+    "source_id": "SRC-01",
+    "location": "計画1..6 キャッシュ値",
+    "summary": "C列の最新計算結果: 計画1=はい59/いいえ48, 計画2=79/28, 計画3=74/33, 計画4=72/35, 計画5=69/38, 計画6=30/37。B列(完了日時)あり=38/28/33/33/38/37。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-016",
+    "source_id": "SRC-01",
+    "location": "差分1!J2:J100 条件付き書式",
+    "summary": "DONE=文字006100/背景C6EFCE, NG=文字9C0006太字/背景FFC7CE。保存時にハイパーリンクは0件(NG行でもリンク未設定の状態で保存されている)。",
+    "basis": "format_or_shape",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-017",
+    "source_id": "SRC-01",
+    "location": "計画2!D230..D264",
+    "summary": "A/C列が空の230-264行のD列に2024-02-27〜02-29のタイムスタンプ16件が残存(旧データ残骸)。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-018",
+    "source_id": "SRC-01",
+    "location": "BOM作成!A1:AB28",
+    "summary": "Asprova用製造BOMテンプレート2ブロック(1-15行: UR-4567, 18-28行: C-UR-4644)。実装-1(SMT-1L/2L/3L, 10m, sp数式, 生産係数0.7)/実装-2/外観検査-1(SMT-AOI1/2, 8sp, 0.5)。注記「28秒以下は、28で入れる」。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-019",
+    "source_id": "SRC-01",
+    "location": "BOM作成 図形2個・画像2枚",
+    "summary": "図1(398x261): Asprova MS 15.3.0.0 のテーブル表示メニュー(製造BOM強調)。図3(1408x747): 製造BOMテーブルAdvance画面(UTS-73xx行, BOSS/SMT差分赤矢印)。",
+    "basis": "format_or_shape",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-020",
+    "source_id": "SRC-01",
+    "location": "workbook.xml definedNames",
+    "summary": "_xlpm.s(xlm, hidden)=#NAME? の名前定義が残存(LET関数の引数名由来、不具合ではないが確認済み)。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-021",
+    "source_id": "SRC-01",
+    "location": "nksv523版 BOM作成!B15",
+    "summary": "nksv523側は UR-4658、Work_Vault側は UR-4567。他のセル・VBAソース・sabunシート・計画1-6 A列は完全一致。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-04",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-022",
+    "source_id": "SRC-01",
+    "location": "nksv523版 vbaProject.bin Module1",
+    "summary": "ソース復号結果は同一だが p-code(コンパイル済みストリーム)が相違(12378バイト vs 17026バイト)。",
+    "basis": "format_or_shape",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-04",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-023",
+    "source_id": "SRC-01",
+    "location": "sabun.csv 先頭行・行数",
+    "summary": "ヘッダ無しCSV 200行。ブック内sabunシート173行とは指図ID集合が不一致(全200件がシート側に無い=シートは6/30以前のスナップショット)。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-05",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-024",
+    "source_id": "SRC-01",
+    "location": "差分確認手順書.xlsx sheet1-3",
+    "summary": "手順: (1)差分チェックシステム(http://172.25.253.60/)からCSV出力→nksv523へ保存 (2)段取り予定.xlsx(SharePoint)のjob作成シートへNG/空白行を貼付 (3)JOB作成関連マクロの差分明細テンプレ作成で品目名_差分明細.xlsx生成。",
+    "basis": "document_statement",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-06",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-025",
+    "source_id": "SRC-01",
+    "location": "TOOL.xlam 差分確認関係 SabunMeisai",
+    "summary": "差分CSVフォルダを指定すると BOSS列/SMT列/数量差分を集計し 品目名_差分明細.xlsx を出力。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-07",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-026",
+    "source_id": "SRC-01",
+    "location": "JOB作成関連マクロ.xlsm openMacro",
+    "summary": "\\nksv523...\bin\\TOOL.xlam をReadOnlyで開くだけのランチャー。",
+    "basis": "formula",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-08",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   },
+   {
+    "evidence_id": "EV-027",
+    "source_id": "SRC-01",
+    "location": "差分1..6 A列 vs sabun A列 突合",
+    "summary": "差分1行目はジョブ名(260702-001等)で sabun に存在しないため B..J列は #N/A(設計通り)。指図行の状態: 差分1=OK10, 差分2=NG1, 差分3=DONE5, 差分4=NG1+DONE1, 差分5=DONE3, 差分6=0件。",
+    "basis": "cell_value",
+    "verification_method": "direct_source_inspection",
+    "inspection_id": "INS-01",
+    "report_input_id": null,
+    "report_location": null,
+    "state": "confirmed_in_source"
+   }
+  ]
+ },
+ "coverage_decisions": [
+  {
+   "coverage_id": "CV-01",
+   "source_id": "SRC-01",
+   "source_scope": "16シート全部",
+   "disposition": "included",
+   "object_ids": [
+    "OBJ-01",
+    "OBJ-02",
+    "OBJ-03",
+    "OBJ-04",
+    "OBJ-05",
+    "OBJ-06",
+    "OBJ-07",
+    "OBJ-08",
+    "OBJ-09",
+    "OBJ-10"
+   ],
+   "reason": "全シートを対象に構造・数式・VBAを図示する。"
+  },
+  {
+   "coverage_id": "CV-02",
+   "source_id": "SRC-01",
+   "source_scope": "計画2-6の行データ明細",
+   "disposition": "summarized",
+   "object_ids": [
+    "OBJ-05"
+   ],
+   "reason": "行データは計画1と同型のため件数集計で代表させる。"
+  },
+  {
+   "coverage_id": "CV-03",
+   "source_id": "SRC-01",
+   "source_scope": "printerSettings1-15.bin のバイナリ詳細",
+   "disposition": "omitted",
+   "object_ids": [],
+   "reason": "用紙設定の列挙以外に業務上の意味が確認できず、存在だけを記録。"
+  },
+  {
+   "coverage_id": "CV-04",
+   "source_id": "SRC-07",
+   "source_scope": "段取り予定.xlsx の内容",
+   "disposition": "unverified",
+   "object_ids": [
+    "OBJ-11"
+   ],
+   "reason": "SharePoint上で今回直接確認できず、do_prepareからの参照事実のみ記載。"
+  },
+  {
+   "coverage_id": "CV-05",
+   "source_id": "SRC-08",
+   "source_scope": "差分チェックシステムの内部",
+   "disposition": "unverified",
+   "object_ids": [
+    "OBJ-11"
+   ],
+   "reason": "URLとCGIパスの記載を確認したが、システム実体は未確認。"
+  }
+ ]
+}

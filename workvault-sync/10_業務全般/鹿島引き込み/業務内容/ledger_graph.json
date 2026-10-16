@@ -1,0 +1,1125 @@
+{
+ "schema_version": "3.0",
+ "run_id": "run-20261016-kashima-hikikomi-01",
+ "delivery_revision": "R1",
+ "artifact_id": "art-graph",
+ "content_revision": "R1",
+ "limitations": [
+  "行明細は代表値のみ。全行の列挙は supplemental_csv でなく台帳の範囲制約として要約記載。"
+ ],
+ "objects": {
+  "state": "complete",
+  "scope": "対象ブックと直接確認した連携先を対象とした論理対象。",
+  "limitations": [
+   "計画2-6の行明細は要約。"
+  ],
+  "items": [
+   {
+    "object_id": "OBJ-01",
+    "class": "content",
+    "kind": "file",
+    "label": "差分確認マクロver2.3a.xlsm",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "object_id": "OBJ-02",
+    "class": "content",
+    "kind": "sheet",
+    "label": "sabun(差分元データ・非表示)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-011",
+     "EV-012"
+    ]
+   },
+   {
+    "object_id": "OBJ-03",
+    "class": "content",
+    "kind": "sheet",
+    "label": "BOM作成(Asprova製造BOMテンプレート)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-018",
+     "EV-019"
+    ]
+   },
+   {
+    "object_id": "OBJ-04",
+    "class": "content",
+    "kind": "sheet",
+    "label": "差分1-6(指図別チェック表・計1-6と対)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-013",
+     "EV-016",
+     "EV-027"
+    ]
+   },
+   {
+    "object_id": "OBJ-05",
+    "class": "content",
+    "kind": "sheet",
+    "label": "計画1-6(指図完了記録)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-014",
+     "EV-015",
+     "EV-017"
+    ]
+   },
+   {
+    "object_id": "OBJ-06",
+    "class": "content",
+    "kind": "sheet",
+    "label": "差分x/計画x(複製元テンプレート・非表示)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001",
+     "EV-005"
+    ]
+   },
+   {
+    "object_id": "OBJ-07",
+    "class": "content",
+    "kind": "figure",
+    "label": "リボンタブ「差分チェック」(customUI)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-002"
+    ]
+   },
+   {
+    "object_id": "OBJ-08",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "VBAモジュール群(Module1/tools/指図入力/シート18個)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-003",
+     "EV-004",
+     "EV-005",
+     "EV-006",
+     "EV-007",
+     "EV-008",
+     "EV-009",
+     "EV-010"
+    ]
+   },
+   {
+    "object_id": "OBJ-09",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "sabun.csv(nksv523・取込既定ファイル)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-023",
+     "EV-003"
+    ]
+   },
+   {
+    "object_id": "OBJ-10",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "差分チェックシステム(sashizu.cgi)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-004",
+     "EV-024"
+    ]
+   },
+   {
+    "object_id": "OBJ-11",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "段取り予定.xlsx(SharePoint)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-005",
+     "EV-024"
+    ]
+   },
+   {
+    "object_id": "OBJ-12",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "JOB作成関連マクロ→TOOL.xlam(差分明細生成)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-025",
+     "EV-026",
+     "EV-024"
+    ]
+   },
+   {
+    "object_id": "OBJ-13",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "差分確認手順書.xlsx",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-024"
+    ]
+   },
+   {
+    "object_id": "OBJ-14",
+    "class": "content",
+    "kind": "documented_entity",
+    "label": "nksv523版コピー(マクロ等フォルダ)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-021",
+     "EV-022"
+    ]
+   }
+  ]
+ },
+ "relations": {
+  "state": "complete",
+  "scope": "確認できた参照・包含・対応・複製関係。",
+  "limitations": [],
+  "items": [
+   {
+    "relation_id": "REL-01",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-02",
+    "type": "containment",
+    "direction": "forward",
+    "label": "sabunシート",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-02",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-03",
+    "type": "containment",
+    "direction": "forward",
+    "label": "BOM作成シート",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-03",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-04",
+    "type": "containment",
+    "direction": "forward",
+    "label": "差分1-6シート",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-04",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-05",
+    "type": "containment",
+    "direction": "forward",
+    "label": "計画1-6シート",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-05",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-06",
+    "type": "containment",
+    "direction": "forward",
+    "label": "差分x/計画xシート",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-06",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-07",
+    "type": "containment",
+    "direction": "forward",
+    "label": "customUI",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-002"
+    ]
+   },
+   {
+    "relation_id": "REL-07",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-08",
+    "type": "containment",
+    "direction": "forward",
+    "label": "VBAプロジェクト",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-001"
+    ]
+   },
+   {
+    "relation_id": "REL-08",
+    "source_object_id": "OBJ-09",
+    "target_object_id": "OBJ-02",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "取込(CSV→sabunシート一括書込)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-003",
+     "EV-023"
+    ]
+   },
+   {
+    "relation_id": "REL-09",
+    "source_object_id": "OBJ-02",
+    "target_object_id": "OBJ-04",
+    "type": "formula_reference",
+    "direction": "forward",
+    "label": "INDEX/MATCH(差分n!B..J列)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-013"
+    ]
+   },
+   {
+    "relation_id": "REL-10",
+    "source_object_id": "OBJ-02",
+    "target_object_id": "OBJ-05",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "C列判定 MATCH(計画n!A,差分n!A)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-008"
+    ]
+   },
+   {
+    "relation_id": "REL-11",
+    "source_object_id": "OBJ-04",
+    "target_object_id": "OBJ-05",
+    "type": "content_correspondence",
+    "direction": "bidirectional",
+    "label": "番号対応ペア(差分n/計画n)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-010"
+    ]
+   },
+   {
+    "relation_id": "REL-12",
+    "source_object_id": "OBJ-06",
+    "target_object_id": "OBJ-04",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "7件超時に複製し差分7..を生成",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-005"
+    ]
+   },
+   {
+    "relation_id": "REL-13",
+    "source_object_id": "OBJ-06",
+    "target_object_id": "OBJ-05",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "同上(計画側)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-005"
+    ]
+   },
+   {
+    "relation_id": "REL-14",
+    "source_object_id": "OBJ-04",
+    "target_object_id": "OBJ-10",
+    "type": "hyperlink",
+    "direction": "forward",
+    "label": "NG行へsashizu.cgiリンク(J列)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-004"
+    ]
+   },
+   {
+    "relation_id": "REL-15",
+    "source_object_id": "OBJ-11",
+    "target_object_id": "OBJ-04",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "ジョブ名+指図をA列へ転記(do_prepare)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-005"
+    ]
+   },
+   {
+    "relation_id": "REL-16",
+    "source_object_id": "OBJ-07",
+    "target_object_id": "OBJ-08",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "リボンボタン→VBAマクロ",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-002"
+    ]
+   },
+   {
+    "relation_id": "REL-17",
+    "source_object_id": "OBJ-08",
+    "target_object_id": "OBJ-04",
+    "type": "formula_reference",
+    "direction": "forward",
+    "label": "差分NGにリンク貼る/ sabunTemplate / SashizuClear",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-004",
+     "EV-007",
+     "EV-010"
+    ]
+   },
+   {
+    "relation_id": "REL-18",
+    "source_object_id": "OBJ-04",
+    "target_object_id": "OBJ-09",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "output: 差分チェックn.csv 出力",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-006"
+    ]
+   },
+   {
+    "relation_id": "REL-19",
+    "source_object_id": "OBJ-03",
+    "target_object_id": "OBJ-12",
+    "type": "document_reference",
+    "direction": "forward",
+    "label": "BOM作成→Asprova用データ(画像で運用を示す)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-018",
+     "EV-019"
+    ]
+   },
+   {
+    "relation_id": "REL-20",
+    "source_object_id": "OBJ-12",
+    "target_object_id": "OBJ-04",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "差分明細テンプレ作成(差分CSV集計)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-024",
+     "EV-025"
+    ]
+   },
+   {
+    "relation_id": "REL-21",
+    "source_object_id": "OBJ-13",
+    "target_object_id": "OBJ-01",
+    "type": "document_reference",
+    "direction": "forward",
+    "label": "手順書が本ブックの運用を説明",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-024"
+    ]
+   },
+   {
+    "relation_id": "REL-22",
+    "source_object_id": "OBJ-01",
+    "target_object_id": "OBJ-14",
+    "type": "duplicate_content",
+    "direction": "bidirectional",
+    "label": "同一ブックの2拠点コピー",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-021",
+     "EV-022"
+    ]
+   },
+   {
+    "relation_id": "REL-23",
+    "source_object_id": "OBJ-03",
+    "target_object_id": "OBJ-03",
+    "type": "content_correspondence",
+    "direction": "forward",
+    "label": "2ブロック構造(1-15行/18-28行)",
+    "state": "confirmed_in_source",
+    "evidence_ids": [
+     "EV-018"
+    ]
+   }
+  ]
+ },
+ "pages": {
+  "state": "complete",
+  "scope": "4ページ構成。",
+  "limitations": [],
+  "items": [
+   {
+    "page_id": "PG-01",
+    "category": "overview",
+    "title": "全体構成と目的",
+    "scope": "ブック全体・外部連携の全体像",
+    "reading_direction": "left_to_right"
+   },
+   {
+    "page_id": "PG-02",
+    "category": "content_structure",
+    "title": "シート構成とデータ内容",
+    "scope": "16シートの構成・列構造・現状値",
+    "reading_direction": "left_to_right"
+   },
+   {
+    "page_id": "PG-03",
+    "category": "relationships",
+    "title": "参照と連携の流れ",
+    "scope": "シート間数式参照・VBA・外部ファイル",
+    "reading_direction": "left_to_right"
+   },
+   {
+    "page_id": "PG-04",
+    "category": "issues",
+    "title": "不整合と未確認事項",
+    "scope": "今回確認した不整合・未確認",
+    "reading_direction": "left_to_right"
+   }
+  ]
+ },
+ "instances": {
+  "state": "complete",
+  "scope": "全ページ×全対象の再掲。",
+  "limitations": [],
+  "items": [
+   {
+    "instance_id": "INS-PG-01-OBJ-01",
+    "object_id": "OBJ-01",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ01"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-02",
+    "object_id": "OBJ-02",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-03",
+    "object_id": "OBJ-03",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-04",
+    "object_id": "OBJ-04",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-05",
+    "object_id": "OBJ-05",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-06",
+    "object_id": "OBJ-06",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-07",
+    "object_id": "OBJ-07",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-08",
+    "object_id": "OBJ-08",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_N2",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-09",
+    "object_id": "OBJ-09",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ09"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-10",
+    "object_id": "OBJ-10",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ10"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-11",
+    "object_id": "OBJ-11",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ11"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-12",
+    "object_id": "OBJ-12",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ12"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-13",
+    "object_id": "OBJ-13",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ13"
+   },
+   {
+    "instance_id": "INS-PG-01-OBJ-14",
+    "object_id": "OBJ-14",
+    "page_id": "PG-01",
+    "native_cell_id": "PG1_OBJ14"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-01",
+    "object_id": "OBJ-01",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_BOX",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-02",
+    "object_id": "OBJ-02",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ02"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-03",
+    "object_id": "OBJ-03",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ03"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-04",
+    "object_id": "OBJ-04",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ04"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-05",
+    "object_id": "OBJ-05",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ05"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-06",
+    "object_id": "OBJ-06",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ06"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-07",
+    "object_id": "OBJ-07",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ07"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-08",
+    "object_id": "OBJ-08",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_OBJ08"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-09",
+    "object_id": "OBJ-09",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-10",
+    "object_id": "OBJ-10",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N3",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-11",
+    "object_id": "OBJ-11",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-12",
+    "object_id": "OBJ-12",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N4",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-13",
+    "object_id": "OBJ-13",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N4",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-02-OBJ-14",
+    "object_id": "OBJ-14",
+    "page_id": "PG-02",
+    "native_cell_id": "PG2_N4",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-01",
+    "object_id": "OBJ-01",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3-T",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-02",
+    "object_id": "OBJ-02",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ02"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-03",
+    "object_id": "OBJ-03",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-04",
+    "object_id": "OBJ-04",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ04"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-05",
+    "object_id": "OBJ-05",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ05"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-06",
+    "object_id": "OBJ-06",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-07",
+    "object_id": "OBJ-07",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-08",
+    "object_id": "OBJ-08",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ08"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-09",
+    "object_id": "OBJ-09",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ09"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-10",
+    "object_id": "OBJ-10",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ10"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-11",
+    "object_id": "OBJ-11",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_OBJ11"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-12",
+    "object_id": "OBJ-12",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-13",
+    "object_id": "OBJ-13",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-03-OBJ-14",
+    "object_id": "OBJ-14",
+    "page_id": "PG-03",
+    "native_cell_id": "PG3_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-01",
+    "object_id": "OBJ-01",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-01",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-02",
+    "object_id": "OBJ-02",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-03",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-03",
+    "object_id": "OBJ-03",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-01",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-04",
+    "object_id": "OBJ-04",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-04",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-05",
+    "object_id": "OBJ-05",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-05",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-06",
+    "object_id": "OBJ-06",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-07",
+    "object_id": "OBJ-07",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_N1",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-08",
+    "object_id": "OBJ-08",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-02",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-09",
+    "object_id": "OBJ-09",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-03",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-10",
+    "object_id": "OBJ-10",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-07",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-11",
+    "object_id": "OBJ-11",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-07",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-12",
+    "object_id": "OBJ-12",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-07",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-13",
+    "object_id": "OBJ-13",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-07",
+    "representation": "note_or_text"
+   },
+   {
+    "instance_id": "INS-PG-04-OBJ-14",
+    "object_id": "OBJ-14",
+    "page_id": "PG-04",
+    "native_cell_id": "PG4_ISS-01",
+    "representation": "note_or_text"
+   }
+  ]
+ },
+ "edges": {
+  "state": "complete",
+  "scope": "23関係の内、関係を表すコネクタ23本。",
+  "limitations": [],
+  "items": [
+   {
+    "edge_id": "EDG-REL-01",
+    "relation_id": "REL-01",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-02",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-02",
+    "relation_id": "REL-02",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-03",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-03",
+    "relation_id": "REL-03",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-04",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-04",
+    "relation_id": "REL-04",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-05",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-05",
+    "relation_id": "REL-05",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-06",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-06",
+    "relation_id": "REL-06",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-07",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-07",
+    "relation_id": "REL-07",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-01",
+    "target_instance_id": "INS-PG-02-OBJ-08",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-08",
+    "relation_id": "REL-08",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-09",
+    "target_instance_id": "INS-PG-03-OBJ-02",
+    "native_cell_id": "PG3_E8"
+   },
+   {
+    "edge_id": "EDG-REL-09",
+    "relation_id": "REL-09",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-02",
+    "target_instance_id": "INS-PG-03-OBJ-04",
+    "native_cell_id": "PG3_E9"
+   },
+   {
+    "edge_id": "EDG-REL-10",
+    "relation_id": "REL-10",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-02",
+    "target_instance_id": "INS-PG-03-OBJ-05",
+    "native_cell_id": "PG3_E10"
+   },
+   {
+    "edge_id": "EDG-REL-11",
+    "relation_id": "REL-11",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-04",
+    "target_instance_id": "INS-PG-03-OBJ-05",
+    "native_cell_id": "PG3_E11"
+   },
+   {
+    "edge_id": "EDG-REL-12",
+    "relation_id": "REL-12",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-06",
+    "target_instance_id": "INS-PG-03-OBJ-04",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-13",
+    "relation_id": "REL-13",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-06",
+    "target_instance_id": "INS-PG-03-OBJ-05",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-14",
+    "relation_id": "REL-14",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-04",
+    "target_instance_id": "INS-PG-03-OBJ-10",
+    "native_cell_id": "PG3_E14"
+   },
+   {
+    "edge_id": "EDG-REL-15",
+    "relation_id": "REL-15",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-11",
+    "target_instance_id": "INS-PG-03-OBJ-04",
+    "native_cell_id": "PG3_E15"
+   },
+   {
+    "edge_id": "EDG-REL-16",
+    "relation_id": "REL-16",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-07",
+    "target_instance_id": "INS-PG-03-OBJ-08",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-17",
+    "relation_id": "REL-17",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-08",
+    "target_instance_id": "INS-PG-03-OBJ-04",
+    "native_cell_id": "PG3_E17"
+   },
+   {
+    "edge_id": "EDG-REL-18",
+    "relation_id": "REL-18",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-04",
+    "target_instance_id": "INS-PG-03-OBJ-09",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-19",
+    "relation_id": "REL-19",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-03",
+    "target_instance_id": "INS-PG-03-OBJ-12",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-20",
+    "relation_id": "REL-20",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-12",
+    "target_instance_id": "INS-PG-03-OBJ-04",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-21",
+    "relation_id": "REL-21",
+    "page_id": "PG-03",
+    "source_instance_id": "INS-PG-03-OBJ-13",
+    "target_instance_id": "INS-PG-03-OBJ-01",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-22",
+    "relation_id": "REL-22",
+    "page_id": "PG-04",
+    "source_instance_id": "INS-PG-04-OBJ-01",
+    "target_instance_id": "INS-PG-04-OBJ-14",
+    "native_cell_id": null,
+    "representation": "implied_by_layout"
+   },
+   {
+    "edge_id": "EDG-REL-23",
+    "relation_id": "REL-23",
+    "page_id": "PG-02",
+    "source_instance_id": "INS-PG-02-OBJ-03",
+    "target_instance_id": "INS-PG-02-OBJ-03",
+    "native_cell_id": "PG2_E23_lbl",
+    "note": "REL-23(2ブロック構造)は自己参照コネクタでなく注記ラベル(PG2_E23_lbl)で表現。コネクタ台帳から除外。",
+    "representation": "note_label"
+   }
+  ]
+ },
+ "page_plan": {
+  "revision": "R1",
+  "categories": [
+   {
+    "category": "overview",
+    "selected": true,
+    "reason": "全体像と連携先を最初に示す。"
+   },
+   {
+    "category": "content_structure",
+    "selected": true,
+    "reason": "16シートの構造・列定義・現状値が分析の中核。"
+   },
+   {
+    "category": "relationships",
+    "selected": true,
+    "reason": "数式参照・VBA・外部連携の経路が運用理解に必須。"
+   },
+   {
+    "category": "format_and_print",
+    "selected": false,
+    "reason": "書式・印刷設定は条件付き書式とタブ色・用紙設定をissues/構成ページに統合し、単独ページにする量がない。"
+   },
+   {
+    "category": "issues",
+    "selected": true,
+    "reason": "不整合(ISS-01〜06)と未確認(ISS-07)を明示する。"
+   }
+  ],
+  "page_ids": [
+   "PG-01",
+   "PG-02",
+   "PG-03",
+   "PG-04"
+  ]
+ }
+}
