@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案A 人物一覧（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">3案比較へ戻る</a>
+    <a href="chara.html">現行</a>
+    <a href="chara-b.html">案B</a>
+    <a href="chara-c.html">案C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>案A — 既存を活かす最小改善</h1>
+  <p class="lead">現行（chara.html）と同じカード形式・同じ絞り込み。変更は「情報が欠けた欄を（未記録）と明示する」一点。
+    学習済みの操作は何も変わらない。肖像の題箋は 3:4 を維持。</p>
+
+  <section aria-labelledby="chip-head">
+    <h2 id="chip-head" class="visually-hidden">絞り込み</h2>
+    <div class="chips" role="group" aria-label="所属で絞り込み">
+      <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+      <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+      <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    <ul class="grid" id="grid" style="list-style:none; padding:0; margin:0;"></ul>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この案の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>想定場面</dt><dd>いまの利用のしかたを続ける。操作の再学習をしない</dd>
+        <dt>改善点</dt><dd>欠損キーで「undefined」と出る欠陥の修正（実施済み）。それ以外は現状維持</dd>
+        <dt>絵が入ったら</dt><dd>題箋の枠へそのまま入る（現行の描画側と同じ）</dd>
+        <dt>不利な点</dt><dd>13人を横断して比ける操作は相変わらず面倒。出典への導線は無い</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。fetch は同梱 json のみ・外部リクエストなし。</footer>
+
+<script src="js/chara-a.js"></script>
+</body>
+</html>

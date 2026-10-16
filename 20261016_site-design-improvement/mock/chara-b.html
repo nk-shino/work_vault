@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案B 人物一覧（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">3案比較へ戻る</a>
+    <a href="chara-a.html">案A</a>
+    <a href="chara-b.html" aria-current="page">案B</a>
+    <a href="chara-c.html">案C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>案B — 作業効率を優先</h1>
+  <p class="lead">13人を表1枚に収める。検索・並び替え・所属絞り込みで「探す・比べる」を短くする。
+    題箋（肖像枠）は省き、外見の特徴を行内に載せる。</p>
+
+  <section aria-label="検索と絞り込み">
+    <div style="display:flex; gap:var(--space-2); flex-wrap:wrap; align-items:center;">
+      <input type="search" id="q" placeholder="名前・役割・外見から引く" aria-label="人物を検索">
+      <label for="sort" style="font-size:12px; color:var(--text-sub);">並び替え</label>
+      <select id="sort" style="font-family:inherit; font-size:13px; color:var(--text); background:var(--bg-raise); border:1px solid var(--rule); padding:4px 8px;">
+        <option value="id">登録順</option>
+        <option value="name">名前（五十音）</option>
+        <option value="aff">所属ごと</option>
+      </select>
+    </div>
+    <div class="chips" role="group" aria-label="所属で絞り込み" style="margin-top: var(--space-2);">
+      <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+      <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+      <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+  </section>
+
+  <section aria-label="人物の一覧">
+    <div class="frame">
+      <table>
+        <caption>外見の記述は characters.json の appearance。題箋を外したぶん、情報密度を上げている。</caption>
+        <thead>
+          <tr><th scope="col">名前</th><th scope="col">役割</th><th scope="col">所属</th><th scope="col">外見の特徴</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>条件に合う人物が無い。</strong>検索語か絞り込みを外すと全員に戻る。</p>
+        <p><a href="#" id="reset">条件を外す</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この案の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>想定場面</dt><dd>「誰がいたか」「あの役割の人は誰か」を最短で引くとき</dd>
+        <dt>構造の違い</dt><dd>カード格子（肖像が主役）→ 行形式（記録が主役）。肖像の枠を外すのが最大の変更</dd>
+        <dt>動く操作</dt><dd>検索・並び替え3種・所属絞り込み。すべて実装済み</dd>
+        <dt>絵が入ったら</dt><dd>行の左端に小さい肖像列を足す想定（未実装。絵が無いと確かめられない）</dd>
+        <dt>不利な点</dt><dd>「肖像画が並ぶ回廊」という本家 §4 の見立てから離れる。雰囲気は薄れる</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。fetch は同梱 json のみ・外部リクエストなし。</footer>
+
+<script src="js/chara-b.js"></script>
+</body>
+</html>

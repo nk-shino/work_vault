@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案C 人物一覧（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">3案比較へ戻る</a>
+    <a href="chara-a.html">案A</a>
+    <a href="chara-b.html">案B</a>
+    <a href="chara-c.html" aria-current="page">案C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>案C — 理解と根拠確認を優先</h1>
+  <p class="lead">カードに「検証状態・出演作品・出典」を載せる。一覧の段階で根拠の有無が分かり、
+    詳細を読む前に「その記録がどこに乗っているか」へ近道する。検証状態は出典数ではなく照合結果で出す。</p>
+
+  <section aria-label="検索と絞り込み">
+    <input type="search" id="q" placeholder="名前・役割から引く" aria-label="人物を検索">
+    <div class="chips" role="group" aria-label="所属で絞り込み" style="margin-top: var(--space-2);">
+      <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+      <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+      <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+    <ul class="grid" id="grid" style="list-style:none; padding:0; margin:0;"></ul>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この案の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>想定場面</dt><dd>「この人物の記録は出典が乗っているか」「どの作品に出たか」を一覧で確認するとき</dd>
+        <dt>構造の違い</dt><dd>カード=肖像の器 → カード=記録の器。検証バッジ・出演・出典の3行を足す</dd>
+        <dt>検証の源泉</dt><dd>catalog.json の verify 値（照合結果）。出典の数では判定しない</dd>
+        <dt>動く操作</dt><dd>検索・所属絞り込み。出演・出典のリンクは catalog.html への近道（詳細ページは未実装）</dd>
+        <dt>絵が入ったら</dt><dd>題箋はそのまま使う。カードが縦に伸びるため、肖像は小さめになる</dd>
+        <dt>不利な点</dt><dd>カードが高くなり1画面の人数が減る。fixture では確認済1件しかないので、バッジの分布は本家データで変わる</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。検証バッジの分布: fixture では人物13人すべて未検証（照合結果）。確認済が並ぶ様子は catalog.html の作品1件で確認できる。</footer>
+
+<script src="js/chara-c.js"></script>
+</body>
+</html>

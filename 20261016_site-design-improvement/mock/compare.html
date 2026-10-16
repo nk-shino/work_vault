@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3案比較入口（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html">HOME</a>
+    <a href="compare.html" aria-current="page">3案比較</a>
+    <a href="chara.html">現行の人物一覧</a>
+  </nav>
+</header>
+
+<main>
+  <h1>人物一覧 3案比較入口</h1>
+  <p class="lead">代表画面1つ（人物一覧）を、同じデータ・同じ状態で3案に分けて開ける。
+    採用判断はここではしない。どの案も本番ルート・公開ディレクトリには入れていない。</p>
+
+  <section aria-labelledby="how-head">
+    <h2 id="how-head">比較の約束</h2>
+    <div class="frame">
+      <ul style="font-size:13px; margin:0; padding-left:1.4em;">
+        <li>3案とも <strong>同じ characters.json（13人）</strong>を読む。日付・乱数・画像の違いは無い</li>
+        <li>肖像は全員空（本家 §2 の実測どおり）。絵が入ったときの見え方は各案の注記に書く</li>
+        <li>動く操作は絞り込みチップ・検索・並び替え。見た目だけの箇所は各案に明記</li>
+        <li>ダーク／ライトは OS 設定に従う（本家 §4 と同じ）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="plans-head">
+    <h2 id="plans-head">3案</h2>
+    <div class="grid">
+      <a class="card" href="chara-a.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">案A — 既存を活かす最小改善</p>
+        <p class="role" style="margin:0">現行（chara.html）＋欠損補正の明示。学習済みの操作を変えない</p>
+      </a>
+      <a class="card" href="chara-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">案B — 作業効率を優先</p>
+        <p class="role" style="margin:0">行形式＋検索＋並び替え＋所属横断。13人を一覧で比べる</p>
+      </a>
+      <a class="card" href="chara-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">案C — 理解と根拠確認を優先</p>
+        <p class="role" style="margin:0">出典・作品出演を各人物に出し、詳細読みまでの導線を整理</p>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="state-head">
+    <h2 id="state-head">表示状態の切り替え</h2>
+    <div class="frame">
+      <p style="font-size:13px; margin:0 0 var(--space-1);">各案ページ内で <code>?empty=filter</code>（絞り込み0件）と
+        <code>?aff=回廊聖堂</code> のような初期条件を URL で渡せる。読み込み中・失敗状態は未実装（§9 に記録）。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。指定ノート「2026-10-16_リファレンス」は未確認——参考例の照合はノート到着後。</footer>
+
+</body>
+</html>

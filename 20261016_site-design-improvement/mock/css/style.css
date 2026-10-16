@@ -302,6 +302,16 @@ dl.facts dd { margin: 0; }
 ol.srcs { font-size: 12px; color: var(--text-sub); padding-left: 1.4em; margin: var(--space-2) 0 0; }
 ol.srcs li { margin-bottom: 2px; }
 
+/* 案B/C 追加分: 行形式と記録カード */
+tr th[scope="row"] { font-weight: normal; color: var(--text); }
+td.app { color: var(--text-sub); font-size: 12px; }
+select { font-family: inherit; }
+
+.card .appears, .card .src { font-size: 12px; color: var(--text-sub); }
+.card .appears a { color: var(--blue); }
+.card .src a { color: var(--blue); }
+.src-none { color: var(--text-sub); border-bottom: 1px dashed var(--rule); }
+
 footer.page-foot {
   max-width: 1080px;
   margin: 0 auto;
