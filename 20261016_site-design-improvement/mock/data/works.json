@@ -1,0 +1,17 @@
+{
+  "works": [
+    {"id": "w001", "title": "第一楽曲「黄昏の封印」", "released": "2023-01-15", "order": 1, "orderLabel": "第Ⅰ楽曲", "characters": ["c001", "c005", "c013"]},
+    {"id": "w002", "title": "第二楽曲「灯の残響」", "released": "2023-06-10", "order": 2, "orderLabel": "第Ⅱ楽曲", "characters": ["c005"]},
+    {"id": "w003", "title": "第三楽曲「常夜の庭」", "released": "2024-01-20", "order": 3, "orderLabel": "第Ⅲ楽曲", "characters": ["c007", "c009"]},
+    {"id": "w004", "title": "第四楽曲「烙印の詩」", "released": "2024-05-30", "order": 4, "orderLabel": "第Ⅳ楽曲", "characters": ["c001", "c013"]},
+    {"id": "w005", "title": "番外「黒き徴」", "released": "2024-08-01", "order": null, "orderLabel": "番外", "characters": ["c008"]},
+    {"id": "w006", "title": "第五楽曲「贖罪の算法」", "released": "2024-12-15", "order": 5, "orderLabel": "第Ⅴ楽曲", "characters": ["c009", "c012"]},
+    {"id": "w007", "title": "第六楽曲「名もなき聖遺物」", "released": "2025-04-20", "order": 6, "orderLabel": "第Ⅵ楽曲", "characters": ["c004", "c007"]},
+    {"id": "w008", "title": "外伝「残灯の器」", "released": "2025-07-05", "order": null, "orderLabel": "外伝", "characters": ["c008", "c012"]},
+    {"id": "w009", "title": "第七楽曲「断章の祝祭」", "released": "2025-10-19", "order": 7, "orderLabel": "第Ⅶ楽曲", "characters": ["c004", "c009", "c013"]},
+    {"id": "w010", "title": "外伝「回廊の写本」", "released": "2026-01-17", "order": null, "orderLabel": "外伝", "characters": ["c002"]},
+    {"id": "w011", "title": "第八楽曲「万燭の堂」", "released": "2026-05-02", "order": 8, "orderLabel": "第Ⅷ楽曲", "characters": ["c001", "c002", "c003", "c012"]},
+    {"id": "w012", "title": "特典「録写の断片」", "released": "2026-06-21", "order": null, "orderLabel": "特典", "characters": ["c012"]},
+    {"id": "w013", "title": "第九楽曲「静寂の号鐘」", "released": "2026-08-30", "order": 9, "orderLabel": "第Ⅸ楽曲", "characters": ["c001", "c006", "c010"]}
+  ]
+}

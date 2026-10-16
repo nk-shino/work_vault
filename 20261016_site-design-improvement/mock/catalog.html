@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>目録棚（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html">HOME</a>
+    <a href="works.html">作品</a>
+    <a href="chara.html">人物</a>
+    <a href="catalog.html" aria-current="page">目録棚</a>
+    <a href="events.html">イベント</a>
+    <a href="work-detail.html">詳細見本</a>
+  </nav>
+</header>
+
+<main>
+  <h1>目録棚</h1>
+  <p class="lead">全種別を串刺しで引く。検証状態は出典との照合から出す（空欄は未検証）。</p>
+
+  <section aria-label="検索と絞り込み">
+    <input type="search" id="q" placeholder="題・人物・用語を引く" aria-label="目録を検索">
+    <div class="chips" role="group" aria-label="種別で絞り込み" style="margin-top: var(--space-2);">
+      <button class="chip" aria-pressed="true" data-kind="all">すべて（50）</button>
+      <button class="chip" aria-pressed="false" data-kind="作品">作品（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="人物">人物（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="出来事">出来事（9）</button>
+      <button class="chip" aria-pressed="false" data-kind="用語">用語（15）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+  </section>
+
+  <section aria-label="目録">
+    <div class="frame">
+      <table>
+        <caption>ID は資料からの参照に固定する。題を直しても ID は動かない扱い（本家 §6-4 の論点は別途）。</caption>
+        <thead>
+          <tr><th scope="col">ID</th><th scope="col">種別</th><th scope="col">題</th><th scope="col">日付</th><th scope="col">検証</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>条件に合う項目が無い。</strong>絞り込みか検索語を外すと全件に戻る。</p>
+        <p><a href="#" id="reset">条件を外す</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。検証状態の分布: 確認済1／要補足0／未検証49（模擬データの照合結果）。</footer>
+
+<script src="js/catalog.js"></script>
+</body>
+</html>

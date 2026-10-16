@@ -1,0 +1,66 @@
+{
+  "groups": [
+    {
+      "id": "s01",
+      "name": "公式サイト",
+      "items": [
+        {"id": "s01-001", "label": "作品概要（第一楽曲）", "url": "（未記録）", "date": "2023-01-15", "status": "confirmed"},
+        {"id": "s01-002", "label": "作品概要（第八楽曲）", "url": "（未記録）", "date": "2026-05-02", "status": "confirmed"},
+        {"id": "s01-003", "label": "登場人物紹介", "url": "（未記録）", "date": "no date", "status": "confirmed"}
+      ]
+    },
+    {
+      "id": "s02",
+      "name": "配信アーカイブ",
+      "items": [
+        {"id": "s02-001", "label": "第七楽曲 公開記念配信", "url": "（未記録）", "date": "2025-10-19", "status": "confirmed"},
+        {"id": "s02-002", "label": "第八楽曲 感想配信", "url": "（未記録）", "date": "2026-05-10", "status": "supplement"}
+      ]
+    },
+    {
+      "id": "s03",
+      "name": "書籍・冊子",
+      "items": [
+        {"id": "s03-001", "label": "設定資料集 初版", "url": "（書籍のため非記載）", "date": "2024-08-01", "status": "confirmed"},
+        {"id": "s03-002", "label": "設定資料集 第二版", "url": "（書籍のため非記載）", "date": "2026-01-17", "status": "confirmed"}
+      ]
+    },
+    {
+      "id": "s04",
+      "name": "グッズ同梱物",
+      "items": [
+        {"id": "s04-001", "label": "記録帳 同梱カード", "url": "（同梱物のため非記載）", "date": "no date", "status": "none"}
+      ]
+    },
+    {
+      "id": "s05",
+      "name": "投稿・SNS",
+      "items": [
+        {"id": "s05-001", "label": "作者投稿（第九楽曲の言及）", "url": "（未記録）", "date": "2026-08-31", "status": "supplement"},
+        {"id": "s05-002", "label": "作者投稿（外伝の言及）", "url": "（未記録）", "date": "2025-07-06", "status": "confirmed"}
+      ]
+    },
+    {
+      "id": "s06",
+      "name": "音源解説",
+      "items": [
+        {"id": "s06-001", "label": "第三楽曲 ライナーノーツ", "url": "（未記録）", "date": "2024-01-20", "status": "confirmed"},
+        {"id": "s06-002", "label": "第六楽曲 ライナーノーツ", "url": "（未記録）", "date": "2024-12-15", "status": "unverified"}
+      ]
+    },
+    {
+      "id": "s07",
+      "name": "イベント資料",
+      "items": [
+        {"id": "s07-001", "label": "展示パネルの記載", "url": "（現物のみ・写真未整理）", "date": "no date", "status": "unverified"}
+      ]
+    },
+    {
+      "id": "s08",
+      "name": "その他",
+      "items": [
+        {"id": "s08-001", "label": "関係者の発言（二次資料経由）", "url": "（出典をたどれないため断定しない）", "date": "no date", "status": "none"}
+      ]
+    }
+  ]
+}

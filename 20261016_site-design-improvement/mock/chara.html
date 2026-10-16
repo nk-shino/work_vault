@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人物一覧（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html">HOME</a>
+    <a href="works.html">作品</a>
+    <a href="chara.html" aria-current="page">人物</a>
+    <a href="catalog.html">目録棚</a>
+    <a href="events.html">イベント</a>
+    <a href="work-detail.html">詳細見本</a>
+  </nav>
+</header>
+
+<main>
+  <h1>人物</h1>
+  <p class="lead">13人。肖像は準備中のあいだ、題箋で代用する（絵が入った日は同じ枠へ入る）。縦横比は 3:4 に固定。</p>
+
+  <section aria-labelledby="chip-head">
+    <h2 id="chip-head" class="visually-hidden">絞り込み</h2>
+    <div class="chips" role="group" aria-label="所属で絞り込み">
+      <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+      <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+      <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    <ul class="grid" id="grid" style="list-style:none; padding:0; margin:0;"></ul>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。本実装では外部リクエストなし・画像ファイルなしで動く。</footer>
+
+<script src="js/chara.js"></script>
+</body>
+</html>
