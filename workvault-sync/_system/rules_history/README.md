@@ -1,4 +1,4 @@
----
+　---
 title: rules.md のスナップショット置き場
 type: note
 phase: organize
