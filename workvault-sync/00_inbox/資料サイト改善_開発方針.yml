@@ -1,0 +1,163 @@
+# 資料サイト改善ラウンドの開発引き継ぎ（別セッションで稼働するAI向け）
+# このファイルは概要と規則の一覧。詳細判断の際は reading_map の一次資料を必ず参照すること。
+# 数値・状態は 2026-10-19 時点。以後の変更は 02_変更履歴ノート.md が正本。
+
+document:
+  id: "site-improvement-handoff"
+  title: "資料サイト改善 開発方針と読書地図"
+  created: "2026-10-19"
+  updated: "2026-10-19"
+  language: "ja-JP"
+  audience: "本ラウンドを引き継ぐAI・開発者"
+  scope_includes:
+    - "アーキテクチャの現状"
+    - "要件と実装上の制約"
+    - "開発時の読書順序とルール"
+    - "検証手順と記録の付け方"
+  scope_excludes:
+    - "本家リポジトリの実装詳細（このPCに存在しない）"
+    - "未承認事項（UC-001〜003）の実施"
+    - "実API・定期実行・自動デプロイ"
+
+paths:
+  workspace:
+    root: "C:\\Users\\ss80751\\kohden-code-workspace\\20261016_site-design-improvement"
+    mock: "C:\\Users\\ss80751\\kohden-code-workspace\\20261016_site-design-improvement\\mock"
+    improve: "C:\\Users\\ss80751\\kohden-code-workspace\\20261016_site-design-improvement\\improve"
+    draft: "C:\\Users\\ss80751\\kohden-code-workspace\\20261016_site-design-improvement\\改善案_下書き.md"
+  vault_root: "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault"
+
+reading_map:
+  required_order:
+    - step: 1
+      path: "vault://00_site-devlops/00_参照サイト改善/サイト設計・デザイン作業の手引き.md"
+      alias: "手引き"
+      gives: "デザイン原則・CSSトークンの規約・本家仕様（§6-4 照合）。正本。§7 は2026-10-18訂正済み"
+    - step: 2
+      path: "vault://00_site-devlops/00_参照サイト改善/00_成果物_情報整理_2026-10-19/01_開発者向け情報整理シート.md"
+      alias: "整理シート"
+      gives: "対象一覧・呼称確認（R-01〜09）・関係（REL）・注意事項（IS-01〜06）・運用設計（UC-001〜003）"
+      note: "草案・承認待ち。記載のIDは文書内管理ID"
+    - step: 3
+      path: "vault://00_site-devlops/00_参照サイト改善/00_成果物_情報整理_2026-10-19/02_変更履歴ノート.md"
+      alias: "02ノート"
+      gives: "変更記録 CH-001〜005。改修の前後と検証結果。新規変更はここへ CH-xxx で起票"
+    - step: 4
+      path: "vault://00_site-devlops/00_参照サイト改善/README_成果物索引.md"
+      gives: "成果物の全体索引と訂正の注記"
+  reference:
+    - path: "vault://00_site-devlops/00_参照サイト改善/00_成果物_モック改善_2026-10-16/09_改善方針ラウンド報告_3方向×5画面.md"
+      alias: "09ノート"
+      gives: "3方向×5画面の設計判断と検証記録（§12の10ケース）"
+    - path: "vault://00_site-devlops/00_参照サイト改善/00_成果物_モック改善_2026-10-16/05_改善案モック検証_データと画面.md"
+      alias: "05ノート"
+      gives: "fixture の実測と検証（出典項数は CH-001 で14項に訂正済み）"
+    - path: "vault://00_site-devlops/00_参照サイト改善/00_成果物_モック改善_2026-10-16/99_訂正_罫線トークンは負債ではない.md"
+      gives: "罫線トークン訂正の経緯。07ノート指摘4・02ノートの行・09ノート仮説9・workspace の改善案_下書き指摘4 が未是正（UC-001）"
+    - path: "vault://00_site-devlops/00_参照サイト改善/設計論点.md"
+      gives: "設計論点の現行判定（訂正済み）"
+    - path: "vault://00_site-devlops/03_共通と運用/00_実行ログ/実行ログ_20261019.md"
+      gives: "最新ラウンドの作業記録（エントリ1〜4）"
+    - path: "workspace://改善案_下書き.md"
+      gives: "改善案の草稿。指摘4 に罫線訂正の残存あり"
+
+project:
+  name: "資料サイト（回廊の記録・非公式）改善"
+  goal: "元サイトの構造を守りつつ、3方向A/B/Cの改善モックで比較検討する。本番実装は別判断"
+  repo_state: "workspace は feature/tanaoroshi-spec-v2-20261013 ブランチ。mock は 99f80d1 でコミット済み（その後 CH-005 で改変あり）。improve は未コミット"
+
+architecture:
+  site_type: "静的HTML＋Vanilla JS＋fetch(JSON)。ビルド・フレームワーク・外部依存なし"
+  directories:
+    mock: "現行運用のコピー（比較の基準）。5頁＋js5本"
+    improve: "改善3方向×5画面の16頁＋js10本＋improve.css"
+    data: "mock/improve とも data/*.json（fixture）。mock と improve の data は同一内容"
+    tools: "mock/tools と improve/tools は同一3本。片方だけ編集しない（diff で同一を確認）"
+  directions:
+    A: "帳面・静かな名簿。既存の絞り込みを守り最小改善"
+    B: "索引・横断。行形式・検索・並び替え・関連列（既存データで組める接続のみ）"
+    C: "記録・根拠。検証バッジ・照合内訳の開示・出典への導線"
+  pages_per_direction: "HOME・目録棚(catalog)・人物一覧(chara)・出来事(events: B/C)・作品詳細(work: A/B/C)"
+  data_flow: "data/*.json を fetch → 画面ごとの js で絞り込み・描画。入口は improve/compare.html"
+  css_tokens:
+    rule: "--rule* は構造の罫線、--border-accent は強調とアフォーダンス。役割分担であり置換しない"
+    note: "手引き §7 参照。旧トークンを新系統へ置換する指示は誤り（99ノート）"
+
+data_model:
+  fixture:
+    sources: "8群14項（confirmed 8 / supplement 2 / unverified 2 / none 2・no date 4項・URL未記録）"
+    catalog: "50件（作品13・人物13・出来事9・用語15・verify 4状態）"
+    characters: "13人（c011 は出演0作・image は全員空）"
+    others: "works 13作・glossary 15・history 9（sourceIds 9/9 実在）・series 2群"
+  verify_states: "confirmed / supplement / unverified / none。正式な定義文書は無し（画面文面が仮定義）"
+  matching_algorithm:
+    implemented_in: "tools/make-catalog.js の main()・表示側は improve/js/catalog-c.js traceFor が同一照合を再現"
+    target: "出来事のみ（他種別は自動照合の対象外）"
+    normalization: "norm(s) = 「」を除去して trim。core = 題から末尾の(公開|発売)を除去"
+    rule: "claims.find(date !== 'no date' && norm(label).includes(core)) を先に当て、無ければ claims.find(norm(label).includes(core))"
+    measured_result: "出来事9件中 E-005→s03-001 の1件のみ当たる。no date 4項は label が題核を含まないため当たらない"
+    pitfall: "no date が落ちる直接の理由は日付の欠如ではなく label の不一致（第2パスは no date も対象）"
+
+requirements:
+  functional:
+    - "検索・絞り込み・並び替え・0件表示（恒常0件文言を区別）・戻し（reset）"
+    - "home-b から catalog-b へ検索語を受け渡す（?q= を URLSearchParams で受け、value 代入で設定）"
+    - "catalog-c は検証バッジ押下で照合内訳を開閉（openSet 管理）"
+    - "関連列は実在する参照（works.characters / glossary.workId / history.workId）のみで組む"
+  nonfunctional:
+    - "外部リクエスト禁止。fetch は同梱 data の相対パスのみ・favicon は data:,・CSS の url()/@import 無し"
+    - "XSS 対策: innerHTML へ渡すデータは必ず esc()/text() 経由。件数行は textContent。属性は二重引用符"
+    - "インラインハンドラ禁止（addEventListener に統一）・秘匿情報をコードと文書に入れない"
+    - "a11y: aria-pressed / aria-expanded / aria-live を維持。ダークモード・390px 幅で崩さない"
+    - "データ欠損時は catch で「データを読み込めない」を表示し 0件と区別する（CH-005 で導入）"
+
+development_policy:
+  workflow:
+    - "着手前に reading_map の1〜3を読む。数値・状態の根拠は一次資料で確認する"
+    - "変更は小さく分け、検証を通してから報告する。報告前に実行ログを書く"
+    - "tools は mock/improve の2部を同一に保つ。編集後は diff -q で確認する"
+  verification_commands:
+    syntax: "node --check <js>（全 js 対象）"
+    catalog_check: "node tools/make-catalog.js --check（期待: 50件・unverified 49 / confirmed 1・元データ一致）"
+    audit: "node tools/fixture-audit.js（空値・null 45件を棚卸し）"
+    boundary: "node tools/fixture-boundary-test.js（期待: 8/8 PASS・エスケープの境界試験）"
+    browser: "python -m http.server を mock/improve それぞれで起動し全頁 HTTP200・console error 0・pageerror 0。検証後はサーバーを PID 指定で停止"
+  prohibitions:
+    - "workspace への commit/push はユーザー承認なしで実施しない"
+    - "vault-sync は scripts/vault-sync.ps1 の skill 手順に従い、実行後の git ls-files 検証を省略しない"
+    - "force-push・100MB超ファイル（自動はんだ不良入力.zip / NPM-DGS.PDF）の履歴再登録をしない"
+    - "リポジトリの public 化をしない（98_Pass を含むため Private 維持）"
+  recording_rules:
+    run_log: "実行ログは vault://00_site-devlops/03_共通と運用/00_実行ログ/実行ログ_YYYYMMDD.md。指示1件＝エントリ1件（依頼・実施・成果物・状態）"
+    change_log: "コード・文書の変更は 02ノートへ CH-xxx で起票（前後・根拠・検証・承認状態を書く）"
+    artifact_log: "成果物の追加は vault://_system/decision-log.md へ1行"
+    before_report: "完了報告の前に実行ログの記載を確認する（forced-logging）"
+  writing_style:
+    rule: "管理文書は比喩・日常語を避け、文長のリズムを揃えすぎない。詳細は deai-writing スキルと vault://01_Templates/プロンプト/DeAIプロンプト.md"
+
+current_state:
+  date: "2026-10-19"
+  done:
+    - "3方向×5画面16頁の実装と検証（09ノート）"
+    - "開発者向け情報整理シート・変更履歴ノートの整備（エントリ1）"
+    - "品質スキャン（中1・低7・指摘ゼロ観点の確認つき・エントリ2）"
+    - "スキャン指摘の全件改修 M1＋L1〜L7（CH-005・エントリ3）"
+    - "verifyStatus の削除による照合ロジックの一本化・索引Map化・catch 追加・?q= 接続・debounce 導入"
+    - "改修後の全検証 PASS（--check・boundary 8/8・ブラウザ 21頁 console 0）"
+  pending_decisions:
+    - id: "UC-001"
+      what: "罫線トークン訂正の伝播。07ノート指摘4・02ノートの行・09ノート仮説9・改善案_下書き指摘4 の4箇所是正"
+    - id: "UC-002"
+      what: "出典照合のID参照化提案（現行はlabel部分一致。ID参照なら9件すべて繋がる）"
+    - id: "UC-003"
+      what: "05・02ノートの出典項数「11項」→14項への訂正反映"
+    - id: "commit"
+      what: "workspace のコミット可否（mock が 99f80d1 から改変・improve は未コミット）"
+
+pitfalls:
+  - "02ノートの「grep -c 'var(--border-accent' で0を確認」の手順は実行しない（実在するため0にならず、手順自体が誤り）"
+  - "本家リポジトリはこのPCに無い。本家に関する記述（catalog 61等）は過去資料の記載として区別する"
+  - "05ノート等の古い記載（11項）は CH-001 で訂正対象。実物14項が正"
+  - "tools の2部を片方だけ直すと照合結果が mock/improve で食い違う（罫線トークンと同型の事故）"
+  - "検証サーバーの停止は PID を特定してから。名前での一括 kill をしない"
+  - "チャットの報告だけですませず、実行ログ・CH-xxx への記録まで行う"
