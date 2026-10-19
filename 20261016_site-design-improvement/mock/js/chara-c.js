@@ -79,6 +79,9 @@ Promise.all([
   // 出典ID → 出典群の名前。項目単位の照合は本家 sources.json の構造に寄せる
   src.groups.forEach((g) => g.items.forEach((i) => { sourceNames[i.id] = g.name; }));
   apply();
+}).catch((e) => {
+  console.error(e);
+  line.textContent = "データを読み込めない。data/ の配置を確認（0人とは別の状態）。";
 });
 
 chips.forEach((b) =>
@@ -87,4 +90,8 @@ chips.forEach((b) =>
     apply();
   })
 );
-q.addEventListener("input", apply);
+let qTimer;
+q.addEventListener("input", () => {
+  clearTimeout(qTimer);
+  qTimer = setTimeout(apply, 80);
+});

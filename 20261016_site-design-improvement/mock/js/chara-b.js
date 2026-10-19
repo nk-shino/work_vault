@@ -59,6 +59,10 @@ fetch("data/characters.json")
   .then((d) => {
     rows = d.characters;
     apply();
+  })
+  .catch((e) => {
+    console.error(e);
+    line.textContent = "データを読み込めない。data/ の配置を確認（0件とは別の状態）。";
   });
 
 chips.forEach((b) =>
@@ -67,7 +71,11 @@ chips.forEach((b) =>
     apply();
   })
 );
-q.addEventListener("input", apply);
+let qTimer;
+q.addEventListener("input", () => {
+  clearTimeout(qTimer);
+  qTimer = setTimeout(apply, 80);
+});
 sortSel.addEventListener("change", apply);
 
 document.getElementById("reset").addEventListener("click", (e) => {

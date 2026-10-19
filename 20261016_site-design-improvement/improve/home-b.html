@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向B HOME — 横断して探す索引（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向B</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="home-a.html">A</a>
+    <a href="home-b.html" aria-current="page">B</a>
+    <a href="home-c.html">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>回廊の記録</h1>
+  <p class="lead">ある音楽プロジェクトの非公式資料。入った瞬間から引ける形にする。
+    検索を正面に置き、その下に棚（種別）と続く道（読み継ぎ）を並べる。</p>
+
+  <section aria-labelledby="search-head">
+    <h2 id="search-head">引き方</h2>
+    <div class="frame">
+      <form id="jump" style="display:flex; gap:var(--space-2); flex-wrap:wrap; align-items:center;">
+        <input type="search" id="q" placeholder="題・人物・用語を引く" aria-label="全項目を検索" style="flex:1; min-width:200px;">
+        <button class="chip" type="submit">目録棚で引く →</button>
+      </form>
+      <p class="result-line" id="line" aria-live="polite">検索語を入れると目録棚の検索へ渡る。</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="shelf-head">
+    <h2 id="shelf-head">棚</h2>
+    <div class="grid">
+      <a class="card" href="catalog-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0"><span class="b-shelf-label">目録</span>50項</p>
+        <p class="role" style="margin:0">全種別を串刺しで引く</p>
+      </a>
+      <a class="card" href="chara-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0"><span class="b-shelf-label">人物</span>13人</p>
+        <p class="role" style="margin:0">行形式の索引・出演数つき</p>
+      </a>
+      <a class="card" href="events-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0"><span class="b-shelf-label">出来事</span>9件</p>
+        <p class="role" style="margin:0">催事はまだ無い。出来事の記録はこちら</p>
+      </a>
+      <a class="card" href="work-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0"><span class="b-shelf-label">作品</span>13作</p>
+        <p class="role" style="margin:0">関連項目への読み継ぎつき</p>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="path-head">
+    <h2 id="path-head">続く道（既存データで組める接続）</h2>
+    <div class="frame">
+      <ul class="b-links">
+        <li><a href="work-b.html">作品 → 出演人物</a></li>
+        <li><a href="chara-b.html">人物 → 出演作品</a></li>
+        <li><a href="catalog-b.html">用語 → 出典の作品</a></li>
+        <li><a href="events-b.html">出来事 → 関連作品</a></li>
+      </ul>
+      <p style="font-size:12px; color:var(--text-sub); margin:var(--space-2) 0 0;">人物 → 用語 は接続データが無いため道にしない（創作しない）。</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>目的を持って引く・道を辿る</dd>
+        <dt>入口の型</dt><dd>検索を正面、棚と道をその下に</dd>
+        <dt>0件の扱い</dt><dd>催事0件を棚に「出来事の記録はこちら」として繋ぐ</dd>
+        <dt>やらないこと</dt><dd>額縁の装飾・展示室の比喩（方向A の担当）。照合状態（方向C の担当）</dd>
+        <dt>不利な点</dt><dd>眺めて楽しむ導入には弱い。検索語が無い訪問者は棚へ降りる</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向B — 横断して探す索引。道の接続は既存データの実在確認済みのみ。</footer>
+
+<script src="js/home-b.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向A 人物一覧 — 静かな資料館（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向A</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="chara-a.html" aria-current="page">A</a>
+    <a href="chara-b.html">B</a>
+    <a href="chara-c.html">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="a-rule-thin">人物一覧</h1>
+  <p class="lead a-measure">肖像はいま用意できていない。名と役割と所属だけで、
+    一冊の名簿として読める形にする。題箋の紋様は弱め、題名の字間を広く取り、
+    額縁の内側に静けさを残す。</p>
+
+  <section aria-labelledby="chip-head">
+    <h2 id="chip-head" class="a-rule-thin">所属で引く</h2>
+    <div class="chips" role="group" aria-label="所属で絞り込み">
+      <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+      <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+      <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+      <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+      <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    <ul class="grid" id="grid" style="list-style:none; padding:0; margin:0;"></ul>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head" class="a-rule-thin">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts a-measure">
+        <dt>最も大切にする行動</dt><dd>じっくり読む。一覧を名簿として眺める</dd>
+        <dt>情報の優先順位</dt><dd>名 → 役割 → 所属。外見の記述は詳細へ譲り、一覧では出さない</dd>
+        <dt>空の扱い</dt><dd>題箋の紋様を細かくし字間を広げる。肖像がないことを隠さず、器として整える</dd>
+        <dt>外見の記述</dt><dd>載せない（方向B と真逆の判断。名簿の余白を守る）</dd>
+        <dt>やらないこと</dt><dd>検索・並び替え・バッジの追加。13人なら絞り込みだけで足りる</dd>
+        <dt>絵が入ったら</dt><dd>題箋の面を差し替えるだけ。比率は 3:4 を維持</dd>
+        <dt>不利な点</dt><dd>探す速さは現行と同じ。横断の導線は無い</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向A — 静かな資料館。fetch は同梱 json のみ・外部リクエストなし。</footer>
+
+<script src="js/chara-a.js"></script>
+</body>
+</html>

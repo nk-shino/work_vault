@@ -28,6 +28,7 @@ function build() {
 
   // 種別ごとに通し番号（種別＋題を鍵に引き継ぐ形）
   const seen = new Map();
+  const counters = new Map();
   const catalog = [];
   for (const e of entries) {
     const key = `${e.kind}＋${e.title}`;
@@ -36,36 +37,14 @@ function build() {
       no = seen.get(key);
     } else {
       const prefix = { 作品: "W", 人物: "C", 出来事: "E", 用語: "G" }[e.kind];
-      no = `${prefix}-${String(entries.filter((x) => x.kind === e.kind).indexOf(e) + 1).padStart(3, "0")}`;
+      const n = (counters.get(e.kind) || 0) + 1;
+      counters.set(e.kind, n);
+      no = `${prefix}-${String(n).padStart(3, "0")}`;
       seen.set(key, no);
     }
     catalog.push({ id: no, kind: e.kind, title: e.title, date: e.date, ref: e.ref });
   }
   return catalog;
-}
-
-// 出典の claim と年表の題を両側正規化で照合する
-function verifyStatus(catalog) {
-  const history = read("history.json").timeline;
-  const sources = read("sources.json").groups;
-  const srcClaims = [];
-  for (const g of sources) for (const it of g.items) srcClaims.push({ ...it, group: g.name });
-
-  for (const h of history) {
-    const hit = catalog.find((c) => c.kind === "出来事" && c.date === h.date && c.title === norm(h.title));
-    if (!hit) continue;
-    // 日付のある出典を先に当てる
-    let src = srcClaims.find((s) => norm(s.label) === hit.title && s.date !== "no date");
-    if (!src) {
-      // 日付の無い出典は、題の先頭6文字に「」を含む項目でも当たるよう両側正規化で探す
-      src = srcClaims.find((s) => norm(s.label) === hit.title);
-    }
-    if (!src) { hit.verify = "unverified"; continue; }
-    hit.verify = { confirmed: "confirmed", supplement: "supplement", unverified: "unverified", none: "none" }[src.status] || "unverified";
-    hit.sourceId = src.id;
-  }
-  // 出来事以外は既定で未検証
-  for (const c of catalog) if (!c.verify) c.verify = "unverified";
 }
 
 function check(catalog) {
@@ -79,7 +58,6 @@ function check(catalog) {
   if (catalog.length !== expect) errors.push(`件数不一致: catalog=${catalog.length} 期待=${expect}`);
   // 検査3: 生成物が元データと一致するか（verify/sourceId は照合結果なので除く）
   const rebuilt = build();
-  verifyStatus(rebuilt);
   const strip = (arr) => arr.map(({ verify, sourceId, ...rest }) => rest);
   if (JSON.stringify(strip(catalog)) !== JSON.stringify(strip(rebuilt))) errors.push("生成物が元データと一致しない（再生成し忘れ）");
   return errors;

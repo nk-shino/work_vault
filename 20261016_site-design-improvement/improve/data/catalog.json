@@ -1,0 +1,405 @@
+{
+  "catalog": [
+    {
+      "id": "W-001",
+      "kind": "作品",
+      "title": "第一楽曲黄昏の封印",
+      "date": "2023-01-15",
+      "ref": "w001",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-002",
+      "kind": "作品",
+      "title": "第二楽曲灯の残響",
+      "date": "2023-06-10",
+      "ref": "w002",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-003",
+      "kind": "作品",
+      "title": "第三楽曲常夜の庭",
+      "date": "2024-01-20",
+      "ref": "w003",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-004",
+      "kind": "作品",
+      "title": "第四楽曲烙印の詩",
+      "date": "2024-05-30",
+      "ref": "w004",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-005",
+      "kind": "作品",
+      "title": "番外黒き徴",
+      "date": "2024-08-01",
+      "ref": "w005",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-006",
+      "kind": "作品",
+      "title": "第五楽曲贖罪の算法",
+      "date": "2024-12-15",
+      "ref": "w006",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-007",
+      "kind": "作品",
+      "title": "第六楽曲名もなき聖遺物",
+      "date": "2025-04-20",
+      "ref": "w007",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-008",
+      "kind": "作品",
+      "title": "外伝残灯の器",
+      "date": "2025-07-05",
+      "ref": "w008",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-009",
+      "kind": "作品",
+      "title": "第七楽曲断章の祝祭",
+      "date": "2025-10-19",
+      "ref": "w009",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-010",
+      "kind": "作品",
+      "title": "外伝回廊の写本",
+      "date": "2026-01-17",
+      "ref": "w010",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-011",
+      "kind": "作品",
+      "title": "第八楽曲万燭の堂",
+      "date": "2026-05-02",
+      "ref": "w011",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-012",
+      "kind": "作品",
+      "title": "特典録写の断片",
+      "date": "2026-06-21",
+      "ref": "w012",
+      "verify": "unverified"
+    },
+    {
+      "id": "W-013",
+      "kind": "作品",
+      "title": "第九楽曲静寂の号鐘",
+      "date": "2026-08-30",
+      "ref": "w013",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-001",
+      "kind": "人物",
+      "title": "燭守 セラフ",
+      "date": null,
+      "ref": "c001",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-002",
+      "kind": "人物",
+      "title": "写本屋 ヴェル",
+      "date": null,
+      "ref": "c002",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-003",
+      "kind": "人物",
+      "title": "灯番 リュミエ",
+      "date": null,
+      "ref": "c003",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-004",
+      "kind": "人物",
+      "title": "異端吏 オクタヴィア",
+      "date": null,
+      "ref": "c004",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-005",
+      "kind": "人物",
+      "title": "調律師 カノン",
+      "date": null,
+      "ref": "c005",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-006",
+      "kind": "人物",
+      "title": "号手 タル",
+      "date": null,
+      "ref": "c006",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-007",
+      "kind": "人物",
+      "title": "薬師 ミョルニ",
+      "date": null,
+      "ref": "c007",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-008",
+      "kind": "人物",
+      "title": "囁き ノクス",
+      "date": null,
+      "ref": "c008",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-009",
+      "kind": "人物",
+      "title": "祝祭主 アレルイ",
+      "date": null,
+      "ref": "c009",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-010",
+      "kind": "人物",
+      "title": "鐘鋳師 フォルデ",
+      "date": null,
+      "ref": "c010",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-011",
+      "kind": "人物",
+      "title": "塵纏い ルゥ",
+      "date": null,
+      "ref": "c011",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-012",
+      "kind": "人物",
+      "title": "算官 セウト",
+      "date": null,
+      "ref": "c012",
+      "verify": "unverified"
+    },
+    {
+      "id": "C-013",
+      "kind": "人物",
+      "title": "看取り ヴィゴル",
+      "date": null,
+      "ref": "c013",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-001",
+      "kind": "出来事",
+      "title": "第一楽曲黄昏の封印公開",
+      "date": "2023-01-15",
+      "ref": "e001",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-002",
+      "kind": "出来事",
+      "title": "第二楽曲灯の残響公開",
+      "date": "2023-06-10",
+      "ref": "e002",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-003",
+      "kind": "出来事",
+      "title": "第三楽曲常夜の庭公開",
+      "date": "2024-01-20",
+      "ref": "e003",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-004",
+      "kind": "出来事",
+      "title": "第四楽曲烙印の詩公開",
+      "date": "2024-05-30",
+      "ref": "e004",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-005",
+      "kind": "出来事",
+      "title": "設定資料集 初版 発売",
+      "date": "2024-08-01",
+      "ref": "e005",
+      "verify": "confirmed",
+      "sourceId": "s03-001"
+    },
+    {
+      "id": "E-006",
+      "kind": "出来事",
+      "title": "第五楽曲贖罪の算法公開",
+      "date": "2024-12-15",
+      "ref": "e006",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-007",
+      "kind": "出来事",
+      "title": "第六楽曲…に先行した名もなき聖遺物公開",
+      "date": "2025-04-20",
+      "ref": "e007",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-008",
+      "kind": "出来事",
+      "title": "第七楽曲断章の祝祭公開",
+      "date": "2025-10-19",
+      "ref": "e008",
+      "verify": "unverified"
+    },
+    {
+      "id": "E-009",
+      "kind": "出来事",
+      "title": "第八楽曲万燭の堂公開",
+      "date": "2026-05-02",
+      "ref": "e009",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-001",
+      "kind": "用語",
+      "title": "封印",
+      "date": null,
+      "ref": "g001",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-002",
+      "kind": "用語",
+      "title": "回廊聖堂",
+      "date": null,
+      "ref": "g002",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-003",
+      "kind": "用語",
+      "title": "異端",
+      "date": null,
+      "ref": "g003",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-004",
+      "kind": "用語",
+      "title": "断章",
+      "date": null,
+      "ref": "g004",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-005",
+      "kind": "用語",
+      "title": "燭台の灯",
+      "date": null,
+      "ref": "g005",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-006",
+      "kind": "用語",
+      "title": "聖遺物",
+      "date": null,
+      "ref": "g006",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-007",
+      "kind": "用語",
+      "title": "祝祭",
+      "date": null,
+      "ref": "g007",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-008",
+      "kind": "用語",
+      "title": "写本",
+      "date": null,
+      "ref": "g008",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-009",
+      "kind": "用語",
+      "title": "贖罪の算法",
+      "date": null,
+      "ref": "g009",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-010",
+      "kind": "用語",
+      "title": "号鐘",
+      "date": null,
+      "ref": "g010",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-011",
+      "kind": "用語",
+      "title": "附喪女",
+      "date": null,
+      "ref": "g011",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-012",
+      "kind": "用語",
+      "title": "烙印",
+      "date": null,
+      "ref": "g012",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-013",
+      "kind": "用語",
+      "title": "検閲",
+      "date": null,
+      "ref": "g013",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-014",
+      "kind": "用語",
+      "title": "調律",
+      "date": null,
+      "ref": "g014",
+      "verify": "unverified"
+    },
+    {
+      "id": "G-015",
+      "kind": "用語",
+      "title": "黒き徴",
+      "date": null,
+      "ref": "g015",
+      "verify": "unverified"
+    }
+  ]
+}

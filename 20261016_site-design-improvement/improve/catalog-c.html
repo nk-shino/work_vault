@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向C 目録棚 — 根拠をたどる記録室（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向C</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="catalog-a.html">A</a>
+    <a href="catalog-b.html">B</a>
+    <a href="catalog-c.html" aria-current="page">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>目録棚</h1>
+  <p class="lead">各行の「検証」を押すと照合の内訳が開く。何が当たって、何が落ちたかを
+    一覧の段階で見せる。日付なし出典が出典なしと同列になる誤解を防ぐ。</p>
+
+  <section aria-label="検索と絞り込み">
+    <input type="search" id="q" placeholder="題・IDから引く" aria-label="目録を検索">
+    <div class="chips" role="group" aria-label="種別で絞り込み" style="margin-top: var(--space-2);">
+      <button class="chip" aria-pressed="true" data-kind="all">すべて（50）</button>
+      <button class="chip" aria-pressed="false" data-kind="作品">作品（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="人物">人物（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="出来事">出来事（9）</button>
+      <button class="chip" aria-pressed="false" data-kind="用語">用語（15）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+  </section>
+
+  <section aria-label="目録">
+    <div class="frame">
+      <table id="tbl">
+        <caption>「検証」列を押すと内訳が開閉する。照合は題核（接尾を除いた題）と出典labelの含み一致。日付なし出典は「日付なし」と明示して扱う。</caption>
+        <thead>
+          <tr><th scope="col">ID</th><th scope="col">種別</th><th scope="col">題</th><th scope="col">日付</th><th scope="col">検証</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>条件に合う項目が無い。</strong>絞り込みか検索語を外すと全件に戻る。</p>
+        <p><a href="#" id="reset">条件を外す</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="trace-head">
+    <h2 id="trace-head">照合の内訳（開いた行）</h2>
+    <div class="frame">
+      <dl class="c-trace" id="trace">
+        <dt>照合の経路</dt><dd>①出典labelから題核（公開・発売を除いた題）を含み一致 → ②日付のない出典は「日付なし」と出して当てる → ③どちらも当たらない場合は未照合として明示</dd>
+        <dt>実測（模擬データ）</dt><dd>出来事9件のうち自動照合が当たるのは1件（E-005）。history.json の sourceIds は9件とも出典側に実在するため、ID直接参照なら9件繋がる。題の文字列照合が弱点</dd>
+        <dt>「確認済」の意味</dt><dd>出典の status が confirmed のこと。絶対的な真実や公開承認ではない</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>根拠を読み解く。状態の裏にある照合の経路を確認する</dd>
+        <dt>情報の優先順位</dt><dd>検証状態 → その内訳 → 題・日付</dd>
+        <dt>日付なし出典</dt><dd>「出典なし」と同一視しない。日付の有無と照合可否を分けて表示</dd>
+        <dt>やらないこと</dt><dd>曖昧な一致の自動確認済化。日付の創作</dd>
+        <dt>不利な点</dt><dd>開閉の操作が増える。一覧のSCAN性は方向A/B に劣る</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向C — 根拠をたどる記録室。照合の実測: 当たり1件／日付なし出典4件は候補にすら上がらない。</footer>
+
+<script src="js/catalog-c.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向B 目録棚 — 横断して探す索引（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向B</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="catalog-a.html">A</a>
+    <a href="catalog-b.html" aria-current="page">B</a>
+    <a href="catalog-c.html">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>目録棚</h1>
+  <p class="lead">種別ごとの棚に分け、検索と絞り込みで横断する。
+    各行から関連項目（作品→人物・用語・出来事）への読み継ぎの道を出す。</p>
+
+  <section aria-label="検索と絞り込み">
+    <input type="search" id="q" placeholder="題・IDから引く" aria-label="目録を検索">
+    <div class="chips" role="group" aria-label="種別で絞り込み" style="margin-top: var(--space-2);">
+      <button class="chip" aria-pressed="true" data-kind="all">すべて（50）</button>
+      <button class="chip" aria-pressed="false" data-kind="作品">作品（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="人物">人物（13）</button>
+      <button class="chip" aria-pressed="false" data-kind="出来事">出来事（9）</button>
+      <button class="chip" aria-pressed="false" data-kind="用語">用語（15）</button>
+    </div>
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+  </section>
+
+  <section aria-label="目録">
+    <div class="frame">
+      <table class="b-dense" id="tbl">
+        <caption>関連列は既存データで組める接続のみ。作品→人物（characters）、用語→作品（workId）、出来事→作品。人物→用語はデータが無いので出さない。</caption>
+        <thead>
+          <tr><th scope="col">ID</th><th scope="col">種別</th><th scope="col">題</th><th scope="col">日付</th><th scope="col">関連 →</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>条件に合う項目が無い。</strong>絞り込みか検索語を外すと全件に戻る。</p>
+        <p><a href="#" id="reset">条件を外す</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="shelf-head">
+    <h2 id="shelf-head">種別ごとの棚（件数）</h2>
+    <div class="frame">
+      <ul class="b-links" id="shelves" aria-label="種別の棚へ移動"></ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>横断する。作品から人物・用語・出来事へ道を辿る</dd>
+        <dt>情報の優先順位</dt><dd>種別 → 題 → 関連。検証状態は方向C の担当</dd>
+        <dt>読み継ぎの根拠</dt><dd>works.characters・glossary.workId・history.workId（実在確認済み）</dd>
+        <dt>やらないこと</dt><dd>照合内訳の開示（データが無い接続を網で偽装しない）</dd>
+        <dt>不利な点</dt><dd>関連列で表が広くなる。出典状態は出さないので根拠確認は後回しになる</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向B — 横断して探す索引。関連列は既存データのみで組む（推測の接続は載せない）。</footer>
+
+<script src="js/catalog-b.js"></script>
+</body>
+</html>

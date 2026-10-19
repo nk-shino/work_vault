@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向B イベント — 横断して探す索引（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向B</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="events-a.html">A</a>
+    <a href="events-b.html" aria-current="page">B</a>
+    <a href="events-c.html">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>催事</h1>
+  <p class="lead">催事の告知はまだ無い。このページの役割は「出来事の記録（年表 9件）」への
+    横断入口として機能すること。行き止まりにしない。</p>
+
+  <section aria-label="催事の一覧">
+    <div class="empty" id="empty" hidden>
+      <p class="mark" aria-hidden="true">──</p>
+      <p><strong>催事の告知はまだ無い。</strong>入ったらこの面に並べる。</p>
+    </div>
+    <div id="list">
+      <p class="result-line" id="line" aria-live="polite"></p>
+      <div class="frame">
+        <table class="b-dense" id="tbl">
+          <caption>history.json（年表）の9件。催事ではない記録を、この面の代わりの行き先として出す。</caption>
+          <thead>
+            <tr><th scope="col">日付</th><th scope="col">出来事</th><th scope="col">作品 →</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:12px; color:var(--text-sub); margin-top: var(--space-2);">
+        催事の告知が入ったら、この表の上に年表形式で並べる。既存の出来事と混ぜない。</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>0件の面から、実在する記録へ移動する</dd>
+        <dt>0件の扱い</dt><dd>空状態と代替の行き先を明確に分ける。催事と出来事は別物として併記しない</dd>
+        <dt>行き先の根拠</dt><dd>history.json 9件（実データ）。workId は全て実在</dd>
+        <dt>やらないこと</dt><dd>催事の告知の捏造。出来事を催事として見せかけない</dd>
+        <dt>不利な点</dt><dd>「イベント」という名の面に年表が出る構造は、名と中身のねじれを残す</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向B — 横断して探す索引。出来事9件は history.json（実データ・出典つき）。</footer>
+
+<script src="js/events-b.js"></script>
+</body>
+</html>

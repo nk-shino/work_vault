@@ -38,6 +38,10 @@ fetch("data/characters.json")
   .then((d) => {
     items = d.characters;
     apply();
+  })
+  .catch((e) => {
+    console.error(e);
+    line.textContent = "データを読み込めない。data/ の配置を確認（0人とは別の状態）。";
   });
 
 chips.forEach((b) =>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>改善3方向 比較入口（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／改善3方向</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html" aria-current="page">比較入口</a>
+    <a href="chara-a.html">人物一覧</a>
+    <a href="catalog-a.html">目録棚</a>
+    <a href="home-a.html">HOME</a>
+    <a href="events-a.html">イベント</a>
+    <a href="work-a.html">作品詳細</a>
+  </nav>
+</header>
+
+<main>
+  <h1>改善3方向の比較入口</h1>
+  <p class="lead">改善方針.md（§6〜7）に基づき、5画面を構造の異なる3方向で作った。
+    同じデータ・同じ状態で比較できる。採用判断はここではしない。
+    本番ルート・公開ディレクトリには入れていない。</p>
+
+  <section aria-labelledby="how-head">
+    <h2 id="how-head">3方向</h2>
+    <div class="grid">
+      <a class="card" href="chara-a.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">方向A — 静かな資料館</p>
+        <p class="role" style="margin:0">読むことと余白を重視。題箋・額縁・紙の表現を洗練する。情報を減らして一冊の記録に寄せる</p>
+      </a>
+      <a class="card" href="chara-b.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">方向B — 横断して探す索引</p>
+        <p class="role" style="margin:0">目録・分類・関連項目への移動を中心に、発見を速くする。読み継ぎ（作品→人物→用語）を道にする</p>
+      </a>
+      <a class="card" href="chara-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">方向C — 根拠をたどる記録室</p>
+        <p class="role" style="margin:0">記録と出典を行き来し、何が分かっていて何が未確認かを理解しやすくする。照合の落ち方を見せる</p>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="screen-head">
+    <h2 id="screen-head">5画面×3方向</h2>
+    <div class="frame">
+      <table>
+        <caption>各方向の先頭画面は nav から、他の画面は下表の各リンクから開く。すべて同一の data/*.json を読む。</caption>
+        <thead><tr><th scope="col">画面</th><th scope="col">A 静かな資料館</th><th scope="col">B 横断して探す索引</th><th scope="col">C 根拠をたどる記録室</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">人物一覧</th><td><a href="chara-a.html">chara-a</a> 題箋の余韻を深める</td><td><a href="chara-b.html">chara-b</a> 行形式の索引・読み継ぎ列</td><td><a href="chara-c.html">chara-c</a> 出典状態つき記録カード</td></tr>
+          <tr><th scope="row">目録棚</th><td><a href="catalog-a.html">catalog-a</a> 帳面形式・1行1項</td><td><a href="catalog-b.html">catalog-b</a> 種別棚＋関連項目の網</td><td><a href="catalog-c.html">catalog-c</a> 照合の内訳を開く</td></tr>
+          <tr><th scope="row">HOME</th><td><a href="home-a.html">home-a</a> 展示室の入口</td><td><a href="home-b.html">home-b</a> 目録検索を正面に</td><td><a href="home-c.html">home-c</a> 記録と出典の入口</td></tr>
+          <tr><th scope="row">イベント</th><td><a href="events-a.html">events-a</a> 空の面を額縁として残す</td><td><a href="events-b.html">events-b</a> 出来事9件への横断入口</td><td><a href="events-c.html">events-c</a> 出典つき出来事の入口</td></tr>
+          <tr><th scope="row">作品詳細</th><td><a href="work-a.html">work-a</a> 本文中心の紙面</td><td><a href="work-b.html">work-b</a> 関連項目への読み継ぎ</td><td><a href="work-c.html">work-c</a> 主張と根拠の対照</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="state-head">
+    <h2 id="state-head">表示状態の切り替え</h2>
+    <div class="frame">
+      <p style="font-size:13px; margin:0;">絞り込み0件の状態は、各一覧画面で検索語に存在しない語（例: <code>ああああ</code>）を入れて再現できる。
+        ライト／ダークは OS 設定に従う。データは improve/data/*.json（mock と同一の模擬データ）。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。fetch は同梱 json のみ・外部リクエストなし。
+  元モック（../mock/）は変更していない。</footer>
+</body>
+</html>

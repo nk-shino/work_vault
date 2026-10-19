@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向C HOME — 根拠をたどる記録室（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向C</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="home-a.html">A</a>
+    <a href="home-b.html">B</a>
+    <a href="home-c.html" aria-current="page">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1>回廊の記録</h1>
+  <p class="lead">ある音楽プロジェクトの非公式資料。入口で「何が分かっていて、何がまだか」を
+    見せる。照合の現状と、出典の群ごとの内訳を最初に開示する。</p>
+
+  <section aria-labelledby="state-head">
+    <h2 id="state-head">記録の現状</h2>
+    <div class="frame">
+      <dl class="facts" id="state">
+        <dt>出典</dt><dd>8群・14項。うち確認済 <span id="n-confirmed">—</span>・要補足 <span id="n-supplement">—</span>・未検証 <span id="n-unverified">—</span>・出典なし <span id="n-none">—</span></dd>
+        <dt>日付のない出典</dt><dd><span id="n-nodate">—</span> 件。日付の有無と出典の有無は別の話として扱う</dd>
+        <dt>照合の現状</dt><dd>出来事9件のうち自動照合が当たったのは <span id="n-matched">—</span> 件。残りは題の照合に落ちて未検証（sourceIds は9件とも出典側に実在）</dd>
+        <dt>「確認済」の意味</dt><dd>出典の status が confirmed のこと。絶対的な真実や公開承認ではない</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section aria-labelledby="entry-head">
+    <h2 id="entry-head">記録室</h2>
+    <div class="grid">
+      <a class="card" href="catalog-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">目録棚</p>
+        <p class="role" style="margin:0">50項。検証列から照合の内訳を開ける</p>
+      </a>
+      <a class="card" href="chara-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">人物一覧</p>
+        <p class="role" style="margin:0">13人。出典の群名と検証状態つき</p>
+      </a>
+      <a class="card" href="work-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">作品詳細見本</p>
+        <p class="role" style="margin:0">主張と根拠の対照表</p>
+      </a>
+      <a class="card" href="events-c.html" style="text-decoration:none;color:inherit">
+        <p class="name" style="margin:0">出来事</p>
+        <p class="role" style="margin:0">催事は0件。出典つき出来事9件への入口</p>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head">この方向の注記</h2>
+    <div class="frame">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>記録の信用の度合いを最初に把握する</dd>
+        <dt>入口の型</dt><dd>現状の開示 → 記録室</dd>
+        <dt>数値の出所</dt><dd>このページの数値は sources.json・history.json・catalog.json を開いた時点の集計（実測・群8項14）。固定値を書かない</dd>
+        <dt>やらないこと</dt><dd>装飾（方向A）・検索（方向B）。データ課題の解決をデザインで偽装しない（§4 層3）</dd>
+        <dt>不利な点</dt><dd>入り口に数字が並ぶため、初見の訪問者には重く見える</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向C — 根拠をたどる記録室。数値は data を読んで集計した実測値。</footer>
+
+<script src="js/home-c.js"></script>
+</body>
+</html>

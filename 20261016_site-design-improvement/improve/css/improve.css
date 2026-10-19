@@ -1,0 +1,85 @@
+/* 改善3方向 共通の追加スタイル。
+   mock/css/style.css を引き継ぎ、3方向で使う部品だけを足す。
+   色・余白は既存トークン経由（16進の直書きなし）。折り返しは 1024 / 768 の2つ。 */
+
+/* ===== 方向A: 静かな資料館 ===== */
+/* 余韻のある題箋: 紋様を静かに、傍線と遊びの空きを広く */
+.a-plate-fine {
+  background:
+    repeating-linear-gradient(45deg, var(--grain) 0 1px, transparent 1px 7px),
+    var(--bg-sink);
+  letter-spacing: 0.2em;
+}
+/* 見出しの傍線を細く（額縁の内側の罫） */
+.a-rule-thin { border-left-width: 1px; }
+/* 紙面の余白を広く（本文列の幅を絞る） */
+.a-measure { max-width: 44em; margin-left: auto; margin-right: auto; }
+/* キャプションの配置（博物館のキャプション型） */
+.a-caption {
+  color: var(--text-sub);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  margin-top: var(--space-1);
+  text-align: center;
+}
+
+/* ===== 方向B: 横断して探す索引 ===== */
+/* 関連項目の網（読み継ぎ） */
+.b-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 12px;
+}
+.b-links a {
+  display: inline-block;
+  border: 1px solid var(--rule);
+  padding: 1px 8px;
+  text-decoration: none;
+}
+.b-links a:hover { border-color: var(--rule-solid); color: var(--accent); }
+/* 種別棚の見出し（分類記号の帯） */
+.b-shelf-label {
+  display: inline-block;
+  border: 1px solid var(--rule-strong);
+  color: var(--text-sub);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  padding: 0 8px;
+  margin-right: var(--space-2);
+}
+/* 密度の高い索引表 */
+.b-dense td, .b-dense th { padding: 3px 8px; font-size: 12px; }
+.b-dense caption { caption-side: bottom; text-align: left; margin-top: var(--space-1); }
+
+/* ===== 方向C: 根拠をたどる記録室 ===== */
+/* 照合の内訳（なぜ落ちたかを見せる） */
+.c-trace {
+  border-left: 2px solid var(--rule-strong);
+  padding-left: var(--space-2);
+  margin: var(--space-1) 0 0;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+.c-trace dt { color: var(--text-sub); }
+.c-trace dd { margin: 0 0 2px; }
+/* 未照合の明示（静かに落ちない） */
+.c-unmatched {
+  border: 1px dashed var(--foil);
+  background: none;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+/* 主張と根拠の対照（3列の強調） */
+.c-claims td:first-child { font-weight: normal; }
+.c-claims .claim-src { color: var(--blue); }
+
+/* ===== 共通: 390px の確認（768以下の1ブロック内に置く） ===== */
+@media (max-width: 768px) {
+  .a-measure { max-width: none; }
+  .b-dense td, .b-dense th { padding: 3px 6px; }
+}

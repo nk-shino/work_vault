@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向A 目録棚 — 静かな資料館（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/improve.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック／方向A</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="compare.html">比較入口</a>
+    <a href="catalog-a.html" aria-current="page">A</a>
+    <a href="catalog-b.html">B</a>
+    <a href="catalog-c.html">C</a>
+  </nav>
+</header>
+
+<main>
+  <h1 class="a-rule-thin">目録棚</h1>
+  <p class="lead a-measure">全50項を帳面の1行として記す。ID・題・日付・状態のみ。
+    50項が一つの帳面として読めるよう、行を詰めず罫線で静かに区切る。</p>
+
+  <section aria-label="検索">
+    <input type="search" id="q" placeholder="題・IDから引く" aria-label="目録を検索">
+    <p class="result-line" id="result-line" aria-live="polite"></p>
+  </section>
+
+  <section aria-label="目録">
+    <div class="frame a-measure">
+      <table class="b-dense">
+        <caption>日付の無い項は「—」。状態の4区分（確認済・要補足・未検証・出典なし）は本家どおり。</caption>
+        <thead>
+          <tr><th scope="col">ID</th><th scope="col">題</th><th scope="col">日付</th><th scope="col">状態</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>条件に合う項目が無い。</strong>検索語を外すと全件に戻る。</p>
+        <p><a href="#" id="reset">条件を外す</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="note-head">
+    <h2 id="note-head" class="a-rule-thin">この方向の注記</h2>
+    <div class="frame a-measure">
+      <dl class="facts">
+        <dt>最も大切にする行動</dt><dd>帳面を通読する。項目の並びそのものを読む</dd>
+        <dt>情報の優先順位</dt><dd>ID → 題 → 日付 → 状態。種別の列は省き、題の語感で分からせる</dd>
+        <dt>検索</dt><dd>1欄のみ。絞り込みチップは置かない（帳面の体裁を優先）</dd>
+        <dt>やらないこと</dt><dd>種別棚の分割・関連項目の網・照合内訳の開示</dd>
+        <dt>不利な点</dt><dd>種別で探すには向かない。横断の導線は無い</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。方向A — 静かな資料館。catalog 50項（作品13・人物13・出来事9・用語15）。</footer>
+
+<script src="js/catalog-a.js"></script>
+</body>
+</html>
