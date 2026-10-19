@@ -1,0 +1,44 @@
+olevba 0.60.2 on Python 3.13.15 - http://decalage.info/python/oletools
+===============================================================================
+FILE: job.xlsm
+Type: OpenXML
+WARNING  For now, VBA stomping cannot be detected for files in memory
+-------------------------------------------------------------------------------
+VBA MACRO ThisWorkbook.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/ThisWorkbook'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Module1.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Module1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+
+Sub openMacro()
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+
+Dim Macro_Path As String
+Macro_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\マクロ等\bin\TOOL.xlam"
+
+If Not fso.FileExists(Macro_Path) Then
+    MsgBox "Error"
+End If
+
+Workbooks.Open Macro_Path, UpdateLinks:=False, ReadOnly:=True
+
+ThisWorkbook.Close False
+
+
+End Sub
+

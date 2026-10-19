@@ -1,0 +1,903 @@
+olevba 0.60.2 on Python 3.13.15 - http://decalage.info/python/oletools
+===============================================================================
+FILE: sabun.xlsm
+Type: OpenXML
+WARNING  For now, VBA stomping cannot be detected for files in memory
+-------------------------------------------------------------------------------
+VBA MACRO ThisWorkbook.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/ThisWorkbook'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO S0_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S0_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO S1_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S1_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S1_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S1_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO S2_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S2_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S2_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S2_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO Module1.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Module1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Sub 差分データ取込(r As IRibbonControl)
+
+Dim f As file
+Dim fD As Folder
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+If fso.FileExists("C:\Program Files\Asprova Corporation\Asprova\Asprova.exe") Then
+    With Application.FileDialog(msoFileDialogFilePicker)
+        .AllowMultiSelect = False
+        .Filters.Clear
+        .Filters.Add "差分データ", "*.csv"
+        If .Show = 0 Then Exit Sub
+        If Not fso.FileExists(.SelectedItems(1)) Then
+            Call MsgBox("指定ファイルが見つかりません。", vbCritical)
+            Exit Sub
+        Else
+            Set f = fso.GetFile(.SelectedItems(1))
+        End If
+    End With
+Else
+    If fso.FileExists("\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\sabun.csv") Then
+        Set f = fso.GetFile("\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\sabun.csv")
+    Else
+        With Application.FileDialog(msoFileDialogFilePicker)
+            .AllowMultiSelect = False
+            .Filters.Clear
+            .Filters.Add "差分データ", "*.csv"
+            If .Show = 0 Then Exit Sub
+            If Not fso.FileExists(.SelectedItems(1)) Then
+                Call MsgBox("指定ファイルが見つかりません。", vbCritical)
+                Exit Sub
+            Else
+                Set f = fso.GetFile(.SelectedItems(1))
+            End If
+        End With
+    End If
+End If
+
+
+
+Dim buf As String
+Dim buf_sp
+Dim cnt As Long
+cnt = 1
+ReDim tmp(1 To 99999, 1 To 9)
+
+
+Application.ScreenUpdating = False
+
+S0_1.Cells.ClearContents
+
+Open f.Path For Input As #1
+Do Until EOF(1)
+    Line Input #1, buf
+    buf_sp = Split(buf, ",")
+    tmp(cnt, 1) = buf_sp(0)
+    tmp(cnt, 2) = buf_sp(1)
+    tmp(cnt, 3) = "'" & buf_sp(2)
+    tmp(cnt, 4) = buf_sp(3)
+    tmp(cnt, 5) = buf_sp(4)
+    tmp(cnt, 6) = buf_sp(5)
+    tmp(cnt, 7) = buf_sp(6)
+    tmp(cnt, 8) = buf_sp(7)
+    tmp(cnt, 9) = buf_sp(8)
+    cnt = cnt + 1
+Loop
+Close #1
+
+Range(S0_1.Cells(1, 1), S0_1.Cells(cnt, 9)).Value = tmp
+Call 差分NGにリンク貼る
+
+Application.ScreenUpdating = True
+MsgBox "完了"
+
+End Sub
+
+
+Public Sub s1(r As IRibbonControl)
+S1_1.Activate
+End Sub
+Public Sub S2(r As IRibbonControl)
+S2_1.Activate
+End Sub
+Public Sub S3(r As IRibbonControl)
+S3_1.Activate
+End Sub
+Public Sub S4(r As IRibbonControl)
+S4_1.Activate
+End Sub
+Public Sub S5(r As IRibbonControl)
+S5_1.Activate
+End Sub
+Public Sub S6(r As IRibbonControl)
+S6_1.Activate
+End Sub
+
+
+Public Sub output(r As IRibbonControl)
+'旧コード
+'Call outputcsv(ThisWorkbook.Path & "\差分チェック1.csv", S1_1)
+'Call outputcsv(ThisWorkbook.Path & "\差分チェック2.csv", S2_1)
+'Call outputcsv(ThisWorkbook.Path & "\差分チェック3.csv", S3_1)
+'Call outputcsv(ThisWorkbook.Path & "\差分チェック4.csv", S4_1)
+'Call outputcsv(ThisWorkbook.Path & "\差分チェック5.csv", S5_1)
+
+Dim num As Variant
+Dim pair As Variant
+Dim D As Dictionary
+Set D = getDic
+
+For Each num In D.Keys
+    pair = D(num)
+    Call outputcsv(ThisWorkbook.Path & "\差分チェック" & num & ".csv", pair(0))
+Next
+
+MsgBox "OK"
+End Sub
+
+
+Sub outputcsv(Pass As String, ByVal ws As Worksheet)
+
+Dim i As Long
+Dim j As Long
+Dim myStr(1 To 11) As String
+Dim buf As String
+
+With ws
+Open Pass For Output As #1
+    For i = 1 To .Cells(.Rows.count, 1).End(xlUp).Row
+        For j = 1 To 11
+            myStr(j) = .Cells(i, j).Text
+        Next j
+        
+        Print #1, Join(myStr, ",")
+    Next i
+Close #1
+
+End With
+
+End Sub
+
+Public Sub SashizuClearButton(r As IRibbonControl)
+
+If MsgBox("全シートから指図情報をクリアします｡", vbOKCancel) = vbCancel Then Exit Sub
+
+Application.EnableEvents = False
+
+' 旧コード
+'Call SashizuClear(S1_1)
+'Call SashizuClear(S2_1)
+'Call SashizuClear(S3_1)
+'Call SashizuClear(S4_1)
+'Call SashizuClear(S5_1)
+'Call 差分NGにリンク貼る
+
+Call delExSheets
+
+Dim pair As Variant
+Dim D As Dictionary
+Set D = getDic
+
+For Each pair In D.Items
+    SashizuClear pair(0)
+    sabunSetCF pair(0)
+    If Not pair(1) Is Nothing Then
+        pair(1).Activate
+        Columns(1).Select '後作業のために各「計画」シートの1列目を選択状態にしておく。
+    End If
+Next
+
+Call 差分NGにリンク貼る
+
+S1_1.Activate
+
+Application.EnableEvents = True
+
+MsgBox "完了"
+
+End Sub
+
+
+Sub SashizuClear(ByVal ws As Worksheet)
+'追記。後作業のために各「差分」シートのA2を選択状態にしておく。
+ws.Activate
+Range("A2").Select
+'ここまで
+Dim dst_rng As Range
+Dim dst_row As Long
+dst_row = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+
+If ws.Cells(ws.Rows.count, 1).End(xlUp).Row <> 1 Then
+    Set dst_rng = Range(ws.Cells(2, 1), ws.Cells(dst_row, 1))
+    dst_rng.ClearContents
+    dst_rng.ClearFormats
+End If
+Set dst_rng = Nothing
+End Sub
+
+Sub 差分NGにリンク貼る()
+
+Dim i As Long
+'Dim SNo() As Variant
+Dim D As Dictionary
+Dim pair As Variant
+Dim tmp As Variant
+
+Set D = getDic
+
+'旧コード
+'SNo() = Array("差分1", "差分2", "差分3", "差分4", "差分5")
+
+Application.EnableEvents = False
+
+'For Each tmp In SNo
+For Each pair In D.Items
+    'With ThisWorkbook.Sheets(tmp)
+    With pair(0)
+        .Cells.ClearHyperlinks
+        .Cells.Font.Underline = False
+        .Cells.Font.ColorIndex = xlAutomatic
+        
+        For i = 2 To 100
+            If .Cells(i, 10).Text = "NG" Then
+                .Cells(i, 10).Hyperlinks.Add .Cells(i, 10), "http://nksv1359.ad.nkc.co.jp/cgi/bom_diff/sashizu.cgi?sashizu=" & .Cells(i, 1).Text & "&sts=0"
+            End If
+        Next i
+        
+    End With
+
+Next pair
+
+Application.EnableEvents = True
+
+End Sub
+-------------------------------------------------------------------------------
+VBA MACRO S3_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S3_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S3_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S3_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S5_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S5_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S4_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S4_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S4_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S4_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S5_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S5_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO 指図入力.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/指図入力'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Sub do_prepare(control As IRibbonControl)
+    Dim i As Long
+    Dim count As Long
+    Dim rng As Range
+    
+    Dim wb As Workbook
+    Set wb = ThisWorkbook
+    
+    
+    Dim wsJobs As Worksheet
+    On Error Resume Next
+    Set wsJobs = Workbooks("段取り予定.xlsx").Worksheets("job作成")
+    On Error GoTo 0
+    
+    If wsJobs Is Nothing Then
+        MsgBox "段取り予定を開いてください。"
+        Exit Sub
+    End If
+    
+    wsJobs.Activate
+    
+    If MsgBox("ジョブ名セルを自動選択しますか？" & vbCrLf & "(Noなら選択中範囲から取得)", vbYesNo) = vbYes Then
+        selectJobName wsJobs
+    End If
+    
+    If Selection.count = 0 Then Exit Sub
+    Dim jobs() As Variant
+    ReDim jobs(1 To Selection.count)
+    
+    '範囲内セルで、正規表現でジョブ名を識別してセルをjobsに格納。
+    Dim rng_sch As Range
+    Set rng_sch = Selection
+    
+    count = 0
+    For Each rng In rng_sch
+        If IsJobName(CStr(rng.Value)) Then
+           count = count + 1
+           Set jobs(count) = rng
+        End If
+    Next
+    
+    '足りない分のシートをコピー生成
+    If count > 6 Then
+        Sx_1.Visible = xlSheetVisible
+        Sx_2.Visible = xlSheetVisible
+        
+        For i = 7 To count
+            Sx_1.Copy After:=wb.Worksheets(wb.Worksheets.count)
+            wb.Worksheets(wb.Worksheets.count).Name = "差分" & i
+            Sx_2.Copy After:=wb.Worksheets(wb.Worksheets.count)
+            wb.Worksheets(wb.Worksheets.count).Name = "計画" & i
+        Next
+        
+        Sx_1.Visible = xlSheetHidden
+        Sx_2.Visible = xlSheetHidden
+    End If
+    
+    '「差分確認マクロ」ブックの差分シートにジョブ名と指図をコピー
+    For i = 1 To UBound(jobs)
+        If Not jobs(i) Is Nothing Then
+            copy_job jobs, i
+        End If
+    Next i
+    
+    ' "差分1"シートをアクティブにして終了
+    S1_1.Activate
+    
+    Set wb = Nothing
+    Set wsJobs = Nothing
+    Set rng_sch = Nothing
+    Set rng = Nothing
+    For i = 1 To UBound(jobs)
+        Set jobs(i) = Nothing
+    Next i
+End Sub
+
+
+Sub copy_job(job As Variant, num As Long)
+    '引数に渡したjobのジョブ名と、Offsetで指図もコピー
+    Dim dst As Range
+    Dim i As Long
+    i = 1
+    Set dst = ThisWorkbook.Worksheets("差分" & num).Cells(2, 1)
+    dst.Value = job(num).Value
+    Do While job(num).Offset(i, 3).Value Like "#########"
+        dst.Offset(i, 0).Value = job(num).Offset(i, 3).Value
+        i = i + 1
+    Loop
+    Set dst = Nothing
+End Sub
+
+'段取り予定.job作成シートを受け取り、ジョブ名セルを選択状態にする
+Sub selectJobName(ByVal ws As Worksheet)
+Dim f As Range
+Dim lastrow As Long
+Dim rngCol As Range
+
+Set f = ws.Rows(1).Find(What:="備考1", LookIn:=xlValues, LookAt:=xlWhole)
+If f Is Nothing Then
+    MsgBox "1行目に[備考1]列がありません。"
+    Exit Sub
+End If
+
+lastrow = ws.Cells(ws.Rows.count, f.Column).End(xlUp).Row
+Set rngCol = ws.Range(ws.Cells(2, f.Column), ws.Cells(lastrow, f.Column))
+
+Dim rng As Range
+Dim hit As Range
+For Each rng In rngCol
+    If IsJobName(CStr(rng.Value)) Then
+        If hit Is Nothing Then
+            Set hit = rng
+        Else
+            Set hit = Union(hit, rng)
+        End If
+    End If
+Next
+
+
+If hit Is Nothing Then
+    MsgBox "ジョブ名パターンにマッチするセルがありません。"
+    Exit Sub
+End If
+
+ws.Activate
+hit.Select
+hit.Cells(1).Activate
+
+End Sub
+
+'文字列がジョブ名のパターンに合致するか返す
+Function IsJobName(ByVal str As String) As Boolean
+IsJobName = False
+    
+Dim re As New RegExp
+re.IgnoreCase = False
+re.Global = False
+re.Pattern = "^\d{6}\-[0-9A-Z]\d[1-3]$"
+
+IsJobName = re.test(str)
+
+End Function
+-------------------------------------------------------------------------------
+VBA MACRO S6_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S6_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO S6_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/S6_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+-------------------------------------------------------------------------------
+VBA MACRO tools.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/tools'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+'シート名数字部分をkeyとする差分シートと計画シートのペアを格納した辞書を返す
+Function getDic() As Dictionary
+Dim D As New Dictionary
+Dim indexNum As String
+Dim ws As Worksheet
+Dim keikaku As Worksheet
+
+
+For Each ws In ThisWorkbook.Worksheets
+    If ws.Name Like "差分*" Then
+        indexNum = Mid$(ws.Name, 3)
+        
+        If IsNumeric(indexNum) Then
+            Set keikaku = Nothing
+            
+            On Error Resume Next
+            Set keikaku = ThisWorkbook.Worksheets("計画" & indexNum)
+            On Error GoTo 0
+            
+            If keikaku Is Nothing Then
+                MsgBox "計画" & indexNum & "シートがありません。"
+            Else
+                Dim tmp As Variant
+                tmp = Array(Nothing, Nothing)
+                Set tmp(0) = ws
+                Set tmp(1) = keikaku
+            End If
+            
+            D.Add indexNum, tmp
+        End If
+    End If
+Next
+
+Set getDic = D
+
+End Function
+
+'臨時シートを削除
+Sub delExSheets()
+    Dim i As Long
+    Dim nm As String
+    Dim n As Long
+
+    On Error GoTo cleanup
+    Application.DisplayAlerts = False
+
+    For i = ThisWorkbook.Worksheets.count To 1 Step -1
+        nm = ThisWorkbook.Worksheets(i).Name
+
+        If Left$(nm, 2) = "差分" Or Left$(nm, 2) = "計画" Then
+            n = Val(Mid$(nm, 3))
+            If n >= 7 Then ThisWorkbook.Worksheets(i).Delete
+        End If
+    Next i
+    
+cleanup:
+    Application.DisplayAlerts = True
+End Sub
+
+'差分*シートの数式入力
+Sub sabunTemplate(ByVal ws As Worksheet)
+    Dim fSabun As String
+    Dim fB As String, fc As String, fD As String, fE As String, fF As String, fG As String, fH As String, fI As String, fJ As String
+
+    ' sabun シート参照
+    fSabun = "sabun"
+
+    ' MATCH(INDIRECT("'"&ws.Name&"'!$A2"), sabun!$A:$A, 0)
+    fB = "=INDEX(sabun!B:B,MATCH($A2,sabun!$A:$A,0))"
+    fc = "=INDEX(sabun!C:C,MATCH($A2,sabun!$A:$A,0))"
+    fE = "=INDEX(sabun!D:D,MATCH($A2,sabun!$A:$A,0))"
+    fF = "=INDEX(sabun!E:E,MATCH($A2,sabun!$A:$A,0))"
+    fG = "=INDEX(sabun!F:F,MATCH($A2,sabun!$A:$A,0))"
+    fH = "=INDEX(sabun!G:G,MATCH($A2,sabun!$A:$A,0))"
+    fI = "=INDEX(sabun!H:H,MATCH($A2,sabun!$A:$A,0))"
+    fJ = "=INDEX(sabun!I:I,MATCH($A2,sabun!$A:$A,0))"
+
+    ' D列（PCB名）：
+    fD = "=LET(s,REGEXREPLACE($C2,""S-"",""""),REGEXREPLACE(s,""([^\d])- "",""$1""))"
+
+    ' ---- 見出し ----
+    ws.Range("A1").Value = "指図"
+    ws.Range("B1").Value = "担当"
+    ws.Range("C1").Value = "品目コード"
+    ws.Range("D1").Value = "PCB名"
+    ws.Range("E1").Value = "台数"
+    ws.Range("F1").Value = "指図登録日"
+    ws.Range("G1").Value = "製造開始日"
+    ws.Range("H1").Value = "完成予定日"
+    ws.Range("I1").Value = "タイプ"
+    ws.Range("J1").Value = "差分"
+
+    ' ---- A列 2～100 行目：空欄 ----
+    ws.Range("A2:A100").ClearContents
+
+    ' ---- 数式（2～100 行目）----
+    ws.Range("B2:B100").Formula2 = fB
+    ws.Range("C2:C100").Formula2 = fc
+    ws.Range("D2:D100").Formula2 = fD
+    ws.Range("E2:E100").Formula2 = fE
+    ws.Range("F2:F100").Formula2 = fF
+    ws.Range("G2:G100").Formula2 = fG
+    ws.Range("H2:H100").Formula2 = fH
+    ws.Range("I2:I100").Formula2 = fI
+    ws.Range("J2:J100").Formula2 = fJ
+End Sub
+
+
+'差分*シートの条件付き書式
+Sub sabunSetCF(ByVal ws As Worksheet)
+    Dim rng As Range
+    Dim fc As FormatCondition
+
+    Set rng = ws.Range("$J$2:$J$100")
+
+    ' 既存の条件付き書式を一旦消して作り直す
+    ws.Cells.FormatConditions.Delete
+
+    ' ---- 1) DONE を含む ----
+    Set fc = rng.FormatConditions.Add( _
+                Type:=xlTextString, _
+                String:="DONE", _
+                TextOperator:=xlContains)
+    With fc
+        .Font.Color = RGB(0, 97, 0)
+        .Interior.Color = RGB(198, 239, 206)
+        .Font.Bold = False
+        .StopIfTrue = False
+    End With
+
+    ' ---- 2) NG を含む ----
+    Set fc = rng.FormatConditions.Add( _
+                Type:=xlTextString, _
+                String:="NG", _
+                TextOperator:=xlContains)
+    With fc
+        .Font.Color = RGB(156, 0, 6)
+        .Font.Bold = True
+        .Interior.Color = RGB(255, 199, 206)
+        .StopIfTrue = False
+    End With
+End Sub
+
+
+'手動でまとめて数式更新
+Sub prepare()
+Dim ws As Worksheet
+Dim D As New Dictionary
+Dim key As Variant
+Set D = getDic()
+
+For Each key In D.Keys
+    'sabunTemplate D(key)(0)
+    sabunSetCF D(key)(0)
+Next
+End Sub
+-------------------------------------------------------------------------------
+VBA MACRO Sx_1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sx_1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+Application.EnableEvents = False
+Target.ClearFormats
+Call 差分NGにリンク貼る
+Application.EnableEvents = True
+
+End Sub
+
+
+
+-------------------------------------------------------------------------------
+VBA MACRO Sx_2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sx_2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private FLG As Boolean
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+If FLG Then Exit Sub
+FLG = True
+
+Dim i As Long
+i = 1
+
+Do While True
+    If Cells(i, 1).Value = "" Then Exit Do
+    Cells(i, 3).FormulaR1C1 = "=IF(AND(ISNA(MATCH(RC[-2],差分" & Mid$(Me.Name, 3) & "!C[-2],0)),RC[-1]=""""),""はい"",""いいえ"")"
+    i = i + 1
+Loop
+
+Range(Cells(i, 1), Cells(Rows.count, 3)).Clear
+
+
+FLG = False
+
+End Sub
+
+
+
