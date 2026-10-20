@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  採用リファレンスの再現（リファレンス台帳は README.md）。
+  保管庫の3文書から採用した項目を、この場で動く形で示す。外部リクエストなし。
+  ANIM 一覧:
+    [ANIM-11] 読込中の回転印（css/proposal.css .loading::before）
+  縮退: prefers-reduced-motion で全停止（proposal.css 末尾）
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>採用リファレンスの再現</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ</a>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・採用リファレンス</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main id="main">
+  <p class="switch">採用リファレンス・ <a href="index.html">一覧へ</a> ・ <a href="README.md">台帳（README）</a></p>
+  <h1 class="page-title" data-reveal>採用リファレンスの再現</h1>
+  <p class="lead" data-reveal>保管庫の3文書から採用した項目を、動く形で示す。実装の適用箇所と理由は README.md の台帳に置く。外部依存は追加していない。</p>
+
+  <section class="frame" data-reveal>
+    <h2>1. 採用元</h2>
+    <table>
+      <caption>参照文書と採用項目。確認日は 2026-10-20。</caption>
+      <thead><tr><th scope="col">文書</th><th scope="col">場所</th><th scope="col">採用項目</th></tr></thead>
+      <tbody>
+        <tr><td>ツール・素材集</td><td>3-3</td><td>色・余白・書体・角丸をデザイントークンとして管理する（R1）</td></tr>
+        <tr><td>開発方針 §12 ／ 素材集 3-1</td><td>表示仕様</td><td>空欄・読込中・エラーを黙って同じにしない（R2）</td></tr>
+        <tr><td>開発方針 §12</td><td>WCAG 2.2 AA 参考</td><td>キーボード・フォーカス・画面外の描画抑止（R3）</td></tr>
+        <tr><td>自律開発ガイド §3・§9</td><td>実行の前提</td><td>外部通信の防止、実装ラウンドは3件まで。この頁自体がその適用例</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="frame" data-reveal>
+    <h2>2. トークン（R1）</h2>
+    <p class="dim" style="font-family:var(--sans);font-size:.82rem">css/tokens.css の値をここで読み取り表示する。灯の切替で値が追従する。</p>
+    <div class="chiplist" id="swatches" aria-live="polite"></div>
+  </section>
+
+  <section class="frame" data-reveal>
+    <h2>3. 状態の再現（R2）</h2>
+    <p class="dim" style="font-family:var(--sans);font-size:.82rem">読込中は回転印と案内文を出し（[ANIM-11]）、完了で外す。失敗は読込中とは別の文で示す。</p>
+    <p style="font-family:var(--sans);font-size:.82rem">
+      <button type="button" class="btn" id="demoLoad">読込中を再現（1.2秒）</button>
+      <button type="button" class="btn" id="demoFail">失敗を再現</button>
+    </p>
+    <div class="frame" id="demoBox" style="margin:0"></div>
+  </section>
+
+  <section class="frame" data-reveal>
+    <h2>4. フォーカス（R3）</h2>
+    <p class="dim" style="font-family:var(--sans);font-size:.82rem">Tab を押すと本文へのスキップリンクが現れる（頁の先頭）。フォーカス枠は :focus-visible で、マウス操作では出ない。次の項を Tab で移動して確かめる。</p>
+    <p><a class="u-draw" href="#main">焦点の見え方を試す項</a></p>
+  </section>
+
+  <section class="frame" data-reveal>
+    <h2>5. 表示性能と動き（R3）</h2>
+    <dl class="props">
+      <dt>描画抑止</dt><dd id="cvState">確認中</dd>
+      <dt>動きの軽減</dt><dd id="rmState">確認中</dd>
+    </dl>
+    <p class="dim" style="font-family:var(--sans);font-size:.82rem">描画抑止は source-ledger-b の札に適用済み。動きの軽減を希望する環境では全アニメが停止する（[ANIM-1〜11]）。</p>
+  </section>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。採用の根拠と不採用の理由は <a class="u-draw" href="README.md">README.md の台帳</a>に置く。</footer>
+<script src="js/proposal.js"></script>
+<script>
+"use strict";
+(() => {
+  // トークンの読み取りと表示（R1）
+  const sw = document.getElementById("swatches");
+  const cs = getComputedStyle(document.documentElement);
+  const names = ["--paper", "--paper-2", "--ink", "--dim", "--lamp", "--rule", "--ok", "--none", "--focus"];
+  sw.innerHTML = names.map((n) => {
+    const v = cs.getPropertyValue(n).trim();
+    return `<span class="sw"><i style="background:${v}"></i>${P.esc(n)} ${P.esc(v)}</span>`;
+  }).join("");
+
+  // 状態の再現（R2）
+  const box = document.getElementById("demoBox");
+  const reset = () => { box.innerHTML = ""; box.removeAttribute("aria-busy"); };
+  document.getElementById("demoLoad").addEventListener("click", () => {
+    reset();
+    P.busy(box);
+    setTimeout(() => {
+      P.settled(box);
+      box.innerHTML = '<p class="loading" style="color:var(--ink)">読み込みが終わった状態（例の行）</p>';
+    }, 1200);
+  });
+  document.getElementById("demoFail").addEventListener("click", () => {
+    reset();
+    P.busy(box);
+    setTimeout(() => {
+      P.settled(box);
+      box.innerHTML = '<div class="notice">データを読み込めない。data/ の配置を確認（0件とは別の状態）。</div>';
+    }, 400);
+  });
+
+  // 対応の表示（R3）
+  document.getElementById("cvState").textContent =
+    CSS.supports("content-visibility: auto") ? "対応（content-visibility: auto）" : "非対応（無しで動く）";
+  document.getElementById("rmState").textContent =
+    matchMedia("(prefers-reduced-motion: reduce)").matches ? "希望（全アニメ停止）" : "未指定（アニメあり）";
+})();
+</script>
+</body>
+</html>

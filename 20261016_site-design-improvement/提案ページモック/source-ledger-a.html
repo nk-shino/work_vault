@@ -15,16 +15,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>出典台帳 A案（帳面）</title>
 <link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/proposal.css">
 </head>
 <body>
+<a class="skip" href="#main">本文へ</a>
 <header class="masthead">
   <p class="site">回廊の記録<small>提案ページモック・出典台帳</small></p>
   <span class="spacer"></span>
   <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
 </header>
 
-<main>
+<main id="main">
+  <noscript><p class="notice noscript-note">この面は JavaScript で出典データを組み立てて表示する。無効の場合は一覧が出ない。<a href="index.html">一覧へ</a></p></noscript>
   <p class="switch">A案（帳面）・ <a href="source-ledger-b.html">B案（札）へ</a> ・ <a href="index.html">一覧へ</a></p>
   <h1 class="page-title" data-reveal>出典台帳</h1>
   <p class="lead" data-reveal>出典8群14項を、原票の並びのまま一覧する。状態の定義は「このサイトについて」に置く。題を直しても出典IDは動かない。</p>
@@ -55,8 +58,11 @@
 "use strict";
 (() => {
   const tbody = document.getElementById("tbody");
+  const frame = document.querySelector(".frame");
+  P.busy(frame);
   P.fetchJson("../improve/data/sources.json")
     .then((d) => {
+      P.settled(frame);
       const rows = [];
       for (const g of d.groups) {
         for (const it of g.items) {
@@ -74,6 +80,7 @@
     })
     .catch((e) => {
       console.error(e);
+      P.settled(frame);
       document.getElementById("loaderr").hidden = false;
     });
 })();

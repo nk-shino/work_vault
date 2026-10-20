@@ -1,0 +1,37 @@
+/* デザイントークン（単一ソース）。
+   参照: ツール・素材集 3-3「色、余白、書体、角丸はデザイントークンとして管理する」（確認日 2026-10-20）。
+   proposal.css は色と書体をこの値だけで参照する。余白・角丸は新設の部品から使用し、
+   既存規則の値の置換は次ラウンドに回す（README.md の台帳を参照）。 */
+
+:root {
+  /* 色 */
+  --paper: #fbf9f4;
+  --paper-2: #f4f0e6;
+  --ink: #2c2a26;
+  --dim: #7a746a;
+  --lamp: #b9822e;
+  --rule: #d9d3c5;
+  --ok: #3e7a4e;
+  --sup: #b9822e;
+  --none: #a34a3c;
+  /* 書体 */
+  --serif: Georgia, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --sans: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+  /* 余白・角丸・焦点（R2/R3 の新設部品から使用） */
+  --gap-s: .5rem;
+  --gap-m: 1rem;
+  --gap-l: 1.5rem;
+  --radius: 4px;
+  --focus: #b9822e;
+}
+html[data-theme="dark"] {
+  --paper: #201e1a;
+  --paper-2: #292620;
+  --ink: #e8e2d4;
+  --dim: #9a9284;
+  --lamp: #d9a94a;
+  --rule: #3b382f;
+  --ok: #7fae8b;
+  --none: #c98073;
+  --focus: #d9a94a;
+}

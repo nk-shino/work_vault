@@ -1,30 +1,7 @@
 /* 提案ページモック共通スタイル。
    テーマ: 紙(paper)×墨(ink)×灯(lamp)。帳面と記録室の雰囲気を、本編モックのトークンに合わせて維持する。
-   アニメーションはすべて [ANIM-n] の印を付ける。縮退は末尾の prefers-reduced-motion を参照。 */
-
-:root {
-  --paper: #fbf9f4;
-  --paper-2: #f4f0e6;
-  --ink: #2c2a26;
-  --dim: #7a746a;
-  --lamp: #b9822e;
-  --rule: #d9d3c5;
-  --ok: #3e7a4e;
-  --sup: #b9822e;
-  --none: #a34a3c;
-  --serif: Georgia, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
-  --sans: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
-}
-html[data-theme="dark"] {
-  --paper: #201e1a;
-  --paper-2: #292620;
-  --ink: #e8e2d4;
-  --dim: #9a9284;
-  --lamp: #d9a94a;
-  --rule: #3b382f;
-  --ok: #7fae8b;
-  --none: #c98073;
-}
+   アニメーションはすべて [ANIM-n] の印を付ける。縮退は末尾の prefers-reduced-motion を参照。
+   色と書体の値は css/tokens.css（単一ソース）に置き、ここでは参照のみ行う。 */
 
 * { box-sizing: border-box; }
 body {
@@ -183,6 +160,44 @@ tbody tr:hover { background: var(--paper-2); }
 }
 dl.props { display: grid; grid-template-columns: 6.5em 1fr; gap: .3rem .8rem; font-size: .92rem; margin: 0; }
 dl.props dt { color: var(--dim); font-family: var(--sans); font-size: .78rem; padding-top: .15em; }
+
+/* ── 採用リファレンスの実装（README.md の台帳を参照） ─────────── */
+
+/* [R3] スキップリンク: キーボード操作で本文へ飛ぶ。フォーカス時だけ見える */
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 20;
+  background: var(--paper-2); color: var(--ink);
+  border: 1px solid var(--focus); border-radius: var(--radius);
+  font-family: var(--sans); font-size: .8rem;
+  padding: .35rem var(--gap-m); text-decoration: none;
+}
+.skip:focus { left: var(--gap-s); top: var(--gap-s); }
+
+/* [R3] フォーカスの可視化（WCAG 2.2 参考。マウス操作では出ない） */
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* [R2] 読込中・失敗の状態。空欄・読込中・エラーを黙って同じにしない（開発方針 §12・素材集 3-1） */
+[aria-busy="true"] { min-height: 9rem; }
+.loading {
+  font-family: var(--sans); font-size: .82rem; color: var(--dim);
+  padding: var(--gap-s) 0; margin: 0;
+}
+.loading::before {
+  content: ""; display: inline-block; width: .8em; height: .8em;
+  border: 2px solid var(--rule); border-top-color: var(--lamp);
+  border-radius: 50%; margin-right: .45em; vertical-align: -.1em;
+  /* [ANIM-11] 読込中の回転印 */
+  animation: spin .9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(1turn); } }
+
+/* [R2] JavaScript 無効時の案内 */
+.noscript-note { margin: var(--gap-m) 0 0; }
+
+/* [R3] 長い札の一覧は画面外を先に描かない（表示性能。対応ブラウザのみ） */
+@supports (content-visibility: auto) {
+  .plates .plate { content-visibility: auto; contain-intrinsic-size: auto 12rem; }
+}
 
 /* 縮退: 動きの軽減を希望する環境では全アニメを停止して最終形を即時表示する */
 @media (prefers-reduced-motion: reduce) {

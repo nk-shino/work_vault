@@ -16,6 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>出典台帳 B案（札）</title>
 <link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/proposal.css">
 <style>
   /* 頁固有: 札の並び */
@@ -29,13 +30,15 @@
 </style>
 </head>
 <body>
+<a class="skip" href="#main">本文へ</a>
 <header class="masthead">
   <p class="site">回廊の記録<small>提案ページモック・出典台帳</small></p>
   <span class="spacer"></span>
   <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
 </header>
 
-<main>
+<main id="main">
+  <noscript><p class="notice noscript-note">この面は JavaScript で出典データを組み立てて表示する。無効の場合は一覧が出ない。<a href="index.html">一覧へ</a></p></noscript>
   <p class="switch">B案（札）・ <a href="source-ledger-a.html">A案（帳面）へ</a> ・ <a href="index.html">一覧へ</a></p>
   <h1 class="page-title" data-reveal>出典台帳</h1>
   <p class="lead" data-reveal>群ごとの札に分けて示す。確認済を含む群の印に灯を付け、見開いたときに群の状態が掴めるようにする。</p>
@@ -59,8 +62,10 @@
 "use strict";
 (() => {
   const wrap = document.getElementById("plates");
+  P.busy(wrap);
   P.fetchJson("../improve/data/sources.json")
     .then((d) => {
+      P.settled(wrap);
       const cards = d.groups.map((g, gi) => {
         const hasOk = g.items.some((it) => it.status === "confirmed");
         const lines = g.items.map((it) => `<li>
@@ -78,6 +83,7 @@
     })
     .catch((e) => {
       console.error(e);
+      P.settled(wrap);
       document.getElementById("loaderr").hidden = false;
     });
 })();

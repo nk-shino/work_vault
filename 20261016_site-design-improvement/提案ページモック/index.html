@@ -10,16 +10,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>提案ページモック 一覧</title>
 <link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/proposal.css">
 </head>
 <body>
+<a class="skip" href="#main">本文へ</a>
 <header class="masthead">
   <p class="site">回廊の記録<small>提案ページモック</small></p>
   <span class="spacer"></span>
   <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
 </header>
 
-<main>
+<main id="main">
   <h1 class="page-title" data-reveal>提案ページの一覧</h1>
   <p class="lead" data-reveal>前回の提案5頁を、それぞれ2案で実装した実働モック。データは本編（improve/data）の単一ソースから読む。</p>
 
@@ -33,6 +35,7 @@
         <tr data-reveal><td>検証の記録</td><td><a class="u-draw" href="verification-log-a.html">A案 日誌（縦線）</a></td><td><a class="u-draw" href="verification-log-b.html">B案 台帳（表と数）</a></td></tr>
         <tr data-reveal><td>このサイトについて</td><td><a class="u-draw" href="about-a.html">A案 定義書</a></td><td><a class="u-draw" href="about-b.html">B案 見本帳（状態の実例）</a></td></tr>
         <tr data-reveal><td>404</td><td><a class="u-draw" href="404-a.html">A案 閉じられた頁</a></td><td><a class="u-draw" href="404-b.html">B案 迷い札</a></td></tr>
+        <tr data-reveal><td>採用リファレンス</td><td colspan="2"><a class="u-draw" href="reference.html">3文書から採用した項目の再現（台帳は README.md）</a></td></tr>
       </tbody>
     </table>
   </div>

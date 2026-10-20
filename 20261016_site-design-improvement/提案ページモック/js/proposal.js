@@ -20,6 +20,19 @@ window.P = (() => {
     return r.json();
   });
 
+  // [R2] 読込中・完了の状態表示。読込中と失敗と空を黙って同じ見た目にしない（開発方針 §12・素材集 3-1）。
+  const busy = (el) => {
+    el.setAttribute("aria-busy", "true");
+    if (!el.querySelector("[data-busy]")) {
+      el.insertAdjacentHTML("afterbegin", '<p class="loading" data-busy>読み込んでいる</p>');
+    }
+  };
+  const settled = (el) => {
+    el.removeAttribute("aria-busy");
+    const p = el.querySelector("[data-busy]");
+    if (p) p.remove();
+  };
+
   // [ANIM-1][ANIM-6] data-reveal の順次出現。兄弟順に遅延 --d を振り、画面内に入ったら .is-in を付ける。
   const reveal = () => {
     const els = [...document.querySelectorAll("[data-reveal]")];
@@ -76,5 +89,5 @@ window.P = (() => {
   const init = () => { theme(); reveal(); countUp(); };
   document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", init) : init();
 
-  return { esc, badge, fetchJson, reveal, countUp, STATUS };
+  return { esc, badge, fetchJson, busy, settled, reveal, countUp, STATUS };
 })();
