@@ -23,6 +23,15 @@
   </h2>
   {% if p.decision_note %}<p class="decision">判定：{{ p.decision_note }}</p>{% endif %}
   <p class="meta-line">スコア {{ "%.2f"|format(p.score) if p.score is not none else "—" }} ／ 生成元 {{ p.model_name }} ／ プロンプト版 {{ p.prompt_version }}</p>
+  {% set v = payload.get("verification") %}
+  {% if v %}
+  <p>
+    {% if v.supported %}<span class="badge st-accepted">独立検証：裏付けあり</span>
+    {% elif v.supported == false %}<span class="badge st-disputed">独立検証：裏付けなし</span>
+    {% else %}<span class="badge">独立検証：未実施</span>{% endif %}
+    {% if v.reason %}<span class="hint"> {{ v.reason }}</span>{% endif %}
+  </p>
+  {% endif %}
   {% if p.proposal_type == "evidence" %}
     <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
   {% elif p.proposal_type == "sense" %}

@@ -11,6 +11,7 @@
     python tasks.py extract          候補語・共起ペアの CSV（data/out/）
     python tasks.py propose          モックLLMで提案を作り、提案キューへ積む
     python tasks.py import DIR [--limit N]  DIR 以下のメール・資料から候補を取り込む（上の3つをまとめて）
+    python tasks.py revise [--limit N]  「修正が必要」の評価が付いた定義の改稿案を LLM に作らせ、提案キューへ積む
     python tasks.py demo             fixtures で上の3つを通し、一部を採用してデモ用 DB を作る
     python tasks.py serve [--db FILE] [--open]  http://127.0.0.1:8000 で起動（--open でブラウザも開く）
     python tasks.py test | lint | typecheck | check（3つまとめて）
@@ -187,6 +188,24 @@ def cmd_import(args: argparse.Namespace) -> None:
     print("ブラウザの「提案キュー」で確認してください（python tasks.py serve --open）")
 
 
+def cmd_revise(args: argparse.Namespace) -> None:
+    s = _settings()
+    _migrate(s.database_url)
+    from glossary.db.session import make_engine, make_session_factory
+    from glossary.factory import make_llm
+    from glossary.preprocess.masking import Masker
+    from glossary.propose import revise_flagged
+
+    send_masker = Masker.from_yaml(s.config_dir / "llm_send_masking.yaml")
+    factory = make_session_factory(make_engine(s.database_url))
+    with factory() as db:
+        made = revise_flagged(db, make_llm(s), limit=args.limit, send_masker=send_masker)
+        db.commit()
+    print(f"改稿案 {made} 件を提案キューに積みました")
+    print(f"（{s.database_url}）")
+    print("ブラウザの「提案キュー」で確認してください（python tasks.py serve --open）")
+
+
 def cmd_demo(_args: argparse.Namespace) -> None:
     demo_dir = ROOT / "data" / "demo"
     db_file = demo_dir / "glossary-demo.db"
@@ -356,6 +375,8 @@ def main() -> None:
     for name in ("preprocess", "extract", "propose", "demo", "migrate", "test", "lint",
                  "typecheck", "check", "fixtures"):  # fmt: skip
         sub.add_parser(name)
+    rev = sub.add_parser("revise")
+    rev.add_argument("--limit", type=int, default=5, help="改稿案を作る語義の数")
     serve = sub.add_parser("serve")
     serve.add_argument("--port", type=int, default=8000)
     serve.add_argument("--db", help="SQLite ファイル（例: data/demo/glossary-demo.db）")

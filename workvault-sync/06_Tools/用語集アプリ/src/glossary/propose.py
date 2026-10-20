@@ -20,6 +20,7 @@ from sqlalchemy.orm import Session
 
 from glossary.adapters.llm.mock_adapter import MOCK_MODEL_NAME
 from glossary.db.models import EXCERPT_MAX_LEN, Proposal, Sense, Term
+from glossary.domain.evaluations import review_queue
 from glossary.domain.proposals import accept, add_proposal
 from glossary.factory import model_name
 from glossary.ports import LlmPort, is_document
@@ -41,6 +42,31 @@ SENSE_SCHEMA: dict[str, Any] = {
         "supported": {"type": "boolean"},
     },
     "required": ["definition", "context_tag", "confidence", "supported"],
+}
+
+# 独立した正誤判定。草案を作らせた呼び出しとは別に、定義と用例だけを見直させる。
+# 出した本人の自己申告（supported）と、別の呼び出しでの検証の両方を通さないと自動採用にしない
+VERIFY_PROMPT_VERSION = "sense-verify-v1"
+VERIFY_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "supported": {"type": "boolean"},
+        "reason": {"type": "string"},
+    },
+    "required": ["supported", "reason"],
+}
+
+# 自己改修。「修正が必要」の評価が付いた定義を、用例と指摘を根拠に書き直させる。
+# 改稿案は人の確認を待つため、自動採用にはしない
+REVISE_PROMPT_VERSION = "sense-revise-v1"
+REVISE_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "definition": {"type": "string"},
+        "context_tag": {"type": "string", "enum": ["業務", "設備", "物流", "品質", "その他"]},
+        "note": {"type": "string"},
+    },
+    "required": ["definition", "note"],
 }
 
 assert SNIPPET_LEN <= EXCERPT_MAX_LEN
@@ -71,6 +97,37 @@ def build_prompt(word: str, excerpts: list[str]) -> str:
         f"対象語: {word}",
         "用例:",
     ]
+    lines += [f"- {e}" for e in excerpts]
+    return "\n".join(lines)
+
+
+def build_verify_prompt(word: str, definition: str, excerpts: list[str]) -> str:
+    lines = [
+        "次の定義が、用例だけから裏付けられるかを確かめてください。",
+        "定義に用例からは読み取れない推測や、用例と矛盾する部分があれば supported を false にし、",
+        "reason にその箇所を1文で書いてください。裏付けられるなら supported を true にしてください。",
+        f"対象語: {word}",
+        f"定義: {definition}",
+        "用例:",
+    ]
+    lines += [f"- {e}" for e in excerpts]
+    return "\n".join(lines)
+
+
+def build_revise_prompt(
+    word: str, current_definition: str, comments: list[str], excerpts: list[str]
+) -> str:
+    lines = [
+        "次の定義は、読んだ人から「修正が必要」と評価されています。",
+        "現在の定義・指摘・用例だけを根拠に、定義を1〜2文で書き直してください。",
+        "用例と指摘から読み取れないことは書かないでください。どこをどう直したかを note に書いてください。",
+        f"対象語: {word}",
+        f"現在の定義: {current_definition}",
+    ]
+    if comments:
+        lines.append("指摘:")
+        lines += [f"- {c}" for c in comments]
+    lines.append("用例:")
     lines += [f"- {e}" for e in excerpts]
     return "\n".join(lines)
 
@@ -260,6 +317,15 @@ def propose_and_adopt(
             result = llm.complete_json(prompt, SENSE_SCHEMA)
         except Exception as e:  # LLM が失敗しても取り込み全体は止めず、その語だけ保留にする
             result = {"definition": "", "context_tag": "その他", "confidence": 0, "error": str(e)}
+        verify: dict[str, Any] | None = None
+        if not is_mock and not result.get("error") and str(result.get("definition", "")).strip():
+            # 草案を作らせた呼び出しとは別に、定義と用例だけを見直させる（正誤判定の二段構え）
+            try:
+                verify = llm.complete_json(
+                    build_verify_prompt(word, str(result["definition"]), sent), VERIFY_SCHEMA
+                )
+            except Exception as e:
+                verify = {"supported": None, "reason": f"検証の呼び出しに失敗: {e}"}
         p = add_proposal(
             session,
             proposal_type="sense",
@@ -269,6 +335,9 @@ def propose_and_adopt(
                 "context_tag": result.get("context_tag"),
                 "confidence": result.get("confidence"),
                 "evidences": evidences,
+                "verification": None
+                if verify is None
+                else {"supported": verify.get("supported"), "reason": verify.get("reason")},
             },
             model_name=model_name(llm),
             prompt_version=PROMPT_VERSION,
@@ -279,6 +348,12 @@ def propose_and_adopt(
         reasons = judge(result, evidences, word, is_mock, rules)
         if "error" in result:
             reasons.insert(0, f"LLM の呼び出しに失敗: {result['error']}")
+        if verify is not None:
+            if verify.get("supported") is False:
+                detail = str(verify.get("reason") or "").strip()
+                reasons.append("独立した検証で用例が定義を支えていないと判定" + (f"（{detail}）" if detail else ""))
+            elif verify.get("supported") is None:
+                reasons.append(str(verify.get("reason") or "検証に失敗"))
         session.flush()
         if reasons:
             p.decision_note = "保留：" + " / ".join(reasons)
@@ -315,4 +390,79 @@ def propose_relations(
                 score=float(p["thread_pmi"]),
             )
             made += 1
+    return made
+
+
+def revise_flagged(
+    session: Session,
+    llm: LlmPort,
+    *,
+    limit: int = 5,
+    send_masker: Masker | None = None,
+) -> int:
+    """自己改修。「修正が必要」の評価が付いた語義の定義を書き直させ、改稿案を提案キューに積む。
+
+    採用は人の確認を待つ（自動採用にしない）。元の語義は消さずに残るので、
+    採用すると同じ見出しに新しい語義が1つ足り、評価は別々に付く。
+    同じ語で未処理の提案があるときは積まない（取り込みと改稿の二重申請を防ぐ）。
+    """
+    is_mock = model_name(llm) == MOCK_MODEL_NAME
+    if not is_mock and send_masker is None:
+        raise RuntimeError("外部の LLM へは、送信用のマスキング（send_masker）を通さずに送らない")
+    pending = pending_headwords(session)
+    made = 0
+    for item in review_queue(session, "needs_fix"):
+        if made >= limit:
+            break
+        sense = item.sense
+        word = sense.term.headword
+        if word in pending:
+            continue
+        excerpts = [e.excerpt for e in sense.evidences]
+        comments = [c.comment for c in item.summary.comments if c.comment][:5]
+        to_send = excerpts + [sense.definition]
+        sent = [send_masker.mask(t).text if send_masker else t for t in to_send]
+        prompt = build_revise_prompt(word, sent[-1], comments, sent[:-1])
+        try:
+            result = llm.complete_json(prompt, REVISE_SCHEMA)
+        except Exception:  # 1語の失敗で全体を止めない。次の語へ
+            continue
+        definition = str(result.get("definition", "")).strip()
+        if not definition:
+            continue
+        evidences = [
+            {
+                "source_type": e.source_type,
+                "source_ref": e.source_ref,
+                "excerpt": e.excerpt,
+                "occurred_at": e.occurred_at.isoformat() if e.occurred_at else None,
+                "masked": e.masked,
+            }
+            for e in sense.evidences
+        ]
+        p = add_proposal(
+            session,
+            proposal_type="sense",
+            payload={
+                "headword": word,
+                "definition": definition,
+                "context_tag": result.get("context_tag") or sense.context_tag,
+                "confidence": None,
+                "evidences": evidences,
+                "revises_sense_id": sense.id,
+                "revises_revision": sense.revision_number,
+            },
+            model_name=model_name(llm),
+            prompt_version=REVISE_PROMPT_VERSION,
+            score=None,
+        )
+        note = str(result.get("note", "")).strip()
+        p.decision_note = (
+            f"自己改修：版{sense.revision_number}への「修正が必要」の評価を受けた改稿案"
+            + (f"。{note}" if note else "")
+            + "。元の語義は残る"
+        )
+        session.flush()
+        pending.add(word)
+        made += 1
     return made
