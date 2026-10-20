@@ -3,7 +3,7 @@
 {% block main %}
 <h1>用語一覧</h1>
 <form method="get" action="/terms" class="filters" role="search">
-  <label for="q">検索（見出し・読み・英語・略語）</label>
+  <label for="q">検索（見出し・読み・英語・略語）<kbd>/</kbd></label>
   <input id="q" name="q" type="search" value="{{ q }}" accesskey="s">
   <label for="tag">文脈タグ</label>
   <select id="tag" name="tag">

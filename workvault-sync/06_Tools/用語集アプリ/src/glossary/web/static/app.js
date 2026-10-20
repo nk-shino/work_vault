@@ -15,6 +15,15 @@ document.addEventListener("submit", function (ev) {
   if (status) status.hidden = false;
 });
 
+// 今開いているページをナビで示す。下の階層（詳細・編集画面）も親の項目を光らせる
+document.querySelectorAll("header nav a").forEach(function (a) {
+  var path = (a.getAttribute("href") || "").split("?")[0];
+  if (path === "/export.csv") return;
+  if (location.pathname === path || location.pathname.indexOf(path + "/") === 0) {
+    a.setAttribute("aria-current", "page");
+  }
+});
+
 // 「/」で検索欄へ移る。入力欄の中では効かせない
 document.addEventListener("keydown", function (ev) {
   if (ev.key !== "/" || ev.ctrlKey || ev.metaKey || ev.altKey) return;
