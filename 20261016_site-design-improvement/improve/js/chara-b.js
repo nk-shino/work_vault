@@ -33,7 +33,7 @@ function render(list) {
         <td>${text(c.role)}</td>
         <td>${text(c.affiliation)}</td>
         <td class="app">${text(c.appearance)}</td>
-        <td><a href="catalog.html" title="目録棚へ">${label} →</a></td>
+        <td><a href="catalog-b.html" title="目録棚へ">${label} →</a></td>
       </tr>`;
       }
     )

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作品（モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>非公式資料サイト・モック</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html">HOME</a>
+    <a href="works.html" aria-current="page">作品</a>
+    <a href="chara.html">人物</a>
+    <a href="catalog.html">目録棚</a>
+    <a href="events.html">イベント</a>
+    <a href="work-detail.html">詳細見本</a>
+  </nav>
+</header>
+
+<main>
+  <h1>作品</h1>
+  <p class="lead">13作。序列と発表日。並びは作品の序列（data/works.json の order）。人物や用語との横断は目録棚で引く。</p>
+
+  <p class="result-line" id="result-line" aria-live="polite"></p>
+
+  <section aria-label="作品一覧">
+    <div class="frame">
+      <table>
+        <caption>発表日は作品ごとの記録による。詳細ページは現在一作品分の見本（詳細見本）。</caption>
+        <thead>
+          <tr><th scope="col">序列</th><th scope="col">作品名</th><th scope="col">発表日</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <p class="mark" aria-hidden="true">──</p>
+        <p><strong>作品が読み込めていない。</strong>0件ではなく、データ取得に失敗した状態。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">モック（模擬データ）。作品データは data/works.json のみを原典にする。</footer>
+
+<script src="js/works.js"></script>
+</body>
+</html>

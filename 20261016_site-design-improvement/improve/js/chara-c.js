@@ -33,14 +33,14 @@ function render(list) {
     .map((c) => {
       const wks = worksOf(c.id);
       const ws = wks
-        .map((w) => `<a href="catalog.html" title="${esc(w.title)}（${esc(w.released)}）">${esc(w.orderLabel || w.title)}</a>`)
+        .map((w) => `<a href="catalog-c.html" title="${esc(w.title)}（${esc(w.released)}）">${esc(w.orderLabel || w.title)}</a>`)
         .join("・");
       const cat = catalogByRef[c.id];
       const v = BADGE[cat && cat.verify] || BADGE.unverified;
       const srcId = cat && cat.sourceId;
       let src;
       if (srcId && sourceNames[srcId]) {
-        src = `<a href="catalog.html">出典 ${esc(sourceNames[srcId])}</a>`;
+        src = `<a href="catalog-c.html">出典 ${esc(sourceNames[srcId])}</a>`;
       } else {
         // 静かに落とさない: 出典側に項目自体はあるが照合に乗っていないことを明示
         src = `<span class="c-unmatched">未照合（出典群から引けていない）</span>`;
