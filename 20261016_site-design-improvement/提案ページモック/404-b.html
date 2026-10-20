@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 404 B案（迷い札）
+  架蔵に無い頁の代わりに迷い札を差し出す形。案内を札の一枚にまとめる。
+  本番ではサーバー設定でこの頁を 404 に割り当てる。
+  ANIM 一覧:
+    [ANIM-1][ANIM-6] 札の淡入と順次出現
+    [ANIM-5] 札の浮き（ホバー）
+    [ANIM-4] 下線の描画（導線リンク）
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 B案（迷い札）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・404</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <div class="plate" data-reveal style="max-width:30rem;margin:2.5rem auto;text-align:center;padding:1.6rem 1.4rem">
+    <p style="margin:0;font-family:var(--sans);font-size:.72rem;color:var(--dim);letter-spacing:.3em">迷い札</p>
+    <h1 class="page-title" style="margin:.2rem 0 .4rem">お探しの頁は<br>この架蔵に無い</h1>
+    <p class="dim" style="font-size:.84rem;margin:.2rem 0 1rem">目的地に近い面を下から選ぶ。</p>
+    <p style="font-family:var(--sans);font-size:.88rem">
+      <a class="u-draw" href="../mock/index.html">HOME</a>　・　
+      <a class="u-draw" href="../mock/catalog.html">目録棚</a>　・　
+      <a class="u-draw" href="../mock/works.html">作品一覧</a>　・　
+      <a class="u-draw" href="index.html">提案一覧</a>
+    </p>
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。404 の割り当ては本番サーバー設定のタスク。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>

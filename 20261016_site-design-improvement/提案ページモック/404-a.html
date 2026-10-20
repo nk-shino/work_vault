@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 404 A案（閉じられた頁）
+  架蔵に無い頁への到達を受け止める面。導線は HOME・目録棚・提案一覧。
+  本番ではサーバー設定でこの頁を 404 に割り当てる（python http.server では不可・本番タスク）。
+  ANIM 一覧:
+    [ANIM-1] 画面の淡入
+    [ANIM-3] 灯の燐光（架蔵の灯）
+    [ANIM-4] 下線の描画（導線リンク）
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 A案（閉じられた頁）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・404</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main style="text-align:center">
+  <p class="big404" data-reveal>4<span class="lamp" aria-hidden="true" style="margin:0 .3rem;vertical-align:.1em"></span>4</p>
+  <h1 class="page-title" data-reveal style="margin-top:.4rem">この頁は架蔵に無い</h1>
+  <p class="lead" data-reveal>URL が変わったか、頁が移された可能性がある。帳面に戻る導線を下に置く。</p>
+
+  <p data-reveal style="font-family:var(--sans);font-size:.88rem">
+    <a class="u-draw" href="../mock/index.html">HOME へ戻る</a>　・　
+    <a class="u-draw" href="../mock/catalog.html">目録棚へ</a>　・　
+    <a class="u-draw" href="index.html">提案一覧へ</a>
+  </p>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。404 の割り当ては本番サーバー設定のタスク。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: このサイトについて B案（見本帳）
+  4状態を実例付きの見本として示す。各見本を開くと実データからの例が現れる。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画
+    [ANIM-1][ANIM-6] 札の順次出現
+    [ANIM-5] 札の浮き（ホバー）
+    [ANIM-8] 見本の開閉（ボタンで例が滑らかに開く）
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>このサイトについて B案（見本帳）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+<style>
+  /* 頁固有: 見本帳の並び */
+  .samples { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: .9rem; }
+  .samples h2 { font-size: .98rem; margin: 0; display: flex; align-items: center; gap: .5rem; }
+  .samples .acc > button { font-family: var(--sans); font-size: .74rem; color: var(--dim); }
+  .samples .acc > button::after { content: "例を開く ▾"; }
+  .samples .acc.open > button::after { content: "例を閉じる ▴"; }
+  .samples .acc-body > div { font-size: .84rem; border-top: 1px solid var(--rule); margin-top: .3rem; padding-top: .5rem; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・このサイトについて</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">B案（見本帳）・ <a href="about-a.html">A案（定義書）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>このサイトについて</h1>
+  <p class="lead" data-reveal>定義を語る代わりに、実例を見本として開示する。各見本は本編データからの実物。</p>
+
+  <section aria-labelledby="d0" style="margin-bottom:1.2rem">
+    <h2 id="d0" style="font-size:1.05rem" data-reveal>前提</h2>
+    <p data-reveal style="font-size:.92rem">非公式資料サイト。掲載の数値・題・日付は模擬データで、実在の作品・人物とは無関係。ID は資料からの参照に固定し、題を直しても動かない。</p>
+  </section>
+
+  <div class="samples">
+    <section class="plate" data-reveal>
+      <h2><span class="badge ok">確認済</span></h2>
+      <div class="acc"><button type="button" aria-expanded="false" aria-label="確認済の実例を開く"></button>
+        <div class="acc-body"><div>
+          日付のある出典に当たり、記載と一致を確認した。<br>
+          <span class="dim">実例: E-005 設定資料集 初版 発売（2024-08-01）← s03-001（status=confirmed）</span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="plate" data-reveal data-d="1">
+      <h2><span class="badge sup">要補足</span></h2>
+      <div class="acc"><button type="button" aria-expanded="false" aria-label="要補足の実例を開く"></button>
+        <div class="acc-body"><div>
+          出典に当たったが、日付や一部の記載が不足していて補いが必要。<br>
+          <span class="dim">実例: 出典2項に日付の記載が無く補い待ち（台帳で「日付なし」を明示）</span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="plate" data-reveal data-d="2">
+      <h2><span class="badge">未検証</span></h2>
+      <div class="acc"><button type="button" aria-expanded="false" aria-label="未検証の実例を開く"></button>
+        <div class="acc-body"><div>
+          出典照合をまだ行っていない。混ぜて平均化せず、状態のまま示す。<br>
+          <span class="dim">実例: 目録50項のうち49項（E-001 第一楽曲黄昏の封印 など）</span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="plate" data-reveal data-d="3">
+      <h2><span class="badge none">出典なし</span></h2>
+      <div class="acc"><button type="button" aria-expanded="false" aria-label="出典なしの実例を開く"></button>
+        <div class="acc-body"><div>
+          現時点で根拠になる出典が存在しない。作品本文からの記録待ち。<br>
+          <span class="dim">実例: 塵纏いルゥ（出演0作・出典なし）</span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="plate" data-reveal data-d="4">
+      <h2><span class="dim">日付なし</span></h2>
+      <div class="acc"><button type="button" aria-expanded="false" aria-label="日付なしの実例を開く"></button>
+        <div class="acc-body"><div>
+          出典に日付の記載が無い。空欄にせず明示する。<br>
+          <span class="dim">実例: s01-003 登場人物紹介（出典4項が no date）</span>
+        </div></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。見本は本編データ（sources・catalog・characters）からの実例。</footer>
+<script src="js/proposal.js"></script>
+<script>
+"use strict";
+(() => {
+  // [ANIM-8] 見本の開閉。ボタンはキーボード操作可。aria-expanded で状態を示す。
+  document.querySelectorAll(".acc > button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const acc = btn.closest(".acc");
+      const open = acc.classList.toggle("open");
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+})();
+</script>
+</body>
+</html>

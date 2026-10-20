@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 出典台帳 B案（札）
+  群ごとに札へまとめ、項は札の中の帳面行にする。群の単位が視覚に残る。確認済の群には灯を付ける。
+  ANIM 一覧:
+    [ANIM-1][ANIM-6] 札の順次出現（data-reveal + --d）
+    [ANIM-5] 札の浮き（ホバー）
+    [ANIM-3] 灯の燐光（確認済の群の印）
+    [ANIM-4] 下線の描画（ホバー）
+    [ANIM-7] 統計数のカウント
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>出典台帳 B案（札）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+<style>
+  /* 頁固有: 札の並び */
+  .plates { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: .9rem; }
+  .plate h2 { font-size: 1rem; margin: 0 0 .4rem; display: flex; align-items: center; gap: .45rem; }
+  .plate ul { list-style: none; margin: 0; padding: 0; font-size: .84rem; }
+  .plate li { display: flex; gap: .5rem; align-items: baseline; padding: .3rem 0; border-top: 1px solid var(--rule); }
+  .plate li:first-child { border-top: none; }
+  .plate .sid { font-family: var(--sans); font-size: .72rem; color: var(--dim); min-width: 4.6em; }
+  .plate .lbl { flex: 1; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・出典台帳</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">B案（札）・ <a href="source-ledger-a.html">A案（帳面）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>出典台帳</h1>
+  <p class="lead" data-reveal>群ごとの札に分けて示す。確認済を含む群の印に灯を付け、見開いたときに群の状態が掴めるようにする。</p>
+
+  <p class="stats" data-reveal>
+    <span>群 <b class="num" data-count="8">0</b></span>
+    <span>項 <b class="num" data-count="14">0</b></span>
+    <span>確認済 <b class="num" data-count="8">0</b></span>
+    <span>日付なし <b class="num" data-count="4">0</b></span>
+  </p>
+
+  <div class="plates" id="plates"></div>
+  <div class="notice" id="loaderr" hidden style="margin-top:.9rem">
+    データを読み込めない。data/ の配置を確認（0群とは別の状態）。
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。データは data/sources.json の単一ソース。<a class="u-draw" href="../improve/catalog-c.html">本編の記録室（catalog-c）で照合の内訳を見る</a>。</footer>
+<script src="js/proposal.js"></script>
+<script>
+"use strict";
+(() => {
+  const wrap = document.getElementById("plates");
+  P.fetchJson("../improve/data/sources.json")
+    .then((d) => {
+      const cards = d.groups.map((g, gi) => {
+        const hasOk = g.items.some((it) => it.status === "confirmed");
+        const lines = g.items.map((it) => `<li>
+            <span class="sid">${P.esc(it.id)}</span>
+            <span class="lbl">${P.esc(it.label)}<br><span class="dim">${it.date === "no date" ? "日付なし" : P.esc(it.date)}</span></span>
+            ${P.badge(it.status)}
+          </li>`).join("");
+        return `<section class="plate" data-reveal data-d="${Math.min(gi, 10)}">
+          <h2>${hasOk ? '<span class="lamp" aria-hidden="true"></span>' : ""}${P.esc(g.name)}</h2>
+          <ul>${lines}</ul>
+        </section>`;
+      });
+      wrap.innerHTML = cards.join("");
+      P.reveal();
+    })
+    .catch((e) => {
+      console.error(e);
+      document.getElementById("loaderr").hidden = false;
+    });
+})();
+</script>
+</body>
+</html>

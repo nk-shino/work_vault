@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 人物詳細 B案（索引カード）
+  左に題箋、右に属性と出演年表。人物を軸に時系列でたどる使い方に寄せる。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画
+    [ANIM-1][ANIM-6] 順次出現
+    [ANIM-5] 題箋の浮き（ホバー）
+    [ANIM-9] 出演年表の縦線の成長
+    [ANIM-3] 灯の燐光（所属印）
+    [ANIM-7] 出演数のカウント
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人物詳細 B案（索引カード）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+<style>
+  /* 頁固有: カードと年表の構成 */
+  .card { display: grid; grid-template-columns: minmax(7rem, 8.5rem) 1fr; gap: 1.1rem; align-items: start; }
+  .tanzaku { padding: 1.1rem .7rem; text-align: center; }
+  .tanzaku .aff { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: .7rem; color: var(--dim); margin-top: .7rem; }
+  .card h2 { font-size: .95rem; margin: 0 0 .2rem; }
+  .works-tl { font-size: .88rem; }
+  .works-tl li { padding: 0 0 .7rem .2rem; }
+  .works-tl .rel { font-family: var(--sans); font-size: .72rem; color: var(--dim); }
+  @media (max-width: 480px) { .card { grid-template-columns: 1fr; } .vname { writing-mode: horizontal-tb; letter-spacing: .2em; } }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・人物詳細</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">B案（索引カード）・ <a href="chara-detail-a.html">A案（紙の一枚）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>人物</h1>
+
+  <div id="root">
+    <div class="notice" data-reveal>
+      人物の指定が無い。下の名札から開く。
+      <div class="chiplist" id="picklist"></div>
+    </div>
+  </div>
+  <div class="notice" id="unknown" hidden style="margin-top: .9rem">
+    架蔵にその名は無い。<a class="u-draw" href="chara-detail-b.html">指定なしの画面へ戻る</a>。
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。肖像は未収録のため題箋で代用する。データは characters・works・catalog の単一ソース。</footer>
+<script src="js/proposal.js"></script>
+<script>
+"use strict";
+(() => {
+  const root = document.getElementById("root");
+  const id = new URLSearchParams(location.search).get("id");
+  const unknown = document.getElementById("unknown");
+
+  const render = (c, works, catRows) => {
+    const appear = works
+      .filter((w) => (w.characters || []).includes(c.id))
+      .sort((a, b) => {
+        const ao = a.order == null, bo = b.order == null;
+        if (ao !== bo) return ao ? 1 : -1;
+        if (ao && bo) return String(a.released || "").localeCompare(String(b.released || ""));
+        return a.order - b.order;
+      });
+    const first = appear[0];
+    root.innerHTML = `
+      <div class="plate card" style="padding:1.2rem" data-reveal>
+        <div class="tanzaku" style="border:1px solid var(--rule);border-radius:4px;background:var(--paper)">
+          <p class="vname">${P.esc(c.name)}</p>
+          <span class="aff"><span class="lamp" aria-hidden="true"></span>${P.esc(c.affiliation || "所属未記載")}</span>
+        </div>
+        <div>
+          <dl class="props">
+            <dt>役割</dt><dd>${P.esc(c.role || "—")}</dd>
+            <dt>容貌</dt><dd>${P.esc(c.appearance || "—")}</dd>
+            <dt>初出</dt><dd>${first ? `${P.esc(first.orderLabel || "")}${P.esc(first.title)}` : "出典に現れない"}</dd>
+            <dt>出演</dt><dd><b class="num" data-count="${appear.length}">0</b> 作</dd>
+          </dl>
+        </div>
+      </div>
+      <h2 style="font-size:1.05rem" data-reveal>出演年表</h2>
+      ${appear.length ? `<ul class="works-tl tl" data-reveal>${appear.map((w) => `<li data-reveal>
+          <span class="rel">${P.esc(w.released || "日付なし")}</span>　${P.esc(w.orderLabel || "")}${P.esc(w.title)}
+        </li>`).join("")}</ul>` : `<div class="notice" data-reveal>出演とされる作品が現時点で無い（出典なし人物）。</div>`}
+      <h2 style="font-size:1.05rem" data-reveal>目録棚のこの人物</h2>
+      <ul style="list-style:none;padding:0;font-size:.9rem">
+        ${catRows.map((r) => `<li data-reveal style="padding:.3rem 0;border-top:1px solid var(--rule)">${P.esc(r.id)}・${P.esc(r.title)} ${P.badge(r.verify)}</li>`).join("")}
+      </ul>`;
+    P.reveal();
+    P.countUp();
+  };
+
+  const pick = (chars) => {
+    document.getElementById("picklist").innerHTML = chars
+      .map((c) => `<a href="?id=${P.esc(c.id)}">${P.esc(c.name)}</a>`).join("");
+  };
+
+  if (!id) {
+    P.fetchJson("../improve/data/characters.json")
+      .then((d) => pick(d.characters))
+      .catch((e) => console.error(e));
+    return;
+  }
+  Promise.all([
+    P.fetchJson("../improve/data/characters.json"),
+    P.fetchJson("../improve/data/works.json"),
+    P.fetchJson("../improve/data/catalog.json")
+  ]).then(([cd, wd, cat]) => {
+    const c = cd.characters.find((x) => x.id === id);
+    if (!c) { unknown.hidden = false; return; }
+    render(c, wd.works || [], (cat.catalog || []).filter((e) => e.kind === "人物" && e.ref === id));
+  }).catch((e) => {
+    console.error(e);
+    root.innerHTML = '<div class="notice">データを読み込めない。data/ の配置を確認（0件とは別の状態）。</div>';
+  });
+})();
+</script>
+</body>
+</html>

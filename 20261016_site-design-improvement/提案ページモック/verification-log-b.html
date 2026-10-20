@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 検証の記録 B案（台帳）
+  記録を表で示し、現状の数と並べる。帳面として一望できる形。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画
+    [ANIM-6] 行の順次出現
+    [ANIM-7] 現状数のカウント
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>検証の記録 B案（台帳）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・検証の記録</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">B案（台帳）・ <a href="verification-log-a.html">A案（日誌）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>検証の記録</h1>
+  <p class="lead" data-reveal>確認の記録を台帳の形で並べる。現状の数と見比べて、どこまで進んだかを一目で確かめる。</p>
+
+  <p class="stats" data-reveal>
+    <span>出典項 <b class="num" data-count="14">0</b></span>
+    <span>確認済 <b class="num" data-count="8">0</b></span>
+    <span>目録未検証 <b class="num" data-count="49">0</b></span>
+  </p>
+
+  <div class="frame">
+    <table>
+      <caption>この記録自体も模擬データ。運用では確認の都度1行を追記する。</caption>
+      <thead><tr><th scope="col">日付</th><th scope="col">対象</th><th scope="col">出典・根拠</th><th scope="col">結果</th></tr></thead>
+      <tbody>
+        <tr data-reveal><td>2026-10-16</td><td>モック改善ラウンドの着手</td><td>—</td><td><span class="badge">作業記録</span></td></tr>
+        <tr data-reveal><td>2026-10-19</td><td>出典8群14項の照合</td><td>data/sources.json</td><td><span class="badge ok">確認済8</span> <span class="badge sup">要補足2</span> <span class="badge">未検証2</span> <span class="badge none">出典なし2</span></td></tr>
+        <tr data-reveal><td>2026-10-19</td><td>品質スキャン指摘の是正（中1・低7）</td><td>スキャン報告</td><td><span class="badge ok">是正済</span></td></tr>
+        <tr data-reveal><td>2026-10-20</td><td>標準テスト分類でのテスト実施</td><td>テスト実施記録_20261020.md</td><td><span class="badge ok">合格</span> <span class="badge sup">F-1/F-2 修正</span></td></tr>
+        <tr data-reveal><td class="dim">次</td><td>提案ページの採否と統合</td><td>提案ページモック</td><td><span class="badge">判断待ち</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。HOME の現状パネルと同じ数を、確認の跡付きで示す。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>

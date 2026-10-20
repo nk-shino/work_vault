@@ -1,0 +1,193 @@
+/* 提案ページモック共通スタイル。
+   テーマ: 紙(paper)×墨(ink)×灯(lamp)。帳面と記録室の雰囲気を、本編モックのトークンに合わせて維持する。
+   アニメーションはすべて [ANIM-n] の印を付ける。縮退は末尾の prefers-reduced-motion を参照。 */
+
+:root {
+  --paper: #fbf9f4;
+  --paper-2: #f4f0e6;
+  --ink: #2c2a26;
+  --dim: #7a746a;
+  --lamp: #b9822e;
+  --rule: #d9d3c5;
+  --ok: #3e7a4e;
+  --sup: #b9822e;
+  --none: #a34a3c;
+  --serif: Georgia, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --sans: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+html[data-theme="dark"] {
+  --paper: #201e1a;
+  --paper-2: #292620;
+  --ink: #e8e2d4;
+  --dim: #9a9284;
+  --lamp: #d9a94a;
+  --rule: #3b382f;
+  --ok: #7fae8b;
+  --none: #c98073;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.7;
+}
+main { max-width: 56rem; margin: 0 auto; padding: 0 1.25rem 3rem; }
+a { color: var(--ink); }
+
+/* ── 枠組み ─────────────────────────────── */
+.masthead {
+  display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+  padding: .9rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead .site { margin: 0; font-weight: 600; }
+.masthead .site small { display: block; font-weight: 400; color: var(--dim); font-size: .72rem; }
+.masthead .spacer { flex: 1; }
+#themeToggle {
+  border: 1px solid var(--rule); background: transparent; color: var(--ink);
+  font-family: var(--sans); font-size: .78rem; padding: .2rem .6rem; border-radius: 999px; cursor: pointer;
+}
+.switch {
+  font-family: var(--sans); font-size: .78rem; color: var(--dim);
+  margin: 1.1rem 0 0;
+}
+.switch a { color: var(--ink); }
+.page-foot {
+  border-top: 1px solid var(--rule);
+  padding: 1rem 1.25rem 1.6rem;
+  color: var(--dim); font-size: .78rem; font-family: var(--sans);
+  max-width: 56rem; margin: 0 auto;
+}
+.page-title { font-size: 1.5rem; margin: 1.6rem 0 .2rem; }
+.lead { color: var(--dim); font-size: .92rem; margin: 0 0 1.4rem; }
+
+/* [ANIM-2] 見出し罫線の描画: .is-in 付与で灯色の罫線が左から伸びる */
+.page-title::after {
+  content: ""; display: block; height: 1px; width: 0;
+  background: var(--lamp);
+  transition: width .7s ease .2s;
+}
+.page-title.is-in::after { width: 6rem; }
+
+/* [ANIM-1][ANIM-6] 淡入と順次出現: data-reveal の要素が .is-in で立ち上がる。
+   JS が兄弟順に --d(遅延) を振るため、表の行や札が順に現れる。 */
+[data-reveal] {
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .55s ease var(--d, 0s), transform .55s ease var(--d, 0s);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* [ANIM-4] 下線の描画(ホバー): 灯色の下線が左から引かれる */
+.u-draw {
+  text-decoration: none;
+  background-image: linear-gradient(var(--lamp), var(--lamp));
+  background-repeat: no-repeat; background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size .3s ease;
+  padding-bottom: 1px;
+}
+.u-draw:hover { background-size: 100% 1px; }
+
+/* [ANIM-5] 札の浮き(ホバー): 題箋・カードがわずかに浮く */
+.plate {
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.plate:hover { transform: translateY(-2px) rotate(-.4deg); box-shadow: 0 6px 14px rgba(44, 42, 38, .12); }
+
+/* [ANIM-3] 灯の燐光: 確認済の印が静かに明滅する */
+.lamp {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--lamp);
+  animation: lamp-breath 2.6s ease-in-out infinite;
+}
+@keyframes lamp-breath { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+/* 表（帳面） */
+.frame { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+caption { text-align: left; color: var(--dim); font-size: .74rem; padding: .5rem .8rem; font-family: var(--sans); }
+th, td { border-bottom: 1px solid var(--rule); padding: .45rem .8rem; text-align: left; vertical-align: top; }
+thead th { background: var(--paper-2); font-family: var(--sans); font-size: .74rem; font-weight: 600; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background .25s ease; }
+tbody tr:hover { background: var(--paper-2); }
+.dim { color: var(--dim); }
+
+/* バッジ（本編と同じ4状態＋日付なし） */
+.badge {
+  display: inline-block; font-family: var(--sans); font-size: .68rem;
+  border: 1px solid var(--rule); border-radius: 999px; padding: .05rem .55rem;
+  color: var(--dim); white-space: nowrap;
+}
+.badge.ok { color: var(--ok); border-color: var(--ok); }
+.badge.sup { color: var(--sup); border-color: var(--sup); }
+.badge.none { color: var(--none); border-color: var(--none); }
+/* [ANIM-10] バッジの着色: 行の出現に合わせてわずかに拡大しながら現れる */
+[data-reveal].is-in .badge { animation: badge-in .5s ease var(--d, 0s) both; }
+@keyframes badge-in { from { transform: scale(.85); } to { transform: scale(1); } }
+
+/* 統計の数値 */
+.stats { display: flex; gap: 1.4rem; flex-wrap: wrap; font-family: var(--sans); font-size: .82rem; margin: 0 0 1.2rem; }
+.stats b { font-size: 1.15rem; font-family: var(--serif); }
+.stats .num { min-width: 1.6em; display: inline-block; }
+
+/* [ANIM-8] 開閉: ボタンで words の高みを滑らかに開閉する（details の代わりに button+div） */
+.acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.acc-body > div { overflow: hidden; }
+.acc.open .acc-body { grid-template-rows: 1fr; }
+.acc > button {
+  all: unset; cursor: pointer; display: block; width: 100%;
+  font: inherit; padding: .45rem 0;
+}
+
+/* [ANIM-9] 縦線の成長: 日誌の縦線が上から下へ引かれる */
+.tl { position: relative; padding-left: 1.4rem; list-style: none; margin: 1.2rem 0; }
+.tl::before {
+  content: ""; position: absolute; left: 4px; top: 4px; bottom: 4px; width: 1px;
+  background: var(--rule);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform .9s ease .2s;
+}
+.tl.is-in::before { transform: scaleY(1); }
+.tl li { position: relative; padding: 0 0 1.1rem; }
+.tl li::before {
+  content: ""; position: absolute; left: -1.4rem; top: .55em;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--paper); border: 1px solid var(--lamp);
+}
+
+/* 空の状態・案内 */
+.notice {
+  border: 1px solid var(--rule); border-radius: 4px;
+  background: var(--paper-2); padding: 1rem 1.1rem;
+  font-family: var(--sans); font-size: .86rem;
+}
+.chiplist { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .6rem; }
+.chiplist a {
+  border: 1px solid var(--rule); border-radius: 999px;
+  padding: .1rem .7rem; font-size: .8rem; text-decoration: none;
+  background: var(--paper);
+}
+.chiplist a:hover { border-color: var(--lamp); }
+.big404 { font-size: 4.2rem; font-family: var(--sans); font-weight: 700; letter-spacing: .08em; margin: 2rem 0 0; }
+.vname {
+  writing-mode: vertical-rl; text-orientation: upright;
+  font-size: 1.35rem; letter-spacing: .35em; margin: 0;
+}
+dl.props { display: grid; grid-template-columns: 6.5em 1fr; gap: .3rem .8rem; font-size: .92rem; margin: 0; }
+dl.props dt { color: var(--dim); font-family: var(--sans); font-size: .78rem; padding-top: .15em; }
+
+/* 縮退: 動きの軽減を希望する環境では全アニメを停止して最終形を即時表示する */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  [data-reveal] { opacity: 1; transform: none; }
+  .page-title::after { width: 6rem; }
+  .tl::before { transform: none; }
+}

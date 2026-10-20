@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 出典台帳 A案（帳面）
+  8群14項を原票の並びのまま1枚の表で一覧する。検証の原票を開示するのが要件の中心。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画（proposal.css .page-title）
+    [ANIM-6] 行の順次出現（data-reveal + --d）
+    [ANIM-4] 下線の描画（ホバー）
+    [ANIM-7] 統計数のカウント（js/proposal.js）
+  縮退: prefers-reduced-motion で全停止（proposal.css 末尾）
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>出典台帳 A案（帳面）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・出典台帳</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">A案（帳面）・ <a href="source-ledger-b.html">B案（札）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>出典台帳</h1>
+  <p class="lead" data-reveal>出典8群14項を、原票の並びのまま一覧する。状態の定義は「このサイトについて」に置く。題を直しても出典IDは動かない。</p>
+
+  <p class="stats" data-reveal>
+    <span>確認済 <b class="num" data-count="8">0</b></span>
+    <span>要補足 <b class="num" data-count="2">0</b></span>
+    <span>未検証 <b class="num" data-count="2">0</b></span>
+    <span>出典なし <b class="num" data-count="2">0</b></span>
+    <span>日付なし <b class="num" data-count="4">0</b></span>
+  </p>
+
+  <div class="frame">
+    <table>
+      <caption>日付が「no date」の項は原票に日付の記載が無い。空欄として黙って落とさず、そのまま示す。</caption>
+      <thead><tr><th scope="col">群</th><th scope="col">ID</th><th scope="col">題</th><th scope="col">日付</th><th scope="col">状態</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="notice" id="loaderr" hidden style="margin:0;border:none;border-top:1px solid var(--rule)">
+      データを読み込めない。data/ の配置を確認（0項とは別の状態）。
+    </div>
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。データは data/sources.json の単一ソース。<a class="u-draw" href="../improve/catalog-c.html">本編の記録室（catalog-c）で照合の内訳を見る</a>。</footer>
+<script src="js/proposal.js"></script>
+<script>
+"use strict";
+(() => {
+  const tbody = document.getElementById("tbody");
+  P.fetchJson("../improve/data/sources.json")
+    .then((d) => {
+      const rows = [];
+      for (const g of d.groups) {
+        for (const it of g.items) {
+          rows.push(`<tr data-reveal>
+            <td class="dim">${P.esc(g.name)}</td>
+            <td>${P.esc(it.id)}</td>
+            <td>${P.esc(it.label)}</td>
+            <td>${it.date === "no date" ? '<span class="dim">日付なし</span>' : P.esc(it.date)}</td>
+            <td>${P.badge(it.status)}</td>
+          </tr>`);
+        }
+      }
+      tbody.innerHTML = rows.join("");
+      P.reveal();
+    })
+    .catch((e) => {
+      console.error(e);
+      document.getElementById("loaderr").hidden = false;
+    });
+})();
+</script>
+</body>
+</html>

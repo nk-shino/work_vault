@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: 検証の記録 A案（日誌）
+  いつ・何を・どの出典で確認したかを縦の日誌で示す。未検証が減る過程を見せる。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画
+    [ANIM-9] 縦線の成長（日誌の軸線が上から下へ引かれる）
+    [ANIM-1][ANIM-6] 項の順次出現
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>検証の記録 A案（日誌）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・検証の記録</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">A案（日誌）・ <a href="verification-log-b.html">B案（台帳）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>検証の記録</h1>
+  <p class="lead" data-reveal>いつ・何を・どの出典で確認したかを、確認の都度ここに追記する。未検証が減っていく過程が、この面で読める。</p>
+
+  <ul class="tl" id="tl" data-reveal>
+    <li data-reveal>
+      <strong>2026-10-16</strong>　モック改善ラウンドの着手。方向A/B/C の5画面を仮置きし、本編の現状（未検証49・確認済1）をそのまま載せる。
+    </li>
+    <li data-reveal>
+      <strong>2026-10-19</strong>　出典8群14項の照合を実施。確認済8・要補足2・未検証2・出典なし2・日付なし4。照合内訳の開示を記録室（catalog-c）に実装。<br>
+      <span class="dim">同日　品質スキャンの指摘（中1・低7）を是正。採番と照合の実装を1系統に統一（CH-005）。</span>
+    </li>
+    <li data-reveal>
+      <strong>2026-10-20</strong>　標準テスト分類でテストを実施（UT・結合・システム・受入・モンキー）。検出した404リンク2件を修正し、作品一覧を新設（CH-006）。<br>
+      <span class="dim">同日　テストのギャップ分析で、出典台帳・人物詳細・検証の記録・サイト説明・404を提案ページとして起案。</span>
+    </li>
+  </ul>
+
+  <div class="notice" data-reveal>
+    この記録自体も模擬データである。運用では確認の都度1行を追記し、確認者と出典IDを添える。
+  </div>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。HOME の現状パネル（確認済8・未検証49…）の裏側がこの面に当たる。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>

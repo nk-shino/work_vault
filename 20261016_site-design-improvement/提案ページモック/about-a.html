@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案: このサイトについて A案（定義書）
+  非公式であること・模擬データであること・検証状態の4状態の定義・IDの運用を、定義書の形で示す。
+  ANIM 一覧:
+    [ANIM-2] 見出し罫線の描画
+    [ANIM-1][ANIM-6] 節の順次出現
+    [ANIM-4] 下線の描画（導線リンク）
+  縮退: prefers-reduced-motion で全停止
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>このサイトについて A案（定義書）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック・このサイトについて</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <p class="switch">A案（定義書）・ <a href="about-b.html">B案（見本帳）へ</a> ・ <a href="index.html">一覧へ</a></p>
+  <h1 class="page-title" data-reveal>このサイトについて</h1>
+  <p class="lead" data-reveal>閲覧に先立って知っておくべきことを、定義の形でまとめる。badge の意味はここが唯一の正式な場所。</p>
+
+  <section aria-labelledby="d1">
+    <h2 id="d1" style="font-size:1.05rem" data-reveal>1. サイトの位置づけ</h2>
+    <p data-reveal style="font-size:.92rem">ある音楽プロジェクトの非公式資料サイト。公式の資料ではない。掲載する数値・題・日付は模擬データであり、実在の作品・人物とは無関係である。</p>
+  </section>
+
+  <section aria-labelledby="d2">
+    <h2 id="d2" style="font-size:1.05rem" data-reveal>2. 検証状態の定義</h2>
+    <dl class="props frame" style="padding:.9rem 1rem" data-reveal>
+      <dt><span class="badge ok">確認済</span></dt><dd>日付のある出典に当たり、記載と一致を確認した。</dd>
+      <dt><span class="badge sup">要補足</span></dt><dd>出典に当たったが、日付や一部の記載が不足していて補いが必要。</dd>
+      <dt><span class="badge">未検証</span></dt><dd>出典照合をまだ行っていない。黙って混ぜないために状態をそのまま示す。</dd>
+      <dt><span class="badge none">出典なし</span></dt><dd>現時点で根拠になる出典が存在しない。作品本文からの記録待ち。</dd>
+      <dt><span class="dim">日付なし</span></dt><dd>出典に日付の記載が無い。空欄とせず、そのまま明示する。</dd>
+    </dl>
+  </section>
+
+  <section aria-labelledby="d3">
+    <h2 id="d3" style="font-size:1.05rem" data-reveal>3. IDの運用</h2>
+    <p data-reveal style="font-size:.92rem">目録の ID（W-001・E-005 など）は資料からの参照に固定する。題を直しても ID は動かない。出典の ID（s01-001 など）も同様に固定で、照合の内訳はこの ID で開示する。</p>
+  </section>
+
+  <section aria-labelledby="d4">
+    <h2 id="d4" style="font-size:1.05rem" data-reveal>4. データの原典</h2>
+    <p data-reveal style="font-size:.92rem">表示は data/ 配下の JSON を唯一の原典にする。頁ごとに手で写した値は置かない。更新はデータの更新のみで行い、確認の跡は検証の記録に残す。</p>
+  </section>
+</main>
+
+<footer class="page-foot">提案ページモック（非公式・模擬データ）。この面は本番では footer から1リンクで開く想定。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>

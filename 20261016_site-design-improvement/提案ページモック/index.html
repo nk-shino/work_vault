@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  提案ページモック 一覧
+  5頁 × A/B案。共通部品は css/proposal.css と js/proposal.js。
+  アニメーションは各ファイルと proposal.css 内の [ANIM-n] 印を参照。prefers-reduced-motion で全停止。
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提案ページモック 一覧</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/proposal.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="site">回廊の記録<small>提案ページモック</small></p>
+  <span class="spacer"></span>
+  <button id="themeToggle" type="button" aria-label="紙と灯の色を切り替える">灯</button>
+</header>
+
+<main>
+  <h1 class="page-title" data-reveal>提案ページの一覧</h1>
+  <p class="lead" data-reveal>前回の提案5頁を、それぞれ2案で実装した実働モック。データは本編（improve/data）の単一ソースから読む。</p>
+
+  <div class="frame">
+    <table>
+      <caption>案の見分け: A案は帳面（一覧と罫線が主役）、B案は札（単位のかたまりと題箋が主役）。</caption>
+      <thead><tr><th scope="col">頁</th><th scope="col">A案（帳面）</th><th scope="col">B案（札）</th></tr></thead>
+      <tbody>
+        <tr data-reveal><td>出典台帳</td><td><a class="u-draw" href="source-ledger-a.html">A案 帳面で14項を一覧</a></td><td><a class="u-draw" href="source-ledger-b.html">B案 群ごとの札</a></td></tr>
+        <tr data-reveal><td>人物詳細</td><td><a class="u-draw" href="chara-detail-a.html">A案 題箋と紙の一枚</a></td><td><a class="u-draw" href="chara-detail-b.html">B案 索引カードと出演年表</a></td></tr>
+        <tr data-reveal><td>検証の記録</td><td><a class="u-draw" href="verification-log-a.html">A案 日誌（縦線）</a></td><td><a class="u-draw" href="verification-log-b.html">B案 台帳（表と数）</a></td></tr>
+        <tr data-reveal><td>このサイトについて</td><td><a class="u-draw" href="about-a.html">A案 定義書</a></td><td><a class="u-draw" href="about-b.html">B案 見本帳（状態の実例）</a></td></tr>
+        <tr data-reveal><td>404</td><td><a class="u-draw" href="404-a.html">A案 閉じられた頁</a></td><td><a class="u-draw" href="404-b.html">B案 迷い札</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="page-foot">非公式・模擬データの提案モック。外部リクエスト無し。アニメーションはコード内 [ANIM] 印の箇所。動きの軽減設定では全て停止する。</footer>
+<script src="js/proposal.js"></script>
+</body>
+</html>
