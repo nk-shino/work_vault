@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>回廊の記録 — 統合モックアップ（単一ファイル）</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          paper: { 50: "#fbf9f4", 100: "#f4efe3", 200: "#e7dfcb", 300: "#d5c9ab" },
+          ink:   { 900: "#2a2723", 700: "#57504a", 500: "#8a8178" },
+          lamp:  { 200: "#f3e2b8", 300: "#e8c37a", 400: "#d9a944", 500: "#b9862c", 600: "#8f6620" }
+        },
+        fontFamily: {
+          mincho: ['"Hiragino Mincho ProN"', '"Yu Mincho"', '"YuMincho"', '"Noto Serif JP"', "serif"]
+        }
+      }
+    }
+  };
+</script>
+<script>
+  // 初期描画前にテーマを確定（FOUC 防止）
+  (function () {
+    const saved = localStorage.getItem("mock-theme");
+    if (saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+    }
+  })();
+</script>
+<style>
+  /* 題箋（プレースホルダー画像）の質感。画像の代わりにSVGと漸層で構成 */
+  .plate-motif {
+    background-image:
+      linear-gradient(160deg, rgba(217, 169, 68, 0.10), transparent 55%),
+      repeating-linear-gradient(0deg, transparent 0 22px, rgba(138, 129, 120, 0.07) 22px 23px);
+  }
+  .vertical-label { writing-mode: vertical-rl; letter-spacing: 0.35em; }
+</style>
+</head>
+
+<body class="bg-paper-50 text-ink-900 dark:bg-stone-950 dark:text-stone-200 font-mincho antialiased">
+
+<!-- ===== ヘッダー ===== -->
+<header class="sticky top-0 z-40 border-b border-paper-200 bg-paper-50/90 backdrop-blur dark:border-stone-800 dark:bg-stone-950/90">
+  <div class="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
+    <a href="#home" class="flex items-center gap-2">
+      <svg class="h-5 w-5 text-lamp-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M12 3v3m0 12v3m-7-9H2m20 0h-3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1m0-12.8l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="3.2"/>
+      </svg>
+      <span class="text-lg font-bold tracking-wide">回廊の記録</span>
+      <span class="hidden text-xs text-ink-500 sm:inline dark:text-stone-500">非公式資料サイト・モックアップ</span>
+    </a>
+    <nav class="ml-auto hidden items-center gap-1 text-sm md:flex" aria-label="主ナビゲーション">
+      <a href="#home" class="rounded px-3 py-1.5 hover:bg-paper-100 dark:hover:bg-stone-900">HOME</a>
+      <a href="#catalog" class="rounded px-3 py-1.5 hover:bg-paper-100 dark:hover:bg-stone-900">目録棚</a>
+      <a href="#chara" class="rounded px-3 py-1.5 hover:bg-paper-100 dark:hover:bg-stone-900">人物一覧</a>
+      <a href="#events" class="rounded px-3 py-1.5 hover:bg-paper-100 dark:hover:bg-stone-900">出来事</a>
+      <a href="#work" class="rounded px-3 py-1.5 hover:bg-paper-100 dark:hover:bg-stone-900">作品詳細</a>
+    </nav>
+    <button id="themeToggle" type="button" aria-label="明るさを切り替える"
+      class="ml-auto rounded border border-paper-200 p-2 text-ink-700 hover:bg-paper-100 md:ml-0 dark:border-stone-700 dark:text-stone-300 dark:hover:bg-stone-900">
+      <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/></svg>
+      <svg class="hidden h-4 w-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4m0-14.2l-1.4 1.4M6.3 17.7l-1.4 1.4" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="flex gap-1 overflow-x-auto border-t border-paper-200 px-3 py-1.5 text-sm md:hidden dark:border-stone-800" aria-label="ページ内移動">
+    <a href="#home" class="shrink-0 rounded px-3 py-1 hover:bg-paper-100 dark:hover:bg-stone-900">HOME</a>
+    <a href="#catalog" class="shrink-0 rounded px-3 py-1 hover:bg-paper-100 dark:hover:bg-stone-900">目録棚</a>
+    <a href="#chara" class="shrink-0 rounded px-3 py-1 hover:bg-paper-100 dark:hover:bg-stone-900">人物一覧</a>
+    <a href="#events" class="shrink-0 rounded px-3 py-1 hover:bg-paper-100 dark:hover:bg-stone-900">出来事</a>
+    <a href="#work" class="shrink-0 rounded px-3 py-1 hover:bg-paper-100 dark:hover:bg-stone-900">作品詳細</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ===== HOME：検索を正面に、現状を静かに ===== -->
+  <section id="home" class="scroll-mt-20 border-b border-paper-200 dark:border-stone-800">
+    <div class="mx-auto grid max-w-6xl items-start gap-10 px-4 py-12 md:grid-cols-[1fr_320px] md:py-16">
+      <div>
+        <p class="mb-3 text-xs tracking-[0.3em] text-lamp-600 dark:text-lamp-300">UNOFFICIAL ARCHIVE — 統合モックアップ</p>
+        <h1 class="text-3xl font-bold leading-snug md:text-4xl">灯を絞り、帳面を開く。</h1>
+        <p class="mt-4 max-w-prose leading-relaxed text-ink-700 dark:text-stone-400">
+          ここは、回廊聖堂シリーズの記録を静かに引くための非公式資料サイトです。
+          作品・人物・出来事・用語を出典の状態とともに記録し、確かめられる形で残します。
+          見付けた誤りは、記録のそばから指摘できます。
+        </p>
+        <form id="heroJump" class="mt-6 flex max-w-md gap-2" role="search">
+          <input id="heroQ" type="search" placeholder="題・人物・用語を引く" aria-label="全項目を検索"
+            class="min-w-0 flex-1 rounded border border-paper-300 bg-white px-3 py-2 text-sm outline-none focus:border-lamp-400 dark:border-stone-700 dark:bg-stone-900">
+          <button type="submit" class="shrink-0 rounded bg-lamp-500 px-4 py-2 text-sm font-sans text-white hover:bg-lamp-600 dark:text-stone-950">目録棚で引く →</button>
+        </form>
+        <p class="mt-2 text-xs text-ink-500 dark:text-stone-500">検索語は目録棚の絞り込みへ渡ります。読み込めない場合と0件の場合は、別の文言で出します。</p>
+      </div>
+
+      <aside aria-labelledby="status-head" class="rounded-lg border border-paper-200 bg-paper-100/60 p-5 dark:border-stone-800 dark:bg-stone-900/60">
+        <h2 id="status-head" class="text-sm font-bold">記録の現状</h2>
+        <p class="mt-1 text-xs text-ink-500 dark:text-stone-500">fixture 実測（2026-10-19時点）</p>
+        <dl class="mt-4 space-y-3 text-sm">
+          <div class="flex items-baseline justify-between gap-2">
+            <dt class="text-ink-700 dark:text-stone-400">出典</dt>
+            <dd class="font-sans text-lg font-bold">8群14項</dd>
+          </div>
+          <div class="flex flex-wrap gap-1.5 font-sans text-[11px]">
+            <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">確認済 8</span>
+            <span class="rounded-full bg-amber-100 px-2 py-0.5 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">要補足 2</span>
+            <span class="rounded-full bg-stone-200 px-2 py-0.5 text-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証 2</span>
+            <span class="rounded-full bg-rose-100 px-2 py-0.5 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300">出典なし 2</span>
+            <span class="rounded-full border border-stone-300 px-2 py-0.5 text-stone-600 dark:border-stone-700 dark:text-stone-400">日付なし 4</span>
+          </div>
+          <div class="flex items-baseline justify-between gap-2 border-t border-paper-200 pt-3 dark:border-stone-800">
+            <dt class="text-ink-700 dark:text-stone-400">目録</dt>
+            <dd class="font-sans text-lg font-bold">50項</dd>
+          </div>
+          <div class="flex flex-wrap gap-1.5 font-sans text-[11px]">
+            <span class="rounded-full bg-stone-200 px-2 py-0.5 text-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証 49</span>
+            <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">確認済 1</span>
+          </div>
+        </dl>
+        <p class="mt-4 border-t border-paper-200 pt-3 text-xs leading-relaxed text-ink-500 dark:border-stone-800 dark:text-stone-500">
+          自動照合の対象は出来事のみ（本家 §6-4 と同じ運用）。当たらない項目は静かに落とさず、内訳を出します。
+        </p>
+      </aside>
+    </div>
+
+    <!-- 棚（種別の入口） -->
+    <div class="mx-auto max-w-6xl px-4 pb-12">
+      <h2 class="text-sm font-bold text-ink-500 dark:text-stone-500">棚</h2>
+      <div class="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <a href="#catalog" class="group rounded-lg border border-paper-200 bg-white p-4 hover:border-lamp-400 dark:border-stone-800 dark:bg-stone-900">
+          <svg class="h-5 w-5 text-lamp-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm4 0v16" stroke-linecap="round"/></svg>
+          <p class="mt-2 text-sm text-ink-700 dark:text-stone-400">作品</p>
+          <p class="font-sans text-2xl font-bold">13<span class="ml-1 text-xs font-normal text-ink-500">作</span></p>
+        </a>
+        <a href="#chara" class="group rounded-lg border border-paper-200 bg-white p-4 hover:border-lamp-400 dark:border-stone-800 dark:bg-stone-900">
+          <svg class="h-5 w-5 text-lamp-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.8-3 3-4.5 5.5-4.5S13.7 16 14.5 19M15.5 5.5a3 3 0 0 1 0 5.6M17 14.7c1.8.6 3 1.9 3.5 4.3" stroke-linecap="round"/></svg>
+          <p class="mt-2 text-sm text-ink-700 dark:text-stone-400">人物</p>
+          <p class="font-sans text-2xl font-bold">13<span class="ml-1 text-xs font-normal text-ink-500">人</span></p>
+        </a>
+        <a href="#events" class="group rounded-lg border border-paper-200 bg-white p-4 hover:border-lamp-400 dark:border-stone-800 dark:bg-stone-900">
+          <svg class="h-5 w-5 text-lamp-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16" stroke-linecap="round"/></svg>
+          <p class="mt-2 text-sm text-ink-700 dark:text-stone-400">出来事</p>
+          <p class="font-sans text-2xl font-bold">9<span class="ml-1 text-xs font-normal text-ink-500">件</span></p>
+        </a>
+        <a href="#catalog" class="group rounded-lg border border-paper-200 bg-white p-4 hover:border-lamp-400 dark:border-stone-800 dark:bg-stone-900">
+          <svg class="h-5 w-5 text-lamp-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1z" stroke-linejoin="round"/></svg>
+          <p class="mt-2 text-sm text-ink-700 dark:text-stone-400">用語</p>
+          <p class="font-sans text-2xl font-bold">15<span class="ml-1 text-xs font-normal text-ink-500">語</span></p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 目録棚：帳面形式（Bの横断）＋照合内訳（Cの開示） ===== -->
+  <section id="catalog" class="scroll-mt-20 border-b border-paper-200 dark:border-stone-800">
+    <div class="mx-auto max-w-6xl px-4 py-12">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h2 class="text-2xl font-bold">目録棚</h2>
+        <p class="text-sm text-ink-500 dark:text-stone-500">1行1項の帳面。検証列を押すと照合の内訳が開きます。</p>
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap gap-1.5 font-sans text-xs" role="group" aria-label="種別で絞り込み">
+          <button type="button" class="chip rounded-full border border-paper-300 px-3 py-1.5 aria-pressed:bg-ink-900 aria-pressed:text-white aria-pressed:border-ink-900 dark:border-stone-700 dark:aria-pressed:bg-stone-100 dark:aria-pressed:text-stone-900" data-kind="all" aria-pressed="true">すべて（50）</button>
+          <button type="button" class="chip rounded-full border border-paper-300 px-3 py-1.5 aria-pressed:bg-ink-900 aria-pressed:text-white aria-pressed:border-ink-900 dark:border-stone-700 dark:aria-pressed:bg-stone-100 dark:aria-pressed:text-stone-900" data-kind="作品" aria-pressed="false">作品</button>
+          <button type="button" class="chip rounded-full border border-paper-300 px-3 py-1.5 aria-pressed:bg-ink-900 aria-pressed:text-white aria-pressed:border-ink-900 dark:border-stone-700 dark:aria-pressed:bg-stone-100 dark:aria-pressed:text-stone-900" data-kind="人物" aria-pressed="false">人物</button>
+          <button type="button" class="chip rounded-full border border-paper-300 px-3 py-1.5 aria-pressed:bg-ink-900 aria-pressed:text-white aria-pressed:border-ink-900 dark:border-stone-700 dark:aria-pressed:bg-stone-100 dark:aria-pressed:text-stone-900" data-kind="出来事" aria-pressed="false">出来事</button>
+          <button type="button" class="chip rounded-full border border-paper-300 px-3 py-1.5 aria-pressed:bg-ink-900 aria-pressed:text-white aria-pressed:border-ink-900 dark:border-stone-700 dark:aria-pressed:bg-stone-100 dark:aria-pressed:text-stone-900" data-kind="用語" aria-pressed="false">用語</button>
+        </div>
+        <input id="catalogQ" type="search" placeholder="帳面を検索" aria-label="目録を検索"
+          class="ml-auto w-full max-w-xs rounded border border-paper-300 bg-white px-3 py-1.5 text-sm outline-none focus:border-lamp-400 dark:border-stone-700 dark:bg-stone-900">
+      </div>
+
+      <p id="catalogLine" class="mt-2 font-sans text-xs text-ink-500" aria-live="polite"></p>
+
+      <div class="mt-3 overflow-x-auto rounded-lg border border-paper-200 bg-white dark:border-stone-800 dark:bg-stone-900">
+        <table class="w-full min-w-[640px] text-left text-sm">
+          <caption class="sr-only">目録の帳面。ID・種別・題・日付・検証状態・関連</caption>
+          <thead>
+            <tr class="border-b border-paper-200 bg-paper-100/60 text-xs text-ink-500 dark:border-stone-800 dark:bg-stone-800/60 dark:text-stone-400">
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">ID</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">種別</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">題</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">日付</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">検証</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">関連 →</th>
+            </tr>
+          </thead>
+          <tbody id="catalogBody" class="divide-y divide-paper-100 dark:divide-stone-800/70">
+            <tr data-row data-kind="作品" id="row-w001" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">W-001</td>
+              <td class="px-4 py-2.5">作品</td>
+              <td class="px-4 py-2.5"><a href="#work" class="decoration-lamp-400 underline-offset-4 hover:underline">第一楽曲黄昏の封印</a></td>
+              <td class="px-4 py-2.5 font-sans text-xs">2023-01-15</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">燭守 セラフ → 調律師 カノン → 調律 →</td>
+            </tr>
+            <tr data-row data-kind="作品" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">W-002</td>
+              <td class="px-4 py-2.5">作品</td>
+              <td class="px-4 py-2.5"><a href="#work" class="decoration-lamp-400 underline-offset-4 hover:underline">第二楽曲灯の残響</a></td>
+              <td class="px-4 py-2.5 font-sans text-xs">2023-06-10</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">調律師 カノン → 調律 →</td>
+            </tr>
+            <tr data-row data-kind="作品" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">W-005</td>
+              <td class="px-4 py-2.5">作品</td>
+              <td class="px-4 py-2.5"><a href="#work" class="decoration-lamp-400 underline-offset-4 hover:underline">外伝 名もなき聖遺物</a></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 font-sans text-[11px] text-rose-800 dark:border-rose-900 dark:bg-rose-900/30 dark:text-rose-300">出典なし</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">名もなき聖遺物 →</td>
+            </tr>
+            <tr data-row data-kind="人物" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">C-001</td>
+              <td class="px-4 py-2.5">人物</td>
+              <td class="px-4 py-2.5"><a href="#chara" class="decoration-lamp-400 underline-offset-4 hover:underline">燭守 セラフ</a></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">第一楽曲黄昏の封印 →</td>
+            </tr>
+            <tr data-row data-kind="出来事" id="row-e001" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">E-001</td>
+              <td class="px-4 py-2.5">出来事</td>
+              <td class="px-4 py-2.5">第一楽曲黄昏の封印公開</td>
+              <td class="px-4 py-2.5 font-sans text-xs">2023-01-15</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">第一楽曲黄昏の封印 →</td>
+            </tr>
+            <tr data-detail="row-e001">
+              <td colspan="6" class="bg-paper-100/70 px-4 py-3 text-xs leading-relaxed dark:bg-stone-800/40">
+                <details>
+                  <summary class="cursor-pointer font-sans text-ink-700 marker:content-none dark:text-stone-300">照合の内訳を見る</summary>
+                  <p class="mt-2 font-sans">①日付あり出典: 当たらず → ②日付なし出典: 当たらず → <strong class="text-rose-700 dark:text-rose-300">未照合</strong>。題核「第一楽曲黄昏の封印」に一致する出典labelが無い。</p>
+                </details>
+              </td>
+            </tr>
+            <tr data-row data-kind="出来事" id="row-e005" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">E-005</td>
+              <td class="px-4 py-2.5">出来事</td>
+              <td class="px-4 py-2.5">第五楽曲贖罪の算法公開</td>
+              <td class="px-4 py-2.5 font-sans text-xs">2024-12-15</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-sans text-[11px] text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">確認済</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">第五楽曲贖罪の算法 →</td>
+            </tr>
+            <tr data-detail="row-e005">
+              <td colspan="6" class="bg-paper-100/70 px-4 py-3 text-xs leading-relaxed dark:bg-stone-800/40">
+                <details>
+                  <summary class="cursor-pointer font-sans text-ink-700 marker:content-none dark:text-stone-300">照合の内訳を見る</summary>
+                  <p class="mt-2 font-sans">①日付あり出典「設定資料集 初版」（s03-001・status=confirmed）に当たった。</p>
+                </details>
+              </td>
+            </tr>
+            <tr data-row data-kind="用語" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">G-001</td>
+              <td class="px-4 py-2.5">用語</td>
+              <td class="px-4 py-2.5">調律（ちょうれい）</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 font-sans text-[11px] text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">要補足</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">第一楽曲黄昏の封印 →</td>
+            </tr>
+            <tr data-row data-kind="用語" class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">G-002</td>
+              <td class="px-4 py-2.5">用語</td>
+              <td class="px-4 py-2.5">烙印（らくいん）</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">第四楽曲烙印の詩 →</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="catalogEmpty" hidden class="mt-3 rounded-lg border border-dashed border-paper-300 bg-paper-100/50 p-6 text-center text-sm text-ink-700 dark:border-stone-700 dark:bg-stone-900/50 dark:text-stone-400">
+        条件に合う項目が無い。種別や語を替えて引き直す。
+      </div>
+      <p class="mt-3 text-xs text-ink-500 dark:text-stone-500">
+        関連列は実在する参照（works.characters・glossary.workId・history.workId）だけで組む。推測の接続は載せない。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== 人物一覧：題箋のプレースホルダー＋検証と出典群 ===== -->
+  <section id="chara" class="scroll-mt-20 border-b border-paper-200 dark:border-stone-800">
+    <div class="mx-auto max-w-6xl px-4 py-12">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h2 class="text-2xl font-bold">人物一覧</h2>
+        <p class="text-sm text-ink-500 dark:text-stone-500">13人。肖像は準備中のため、題箋で代用する。</p>
+      </div>
+      <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <!-- カード1 -->
+        <article class="rounded-lg border border-paper-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <div class="plate-motif relative aspect-[3/4] overflow-hidden rounded-md border border-paper-200 bg-gradient-to-br from-paper-100 to-paper-200 dark:border-stone-800 dark:from-stone-800 dark:to-stone-900" role="img" aria-label="肖像は準備中">
+            <span class="vertical-label absolute right-2 top-2 text-[10px] text-ink-500/70 dark:text-stone-500">題箋</span>
+            <svg class="absolute inset-0 m-auto h-14 w-14 text-ink-500/30 dark:text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="9" r="3.4"/><path d="M5.5 20c1-3.8 3.6-5.6 6.5-5.6s5.5 1.8 6.5 5.6" stroke-linecap="round"/></svg>
+            <span class="absolute inset-x-0 bottom-0 bg-paper-50/85 py-1 text-center text-xs backdrop-blur dark:bg-stone-900/85">燭守 セラフ</span>
+          </div>
+          <p class="mt-2 text-center text-sm">燭守 セラフ <span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-1.5 font-sans text-[10px] align-middle text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></p>
+          <p class="mt-1 text-center text-xs text-ink-500 dark:text-stone-500">回廊聖堂</p>
+          <p class="mt-1 text-center font-sans text-xs text-lamp-600 dark:text-lamp-300">出演: 4作 →</p>
+        </article>
+        <!-- カード2 -->
+        <article class="rounded-lg border border-paper-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <div class="plate-motif relative aspect-[3/4] overflow-hidden rounded-md border border-paper-200 bg-gradient-to-br from-paper-100 to-paper-200 dark:border-stone-800 dark:from-stone-800 dark:to-stone-900" role="img" aria-label="肖像は準備中">
+            <span class="vertical-label absolute right-2 top-2 text-[10px] text-ink-500/70 dark:text-stone-500">題箋</span>
+            <svg class="absolute inset-0 m-auto h-14 w-14 text-ink-500/30 dark:text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="9" r="3.4"/><path d="M5.5 20c1-3.8 3.6-5.6 6.5-5.6s5.5 1.8 6.5 5.6" stroke-linecap="round"/></svg>
+            <span class="absolute inset-x-0 bottom-0 bg-paper-50/85 py-1 text-center text-xs backdrop-blur dark:bg-stone-900/85">調律師 カノン</span>
+          </div>
+          <p class="mt-2 text-center text-sm">調律師 カノン <span class="inline-block rounded-full border border-amber-200 bg-amber-50 px-1.5 font-sans text-[10px] align-middle text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">要補足</span></p>
+          <p class="mt-1 text-center text-xs text-ink-500 dark:text-stone-500">教団</p>
+          <p class="mt-1 text-center font-sans text-xs text-lamp-600 dark:text-lamp-300">出演: 3作 →</p>
+        </article>
+        <!-- カード3 -->
+        <article class="rounded-lg border border-paper-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <div class="plate-motif relative aspect-[3/4] overflow-hidden rounded-md border border-paper-200 bg-gradient-to-br from-paper-100 to-paper-200 dark:border-stone-800 dark:from-stone-800 dark:to-stone-900" role="img" aria-label="肖像は準備中">
+            <span class="vertical-label absolute right-2 top-2 text-[10px] text-ink-500/70 dark:text-stone-500">題箋</span>
+            <svg class="absolute inset-0 m-auto h-14 w-14 text-ink-500/30 dark:text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="9" r="3.4"/><path d="M5.5 20c1-3.8 3.6-5.6 6.5-5.6s5.5 1.8 6.5 5.6" stroke-linecap="round"/></svg>
+            <span class="absolute inset-x-0 bottom-0 bg-paper-50/85 py-1 text-center text-xs backdrop-blur dark:bg-stone-900/85">看取り ヴィゴル</span>
+          </div>
+          <p class="mt-2 text-center text-sm">看取り ヴィゴル <span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-1.5 font-sans text-[10px] align-middle text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></p>
+          <p class="mt-1 text-center text-xs text-ink-500 dark:text-stone-500">回廊聖堂</p>
+          <p class="mt-1 text-center font-sans text-xs text-lamp-600 dark:text-lamp-300">出演: 3作 →</p>
+        </article>
+        <!-- カード4：出典なしの見え方 -->
+        <article class="rounded-lg border border-paper-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <div class="plate-motif relative aspect-[3/4] overflow-hidden rounded-md border border-paper-200 bg-gradient-to-br from-paper-100 to-paper-200 dark:border-stone-800 dark:from-stone-800 dark:to-stone-900" role="img" aria-label="肖像は準備中">
+            <span class="vertical-label absolute right-2 top-2 text-[10px] text-ink-500/70 dark:text-stone-500">題箋</span>
+            <svg class="absolute inset-0 m-auto h-14 w-14 text-ink-500/30 dark:text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="9" r="3.4"/><path d="M5.5 20c1-3.8 3.6-5.6 6.5-5.6s5.5 1.8 6.5 5.6" stroke-linecap="round"/></svg>
+            <span class="absolute inset-x-0 bottom-0 bg-paper-50/85 py-1 text-center text-xs backdrop-blur dark:bg-stone-900/85">塵纏いルゥ</span>
+          </div>
+          <p class="mt-2 text-center text-sm">塵纏いルゥ <span class="inline-block rounded-full border border-rose-200 bg-rose-50 px-1.5 font-sans text-[10px] align-middle text-rose-800 dark:border-rose-900 dark:bg-rose-900/30 dark:text-rose-300">出典なし</span></p>
+          <p class="mt-1 text-center text-xs text-ink-500 dark:text-stone-500">不明</p>
+          <p class="mt-1 text-center font-sans text-xs text-ink-500 dark:text-stone-500">未照合（出典群から引けていない）</p>
+        </article>
+      </div>
+      <p class="mt-4 text-xs text-ink-500 dark:text-stone-500">ほか9人。カードを押すと人物詳細へ進む（本モックでは省略）。出典の群名と照合の結果を、名前のそばに出す。</p>
+    </div>
+  </section>
+
+  <!-- ===== 出来事：日付なしも明示する年表 ===== -->
+  <section id="events" class="scroll-mt-20 border-b border-paper-200 dark:border-stone-800">
+    <div class="mx-auto max-w-6xl px-4 py-12">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h2 class="text-2xl font-bold">出来事</h2>
+        <p class="text-sm text-ink-500 dark:text-stone-500">公開・発売などの記録。出典に日付が無い場合は「日付なし」と出す。</p>
+      </div>
+      <div class="mt-6 overflow-x-auto rounded-lg border border-paper-200 bg-white dark:border-stone-800 dark:bg-stone-900">
+        <table class="w-full min-w-[560px] text-left text-sm">
+          <thead>
+            <tr class="border-b border-paper-200 bg-paper-100/60 text-xs text-ink-500 dark:border-stone-800 dark:bg-stone-800/60 dark:text-stone-400">
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">日付</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">出来事</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">出典 →</th>
+              <th scope="col" class="px-4 py-2.5 font-sans font-medium">状態</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-paper-100 dark:divide-stone-800/70">
+            <tr class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs">2023-01-15</td>
+              <td class="px-4 py-2.5">第一楽曲黄昏の封印 公開</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+            </tr>
+            <tr class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs">2024-12-15</td>
+              <td class="px-4 py-2.5">第五楽曲贖罪の算法 公開</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">設定資料集 初版 →</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-sans text-[11px] text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">確認済</span></td>
+            </tr>
+            <tr class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs">2025-04-20</td>
+              <td class="px-4 py-2.5">第六楽曲…に先行した名もなき聖遺物 公開</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">—</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></td>
+            </tr>
+            <tr class="hover:bg-paper-50 dark:hover:bg-stone-800/40">
+              <td class="px-4 py-2.5 font-sans text-xs text-ink-500">日付なし</td>
+              <td class="px-4 py-2.5">作者インタビュー（出典側に日付の記載が無い）</td>
+              <td class="px-4 py-2.5 font-sans text-xs text-lamp-600 dark:text-lamp-300">作者インタビュー →</td>
+              <td class="px-4 py-2.5"><span class="inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 font-sans text-[11px] text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-300">要補足</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-xs leading-relaxed text-ink-500 dark:text-stone-500">
+        日付の無い出典は4項ある。label が出来事の題核を含まない場合、自動照合には乗らない。落ちた項目は「未照合」として開示し、黙って消さない。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== 作品詳細：読み継ぎの集約 ===== -->
+  <section id="work" class="scroll-mt-20">
+    <div class="mx-auto max-w-6xl px-4 py-12">
+      <div class="grid gap-8 md:grid-cols-[220px_1fr]">
+        <div>
+          <div class="plate-motif relative aspect-[3/4] overflow-hidden rounded-md border border-paper-200 bg-gradient-to-br from-paper-100 to-paper-200 shadow-sm dark:border-stone-800 dark:from-stone-800 dark:to-stone-900" role="img" aria-label="表紙は準備中">
+            <span class="vertical-label absolute right-3 top-3 text-sm text-ink-700/80 dark:text-stone-400">第一楽曲 黄昏の封印</span>
+            <svg class="absolute inset-0 m-auto h-16 w-16 text-lamp-500/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 3v3m0 12v3m-7-9H2m20 0h-3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1m0-12.8l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2"/></svg>
+          </div>
+          <p class="mt-3 font-sans text-xs text-ink-500 dark:text-stone-500">W-001・2023-01-15 公開</p>
+          <p class="mt-1"><span class="inline-block rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 font-sans text-[11px] text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">未検証</span></p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold md:text-3xl">第一楽曲 黄昏の封印</h2>
+          <p class="mt-4 max-w-prose leading-relaxed text-ink-700 dark:text-stone-400">
+            回廊の灯が一つ減った朝、封印の鐘が鳴った。燭守のセラフは、黄昏に沈む聖堂で最後の調律を命じられる。
+            鐘の音は街の縁まで届き、失われた筈の名を呼び戻す。監修者の署名が無い古い写本だけが、封印の理由を語って残っている。
+          </p>
+          <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-lg border border-paper-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+              <dt class="text-xs font-bold text-ink-500 dark:text-stone-500">出演 →</dt>
+              <dd class="mt-2 space-y-1 text-sm">
+                <p class="text-lamp-600 dark:text-lamp-300">燭守 セラフ →</p>
+                <p class="text-lamp-600 dark:text-lamp-300">調律師 カノン →</p>
+                <p class="text-lamp-600 dark:text-lamp-300">看取り ヴィゴル →</p>
+              </dd>
+            </div>
+            <div class="rounded-lg border border-paper-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+              <dt class="text-xs font-bold text-ink-500 dark:text-stone-500">用語 →</dt>
+              <dd class="mt-2 flex flex-wrap gap-1.5 font-sans text-xs">
+                <span class="rounded-full border border-paper-300 px-2 py-0.5 dark:border-stone-700">調律</span>
+                <span class="rounded-full border border-paper-300 px-2 py-0.5 dark:border-stone-700">聖遺物</span>
+                <span class="rounded-full border border-paper-300 px-2 py-0.5 dark:border-stone-700">黄昏の封印</span>
+              </dd>
+            </div>
+            <div class="rounded-lg border border-paper-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+              <dt class="text-xs font-bold text-ink-500 dark:text-stone-500">関連する出来事 →</dt>
+              <dd class="mt-2 text-sm text-lamp-600 dark:text-lamp-300">第一楽曲黄昏の封印公開（2023-01-15）→</dd>
+            </div>
+            <div class="rounded-lg border border-paper-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+              <dt class="text-xs font-bold text-ink-500 dark:text-stone-500">出典</dt>
+              <dd class="mt-2 text-sm">未照合（出典群から引けていない）</dd>
+            </div>
+          </dl>
+          <div class="mt-6">
+            <p class="text-xs font-bold text-ink-500 dark:text-stone-500">シリーズの位置</p>
+            <ol class="mt-2 flex flex-wrap gap-1.5 font-sans text-xs">
+              <li><span class="inline-block rounded border border-lamp-500 bg-lamp-200/60 px-2 py-1 font-bold text-lamp-600 dark:bg-lamp-500/20 dark:text-lamp-300">第一</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第二</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第三</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第四</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第五</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第六</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第七</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第八</span></li>
+              <li><span class="inline-block rounded border border-paper-300 px-2 py-1 text-ink-500 dark:border-stone-700 dark:text-stone-400">第九</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-paper-200 bg-paper-100/50 dark:border-stone-800 dark:bg-stone-900/50">
+  <div class="mx-auto max-w-6xl px-4 py-8 text-xs leading-relaxed text-ink-500 dark:text-stone-500">
+    <p>回廊の記録は、回廊聖堂シリーズの非公式ファンメイド資料サイトです。記録の出典と検証の状態を添え、確かめられる形で残すことを目的とします。</p>
+    <p class="mt-2">このページはデザイン確認用の統合モックアップです。表示内容にはダミーテキストを含み、実データとは一致しません。外部スクリプトはTailwind CDNのみを使用します。</p>
+  </div>
+</footer>
+
+<script>
+  // テーマ切替
+  const rootEl = document.documentElement;
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    rootEl.classList.toggle("dark");
+    localStorage.setItem("mock-theme", rootEl.classList.contains("dark") ? "dark" : "light");
+  });
+
+  // 目録棚の絞り込み（種別チップ＋検索語）
+  const chips = Array.from(document.querySelectorAll(".chip[data-kind]"));
+  const rows = Array.from(document.querySelectorAll("#catalogBody tr[data-row]"));
+  const detailRows = Array.from(document.querySelectorAll("#catalogBody tr[data-detail]"));
+  const q = document.getElementById("catalogQ");
+  const line = document.getElementById("catalogLine");
+  const emptyBox = document.getElementById("catalogEmpty");
+  let kind = "all";
+
+  function applyCatalog() {
+    const word = q.value.trim().toLowerCase();
+    let shown = 0;
+    rows.forEach((tr) => {
+      const hit = (kind === "all" || tr.dataset.kind === kind) && (!word || tr.textContent.toLowerCase().includes(word));
+      tr.hidden = !hit;
+      if (hit) shown++;
+    });
+    // 内訳行は、対応する本体行が見えるときだけ出す
+    detailRows.forEach((tr) => { tr.hidden = document.getElementById(tr.dataset.detail).hidden; });
+    line.textContent = shown ? `${shown}項を表示中。` : "";
+    emptyBox.hidden = shown > 0;
+  }
+
+  chips.forEach((b) =>
+    b.addEventListener("click", () => {
+      chips.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      kind = b.dataset.kind;
+      applyCatalog();
+    })
+  );
+  let qTimer;
+  q.addEventListener("input", () => {
+    clearTimeout(qTimer);
+    qTimer = setTimeout(applyCatalog, 80);
+  });
+
+  // HOMEの検索欄 → 目録棚へ受け渡し（?q= の代わりに同一ページ内で再現）
+  document.getElementById("heroJump").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const word = document.getElementById("heroQ").value.trim();
+    if (word) {
+      q.value = word;
+      applyCatalog();
+      document.getElementById("catalog").scrollIntoView({ behavior: "smooth" });
+    } else {
+      line.textContent = "検索語が空。そのまま帳面を見ることもできる。";
+      document.getElementById("catalog").scrollIntoView({ behavior: "smooth" });
+    }
+  });
+</script>
+</body>
+</html>
