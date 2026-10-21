@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}修正して採用 - 社内用語集{% endblock %}
+{% block main %}
+<h1>修正して採用：{{ payload.headword }}</h1>
+{% set v = payload.get("verification") %}
+{% if v and v.supported == false and v.reason %}
+<p class="warn">独立検証が「用例が定義を裏付けていない」と判定しています：{{ v.reason }}。用例だけで言える範囲に直してください。</p>
+{% elif v and v.reason %}
+<p class="hint">独立検証の指摘：{{ v.reason }}</p>
+{% endif %}
+<form method="post" action="/proposals/{{ p.id }}/edit" class="busy-on-submit edit">
+  <label for="definition">定義</label>
+  <textarea id="definition" name="definition" rows="4" required placeholder="用例を読んで、この語の意味を書いてください">{{ payload.definition }}</textarea>
+  <label for="context_tag">文脈タグ</label>
+  <input id="context_tag" name="context_tag" value="{{ payload.context_tag or '' }}">
+  <label for="scope_note">適用範囲の注記</label>
+  <textarea id="scope_note" name="scope_note" rows="2"></textarea>
+  <label for="change_reason">編集理由（必須）</label>
+  <input id="change_reason" name="change_reason" required>
+  <h2>用例（この提案に付いているもの）</h2>
+  <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
+  <button type="submit">修正して採用する</button>
+  <a href="/proposals">取り消して戻る</a>
+</form>
+{% endblock %}
