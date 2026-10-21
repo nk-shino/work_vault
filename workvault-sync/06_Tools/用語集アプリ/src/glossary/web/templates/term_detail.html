@@ -1,18 +1,21 @@
 {% extends "base.html" %}
 {% block title %}{{ d.term.headword }} - 社内用語集{% endblock %}
 {% block main %}
-<h1>{{ d.term.headword }} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
-<dl class="meta">
-  {% if d.term.reading %}<dt>読み</dt><dd>{{ d.term.reading }}</dd>{% endif %}
-  {% if d.term.english %}<dt>英語</dt><dd>{{ d.term.english }}</dd>{% endif %}
-  {% if d.term.abbreviation %}<dt>略語</dt><dd>{{ d.term.abbreviation }}</dd>{% endif %}
-  <dt>版</dt><dd>{{ d.term.revision_number }}（<a href="/history/term/{{ d.term.id }}">用語の履歴</a>）</dd>
-</dl>
-<p><a href="/terms/{{ d.term.id }}/edit">読み・英語・略語を編集</a> ／ <a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
+<nav class="crumbs" aria-label="現在位置"><a href="/terms">用語一覧</a> ／ {{ d.term.headword }}</nav>
+<section class="hero">
+  <h1 class="hw">{{ d.term.headword }} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
+  <dl class="meta">
+    {% if d.term.reading %}<dt>読み</dt><dd>{{ d.term.reading }}</dd>{% endif %}
+    {% if d.term.english %}<dt>英語</dt><dd>{{ d.term.english }}</dd>{% endif %}
+    {% if d.term.abbreviation %}<dt>略語</dt><dd>{{ d.term.abbreviation }}</dd>{% endif %}
+    <dt>版</dt><dd>{{ d.term.revision_number }}（<a href="/history/term/{{ d.term.id }}">用語の履歴</a>）</dd>
+  </dl>
+  <p class="hero-links"><a href="/terms/{{ d.term.id }}/edit">読み・英語・略語を編集</a> ／ <a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
+</section>
 
 {% if d.relations.get("confused_with") %}
 <section class="confused" aria-labelledby="confused-h">
-  <h2 id="confused-h">⚠ 混同注意</h2>
+  <h2 id="confused-h"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" focusable="false"><path fill="currentColor" d="M12 2 1 21h22L12 2zm0 5 8.2 14.4H3.8L12 7zm-1 4h2v4h-2v-4zm0 5h2v2h-2v-2z"/></svg>混同注意</h2>
   <p>次の語と取り違えやすい。意味が違うので注意すること。</p>
   <ul>{% for r in d.relations["confused_with"] %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a></li>{% endfor %}</ul>
 </section>

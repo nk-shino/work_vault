@@ -44,3 +44,21 @@ window.addEventListener("pageshow", function () {
     delete f.dataset.busy;
   });
 });
+
+// 統計カードの数をゆっくり上げる。動きは飾りで、数値自体は HTML に書いてある（JS が無くても読める）
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".stat .n[data-count]").forEach(function (el) {
+    var target = parseInt(el.dataset.count, 10) || 0;
+    if (!target || reduce) return;
+    var t0 = null;
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min((t - t0) / 500, 1);
+      k = 1 - Math.pow(1 - k, 3);
+      el.textContent = String(Math.round(target * k));
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+})();

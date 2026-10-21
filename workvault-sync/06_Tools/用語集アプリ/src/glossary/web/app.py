@@ -138,6 +138,22 @@ def create_app(database_url: str | None = None) -> FastAPI:
     ) -> HTMLResponse:
         result = queries.list_terms(db, q=q.strip(), tag=tag, status=status, page=page)
 
+        # 一覧の上部に出す全体の状況。4つの数え直しだが、SQLite の手元なので負担は無視できる範囲
+        stats = {
+            "terms": db.scalar(
+                select(func.count()).select_from(Term).where(Term.status != "archived")
+            ) or 0,
+            "pending": db.scalar(
+                select(func.count()).select_from(Proposal).where(Proposal.status == "pending")
+            ) or 0,
+            "disputed": db.scalar(
+                select(func.count()).select_from(Sense).where(Sense.status == "disputed")
+            ) or 0,
+            "confirmed": db.scalar(
+                select(func.count()).select_from(Sense).where(Sense.status == "confirmed")
+            ) or 0,
+        }
+
         def page_url(n: int) -> str:
             # 検索条件は URL に全部載せる。リンクを共有すれば同じ一覧が開ける
             params = {k: v for k, v in {"q": q, "tag": tag, "status": status}.items() if v}
@@ -147,6 +163,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
             request,
             "terms_list.html",
             result=result,
+            stats=stats,
             q=q,
             tag=tag,
             status=status,

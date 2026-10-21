@@ -2,6 +2,12 @@
 {% block title %}用語一覧 - 社内用語集{% endblock %}
 {% block main %}
 <h1>用語一覧</h1>
+<section class="stats" aria-label="全体の状況">
+  <div class="stat"><span class="n" data-count="{{ stats.terms }}">{{ stats.terms }}</span><span class="k">登録された語</span></div>
+  <a class="stat" href="/proposals"><span class="n" data-count="{{ stats.pending }}">{{ stats.pending }}</span><span class="k">未処理の提案</span></a>
+  <div class="stat"><span class="n" data-count="{{ stats.disputed }}">{{ stats.disputed }}</span><span class="k">係争中の語義</span></div>
+  <div class="stat"><span class="n" data-count="{{ stats.confirmed }}">{{ stats.confirmed }}</span><span class="k">確定した語義</span></div>
+</section>
 <form method="get" action="/terms" class="filters" role="search">
   <label for="q">検索（見出し・読み・英語・略語）<kbd>/</kbd></label>
   <input id="q" name="q" type="search" value="{{ q }}" accesskey="s">

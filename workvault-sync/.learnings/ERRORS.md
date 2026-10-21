@@ -28,3 +28,9 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 - 発生コマンド/状況: 同スクリプトの try 節に `except` を挿入する編集で、`raise` の後ろに本体コードが残り、Workbooks.Open 成功時は except がスキップされて本体未実行のまま正常終了。エラー出力なし・ファイル無変更で気づきにくい。
 - 解決法: スクリプトを書き直した。教訓: 構造を含む編集の後は「処理が実行されたことを示す出力(保存完了メッセージ等)」が出るまで完了扱いにしない。exit 0 は処理成功の証拠にならない。
 - Pattern-Key: edit.try-except-unreachable-silent-skip
+
+## [ERR-20261021-005] ピボットXMLの検証ロジが実装詳細を誤認し誤NGを出した
+
+- 発生コマンド/状況: `verify_full.py`(SMT鹿島_BOSS.xlsx 再検証)。5件のNGを出したが全て検証側の誤りだった。①表示形式は Excel が `yyyy-mm-dd` を `yyyy\-mm\-dd` に正規化する(表示は同一)。②スタイルは pivotTableDefinition の属性ではなく子要素 `pivotTableStyleInfo/@name` にある。③dataField の subtotal は省略時デフォルトが sum。④colFields の `x=-2`(値フィールド位置)は単一データフィールドでは省略される。⑤sharedItems はピボットで使用したフィールド(品目/製造責任者/月)のみ列挙され、未使用フィールドはレコード側にインライン保持される。
+- 解決法: 各項目を実ファイル照合・実機RefreshTableテストで切り分けた。OOXML の検証は属性の省略時デフォルト仕様を確認してから判定する。
+- Pattern-Key: ooxml.pivot-xml-default-attributes

@@ -23,6 +23,12 @@
   </h2>
   {% if p.decision_note %}<p class="decision">判定：{{ p.decision_note }}</p>{% endif %}
   <p class="meta-line">スコア {{ "%.2f"|format(p.score) if p.score is not none else "—" }} ／ 生成元 {{ p.model_name }} ／ プロンプト版 {{ p.prompt_version }}</p>
+  {% if p.status == "pending" and p.proposal_type == "sense" and p.score is not none %}
+  <div class="meter-wrap">
+    <span class="meter-k">確からしさ</span>
+    <span class="meter" role="img" aria-label="確からしさ {{ ((p.score * 100)|round(0)|int) }} パーセント"><i style="width: {{ [0, ((p.score * 100)|round(0)|int), 100]|min }}%"></i></span>
+  </div>
+  {% endif %}
   {% set v = payload.get("verification") %}
   {% if v %}
   <p>

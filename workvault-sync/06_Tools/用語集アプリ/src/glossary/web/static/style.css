@@ -1,6 +1,7 @@
 /* 社内用語集 の見た目と操作感。
  * 方針: 情報の密度は落とさず、押したときの反応と位置の分かりやすさを足す。
- * 動きは控えめにし、 reduced-motion の設定があれば止める。 */
+ * 動きは控えめにし、 reduced-motion の設定があれば止める。
+ * 色は変数に集め、OS の明暗設定に応じて自動で切り替わる。 */
 
 :root {
   --fg: #26262e;
@@ -8,19 +9,73 @@
   --line: #d9d9e2;
   --line-soft: #e9e9f0;
   --bg: #f6f6f2;
+  --bg-top: #f8f8f4;
   --surface: #ffffff;
+  --surface-2: #f4f4f8;
+  --zebra: #fbfbf9;
+  --chip-bg: #ffffff;
+  --quote-bg: #f6f6f2;
+  --ev-hover: #f0f0f4;
+  --hover-line: #b9b9c9;
   --accent: #3a4db8;
   --accent-strong: #2c3c99;
   --accent-soft: #eef1fc;
+  --accent-grad-2: #7a8ae0;
+  --accent-grad-3: #b9c3f2;
+  --focus-ring: rgba(58, 77, 184, .16);
+  --glow: rgba(58, 77, 184, .05);
   --good: #1e7a3f;
   --good-bg: #e9f5ec;
+  --good-border: #b4d6bd;
   --warn-fg: #8a5800;
   --warn-bg: #fdf3dd;
+  --warn-border: #e4c98a;
   --danger-fg: #b3261e;
   --danger-bg: #fdeaea;
+  --danger-border: #e8b7b3;
+  --danger-stripe: rgba(179, 38, 30, .045);
+  --header-bg: rgba(255, 255, 255, .86);
   --shadow-1: 0 1px 2px rgba(32, 32, 64, .05), 0 1px 6px rgba(32, 32, 64, .06);
   --shadow-2: 0 6px 16px rgba(32, 32, 64, .12);
   --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e2e4ee;
+    --muted: #9aa0b5;
+    --line: #3c3f50;
+    --line-soft: #2c2f3d;
+    --bg: #17181f;
+    --bg-top: #1b1c25;
+    --surface: #1f2029;
+    --surface-2: #262834;
+    --zebra: #22232e;
+    --chip-bg: #1f2029;
+    --quote-bg: #262834;
+    --ev-hover: #2c2f3d;
+    --hover-line: #4a5074;
+    --accent: #8fa0f5;
+    --accent-strong: #b0bcf8;
+    --accent-soft: #262c47;
+    --accent-grad-2: #6474c9;
+    --accent-grad-3: #3d4787;
+    --focus-ring: rgba(143, 160, 245, .22);
+    --glow: rgba(143, 160, 245, .07);
+    --good: #6cc98a;
+    --good-bg: #1d3326;
+    --good-border: #2f5a3d;
+    --warn-fg: #e0b45c;
+    --warn-bg: #332a17;
+    --warn-border: #5c4c22;
+    --danger-fg: #ef918a;
+    --danger-bg: #3a2020;
+    --danger-border: #5c3230;
+    --danger-stripe: rgba(239, 145, 138, .06);
+    --header-bg: rgba(23, 24, 31, .86);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 6px rgba(0, 0, 0, .25);
+    --shadow-2: 0 6px 16px rgba(0, 0, 0, .45);
+  }
 }
 
 body {
@@ -29,9 +84,9 @@ body {
   font-feature-settings: "palt";
   color: var(--fg);
   background:
-    radial-gradient(60rem 18rem at 85% -6rem, rgba(58, 77, 184, .05), transparent 60%),
-    linear-gradient(180deg, #f8f8f4, var(--bg) 28rem);
-  background-attachment: fixed;
+    radial-gradient(60rem 18rem at 85% -6rem, var(--glow), transparent 60%),
+    linear-gradient(180deg, var(--bg-top), var(--bg) 28rem) fixed,
+    var(--bg);
   line-height: 1.65;
 }
 
@@ -43,7 +98,7 @@ a:hover { color: var(--accent-strong); }
 html { scroll-behavior: smooth; }
 
 .skip { position: absolute; left: -999px; }
-.skip:focus { left: 1rem; top: .5rem; background: #fff; padding: .3rem .6rem; z-index: 10; box-shadow: var(--shadow-2); border-radius: 6px; }
+.skip:focus { left: 1rem; top: .5rem; background: var(--surface); color: var(--fg); padding: .3rem .6rem; z-index: 10; box-shadow: var(--shadow-2); border-radius: 6px; }
 
 /* ---- ヘッダー ---- */
 
@@ -51,13 +106,13 @@ header {
   display: flex; gap: 1.5rem; align-items: center;
   padding: .55rem 1.5rem;
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, .86);
+  background: var(--header-bg);
   backdrop-filter: blur(6px);
   position: sticky; top: 0; z-index: 5;
 }
 header::before {
   content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent), #7a8ae0 60%, #b9c3f2);
+  background: linear-gradient(90deg, var(--accent), var(--accent-grad-2) 60%, var(--accent-grad-3));
 }
 header .brand { display: flex; align-items: center; gap: .5rem; }
 header .brand::before {
@@ -66,6 +121,9 @@ header .brand::before {
   width: 1.7rem; height: 1.7rem; border-radius: .45rem;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: #fff; font-size: 1rem; font-weight: bold;
+}
+@media (prefers-color-scheme: dark) {
+  header .brand::before { color: #14161f; }
 }
 header nav { display: flex; gap: .25rem; flex-wrap: wrap; }
 header nav a {
@@ -78,7 +136,7 @@ header nav a[aria-current="page"] { background: var(--accent-soft); color: var(-
 .notice {
   margin-left: auto; color: var(--muted); font-size: .8rem;
   border: 1px solid var(--line-soft); border-radius: 999px; padding: .1rem .7rem;
-  background: #fff; white-space: nowrap;
+  background: var(--chip-bg); white-space: nowrap;
 }
 
 /* ---- 本文 ---- */
@@ -97,10 +155,68 @@ h1::after {
   background: var(--accent);
 }
 h2 { font-size: 1.15rem; margin-top: 1.6rem; }
+h2 .ic { vertical-align: -3px; margin-right: .35rem; }
 h3 { font-size: 1rem; margin: .2rem 0 .5rem; }
 
 label { display: block; font-weight: bold; margin-top: .6rem; }
 .hint { color: var(--muted); font-size: .85rem; }
+
+/* ---- 統計カード（一覧の上部。数値は HTML に直接書いてあり、JS は飾り） ---- */
+
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: .7rem; margin: .2rem 0 1.1rem;
+}
+.stat {
+  position: relative; overflow: hidden;
+  display: block; color: inherit; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  border-radius: var(--radius); box-shadow: var(--shadow-1);
+  padding: .6rem .9rem .5rem;
+  transition: border-color .15s ease, box-shadow .18s ease, transform .18s ease;
+}
+.stat::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-grad-2));
+  opacity: .65;
+}
+.stat .n {
+  display: block; font-size: 1.5rem; font-weight: bold;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em; line-height: 1.3;
+}
+.stat .k { display: block; color: var(--muted); font-size: .8rem; }
+a.stat:hover { border-color: var(--accent); box-shadow: var(--shadow-2); transform: translateY(-1px); }
+a.stat:hover .k { color: var(--accent-strong); }
+
+/* ---- パンくずと見出しの一段 ---- */
+
+.crumbs { font-size: .85rem; color: var(--muted); margin: .1rem 0 .6rem; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--accent); text-decoration: underline; }
+
+.hero {
+  position: relative; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  border-radius: var(--radius); box-shadow: var(--shadow-1);
+  padding: 1.05rem 1.4rem .95rem; margin: .2rem 0 1.2rem;
+}
+.hero::before {
+  content: "語"; position: absolute; right: -.7rem; bottom: -2.6rem;
+  font-family: "Yu Mincho", "YuMincho", serif; font-weight: bold;
+  font-size: 7.5rem; line-height: 1; color: var(--accent); opacity: .07;
+  pointer-events: none;
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-grad-2) 60%, var(--accent-grad-3));
+}
+.hero .hw {
+  border: none; padding: 0; margin: .1rem 0 .5rem;
+  font-size: 1.7rem; letter-spacing: .04em;
+}
+.hero .hw::after { display: none; }
+.hero .meta { margin: .2rem 0 .3rem; }
+.hero-links { margin: .35rem 0 0; font-size: .92rem; }
 
 /* ---- フォーム ---- */
 
@@ -110,13 +226,14 @@ label { display: block; font-weight: bold; margin-top: .6rem; }
 
 input, select, textarea {
   font: inherit; padding: .4rem .6rem;
-  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--surface);
+  color: var(--fg);
   transition: border-color .15s ease, box-shadow .15s ease;
 }
-input:hover, select:hover, textarea:hover { border-color: #b9b9c9; }
+input:hover, select:hover, textarea:hover { border-color: var(--hover-line); }
 input:focus, select:focus, textarea:focus {
   outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(58, 77, 184, .16);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 input[type="search"]#q { min-width: 15rem; font-size: 1.02rem; }
 
@@ -124,7 +241,7 @@ kbd {
   display: inline-block; min-width: 1.3em; text-align: center;
   font: inherit; font-size: .78rem; line-height: 1.4;
   border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px;
-  background: #fff; color: var(--muted); padding: 0 .3em; margin-left: .4em;
+  background: var(--chip-bg); color: var(--muted); padding: 0 .3em; margin-left: .4em;
 }
 
 .edit textarea, .edit input { width: 100%; box-sizing: border-box; }
@@ -133,7 +250,7 @@ kbd {
 button {
   font: inherit; padding: .42rem 1.1rem; margin-top: .6rem;
   border: 1px solid var(--line); border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff, #f4f4f8);
+  background: var(--chip-bg);
   color: var(--fg); cursor: pointer; box-shadow: var(--shadow-1);
   transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .12s ease, box-shadow .15s ease;
 }
@@ -155,13 +272,13 @@ table {
 }
 th, td { border-bottom: 1px solid var(--line-soft); padding: .5rem .7rem; text-align: left; }
 thead th {
-  background: #f4f4f8; font-size: .82rem; font-weight: bold; color: var(--muted);
+  background: var(--surface-2); font-size: .82rem; font-weight: bold; color: var(--muted);
   border-bottom: 1px solid var(--line); white-space: nowrap;
 }
 thead th:first-child { border-top-left-radius: var(--radius); }
 thead th:last-child { border-top-right-radius: var(--radius); }
 tbody tr { transition: background-color .12s ease; }
-tbody tr:nth-child(even) { background: #fbfbf9; }
+tbody tr:nth-child(even) { background: var(--zebra); }
 tbody tr:hover { background: var(--accent-soft); }
 tbody tr:last-child td { border-bottom: none; }
 td a { font-weight: bold; text-decoration: none; }
@@ -172,18 +289,18 @@ td a:hover { text-decoration: underline; }
 .badge {
   display: inline-block; font-size: .76rem; font-weight: normal;
   padding: .06rem .6rem; border-radius: 999px;
-  border: 1px solid var(--line); background: #fff; color: var(--muted);
+  border: 1px solid var(--line); background: var(--chip-bg); color: var(--muted);
   white-space: nowrap;
 }
 .badge::before {
   content: ""; display: inline-block; width: .42em; height: .42em;
   border-radius: 50%; background: var(--muted); margin-right: .4em; vertical-align: .08em;
 }
-.st-disputed { background: var(--warn-bg); color: var(--warn-fg); border-color: #e4c98a; }
+.st-disputed { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-border); }
 .st-disputed::before { background: var(--warn-fg); }
 .st-archived, .st-rejected { color: var(--muted); }
 .st-confirmed, .st-active, .st-accepted {
-  background: var(--good-bg); color: var(--good); border-color: #b4d6bd;
+  background: var(--good-bg); color: var(--good); border-color: var(--good-border);
 }
 .st-confirmed::before, .st-active::before, .st-accepted::before { background: var(--good); }
 
@@ -198,7 +315,7 @@ td a:hover { text-decoration: underline; }
   box-shadow: var(--shadow-1);
   transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
 }
-.sense:hover, .proposal:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); border-color: #c3c9ea; }
+.sense:hover, .proposal:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); border-color: var(--hover-line); }
 .sense.disputed { border: 2px solid var(--warn-fg); }
 
 .warn { background: var(--warn-bg); color: var(--warn-fg); padding: .35rem .7rem; border-radius: 6px; }
@@ -206,26 +323,42 @@ td a:hover { text-decoration: underline; }
 .confused {
   border: 2px solid var(--danger-fg); border-left-width: 6px;
   background:
-    repeating-linear-gradient(-45deg, transparent 0 12px, rgba(179, 38, 30, .045) 12px 24px),
+    repeating-linear-gradient(-45deg, transparent 0 12px, var(--danger-stripe) 12px 24px),
     var(--danger-bg);
   color: var(--danger-fg); padding: .5rem 1rem; border-radius: 10px;
 }
 .confused a { color: var(--danger-fg); font-weight: bold; }
 
-.definition { font-size: 1.08rem; white-space: pre-wrap; }
+/* 定義文は辞書の項目のように。明朝で行間を大きく取り、左に罫を引く */
+.definition {
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: 1.1rem; line-height: 1.9; letter-spacing: .02em;
+  border-left: 3px solid var(--line); padding-left: .85rem;
+  white-space: pre-wrap;
+}
 .evidences { padding-left: 1.2rem; }
 .evidences li { margin: .25rem 0; }
 .evidences q, .proposal q {
-  background: #f6f6f2; padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」";
+  background: var(--quote-bg); padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」";
 }
 .evidences small, .meta-line { color: var(--muted); }
 .empty {
   color: var(--muted); font-style: italic;
   border: 1.5px dashed var(--line); border-radius: var(--radius);
-  background: rgba(255, 255, 255, .6);
+  background: transparent;
   padding: 1.2rem 1.4rem; text-align: center; margin: 1rem 0;
 }
-.error { background: var(--danger-bg); color: var(--danger-fg); padding: .5rem .9rem; border-radius: 8px; border: 1px solid #f0c4c1; }
+.error { background: var(--danger-bg); color: var(--danger-fg); padding: .5rem .9rem; border-radius: 8px; border: 1px solid var(--danger-border); }
+
+/* 提案の確からしさ。値は p.score（0〜1）で、バーの長さで示す */
+.meter-wrap { display: flex; align-items: center; gap: .6rem; margin: .15rem 0 .2rem; }
+.meter-k { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.meter {
+  flex: 1; max-width: 16rem; height: .5rem; display: block;
+  background: var(--surface-2); border: 1px solid var(--line-soft);
+  border-radius: 999px; overflow: hidden;
+}
+.meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-grad-2)); }
 
 .actions { display: flex; gap: 1.2rem; align-items: end; flex-wrap: wrap; }
 .actions label { font-weight: normal; font-size: .85rem; }
@@ -241,19 +374,19 @@ td a:hover { text-decoration: underline; }
 .pager { margin: 1.2rem 0; }
 .pager a {
   display: inline-block; margin-right: .6rem; padding: .3rem 1rem;
-  border: 1px solid var(--line); border-radius: 999px; background: #fff;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--chip-bg);
   text-decoration: none; box-shadow: var(--shadow-1);
   transition: border-color .15s ease, background-color .15s ease;
 }
 .pager a:hover { border-color: var(--accent); background: var(--accent-soft); }
 
-.diff { background: #f4f4f8; padding: .6rem .8rem; overflow-x: auto; border-radius: 8px; border: 1px solid var(--line-soft); font-family: Consolas, "Courier New", monospace; font-size: .88rem; }
+.diff { background: var(--surface-2); padding: .6rem .8rem; overflow-x: auto; border-radius: 8px; border: 1px solid var(--line-soft); font-family: Consolas, "Courier New", monospace; font-size: .88rem; }
 .diff .add { color: var(--good); }
 .diff .del { color: var(--danger-fg); }
 
 .busy {
   position: fixed; right: 1rem; bottom: 1rem;
-  background: var(--fg); color: #fff; padding: .5rem 1.1rem;
+  background: var(--fg); color: var(--bg); padding: .5rem 1.1rem;
   border-radius: 999px; box-shadow: var(--shadow-2);
   animation: toast .22s ease-out both;
 }
@@ -267,21 +400,21 @@ td a:hover { text-decoration: underline; }
 .ev-buttons { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
 .ev-buttons button {
   margin-top: .25rem; padding: .2rem .85rem; border-radius: 999px;
-  box-shadow: none; background: #fff;
+  box-shadow: none; background: var(--chip-bg);
 }
-.ev-buttons button[value="correct"], .ev-buttons button[value="useful"] { color: var(--good); border-color: #b4d6bd; }
-.ev-buttons button[value="needs_fix"], .ev-buttons button[value="not_useful"] { color: var(--danger-fg); border-color: #e8b7b3; }
+.ev-buttons button[value="correct"], .ev-buttons button[value="useful"] { color: var(--good); border-color: var(--good-border); }
+.ev-buttons button[value="needs_fix"], .ev-buttons button[value="not_useful"] { color: var(--danger-fg); border-color: var(--danger-border); }
 .ev-buttons button[value="unsure"] { color: var(--muted); }
 .ev-buttons button[value="correct"]:hover, .ev-buttons button[value="useful"]:hover { background: var(--good-bg); border-color: var(--good); color: var(--good); }
 .ev-buttons button[value="needs_fix"]:hover, .ev-buttons button[value="not_useful"]:hover { background: var(--danger-bg); border-color: var(--danger-fg); color: var(--danger-fg); }
-.ev-buttons button[value="unsure"]:hover { background: #f0f0f4; color: var(--fg); }
+.ev-buttons button[value="unsure"]:hover { background: var(--ev-hover); color: var(--fg); }
 .ev-comments { color: var(--muted); font-size: .85rem; }
 .decision { background: var(--accent-soft); padding: .25rem .7rem; font-size: .9rem; border-radius: 6px; display: inline-block; }
 
 .review-kinds { display: flex; gap: .4rem; flex-wrap: wrap; margin: .8rem 0 1.2rem; }
 .review-kinds a {
   margin-right: 0; padding: .25rem .85rem; border: 1px solid var(--line);
-  border-radius: 999px; background: #fff; text-decoration: none; font-size: .92rem;
+  border-radius: 999px; background: var(--chip-bg); text-decoration: none; font-size: .92rem;
   box-shadow: var(--shadow-1); transition: border-color .15s ease, background-color .15s ease;
 }
 .review-kinds a:hover { border-color: var(--accent); background: var(--accent-soft); }
@@ -294,7 +427,7 @@ ol.history li { position: relative; padding: 0 0 1.4rem .9rem; }
 ol.history li::before {
   content: ""; position: absolute; left: -1.44rem; top: .35rem;
   width: .62rem; height: .62rem; border-radius: 50%;
-  background: #fff; border: 3px solid var(--accent);
+  background: var(--surface); border: 3px solid var(--accent);
 }
 ol.history h2 { margin: 0; font-size: 1rem; }
 
