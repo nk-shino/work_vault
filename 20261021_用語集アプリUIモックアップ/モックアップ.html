@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>社内用語集 UIモックアップ</title>
+<style>
+:root {
+  --bg: #f4f4ef;
+  --bg-soft: #fbfbf8;
+  --surface: #ffffff;
+  --fg: #23232b;
+  --muted: #71717e;
+  --line: #e2e2ea;
+  --accent: #3a4db8;
+  --accent-strong: #2c3c99;
+  --accent-soft: #eef1fc;
+  --good: #1e7a3f;
+  --good-bg: #e7f4ec;
+  --warn: #8a5800;
+  --warn-bg: #fdf3dd;
+  --danger: #b3261e;
+  --danger-bg: #fdeaea;
+  --side-bg: linear-gradient(180deg, #232a55, #1a1f42);
+  --side-fg: #c9d0f2;
+  --shadow-1: 0 1px 2px rgba(30,30,60,.06), 0 2px 8px rgba(30,30,60,.07);
+  --shadow-2: 0 10px 28px rgba(30,30,60,.16);
+  --r: 12px;
+}
+html[data-theme="dark"] {
+  --bg: #12131a;
+  --bg-soft: #191b24;
+  --surface: #1d1f2b;
+  --fg: #e4e4ec;
+  --muted: #9a9aae;
+  --line: #2d3040;
+  --accent: #8fa1ff;
+  --accent-strong: #b0bdff;
+  --accent-soft: #262b45;
+  --good: #5fca8b;
+  --good-bg: #1c2e24;
+  --warn: #e8b45a;
+  --warn-bg: #33291a;
+  --danger: #ff8d85;
+  --danger-bg: #37201f;
+  --side-bg: linear-gradient(180deg, #171a30, #101223);
+  --side-fg: #b9c0e8;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.35);
+  --shadow-2: 0 10px 28px rgba(0,0,0,.55);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Yu Gothic UI", "Meiryo UI", "Segoe UI", sans-serif;
+  font-feature-settings: "palt";
+  background: radial-gradient(70rem 22rem at 80% -8rem, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%), var(--bg);
+  color: var(--fg); line-height: 1.65;
+  transition: background-color .3s ease, color .3s ease;
+}
+a { color: var(--accent); text-decoration: none; }
+
+/* ---- モックアップである旨の帯 ---- */
+.mock-banner {
+  background: repeating-linear-gradient(-45deg, var(--warn-bg) 0 14px, transparent 14px 28px), var(--surface);
+  border-bottom: 1px solid var(--line);
+  color: var(--warn); font-size: .82rem; padding: .35rem 1.2rem;
+  display: flex; gap: 1rem; align-items: center;
+}
+.mock-banner strong { font-weight: bold; }
+
+/* ---- 上部バー ---- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 1rem;
+  padding: .5rem 1.2rem; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.tabs { display: flex; gap: .3rem; }
+.tabs button {
+  font: inherit; font-size: .9rem; padding: .35rem 1rem; border-radius: 999px;
+  border: 1px solid transparent; background: transparent; color: var(--muted);
+  cursor: pointer; transition: all .18s ease;
+}
+.tabs button:hover { color: var(--fg); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.tabs button.on { background: var(--accent-soft); color: var(--accent); font-weight: bold; border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+.topbar .spacer { flex: 1; }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+  color: var(--muted); cursor: pointer; transition: all .2s ease;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(15deg); }
+
+/* ---- レイアウト ---- */
+.shell { display: flex; min-height: calc(100vh - 4.6rem); }
+.side {
+  width: 216px; flex: none; padding: 1.1rem .9rem;
+  background: var(--side-bg); color: var(--side-fg);
+  display: flex; flex-direction: column; gap: .2rem;
+  position: sticky; top: 4.6rem; align-self: flex-start;
+  height: calc(100vh - 4.6rem);
+}
+.side .brand { display: flex; align-items: center; gap: .6rem; padding: .3rem .5rem 1rem; color: #fff; }
+.side .brand .mark {
+  display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .55rem;
+  background: linear-gradient(135deg, #5b6ee0, #3a4db8); color: #fff; font-weight: bold; font-size: 1.05rem;
+  box-shadow: 0 4px 12px rgba(90,110,224,.45);
+}
+.side .brand small { display: block; font-size: .68rem; color: var(--side-fg); font-weight: normal; }
+.side .group { font-size: .68rem; letter-spacing: .12em; color: color-mix(in srgb, var(--side-fg) 60%, transparent); padding: .8rem .6rem .2rem; }
+.side a {
+  display: flex; align-items: center; gap: .65rem;
+  color: var(--side-fg); padding: .48rem .7rem; border-radius: 9px; font-size: .92rem;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+.side a:hover { background: rgba(255,255,255,.08); transform: translateX(3px); color: #fff; }
+.side a.on { background: linear-gradient(90deg, rgba(96,120,255,.28), rgba(96,120,255,.06)); color: #fff; box-shadow: inset 2.5px 0 0 #8fa1ff; }
+.side a .cnt { margin-left: auto; font-size: .72rem; background: rgba(255,255,255,.14); border-radius: 999px; padding: 0 .5em; }
+.side .foot { margin-top: auto; font-size: .74rem; color: color-mix(in srgb, var(--side-fg) 75%, transparent); padding: .6rem; display: flex; align-items: center; gap: .5rem; }
+.livedot { width: .55rem; height: .55rem; border-radius: 50%; background: #4cd47c; box-shadow: 0 0 0 0 rgba(76,212,124,.5); animation: pulse 2.4s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 .5rem rgba(76,212,124,0); } 100% { box-shadow: 0 0 0 0 rgba(76,212,124,0); } }
+
+main { flex: 1; padding: 1.4rem 2rem 4rem; max-width: 62rem; }
+.screen { display: none; animation: rise .3s ease-out; }
+.screen.on { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h1.screen-title { font-size: 1.4rem; margin: 0 0 .2rem; letter-spacing: .02em; }
+p.screen-sub { color: var(--muted); font-size: .88rem; margin: 0 0 1.2rem; }
+
+/* ---- 統計カード ---- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin: 0 0 1.2rem; }
+.stat {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  padding: .7rem 1rem; box-shadow: var(--shadow-1); position: relative; overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.stat::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--bar, var(--accent)); opacity: .8; }
+.stat .n { font-size: 1.55rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+.stat .l { font-size: .78rem; color: var(--muted); }
+.stat svg { position: absolute; right: .4rem; bottom: .3rem; opacity: .5; }
+
+/* ---- 検索 ---- */
+.searchbar {
+  display: flex; gap: .6rem; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: .45rem .6rem .45rem 1.1rem; box-shadow: var(--shadow-1);
+  transition: box-shadow .2s ease, border-color .2s ease; margin-bottom: .8rem;
+}
+.searchbar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent), var(--shadow-1); }
+.searchbar svg { color: var(--muted); flex: none; }
+.searchbar input { flex: 1; border: none; outline: none; font: inherit; font-size: 1.05rem; background: transparent; color: var(--fg); }
+kbd { font: inherit; font-size: .75rem; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 .4em; color: var(--muted); background: var(--bg-soft); }
+.chips { display: flex; gap: .4rem; flex-wrap: wrap; margin: 0 0 1.2rem; }
+.chip {
+  font: inherit; font-size: .85rem; padding: .18rem .9rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer;
+  transition: all .16s ease;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: bold; }
+
+/* ---- 表 ---- */
+.tablewrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-1); overflow: hidden; }
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font-size: .76rem; color: var(--muted); background: color-mix(in srgb, var(--muted) 7%, var(--surface)); padding: .55rem .9rem; border-bottom: 1px solid var(--line); }
+td { padding: .6rem .9rem; border-bottom: 1px solid var(--line); font-size: .95rem; position: relative; }
+tbody tr { transition: background-color .15s ease; }
+tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+tbody tr:hover td:first-child::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
+tbody tr:last-child td { border-bottom: none; }
+td .word { font-weight: bold; }
+td .read { color: var(--muted); font-size: .85rem; margin-left: .5em; }
+td .newtag { font-size: .7rem; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 999px; padding: 0 .5em; margin-left: .5em; }
+.pill { display: inline-flex; align-items: center; gap: .35em; font-size: .74rem; border-radius: 999px; padding: .08rem .65rem; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.pill i { width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.pill.ok { background: var(--good-bg); color: var(--good); border-color: color-mix(in srgb, var(--good) 30%, transparent); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+.pill.mute { background: transparent; }
+
+/* ---- 詳細 ---- */
+.crumbs { font-size: .82rem; color: var(--muted); margin-bottom: .6rem; }
+.hero {
+  display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+  padding: 1rem 1.3rem; border-radius: var(--r); margin-bottom: 1rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--surface)), var(--surface) 55%);
+  border: 1px solid var(--line); box-shadow: var(--shadow-1); position: relative; overflow: hidden;
+}
+.hero::before { content: "語"; position: absolute; right: -1rem; bottom: -2.2rem; font-size: 8rem; font-weight: bold; color: color-mix(in srgb, var(--accent) 8%, transparent); font-family: serif; }
+.hero .hw { font-size: 2.1rem; font-weight: bold; letter-spacing: .04em; }
+.hero .ruby { color: var(--muted); }
+.hero .meta { display: flex; gap: .5rem; align-items: center; margin-left: auto; }
+.copybtn { font: inherit; font-size: .8rem; border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 8px; padding: .2rem .7rem; cursor: pointer; transition: all .16s ease; }
+.copybtn:hover { color: var(--accent); border-color: var(--accent); }
+
+.alert {
+  display: flex; gap: .9rem; align-items: flex-start;
+  border: 2px solid var(--danger); border-left-width: 7px; border-radius: var(--r);
+  background: repeating-linear-gradient(-45deg, transparent 0 12px, color-mix(in srgb, var(--danger) 5%, transparent) 12px 24px), var(--danger-bg);
+  color: var(--danger); padding: .8rem 1.1rem; margin: 0 0 1.2rem;
+}
+.alert svg { flex: none; margin-top: .15rem; }
+.alert .body strong { display: block; }
+.alert .body small { color: color-mix(in srgb, var(--danger) 80%, var(--fg)); }
+
+.sense {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow-1); padding: 1.1rem 1.4rem; margin: 0 0 1.2rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.sense:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.sense .head { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .5rem; font-size: .85rem; color: var(--muted); }
+.definition {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 1.18rem; line-height: 1.9; margin: .4rem 0 1rem;
+  padding-left: 1rem; border-left: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.definition .kw { color: var(--accent-strong); font-weight: bold; }
+.evi { list-style: none; margin: 0; padding: 0; }
+.evi li {
+  display: flex; gap: .7rem; padding: .45rem .2rem; border-top: 1px dashed var(--line); font-size: .92rem;
+  align-items: baseline;
+}
+.evi li:first-child { border-top: none; }
+.evi q { quotes: "「" "」"; color: var(--fg); }
+.evi .when { margin-left: auto; color: var(--muted); font-size: .76rem; white-space: nowrap; }
+.evi .src { font-size: .76rem; color: var(--muted); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 0 .45em; white-space: nowrap; }
+.evbtns { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; border-top: 1px dashed var(--line); padding-top: .7rem; margin-top: .8rem; }
+.evbtns .lbl { font-size: .82rem; color: var(--muted); }
+.vbtn {
+  font: inherit; font-size: .86rem; padding: .22rem 1rem; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--line); background: transparent; color: var(--muted); transition: all .16s ease;
+}
+.vbtn.g { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+.vbtn.r { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, transparent); }
+.vbtn.n { color: var(--muted); }
+.vbtn:hover { transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.vbtn.g:hover { background: var(--good-bg); border-color: var(--good); }
+.vbtn.r:hover { background: var(--danger-bg); border-color: var(--danger); }
+.vbtn.n:hover { background: var(--bg-soft); color: var(--fg); }
+.vcount { font-size: .76rem; color: var(--muted); margin-left: .2rem; }
+.rel { display: flex; gap: .5rem; flex-wrap: wrap; }
+.rel a {
+  display: inline-flex; align-items: center; gap: .4em; font-size: .86rem;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: .2rem .9rem;
+  color: var(--fg); transition: all .16s ease;
+}
+.rel a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.rel a small { color: var(--muted); }
+h3.sec { font-size: 1.02rem; margin: 1.6rem 0 .6rem; display: flex; align-items: center; gap: .5rem; }
+h3.sec::before { content: ""; width: .5rem; height: .5rem; border-radius: 2px; background: var(--accent); transform: rotate(45deg); }
+
+/* ---- 提案キュー ---- */
+.queue-sum { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: .85rem; color: var(--muted); }
+.queue-sum b { color: var(--fg); }
+.prop {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow-1); padding: 1rem 1.3rem; margin: 0 0 1rem; position: relative;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.prop:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.prop .head { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.prop .head .word { font-size: 1.12rem; font-weight: bold; }
+.prop .score { margin-left: auto; display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: var(--muted); }
+.meter { width: 8rem; height: .45rem; border-radius: 999px; background: color-mix(in srgb, var(--muted) 15%, transparent); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), #8fa1ff); animation: fill 1.1s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes fill { from { width: 0; } }
+.prop .def { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 1.02rem; margin: .5rem 0; }
+.prop .note { font-size: .85rem; color: var(--muted); background: var(--bg-soft); border: 1px dashed var(--line); border-radius: 8px; padding: .4rem .8rem; margin: .5rem 0; }
+.prop .acts { display: flex; gap: .6rem; align-items: center; margin-top: .7rem; }
+.btn { font: inherit; font-size: .9rem; padding: .35rem 1.2rem; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; transition: all .16s ease; }
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.btn.pri { background: linear-gradient(180deg, #4a5ec9, var(--accent-strong)); border-color: var(--accent-strong); color: #fff; font-weight: bold; }
+.btn.pri:hover { filter: brightness(1.08); }
+.btn.neg:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+.btn.link { border: none; background: none; color: var(--accent); padding-left: .2rem; }
+.btn.link:hover { text-decoration: underline; box-shadow: none; transform: none; }
+
+/* ---- トースト ---- */
+#toast {
+  position: fixed; right: 1.2rem; bottom: 1.2rem; z-index: 50;
+  background: var(--fg); color: var(--bg); padding: .55rem 1.2rem; border-radius: 999px;
+  box-shadow: var(--shadow-2); font-size: .9rem;
+  opacity: 0; transform: translateY(12px); transition: all .25s ease; pointer-events: none;
+}
+#toast.show { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 900px) { .side { display: none; } .stats { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">
+  <strong>UIモックアップ</strong>
+  <span>デザイン提案です。アプリ本体には未反映。データは架空のもの。</span>
+</div>
+
+<div class="topbar">
+  <div class="tabs" id="tabs">
+    <button class="on" data-s="s1">用語一覧</button>
+    <button data-s="s2">用語詳細</button>
+    <button data-s="s3">提案キュー</button>
+  </div>
+  <span class="spacer"></span>
+  <button class="icon-btn" id="theme" title="明るさを切り替える" aria-label="表示の切り替え">
+    <svg id="ic-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg id="ic-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
+</div>
+
+<div class="shell">
+<nav class="side" aria-label="メイン">
+  <div class="brand"><span class="mark">語</span><span><strong>社内用語集</strong><small>glossary workspace</small></span></div>
+  <div class="group">さがす</div>
+  <a class="on" href="#s1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>用語一覧</a>
+  <a href="#s2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg>用語詳細</a>
+  <div class="group">ためる・みなおす</div>
+  <a href="#s3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3 12 12"/></svg>提案キュー<span class="cnt">23</span></a>
+  <a href="#s1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>見直し<span class="cnt">13</span></a>
+  <div class="group">ふやす</div>
+  <a href="#s1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>用語を登録</a>
+  <a href="#s1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>CSV出力</a>
+  <div class="foot"><span class="livedot"></span>外部接続なし・このPCの中だけ</div>
+</nav>
+
+<main>
+
+<!-- ============ 画面1: 用語一覧 ============ -->
+<section class="screen on" id="s1">
+  <h1 class="screen-title">用語一覧</h1>
+  <p class="screen-sub">見出し・読み・英語・略語から探せます。<kbd>/</kbd> を押すと検索欄に飛びます。</p>
+
+  <div class="stats">
+    <div class="stat" style="--bar: var(--accent)"><div class="n" data-count="154">0</div><div class="l">登録された語</div>
+      <svg width="70" height="26" viewBox="0 0 70 26"><polyline points="0,22 12,19 24,20 36,14 48,15 60,8 70,5" fill="none" stroke="var(--accent)" stroke-width="2"/></svg></div>
+    <div class="stat" style="--bar: var(--good)"><div class="n" data-count="12">0</div><div class="l">今週の自動採用</div>
+      <svg width="70" height="26" viewBox="0 0 70 26"><polyline points="0,20 12,21 24,16 36,17 48,10 60,11 70,6" fill="none" stroke="var(--good)" stroke-width="2"/></svg></div>
+    <div class="stat" style="--bar: var(--warn)"><div class="n" data-count="8">0</div><div class="l">保留（人の確認待ち）</div>
+      <svg width="70" height="26" viewBox="0 0 70 26"><polyline points="0,14 12,16 24,12 36,15 48,11 60,13 70,10" fill="none" stroke="var(--warn)" stroke-width="2"/></svg></div>
+    <div class="stat" style="--bar: var(--danger)"><div class="n" data-count="2">0</div><div class="l">係争中の語義</div>
+      <svg width="70" height="26" viewBox="0 0 70 26"><polyline points="0,18 12,12 24,18 36,10 48,16 60,9 70,12" fill="none" stroke="var(--danger)" stroke-width="2"/></svg></div>
+  </div>
+
+  <div class="searchbar">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+    <input type="search" placeholder="語・読み・略語で探す（例: 竜舎、ELT）" aria-label="用語の検索">
+    <kbd>/</kbd>
+  </div>
+  <div class="chips">
+    <button class="chip on">すべて</button><button class="chip">業務</button><button class="chip">設備</button><button class="chip">物流</button><button class="chip">品質</button><button class="chip">その他</button>
+  </div>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>見出し</th><th>語義の数</th><th>最終更新</th><th>状態</th></tr></thead>
+    <tbody>
+      <tr><td><span class="word">竜舎</span><span class="read">りゅうしゃ</span><span class="newtag">今週</span></td><td>1</td><td>10-21</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">竜車</span><span class="read">りゅうしゃ</span></td><td>1</td><td>10-21</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">FLT点検</span><span class="read">えふえるてぃーてんけん</span></td><td>1</td><td>10-20</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">卵温計</span><span class="read">らんおんけい</span></td><td>2</td><td>10-19</td><td><span class="pill warn"><i></i>係争中</span></td></tr>
+      <tr><td><span class="word">星読み台帳</span><span class="read">ほしよみだいちょう</span></td><td>1</td><td>10-18</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">スカイポスト</span><span class="read">すかいぽすと</span></td><td>1</td><td>10-17</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">MGK</span><span class="read">えむじーけー</span></td><td>1</td><td>10-16</td><td><span class="pill ok"><i></i>有効</span></td></tr>
+      <tr><td><span class="word">ほうき便</span><span class="read">ほうきびん</span></td><td>1</td><td>10-15</td><td><span class="pill mute"><i></i>下書き</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="screen-sub" style="margin-top:.8rem">154 件（1 / 20 ページ）　<span style="color:var(--accent)">次のページ →</span></p>
+</section>
+
+<!-- ============ 画面2: 用語詳細 ============ -->
+<section class="screen" id="s2">
+  <p class="crumbs"><a href="#s1">用語一覧</a> ／ 設備 ／ 竜舎</p>
+  <div class="hero">
+    <span class="hw">竜舎</span>
+    <span class="ruby">りゅうしゃ ／ dragon house</span>
+    <span class="meta">
+      <span class="pill ok"><i></i>有効</span>
+      <button class="copybtn" id="copy">見出しを写す</button>
+    </span>
+  </div>
+
+  <div class="alert">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4m0 4h.01"/></svg>
+    <div class="body">
+      <strong>混同注意 — 竜車</strong>
+      <small>読みが同じ「りゅうしゃ」ですが、意味が違います。取り違えの指摘が2026-10に出ています。<a href="#s2">竜車</a> の語義を見比べてください。</small>
+    </div>
+  </div>
+
+  <article class="sense">
+    <div class="head">
+      <strong style="color:var(--fg)">語義 1</strong>
+      <span class="pill ok"><i></i>確定</span>
+      <span>文脈: 設備</span>
+      <span>出どころ: メール2通 ／ 資料1件</span>
+      <span style="margin-left:auto">版 2</span>
+    </div>
+    <p class="definition">【竜舎】竜を飼っておく建物。東棟と西棟にあり、<span class="kw">卵温計</span>を2台ずつ置く。温度の校正は毎月、星読み台帳に記録する。</p>
+    <ul class="evi">
+      <li><q>竜舎の東棟は卵温計の校正がされていうようです。</q><span class="src">eml:0006</span><span class="when">2031-04-05</span></li>
+      <li><q>卵温計は孵化室の温度を測る道具で、竜舎ごとに2台ずつ置いています。</q><span class="src">eml:0007</span><span class="when">2031-04-06</span></li>
+      <li><q>来週は浮遊石のFLT点検の週です。</q><span class="src">eml:0031</span><span class="when">2031-04-20</span></li>
+    </ul>
+    <div class="evbtns">
+      <span class="lbl">この定義を評価:</span>
+      <button class="vbtn g">正しい</button>
+      <button class="vbtn r">修正が必要</button>
+      <button class="vbtn n">判断できない</button>
+      <span class="vcount">正しい 3 ／ 修正が必要 1</span>
+    </div>
+  </article>
+
+  <h3 class="sec">関連語</h3>
+  <div class="rel">
+    <a href="#s2">竜車 <small>混同注意</small></a>
+    <a href="#s2">卵温計 <small>関連</small></a>
+    <a href="#s2">星読み台帳 <small>関連</small></a>
+    <a href="#s2">浮遊石 <small>同義</small></a>
+  </div>
+
+  <h3 class="sec">変わりゆき</h3>
+  <div class="sense" style="box-shadow:none;border-style:dashed">
+    <div class="head"><span class="pill mute"><i></i>版 2</span><span>10-19 ／ 理由: 用例を2件追加</span></div>
+    <div class="head" style="margin-top:.2rem"><span class="pill mute"><i></i>版 1</span><span>10-05 ／ 初回登録（メール2通から）</span></div>
+  </div>
+</section>
+
+<!-- ============ 画面3: 提案キュー ============ -->
+<section class="screen" id="s3">
+  <h1 class="screen-title">提案キュー</h1>
+  <p class="screen-sub">自動取り込みと自己改修の提案が並びます。判断は人が行います。</p>
+  <div class="queue-sum">
+    <span><b>23</b> 件が未処理</span>・<span>自動採用の条件を満たしたものは <b>次回の取り込みで反映</b></span>・<span>判定理由は各カードに表示</span>
+  </div>
+
+  <article class="prop">
+    <div class="head">
+      <span class="word">霧技</span>
+      <span class="pill">語義の提案</span>
+      <span class="pill warn"><i></i>独立検証：裏付けなし</span>
+      <span class="score">確からしさ <span class="meter"><i style="width:42%"></i></span> 0.42</span>
+    </div>
+    <p class="def">【霧技】霧の日にだけ行う設備点検の総称。</p>
+    <p class="note">保留の理由: 独立した検証で「用例に定義の後半の根拠が無い」と判定 ／ 用例が2件（3件以上が必要）</p>
+    <div class="acts">
+      <button class="btn pri">採用</button>
+      <button class="btn neg">却下</button>
+      <button class="btn link">修正して採用…</button>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="head">
+      <span class="word">浮遊石</span>
+      <span class="pill">語義の提案</span>
+      <span class="pill ok"><i></i>独立検証：裏付けあり</span>
+      <span class="score">確からしさ <span class="meter"><i style="width:88%"></i></span> 0.88</span>
+    </div>
+    <p class="def">【浮遊石】磁場の調整で空中に浮かべて保管する検査用の石。FLT点検で浮力の規定値を確かめる。</p>
+    <p class="note">自動採用の条件をすべて満たす（用例3件・出典2種・検証済み）。次の取り込みで反映されます。</p>
+    <div class="acts">
+      <button class="btn pri">いますぐ採用</button>
+      <button class="btn neg">却下</button>
+      <button class="btn link">修正して採用…</button>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="head">
+      <span class="word">竜舎</span>
+      <span class="pill">自己改修の改稿案</span>
+      <span class="pill mute"><i></i>人の確認待ち</span>
+    </div>
+    <p class="def">【竜舎】竜を飼っておく建物。東棟と西棟にあり、卵温計を2台ずつ置く。</p>
+    <p class="note">版1への「修正が必要」の評価を受けた改稿案。どこを直したか: 推測を除いた。元の語義は残ります。</p>
+    <div class="acts">
+      <button class="btn pri">採用</button>
+      <button class="btn neg">却下</button>
+      <button class="btn link">修正して採用…</button>
+    </div>
+  </article>
+
+  <p class="screen-sub">23 件（1 / 2 ページ）　<span style="color:var(--accent)">次のページ →</span></p>
+</section>
+
+</main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+var $ = function (s) { return document.querySelector(s); };
+
+// 画面の切り替え
+document.getElementById("tabs").addEventListener("click", function (ev) {
+  var b = ev.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#tabs button").forEach(function (x) { x.classList.toggle("on", x === b); });
+  document.querySelectorAll(".screen").forEach(function (s) { s.classList.toggle("on", s.id === b.dataset.s); });
+});
+document.querySelector(".side").addEventListener("click", function (ev) {
+  var a = ev.target.closest("a"); if (!a) return;
+  var id = (a.getAttribute("href") || "").replace("#", "");
+  var tab = document.querySelector('#tabs button[data-s="' + id + '"]');
+  if (tab) tab.click();
+});
+
+// 明るさの切り替え
+document.getElementById("theme").addEventListener("click", function () {
+  var html = document.documentElement;
+  var dark = html.getAttribute("data-theme") === "dark";
+  html.setAttribute("data-theme", dark ? "light" : "dark");
+  document.getElementById("ic-moon").style.display = dark ? "" : "none";
+  document.getElementById("ic-sun").style.display = dark ? "none" : "";
+});
+
+// 数字のカウントアップ
+document.querySelectorAll(".stat .n").forEach(function (el) {
+  var target = +el.dataset.count, t0 = null;
+  function step(t) {
+    if (!t0) t0 = t;
+    var p = Math.min((t - t0) / 900, 1);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+});
+
+// トースト
+var toastTimer = null;
+function toast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+}
+
+// 評価ボタンとタグのいじり感
+document.querySelectorAll(".vbtn").forEach(function (b) {
+  b.addEventListener("click", function () { toast("評価を記録しました（モックアップ）"); });
+});
+document.querySelectorAll(".chips .chip").forEach(function (c) {
+  c.addEventListener("click", function () {
+    document.querySelectorAll(".chips .chip").forEach(function (x) { x.classList.toggle("on", x === c); });
+  });
+});
+document.querySelectorAll(".btn").forEach(function (b) {
+  b.addEventListener("click", function () { toast("モックアップです。実際の操作はアプリで行います"); });
+});
+document.getElementById("copy").addEventListener("click", function () { toast("見出しを写しました（モックアップ）"); });
+</script>
+</body>
+</html>
