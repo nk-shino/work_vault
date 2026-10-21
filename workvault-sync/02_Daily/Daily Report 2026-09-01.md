@@ -65,4 +65,4 @@ Total:
 ## Links
 Previous: [[Daily Report 2026-08-31]]
 Next: [[Daily Report 2026-09-02]]
-Weekly: [[Weekly Review 2026-W36]]
+Weekly: [[Weekly Review 2026-W36]]（未作成）

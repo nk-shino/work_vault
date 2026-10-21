@@ -34,3 +34,9 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 - 発生コマンド/状況: `verify_full.py`(SMT鹿島_BOSS.xlsx 再検証)。5件のNGを出したが全て検証側の誤りだった。①表示形式は Excel が `yyyy-mm-dd` を `yyyy\-mm\-dd` に正規化する(表示は同一)。②スタイルは pivotTableDefinition の属性ではなく子要素 `pivotTableStyleInfo/@name` にある。③dataField の subtotal は省略時デフォルトが sum。④colFields の `x=-2`(値フィールド位置)は単一データフィールドでは省略される。⑤sharedItems はピボットで使用したフィールド(品目/製造責任者/月)のみ列挙され、未使用フィールドはレコード側にインライン保持される。
 - 解決法: 各項目を実ファイル照合・実機RefreshTableテストで切り分けた。OOXML の検証は属性の省略時デフォルト仕様を確認してから判定する。
 - Pattern-Key: ooxml.pivot-xml-default-attributes
+
+## [ERR-20261021-006] 一時作業フォルダの検証スクリプトが次セッションで消失していた
+
+- 発生コマンド/状況: `Temp\kohden-codeeport202610alidate.py`(8月版とのXML差分検証)。前セッションで作成・使用したが、同日午後の再実行時にファイルが存在しなかった(build.py は残存)。
+- 解決法: 再作成せず、PowerPoint COM でのオープン+PNGエクスポート(パース成功が妥当性の証拠)と markitdown 全文確認で代替検証。長期で使う検証スクリプトは保管庫側かワークスペースの恒久場所に置く。
+- Pattern-Key: temp.transient-script-loss-between-sessions

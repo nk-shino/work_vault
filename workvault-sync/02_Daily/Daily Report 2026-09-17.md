@@ -120,5 +120,5 @@ status: WIP
 
 ## リンク
 - 前日: [[Daily Report 2026-09-16]]
-- 翌日: [[Daily Report 2026-09-18]]
+- 翌日: [[Daily Report 2026-09-18]]（未作成）
 - 週次: [[Weekly Review 2026-W38]]

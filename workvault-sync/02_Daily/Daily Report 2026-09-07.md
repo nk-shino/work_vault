@@ -85,4 +85,4 @@ status: Done
 ## リンク
 - 前日: [[Daily Report 2026-09-04]]
 - 翌日: [[Daily Report 2026-09-08]]
-- 週次: [[Weekly Review 2026-W36]]
+- 週次: [[Weekly Review 2026-W36]]（未作成）

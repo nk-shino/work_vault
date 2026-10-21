@@ -114,4 +114,4 @@ Invoke-Item $out
 ## リンク
 - 前日: [[Daily Report 2026-09-08]]
 - 翌日: [[Daily Report 2026-09-10]]
-- 週次: [[Weekly Review 2026-W37]]
+- 週次: [[Weekly Review 2026-W37]]（未作成）
