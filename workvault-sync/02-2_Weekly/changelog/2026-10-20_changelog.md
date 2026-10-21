@@ -77,3 +77,4 @@
 
 - decision-log 1行(2026-10-20・ver.2 要件充足と旧版同等性の検証)
 - 実行ログ: 20261013_tanaoroshi-v2/実行ログ_20261013.md エントリ15
+- rules.md v1.2 → v1.3（P-014 承認）。§2 へ命名規約を追加。旧版は `rules_history/rules_v1.2.md` へ保存
