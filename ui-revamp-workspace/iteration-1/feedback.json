@@ -1,0 +1,25 @@
+{
+  "reviews": [
+    {
+      "run_id": "eval-0-queue-cleanup-research-with_skill",
+      "feedback": "",
+      "timestamp": "2026-10-22T08:41:53.435Z"
+    },
+    {
+      "run_id": "eval-0-queue-cleanup-research-without_skill",
+      "feedback": "",
+      "timestamp": "2026-10-22T08:41:53.435Z"
+    },
+    {
+      "run_id": "eval-1-detail-readability-research-with_skill",
+      "feedback": "",
+      "timestamp": "2026-10-22T08:41:53.435Z"
+    },
+    {
+      "run_id": "eval-1-detail-readability-research-without_skill",
+      "feedback": "",
+      "timestamp": "2026-10-22T08:41:53.435Z"
+    }
+  ],
+  "status": "complete"
+}
