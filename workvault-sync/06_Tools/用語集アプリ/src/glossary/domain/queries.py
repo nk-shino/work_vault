@@ -14,6 +14,9 @@ from glossary.db.models import RELATION_TYPES, Relation, Revision, Sense, Term
 
 PER_PAGE = 20
 
+# 一覧で列ソートに使える列。URL のパラメータはこの名前で受ける
+SORTABLE = {"headword": Term.headword, "reading": Term.reading, "status": Term.status}
+
 
 @dataclass
 class TermPage:
@@ -24,7 +27,14 @@ class TermPage:
 
 
 def list_terms(
-    session: Session, *, q: str = "", tag: str = "", status: str = "", page: int = 1
+    session: Session,
+    *,
+    q: str = "",
+    tag: str = "",
+    status: str = "",
+    page: int = 1,
+    sort: str = "headword",
+    direction: str = "asc",
 ) -> TermPage:
     stmt = select(Term)
     if q:
@@ -44,8 +54,11 @@ def list_terms(
     total = session.scalar(select(func.count()).select_from(stmt.subquery())) or 0
     pages = max(1, -(-total // PER_PAGE))
     page = min(max(1, page), pages)
+    # ソート列の指定が不正なときは既定（見出し）に戻す。第2キーを見出しにして並びを安定させる
+    column = SORTABLE.get(sort, Term.headword)
+    order = column.desc() if direction == "desc" else column.asc().nulls_last()
     items = session.scalars(
-        stmt.order_by(Term.headword).offset((page - 1) * PER_PAGE).limit(PER_PAGE)
+        stmt.order_by(order, Term.headword.asc()).offset((page - 1) * PER_PAGE).limit(PER_PAGE)
     ).all()
     return TermPage(list(items), total, page, pages)
 

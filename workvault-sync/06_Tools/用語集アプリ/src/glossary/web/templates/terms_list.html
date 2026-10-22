@@ -27,7 +27,12 @@
 <p>{{ result.total }} 件（{{ result.page }} / {{ result.pages }} ページ）</p>
 {% if result.items %}
 <table>
-  <thead><tr><th scope="col">見出し</th><th scope="col">読み</th><th scope="col">略語</th><th scope="col">状態</th></tr></thead>
+  <thead><tr>
+    <th scope="col" {% if sort == "headword" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('headword') }}">見出し</a>{% if sort == "headword" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
+    <th scope="col" {% if sort == "reading" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('reading') }}">読み</a>{% if sort == "reading" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
+    <th scope="col">略語</th>
+    <th scope="col" {% if sort == "status" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('status') }}">状態</a>{% if sort == "status" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
+  </tr></thead>
   <tbody>
   {% for t in result.items %}
     <tr>
@@ -44,6 +49,16 @@
   {% if result.page < result.pages %}<a href="{{ page_url(result.page + 1) }}" rel="next">次のページ</a>{% endif %}
 </nav>
 {% else %}
-<p class="empty">条件に合う用語がありません。{% if not q and not tag and not status %}「用語を登録」から手で入れるか、提案キューで採用すると、ここに並びます。{% endif %}</p>
+<div class="empty">
+  {% if q or tag or status %}
+  <p class="empty-h">条件に合う用語がありません</p>
+  <p class="empty-d">検索と絞り込みを変えるか、条件を解除してください。</p>
+  <p class="empty-actions"><a href="/terms">絞り込みを解除</a></p>
+  {% else %}
+  <p class="empty-h">用語はまだありません</p>
+  <p class="empty-d">「用語を登録」から手で入れるか、提案キューで採用すると、ここに並びます。</p>
+  <p class="empty-actions"><a href="/new">用語を登録</a></p>
+  {% endif %}
+</div>
 {% endif %}
 {% endblock %}

@@ -283,6 +283,15 @@ tbody tr:hover { background: var(--accent-soft); }
 tbody tr:last-child td { border-bottom: none; }
 td a { font-weight: bold; text-decoration: none; }
 td a:hover { text-decoration: underline; }
+/* 列ソート。矢印は並び替えている列にだけ常に出し、ほかの列はホバーで出して並べ替えられることを示す */
+th a.sort { color: inherit; text-decoration: none; }
+th a.sort:hover { color: var(--accent); }
+th .dir { font-size: .72rem; margin-left: .25rem; }
+th:not(.sorted) a.sort::after {
+  content: "⇅"; opacity: 0; font-size: .72rem; margin-left: .25rem;
+  transition: opacity .12s ease;
+}
+th:hover a.sort::after { opacity: .55; }
 
 /* ---- 状態の表示 ---- */
 
@@ -306,6 +315,12 @@ td a:hover { text-decoration: underline; }
 
 .tag, .src { font-size: .8rem; font-weight: normal; color: var(--muted); margin-left: .5rem; }
 .tag { border-bottom: 1px dotted var(--line); }
+/* AI が生成した定義の目印。「AI」の文字と title でも示し、色だけに頼らない */
+.ai-chip {
+  display: inline-block; font-size: .7rem; font-weight: bold; padding: 0 .45em;
+  border-radius: 4px; border: 1px solid var(--accent); color: var(--accent);
+  vertical-align: .1em; margin-right: .35em; letter-spacing: .04em;
+}
 
 /* ---- 卡片（語義・提案） ---- */
 
@@ -343,11 +358,15 @@ td a:hover { text-decoration: underline; }
 }
 .evidences small, .meta-line { color: var(--muted); }
 .empty {
-  color: var(--muted); font-style: italic;
+  color: var(--muted);
   border: 1.5px dashed var(--line); border-radius: var(--radius);
   background: transparent;
   padding: 1.2rem 1.4rem; text-align: center; margin: 1rem 0;
 }
+/* 空状態は見出し+説明+次の一手の3段。斜体に頼らず、状態と取れる手段をはっきり述べる */
+.empty-h { font-weight: bold; color: var(--fg); margin: .1rem 0 .2rem; }
+.empty-d { color: var(--muted); margin: 0 0 .5rem; }
+.empty-actions { margin: 0; font-size: .92rem; }
 .error { background: var(--danger-bg); color: var(--danger-fg); padding: .5rem .9rem; border-radius: 8px; border: 1px solid var(--danger-border); }
 
 /* 提案の確からしさ。値は p.score（0〜1）で、バーの長さで示す */

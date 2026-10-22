@@ -37,7 +37,7 @@ from glossary.db.models import (
 from glossary.db.session import make_engine, make_session_factory
 from glossary.domain import evaluations, proposals, queries, review
 from glossary.domain.errors import ConflictError, DomainError, NotFound, ValidationFailed
-from glossary.domain.proposals import SenseOverrides
+from glossary.domain.proposals import HUMAN, SenseOverrides
 from glossary.settings import load_settings
 
 HERE = Path(__file__).parent
@@ -85,6 +85,8 @@ def _jst(value: datetime | None) -> str:
 templates.env.filters["jst"] = _jst
 # モックの定義文は中身の無い置き物。そのまま「確定」にさせないため、画面でも受理でも区別する
 templates.env.globals["MOCK_MODEL_NAME"] = MOCK_MODEL_NAME
+# 人手で登録した提案には AI の目印を付けない。テンプレート側で生成元の判定に使う
+templates.env.globals["HUMAN"] = HUMAN
 PROPOSALS_PER_PAGE = 20
 
 
@@ -134,9 +136,12 @@ def create_app(database_url: str | None = None) -> FastAPI:
 
     @app.get("/terms", response_class=HTMLResponse)
     def terms_list(
-        request: Request, db: Db, q: str = "", tag: str = "", status: str = "", page: int = 1
+        request: Request, db: Db, q: str = "", tag: str = "", status: str = "", page: int = 1,
+        sort: str = "headword", direction: str = "asc",
     ) -> HTMLResponse:
-        result = queries.list_terms(db, q=q.strip(), tag=tag, status=status, page=page)
+        result = queries.list_terms(
+            db, q=q.strip(), tag=tag, status=status, page=page, sort=sort, direction=direction
+        )
 
         # 一覧の上部に出す全体の状況。4つの数え直しだが、SQLite の手元なので負担は無視できる範囲
         stats = {
@@ -157,7 +162,18 @@ def create_app(database_url: str | None = None) -> FastAPI:
         def page_url(n: int) -> str:
             # 検索条件は URL に全部載せる。リンクを共有すれば同じ一覧が開ける
             params = {k: v for k, v in {"q": q, "tag": tag, "status": status}.items() if v}
+            # 並びは既定（見出し・昇順）のときは省く。URL を短く保つ
+            if sort != "headword":
+                params["sort"] = sort
+            if direction != "asc":
+                params["direction"] = direction
             return "/terms?" + urlencode(params | {"page": n})
+
+        def sort_url(column: str) -> str:
+            # 列見出しのリンク先。その列で昇順に並んでいるときは降順へ、それ以外は昇順へ切り替える
+            next_dir = "desc" if (sort == column and direction == "asc") else "asc"
+            base = {k: v for k, v in {"q": q, "tag": tag, "status": status}.items() if v}
+            return "/terms?" + urlencode(base | {"sort": column, "direction": next_dir})
 
         return render(
             request,
@@ -170,6 +186,9 @@ def create_app(database_url: str | None = None) -> FastAPI:
             tags=queries.context_tags(db),
             statuses=TERM_STATUSES,
             page_url=page_url,
+            sort=sort,
+            direction=direction,
+            sort_url=sort_url,
         )
 
     @app.get("/terms/{term_id}", response_class=HTMLResponse)

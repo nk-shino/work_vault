@@ -23,7 +23,11 @@
 
 <h2>語義（{{ d.senses|length }}）</h2>
 {% if not d.senses %}
-<p class="empty">語義はまだありません。</p>
+<div class="empty">
+  <p class="empty-h">語義はまだありません</p>
+  <p class="empty-d">最初の語義を書くと、評価と履歴がここに記録されます。</p>
+  <p class="empty-actions"><a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
+</div>
 {% endif %}
 {% for s in d.senses %}
 <article class="sense{% if s.status == 'disputed' %} disputed{% endif %}" aria-labelledby="sense-{{ s.id }}">
@@ -32,6 +36,7 @@
     {% if s.context_tag %}<span class="tag">文脈：{{ s.context_tag }}</span>{% endif %}
     <span class="src">出どころ：{{ label(s.source_type) }}</span>
     <span class="src">{{ "自動採用" if s.adopted_by == "auto" else "人が採用" }}</span>
+    {% if s.source_type == "ai" %}<span class="ai-chip" title="AI が生成した定義">AI</span>{% endif %}
   </h3>
   {% if s.status == 'disputed' %}<p class="warn">この語義は係争中です。解釈が割れているので、確定するまで引用しないでください。</p>{% endif %}
   <p class="definition">{{ s.definition }}</p>
