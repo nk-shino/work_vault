@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 公開ドメイン確定後、REPLACE-WITH-PROJECT.pages.dev を実際のドメインへ一括置換（Cloudflare_Pages_公開手順.md 参照） -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/</loc><priority>1.0</priority></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/home-a.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/home-b.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/home-c.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/catalog-a.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/catalog-b.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/catalog-c.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/chara-a.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/chara-b.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/chara-c.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/events-a.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/events-b.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/events-c.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/work-a.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/work-b.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/work-c.html</loc></url>
+<url><loc>https://REPLACE-WITH-PROJECT.pages.dev/compare.html</loc></url>
+</urlset>

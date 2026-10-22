@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>静かな資料館 — 非公式資料サイト（モック）</title>
+<meta name="description" content="非公式・模擬データで作る資料サイトのモック。外部リクエストなしの静的構成。">
+<meta property="og:title" content="静かな資料館 — 非公式資料サイト（モック）">
+<meta property="og:site_name" content="回廊の記録">
+<meta property="og:type" content="website">
+<meta property="og:description" content="非公式・模擬データで作る資料サイトのモック。外部リクエストなしの静的構成。">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+:root { --bg:#f6f1ea; --bg-raise:#fdfaf5; --text:#2b2320; --text-sub:#6f625a; --accent:#7c1d24; --rule:rgba(43,35,32,.16); }
+@media (prefers-color-scheme: dark) { :root { --bg:#191410; --bg-raise:#221b15; --text:#e8ddcd; --text-sub:#a8937a; --rule:rgba(232,221,205,.2); } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; line-height:1.8; }
+.masthead { padding:20px 24px; border-bottom:1px solid var(--rule); }
+.masthead p { margin:0; letter-spacing:.12em; }
+.masthead small { display:block; color:var(--text-sub); letter-spacing:.08em; margin-top:2px; }
+main { max-width:640px; margin:0 auto; padding:48px 24px; }
+h1 { font-size:1.6rem; font-weight:600; letter-spacing:.14em; margin:0 0 12px; }
+.lead { color:var(--text-sub); margin:0 0 32px; }
+ul { list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+li { border-bottom:1px solid var(--rule); }
+li a { display:block; padding:16px 4px; color:var(--text); text-decoration:none; }
+li a:hover, li a:focus { color:var(--accent); }
+li small { color:var(--text-sub); margin-left:12px; }
+footer { max-width:640px; margin:0 auto; padding:0 24px 40px; color:var(--text-sub); font-size:.85rem; }
+</style>
+</head>
+<body>
+<header class="masthead"><p>回廊の記録<small>非公式資料サイト・モック</small></p></header>
+<main>
+  <h1>静かな資料館</h1>
+  <p class="lead">三つの方向の HOME から入る。収録内容は模擬データで、実在の作品・人物とは無関係。</p>
+  <ul>
+    <li><a href="home-a.html">方向A の HOME<small>静かな資料館</small></a></li>
+    <li><a href="home-b.html">方向B の HOME<small>横断して探す索引</small></a></li>
+    <li><a href="home-c.html">方向C の HOME<small>根拠をたどる記録室</small></a></li>
+    <li><a href="compare.html">比較入口</a></li>
+  </ul>
+</main>
+<footer><p>非公式・模擬データ。外部への通信は行わない。</p></footer>
+</body>
+</html>

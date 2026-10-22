@@ -16,3 +16,6 @@ AppData/
 
 # Kohden Code のローカル状態(セッション等)。追跡対象外
 .kohden-code/
+
+# Cloudflare Pages デプロイ用ビルド成果物
+20261016_site-design-improvement/dist/
