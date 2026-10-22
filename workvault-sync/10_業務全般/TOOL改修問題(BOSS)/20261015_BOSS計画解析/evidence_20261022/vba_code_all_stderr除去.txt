@@ -1,0 +1,1785 @@
+olevba 0.60.2 on Python 3.13.15 - http://decalage.info/python/oletools
+===============================================================================
+FILE: C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題\BOSS計画.xlsm
+Type: OpenXML
+WARNING  For now, VBA stomping cannot be detected for files in memory
+-------------------------------------------------------------------------------
+VBA MACRO ThisWorkbook.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/ThisWorkbook'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Cal2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Cal2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO MainModule.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/MainModule'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Declare PtrSafe Function GetInputState Lib "user32" () As Long
+
+Sub Main(Optional Flag_Skip As Boolean = False)
+
+Dim flag As Boolean
+Dim flag2 As Boolean
+
+'If Flag_Skip Then
+    flag = True
+    flag2 = True
+'Else
+'    Select Case MsgBox("部品数を計算しますか?", vbYesNoCancel)
+'        Case vbYes
+'            flag = True
+'            If MsgBox("トレイも計算しますか？", vbYesNo) = vbYes Then
+'                flag2 = True
+'                With Sheet_Tray
+'                    .Cells(2, 2).Resize(.Rows.Count - 1, .Columns.Count - 1).ClearContents
+'                End With
+'            End If
+'        Case vbCancel
+'            Exit Sub
+'    End Select
+'End If
+
+Dim D_Day As Dictionary
+Set D_Day = New Dictionary
+
+
+'高速化の為､数式自動計算OFF
+Application.Calculation = xlCalculationManual
+If GetInputState() <> 0 Then DoEvents
+'シート表示
+Sheet_Cal.Activate
+'コンテンツクリア
+Range(Sheet_Cal.Cells(1, 2), Sheet_Cal.Cells(Sheet_Cal.Rows.Count, Sheet_Cal.Columns.Count)).ClearContents
+
+Dim i As Long
+Dim j As Long
+Dim uni As Range
+Dim rng As Range
+Dim DT As Date
+Dim tmp2
+
+Dim reg  As RegExp
+Set reg = New RegExp
+
+
+
+'試作DB作成
+Dim D_Sisaku As Dictionary
+Set D_Sisaku = New Dictionary
+With Sheet_Sisaku
+For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If Not D_Sisaku.Exists(CStr(.Cells(i, 1).Value)) Then
+        D_Sisaku.Add CStr(.Cells(i, 1).Value), Array(.Cells(i, 3).Value, .Cells(i, 4).Value)
+    End If
+Next i
+End With
+
+'組取数DB作成
+Dim D_kumitori As Dictionary
+Set D_kumitori = New Dictionary
+
+With Sheet_Kumitori
+For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If Not D_kumitori.Exists(CStr(.Cells(i, 1).Value)) Then
+        D_kumitori.Add CStr(.Cells(i, 1).Value), .Cells(i, 2).Value
+    End If
+Next i
+End With
+
+
+'対象指図タイプ
+reg.Pattern = "^(LA|ZP1\d|ZP2\d)$"
+
+'フォームロード
+Load Msg
+Msg.Show vbModeless
+
+'クエリ更新
+Msg.Label.Caption = "クエリ更新中"
+DoEvents
+ThisWorkbook.RefreshAll
+
+'日程修正
+Dim D_tmp As Dictionary
+Set D_tmp = New Dictionary
+
+With Sheet_Custom
+For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If Not D_tmp.Exists(CStr(.Cells(i, 1).Value) & "|" & Format(.Cells(i, 2).Value, "yyyy/mm/dd")) Then
+        D_tmp.Add CStr(.Cells(i, 1).Value) & "|" & Format(.Cells(i, 2).Value, "yyyy/mm/dd"), .Cells(i, 3).Value
+    End If
+Next i
+End With
+
+tmp2 = Sheet_BOSS.UsedRange
+For i = 2 To UBound(tmp2)
+    If D_tmp.Exists(tmp2(i, 2) & "|" & Format(tmp2(i, 14), "yyyy/mm/dd")) Then
+        Sheet_BOSS.Cells(i, 14).Value = D_tmp(tmp2(i, 2) & "|" & Format(tmp2(i, 14), "yyyy/mm/dd"))
+    End If
+    For j = 2 To Sheet_Custom.Cells(Sheet_Custom.Rows.Count, 18).End(xlUp).Row
+    If tmp2(i, 1) = Sheet_Custom.Cells(j, 18).Value Then
+          Sheet_BOSS.Cells(i, 14).Value = Sheet_Custom.Cells(j, 19).Value
+    End If
+    Next j
+Next i
+
+
+'今後もデータは増え続けると思うので前後2年で絞る
+Sheet_BOSS.AutoFilterMode = False
+Set rng = Sheet_BOSS.Range(Sheet_BOSS.Rows(2), Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).EntireRow)
+Sheet_BOSS.Cells(1, 1).AutoFilter Field:=14, Criteria1:="<=" & Format(DateValue(Now - 730), "yyyy/m/d"), Operator:=xlOr, Criteria2:=">=" & Format(DateValue(Now + 730), "yyyy/m/d")
+If WorksheetFunction.Subtotal(3, rng) <> 0 Then rng.SpecialCells(xlCellTypeVisible).Delete
+Sheet_BOSS.AutoFilterMode = False
+
+
+'最適化
+DT = Now
+For i = Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).Row To 2 Step -1
+    If Not reg.test(Sheet_BOSS.Cells(i, 4).Value) Or InStr(Sheet_BOSS.Cells(i, 2).Value, "KV") = 1 Then
+        'Sheet_BOSS.Rows(i).Delete
+        If uni Is Nothing Then
+            Set uni = Sheet_BOSS.Rows(i)
+        Else
+            Set uni = Union(uni, Sheet_BOSS.Rows(i))
+        End If
+    End If
+    If Now > DT + 0.5 / 86400 Then
+        Msg.Label.Caption = "最適化中:" & i
+        DoEvents
+        DT = DT + 0.5 / 86400
+    End If
+Next i
+
+Msg.Label.Caption = "余計なデータ削除中"
+DoEvents
+
+Application.ScreenUpdating = False
+
+If Not uni Is Nothing Then uni.Delete
+
+
+Msg.Label.Caption = "準備中"
+DoEvents
+
+'BOSS計画を変数へ格納
+For i = 2 To Cells(Sheet_Cal.Rows.Count, 1).End(xlUp).Row
+    D_Day.Add CStr(Sheet_Cal.Cells(i, 1).Text), New Dictionary
+Next i
+
+For i = 2 To Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).Row
+    
+    If D_Day.Exists(CStr(Sheet_BOSS.Cells(i, 14).Value)) Then
+        If Not D_Day(Sheet_BOSS.Cells(i, 14).Text).Exists(Sheet_BOSS.Cells(i, 2).Text) Then
+            D_Day(Sheet_BOSS.Cells(i, 14).Text).Add CStr(Sheet_BOSS.Cells(i, 2).Value), Sheet_BOSS.Cells(i, 12).Value
+        Else
+             D_Day(Sheet_BOSS.Cells(i, 14).Text)(CStr(Sheet_BOSS.Cells(i, 2).Value)) = D_Day(Sheet_BOSS.Cells(i, 14).Text)(CStr(Sheet_BOSS.Cells(i, 2).Value)) + Sheet_BOSS.Cells(i, 12).Value
+        End If
+    End If
+Next i
+
+Dim tmp As Dictionary
+Dim var
+Dim key As String
+Dim key2
+Dim D_Col As Dictionary
+Dim ColName As String
+Dim cnt As Long
+Dim str As String
+Dim str2 As String
+Dim Target As Long
+
+Dim ChkGroup As Dictionary
+Set ChkGroup = New Dictionary
+
+Dim D_ColNumber As Dictionary
+Set D_ColNumber = New Dictionary
+
+
+cnt = 1
+
+'固定カラム名
+D_ColNumber.Add "日付", cnt
+Sheet_Cal.Cells(1, cnt).Value = "日付"
+cnt = cnt + 1
+D_ColNumber.Add "DBにBOM無し", cnt
+Sheet_Cal.Cells(1, cnt).Value = "DBにBOM無し"
+cnt = cnt + 1
+
+D_ColNumber.Add "DBにサイクルタイム無し", cnt
+Sheet_Cal.Cells(1, cnt).Value = "DBにサイクルタイム無し"
+cnt = cnt + 1
+
+D_ColNumber.Add "フリー容量", cnt
+Sheet_Cal.Cells(1, cnt).Value = "フリー容量"
+cnt = cnt + 1
+
+D_ColNumber.Add "フリー部品種類数", cnt
+Sheet_Cal.Cells(1, cnt).Value = "フリー部品種類数"
+cnt = cnt + 1
+
+D_ColNumber.Add "フリー", cnt
+Sheet_Cal.Cells(1, cnt).Value = "フリー"
+Sheet_Cal.Columns(cnt).NumberFormatLocal = ("0.00""h""")
+cnt = cnt + 1
+
+
+'グループ一覧作成
+
+'強制列位置設定
+With Sheet_CalumSetting
+    For i = 1 To .Cells(.Rows.Count, 1).End(xlUp).Row
+        key = .Cells(i, 1).Text
+        If Not D_ColNumber.Exists(key) And key <> "" Then
+            D_ColNumber.Add key, cnt
+            Sheet_Cal.Cells(1, cnt).Value = key
+            Sheet_Cal.Columns(cnt).NumberFormatLocal = ("0.00""h""")
+            cnt = cnt + 1
+        End If
+    Next i
+End With
+
+'試作品目振り分け
+With Sheet_Sisaku
+    For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+        If ChkGroup.Exists(.Cells(i, 1).Text) = False Then ChkGroup.Add .Cells(i, 1).Text, .Cells(i, 2).Text
+        
+        key = .Cells(i, 2).Text
+        If Not D_ColNumber.Exists(key) And key <> "" Then
+            D_ColNumber.Add key, cnt
+            Sheet_Cal.Cells(1, cnt).Value = key
+            Sheet_Cal.Columns(cnt).NumberFormatLocal = ("0.00""h""")
+            cnt = cnt + 1
+        End If
+    Next i
+End With
+
+'品目振り分け
+With Sheet_Group
+    For i = 2 To .Cells(.Rows.Count, 2).End(xlUp).Row
+        If ChkGroup.Exists(.Cells(i, 2).Text) = False Then ChkGroup.Add .Cells(i, 2).Text, .Cells(i, 1).Text
+        
+        key = .Cells(i, 1).Text
+        If Not D_ColNumber.Exists(key) And key <> "" Then
+            D_ColNumber.Add key, cnt
+            Sheet_Cal.Cells(1, cnt).Value = key
+            Sheet_Cal.Columns(cnt).NumberFormatLocal = ("0.00""h""")
+            cnt = cnt + 1
+        End If
+    Next i
+End With
+
+'停止時間
+With Sheet_tenken
+    For j = 6 To .Cells(1, .Columns.Count).End(xlToLeft).Column
+        If Not D_ColNumber.Exists(.Cells(1, j).Text) And .Cells(1, j).Text <> "" Then
+            D_ColNumber.Add .Cells(1, j).Text, cnt
+            Sheet_Cal.Cells(1, cnt).Value = .Cells(1, j).Text
+            Sheet_Cal.Columns(cnt).NumberFormatLocal = ("0.00""h""")
+            cnt = cnt + 1
+        End If
+    Next j
+    For i = 2 To .Cells(.Rows.Count, 2).End(xlUp).Row
+        If Not Sheet_Cal.Columns(1).Find(.Cells(i, 1).Text, LookIn:=xlValues, lookat:=xlWhole) Is Nothing Then
+            Target = Sheet_Cal.Columns(1).Find(.Cells(i, 1).Text, LookIn:=xlValues, lookat:=xlWhole).Row
+            For j = 6 To .Cells(1, .Columns.Count).End(xlToLeft).Column
+                If .Cells(i, j).Value > 0 Then
+                    Sheet_Cal.Cells(Target, D_ColNumber(.Cells(1, j).Text)) = Sheet_Cal.Cells(Target, D_ColNumber(.Cells(1, j).Text)) + .Cells(i, j).Value
+                End If
+            Next j
+        End If
+        If GetInputState() <> 0 Then DoEvents
+    Next i
+End With
+
+
+
+Sheet_Tray.Cells.Delete
+For i = 1 To Sheet_Cal.Cells(Rows.Count, 1).End(xlUp).Row
+    Sheet_Tray.Cells(i, 1).Value = Sheet_Cal.Cells(i, 1).Value
+Next i
+For i = 2 To Sheet_Cal.Cells(1, Columns.Count).End(xlToLeft).Column
+    Sheet_Tray.Cells(1, i).Value = Sheet_Cal.Cells(1, i).Value
+Next i
+Sheet_Tray.Columns.AutoFit
+
+
+Application.ScreenUpdating = True
+
+
+Dim D_CycleTime As Dictionary
+Set D_CycleTime = New Dictionary
+Dim MsgTxt As String
+
+With Sheet_CycleTime
+    For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If D_CycleTime.Exists(.Cells(i, 1).Value) Then
+        If MsgTxt = "" Then
+            MsgTxt = .Cells(i, 1).Value
+        Else
+            MsgTxt = MsgTxt & vbCrLf & .Cells(i, 1).Value
+        End If
+    Else
+        If .Cells(i, 1).Value <> "" Then
+            D_CycleTime.Add .Cells(i, 1).Value, .Cells(i, 4).Value
+        End If
+    End If
+    Next i
+End With
+
+If MsgTxt <> "" Then
+    Msg.Height = 160
+    Msg.Label2.Caption = "警告:複数サイクルタイムがあります｡上の行が優先されます｡" & vbCrLf & MsgTxt
+    DoEvents
+    'If MsgBox("警告:複数サイクルタイムがあります｡上の行が優先されます｡" & vbCrLf & MsgTxt, vbOKCancel) = vbCancel Then
+    '    Exit Sub
+    'End If
+End If
+
+'D_day key=日付 val(ループ時tmpで置き換えてる)=品目Dictionary(key=品目 val=数量)
+'D_col(1行ごとに初期化) key=グループ名 val=品目Dictionary(key=品目 val=数量)
+
+With Sheet_Cal
+
+    For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+        If i Mod 3 = 0 Then
+            Msg.Label.Caption = "処理中:" & i & "/" & .Cells(.Rows.Count, 1).End(xlUp).Row & vbCrLf & .Cells(i, 1).Text
+            DoEvents
+        End If
+        If GetInputState() <> 0 Then DoEvents
+        
+        key = .Cells(i, 1).Text
+        Set D_Col = New Dictionary
+        If D_Day.Exists(key) Then
+            Set tmp = D_Day(key)
+            
+            For Each key2 In tmp
+                If ChkGroup.Exists(key2) Then
+                    ColName = ChkGroup(key2)
+                Else
+                    ColName = "フリー"
+                End If
+                If Not D_Col.Exists(ColName) Then
+                     D_Col.Add ColName, New Dictionary
+                End If
+                D_Col(ColName).Add key2, tmp(key2)
+                
+            Next key2
+            
+            cnt = 0
+            For Each key2 In D_Col
+                
+                str = chkTime(D_CycleTime, D_Col(key2), D_Sisaku, D_kumitori)
+                
+                If flag Then
+                    If (key2 = "フリー" Or key2 = "L1試作" Or key2 = "L2試作" Or key2 = "L3試作") And cnt = 0 Then
+                        '部品の計算処理
+                        '試作とフリーを統合
+                        Set tmp = New Dictionary
+                        If D_Col.Exists("フリー") Then
+                            For Each var In D_Col("フリー")
+                                tmp.Add var, D_Col("フリー")(var)
+                            Next var
+                        End If
+                        For Each tmp2 In Array("L1試作", "L2試作", "L3試作")
+                            If D_Col.Exists(tmp2) Then
+                                For Each var In D_Col(tmp2)
+                                    '試作かつ固定だった場合ここで部品の計算から除外
+                                    If Sheet_Group.Columns(2).Find(What:=var, LookIn:=xlValues, lookat:=xlWhole) Is Nothing Then
+                                        tmp.Add var, D_Col(tmp2)(var)
+                                    End If
+                                Next var
+                            End If
+                        Next tmp2
+                        
+                        str2 = Cal_Capa(tmp)
+                        Set tmp = Nothing
+                        
+                        'BOMなし
+                        .Cells(i, D_ColNumber("DBにBOM無し")).Value = Split(str2, ",")(2)
+                        '容量
+                        .Cells(i, D_ColNumber("フリー容量")).Value = Format(Split(str2, ",")(0), " 0.0;-0.0;") & "|" & Format(Split(str2, ",")(1), " 0.0;-0.0;")
+                        'トレイ
+                        Sheet_Tray.Cells(i, D_ColNumber(key2)).Value = Split(str2, ",")(3)
+                        
+                        'フリー部品種↓
+                        .Cells(i, D_ColNumber("フリー部品種類数")).Value = Split(str2, ",")(4)
+                        
+                        cnt = cnt + 1
+                        
+                    Else
+                        '固定グループはトレイだけ計算
+                        If flag2 Then
+                            Set tmp = New Dictionary
+                            For Each var In D_Col(key2)
+                                tmp.Add var, D_Col(key2)(var)
+                            Next var
+                            str2 = Cal_Tray(tmp)
+                            Set tmp = Nothing
+                            Sheet_Tray.Cells(i, D_ColNumber(key2)).Value = str2
+                        End If
+                    End If
+                End If
+                'サイクルタイムなし
+                If Split(str, ",")(1) <> "" Then
+                    If .Cells(i, D_ColNumber("DBにサイクルタイム無し")).Value = "" Then
+                        .Cells(i, D_ColNumber("DBにサイクルタイム無し")).Value = Split(str, ",")(1)
+                    Else
+                        .Cells(i, D_ColNumber("DBにサイクルタイム無し")).Value = .Cells(i, D_ColNumber("DBにサイクルタイム無し")).Value & "|" & Split(str, ",")(1)
+                    End If
+                End If
+                
+                
+                If Split(str, ",")(2) > 0 Then
+                    '試作の時間
+                    .Cells(i, D_ColNumber(key2)).Value = CDbl(Split(str, ",")(2))
+                    If Split(str, ",")(2) <> 0 And Split(str, ",")(0) <> 0 Then
+                        MsgBox "試作シートのグループ名に量産グループ名は使用できません｡エラーが発生した部分の該当の時間は999となります｡"
+                        .Cells(i, D_ColNumber(key2)).Value = 999
+                    End If
+                Else
+                    '量産品の時間
+                    .Cells(i, D_ColNumber(key2)).Value = CDbl(Split(str, ",")(0))
+                End If
+                
+            Next key2
+        End If
+        
+        
+        If WorksheetFunction.CountIf(Sheet_Holiday.Columns(1), .Cells(i, 1).Value) > 0 Or Weekday(.Cells(i, 1).Value, vbMonday) > 5 Then
+            '休日の場合の処理
+            
+        Else
+            '平日の場合の処理
+            .Cells(i, D_ColNumber("L1停止時間")).Value = .Cells(i, D_ColNumber("L1停止時間")).Value + 1.75
+            .Cells(i, D_ColNumber("L2停止時間")).Value = .Cells(i, D_ColNumber("L2停止時間")).Value + 1.75
+            .Cells(i, D_ColNumber("L3停止時間")).Value = .Cells(i, D_ColNumber("L3停止時間")).Value + 1.75
+        End If
+
+        Set D_Col = Nothing
+    
+    Next i
+
+
+
+
+End With
+
+Application.Calculation = xlCalculationAutomatic
+
+Call Sheet_Junbi.Reflection_Junbi
+Sheet_Cal.Activate
+
+Unload Msg
+If Flag_Skip = False Then MsgBox "完了"
+Application.ScreenUpdating = True
+
+End Sub
+
+
+Function chkTime(ByRef D_CycleTime As Dictionary, ByRef D As Dictionary, ByRef D_Sisaku As Dictionary, ByRef D_kumitori As Dictionary) As String
+
+Dim i As Long
+Dim tmp
+Dim strOut As String
+Dim x As Double
+Dim x_sisaku As Double
+Dim NotFound As String
+Dim koteiTime_sisaku As Double
+Dim Flag_nonKumitori As Boolean
+koteiTime_sisaku = 0
+NotFound = ""
+Dim KARI As Double
+Dim KARI_sisaku As Double
+
+'量産品でサイクルタイムが無かった場合の仮の秒数
+KARI = 56
+'試作品でサイクルタイムが無かった場合の仮の秒数
+KARI_sisaku = 75
+'※片面の場合実際の生産時間は短くなる。暫定値なのでしょうがない。ちゃんと計算したい場合サイクルタイムシートに自分で入れよう！
+
+
+For Each tmp In D
+    Flag_nonKumitori = False
+    
+    If D_Sisaku.Exists(tmp) Then
+        '試作なら固定時間増やす
+        koteiTime_sisaku = koteiTime_sisaku + D_Sisaku(tmp)(0)
+    End If
+    If D_CycleTime.Exists(tmp) And VarType(D_CycleTime(tmp)) = 5 Then
+        'サイクルタイムがあるなら
+        If D_Sisaku.Exists(tmp) Then
+            '試作の時間計算
+            x_sisaku = x_sisaku + D(tmp) * D_CycleTime(tmp) + 600
+        Else
+            '量産品の時間計算
+            x = x + D(tmp) * D_CycleTime(tmp) + 600
+        End If
+    Else
+        'サイクルタイムDBに無いなら
+        'サイクルタイムがない場合の時間計算(仮で28秒とする)
+        If D_kumitori.Exists(tmp) Then
+            '組取り数があったら
+            If D_Sisaku.Exists(tmp) Then
+                x_sisaku = x_sisaku + D(tmp) / D_kumitori(tmp) * KARI_sisaku + 600
+            Else
+                x = x + D(tmp) / D_kumitori(tmp) * KARI + 600
+            End If
+        Else
+            '組取り数が無かったら
+            If D_Sisaku.Exists(tmp) Then
+                If D_Sisaku(tmp)(1) <> "" Then
+                    x_sisaku = x_sisaku + D(tmp) / D_Sisaku(tmp)(1) * KARI_sisaku + 600
+                Else
+                    x_sisaku = x_sisaku + D(tmp) * KARI_sisaku + 600
+                    Flag_nonKumitori = True
+                End If
+            Else
+                x = x + D(tmp) * 28 + 600
+                Flag_nonKumitori = True
+            End If
+        End If
+        
+        'サイクルタイムなしリストに品目名追加
+        If NotFound = "" Then
+            If Flag_nonKumitori Then
+                NotFound = "★" & tmp
+            Else
+                NotFound = tmp
+            End If
+        Else
+            If Flag_nonKumitori Then
+                NotFound = NotFound & "|★" & tmp
+            Else
+                NotFound = NotFound & "|" & tmp
+            End If
+        End If
+        
+    End If
+Next tmp
+
+chkTime = x / 3600 / 0.7 & "," & NotFound & "," & koteiTime_sisaku + x_sisaku / 3600 / 0.7
+
+
+End Function
+
+
+Function Cal_Capa(ByRef D As Dictionary) As String
+
+Dim HINMOKU As Dictionary
+Set HINMOKU = New Dictionary
+Dim tmp As Variant
+Dim i As Long
+Dim cnt As Double
+Dim NonHit As String
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+Dim DB_Path As String
+DB_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\部品リスト.accdb"
+
+Dim TMP_Path As String
+TMP_Path = fso.GetSpecialFolder(TemporaryFolder).Path & "\部品リスト.accdb"
+
+
+If fso.FileExists(TMP_Path) Then
+    If fso.GetFile(DB_Path).DateLastModified <> fso.GetFile(TMP_Path).DateLastModified Then
+        Call fso.DeleteFile(TMP_Path)
+        Call fso.CopyFile(DB_Path, TMP_Path)
+    End If
+Else
+    Call fso.CopyFile(DB_Path, TMP_Path)
+End If
+
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+Set con = New ADODB.Connection
+
+con.Mode = adModeRead
+con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.16.0;" _
+                        & "Data Source=" & TMP_Path & ""
+con.Open
+
+
+Dim strSQL As String
+
+'品目リスト取得
+For Each tmp In D
+    '存在チェック
+    Set rs = con.Execute("SELECT DISTINCT 品目名 FROM egproBOM WHERE 品目名='" & tmp & "';")
+    If rs.EOF Then
+        If NonHit = "" Then
+            NonHit = tmp
+        Else
+            NonHit = NonHit & "|" & tmp
+        End If
+
+    End If
+    If tmp <> "" And Not rs.EOF Then
+        If strSQL = "" Then
+            strSQL = "'" & tmp & "'"
+        Else
+            strSQL = strSQL & ",'" & tmp & "'"
+        End If
+    End If
+Next tmp
+
+If strSQL = "" Then strSQL = "'Dummy'"
+
+rs.Close
+Set rs = Nothing
+
+
+Dim DBG_3H As Double
+Dim DBG_other3H As Double
+Dim cnt_Tray As Long
+Dim BUHINSU As Long
+
+Set rs = con.Execute("SELECT Count([filteredBOM].[部品名]) AS 部品数, Sum(IIf( [PartList].[供給種別] = 'トレイ', 1, 0 )) AS トレイ部品数, Sum(IIf( [PartList].[三ノズルヘッド] = 1, [PartList].[フィーダーサイズ], 0 )) AS 三ノズルヘッド容量, Sum(IIf( [PartList].[三ノズルヘッド] = 0, [PartList].[フィーダーサイズ], 0 )) AS 三ノズルヘッド以外容量 FROM ( SELECT DISTINCT 部品名 FROM [egproBOM] WHERE 品目名 IN(" & strSQL & ") ) AS filteredBOM INNER JOIN PartList ON  [filteredBOM].[部品名] = [PartList].[部品名]")
+If rs!部品数 = 0 Then
+    DBG_3H = 0
+    DBG_other3H = 0
+    cnt_Tray = 0
+    BUHINSU = 0
+Else
+    DBG_3H = rs!三ノズルヘッド容量
+    DBG_other3H = rs!三ノズルヘッド以外容量
+    cnt_Tray = rs!トレイ部品数
+    BUHINSU = rs!部品数
+End If
+rs.Close
+con.Close
+Set rs = Nothing
+Set con = Nothing
+
+Cal_Capa = 90# - DBG_3H & "," & 300# - DBG_other3H & "," & NonHit & "," & cnt_Tray & "," & BUHINSU
+
+End Function
+
+
+
+Function Cal_Duplicate(ByRef FirstStr As String, SecondStr As String) As String
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+Dim DB_Path As String
+DB_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\部品リスト.accdb"
+
+Dim TMP_Path As String
+TMP_Path = fso.GetSpecialFolder(TemporaryFolder).Path & "\部品リスト.accdb"
+
+
+If fso.FileExists(TMP_Path) Then
+    If fso.GetFile(DB_Path).DateLastModified <> fso.GetFile(TMP_Path).DateLastModified Then
+        Call fso.DeleteFile(TMP_Path)
+        Call fso.CopyFile(DB_Path, TMP_Path)
+    End If
+Else
+    Call fso.CopyFile(DB_Path, TMP_Path)
+End If
+
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+Set con = New ADODB.Connection
+
+con.Mode = adModeRead
+con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.16.0;" _
+                        & "Data Source=" & TMP_Path & ""
+con.Open
+
+    Dim KyotuSlot As Double
+    Dim SenyoSlot As Double
+    
+    Set rs = con.Execute( _
+        "SELECT " & _
+        "    SUM(IIf(Flag = 1, フィーダーサイズ, 0)) AS 共通部品スロット数, " & _
+        "    SUM(IIf(flag Is Null, フィーダーサイズ, 0)) As 専用部品スロット数 " & _
+        "From " & _
+        "    ( " & _
+        "        ( " & _
+        "            SELECT DISTINCT " & _
+        "                部品名 " & _
+        "            From " & _
+        "                [egproBOM] " & _
+        "            WHERE " & _
+        "                品目名 IN (" & FirstStr & ") " & _
+        "        ) AS FirstBOM " & _
+        "        LEFT JOIN ( " & _
+        "            SELECT DISTINCT " & _
+        "                部品名, " & _
+        "                1 AS Flag " & _
+        "            From " & _
+        "                [egproBOM] " & _
+        "            WHERE " & _
+        "                品目名 IN (" & SecondStr & ") " & _
+        "        ) AS SecondBOM ON firstBOM.部品名 = SecondBOM.部品名 " & _
+        "    ) " & _
+        "INNER JOIN PartList ON [firstBOM].[部品名] = [PartList].[部品名]; ")
+    
+    If IsNull(rs!共通部品スロット数) Then KyotuSlot = 0 Else KyotuSlot = rs!共通部品スロット数
+    If IsNull(rs!専用部品スロット数) Then SenyoSlot = 0 Else SenyoSlot = rs!専用部品スロット数
+
+rs.Close
+con.Close
+Set rs = Nothing
+Set con = Nothing
+
+Cal_Duplicate = KyotuSlot & "," & SenyoSlot
+
+End Function
+
+
+'容量計算シートの実行ボタン
+'★★★時間計算はこのプロシージャ独自なので超注意
+Sub getBOSS_btn()
+
+Dim i As Long
+Dim D As Dictionary
+Set D = New Dictionary
+
+'試作DB作成
+Dim D_Sisaku As Dictionary
+Set D_Sisaku = New Dictionary
+With Sheet_Sisaku
+For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If Not D_Sisaku.Exists(CStr(.Cells(i, 1).Value)) Then
+        D_Sisaku.Add CStr(.Cells(i, 1).Value), Array(.Cells(i, 3).Value, .Cells(i, 4).Value)
+    End If
+Next i
+End With
+
+Sheet_Cal2.Activate
+
+Cells(1, 4).Value = ""
+Cells(1, 5).Value = ""
+
+Range(Cells(2, 1), Cells(Rows.Count, 5)).ClearContents
+Columns(1).Interior.Pattern = xlNone
+
+Columns(3).NumberFormatLocal = ("0.00""h""")
+
+
+For i = 2 To Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).Row
+    
+    If Cells(2, 7).Value = Sheet_BOSS.Cells(i, 14).Value Then
+        If D.Exists(CStr(Sheet_BOSS.Cells(i, 2).Value)) Then
+            D(CStr(Sheet_BOSS.Cells(i, 2).Value)) = D(CStr(Sheet_BOSS.Cells(i, 2).Value)) + Sheet_BOSS.Cells(i, 12).Value
+        Else
+            D.Add CStr(Sheet_BOSS.Cells(i, 2).Value), Sheet_BOSS.Cells(i, 12).Value
+        End If
+    End If
+Next
+
+
+
+Dim ChkGroup As Dictionary
+Set ChkGroup = New Dictionary
+
+With Sheet_Sisaku
+    For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+        If ChkGroup.Exists(.Cells(i, 1).Text) = False Then ChkGroup.Add .Cells(i, 1).Text, .Cells(i, 2).Text
+    Next i
+End With
+With Sheet_Group
+    For i = 2 To .Cells(.Rows.Count, 2).End(xlUp).Row
+        If ChkGroup.Exists(.Cells(i, 2).Text) = False Then ChkGroup.Add .Cells(i, 2).Text, .Cells(i, 1).Text
+    Next i
+End With
+
+
+Dim D_CycleTime As Dictionary
+Set D_CycleTime = New Dictionary
+Dim MsgTxt As String
+
+With Sheet_CycleTime
+    For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If D_CycleTime.Exists(.Cells(i, 1).Value) Then
+        If MsgTxt = "" Then
+            MsgTxt = .Cells(i, 1).Value
+        Else
+            MsgTxt = MsgTxt & vbCrLf & .Cells(i, 1).Value
+        End If
+    Else
+        If .Cells(i, 1).Value <> "" Then
+            D_CycleTime.Add .Cells(i, 1).Value, .Cells(i, 4).Value
+        End If
+    End If
+    Next i
+End With
+
+If MsgTxt <> "" Then
+    Cells(1, 9).Value = "警告:複数サイクルタイムがあります｡上の行が優先されます｡"
+    'If MsgBox("警告:複数サイクルタイムがあります｡上の行が優先されます｡" & vbCrLf & MsgTxt, vbOKCancel) = vbCancel Then
+    '    Exit Sub
+    'End If
+Else
+    Cells(1, 9).Value = ""
+End If
+
+
+Dim tmp As Variant
+Dim cnt As Long
+
+cnt = 2
+
+'★★★時間計算はこのプロシージャ独自なので超注意
+
+Application.Calculation = xlCalculationManual
+For Each tmp In D
+    Cells(cnt, 1).Value = tmp
+    If ChkGroup.Exists(tmp) Then
+        Cells(cnt, 2).Value = ChkGroup(tmp)
+    Else
+        Cells(cnt, 2).Value = "フリー"
+    End If
+    
+    If D_CycleTime.Exists(tmp) Then
+        If D_Sisaku.Exists(Cells(cnt, 1).Text) Then
+            Cells(cnt, 3).Value = (D(tmp) * D_CycleTime(tmp) + 600) / 3600 / 0.7 + D_Sisaku(Cells(cnt, 1).Text)(0)
+        Else
+            Cells(cnt, 3).Value = (D(tmp) * D_CycleTime(tmp) + 600) / 3600 / 0.7
+        End If
+    Else
+        Cells(cnt, 4).Value = "DBにサイクルタイム無し"
+        If D_Sisaku.Exists(Cells(cnt, 1).Text) Then
+            Cells(cnt, 3).Value = (D(tmp) / D_Sisaku(Cells(cnt, 1).Text)(1) * 75 + 600) / 3600 / 0.7 + D_Sisaku(Cells(cnt, 1).Text)(0)
+        Else
+            Cells(cnt, 3).Value = (D(tmp) * 56 + 600) / 3600 / 0.7
+        End If
+    End If
+    cnt = cnt + 1
+Next tmp
+
+'★★★時間計算はこのプロシージャ独自なので超注意
+
+
+ActiveSheet.Sort.SortFields.Clear
+ActiveSheet.Sort.SortFields.Add2 key:=Range(Cells(2, 2), Cells(Rows.Count, 2).End(xlUp)), _
+    SortOn:=xlSortOnValues, Order:=xlAscending, CustomOrder:= _
+        "AED,L3試作,TEC-5600,TEC-1000,L2試作,送信機,L1試作,フリー", DataOption:=xlSortNormal
+With ActiveSheet.Sort
+    .SetRange Range(Cells(1, 1), Cells(Rows.Count, 2).End(xlUp).Offset(0, 3))
+    .Header = xlYes
+    .MatchCase = False
+    .Orientation = xlTopToBottom
+    .SortMethod = xlPinYin
+    .Apply
+End With
+Application.Calculation = xlCalculationAutomatic
+
+End Sub
+
+
+'選択して実行ボタン
+Sub Cal_Capa_btn()
+
+Dim D As Dictionary
+Set D = New Dictionary
+Dim tmp As Variant
+
+Sheet_Cal2.Activate
+
+Columns(1).Interior.Pattern = xlNone
+
+For Each tmp In Selection
+    If tmp.Column = 1 And tmp.Value <> "" Then
+        D.Add CStr(tmp.Value), tmp.Value
+        tmp.Interior.Color = 65535
+    End If
+Next tmp
+
+Dim str As String
+
+If D.Count = 0 Then Exit Sub
+
+str = Cal_Capa(D)
+
+Cells(4, 9).Value = Split(str, ",")(0)
+Cells(6, 9).Value = Split(str, ",")(1)
+Cells(8, 9).Value = Split(str, ",")(2)
+Cells(4, 15).Value = Split(str, ",")(4)
+End Sub
+
+'使用スロット一括計算ボタン
+Sub Cal_Capa2_btn()
+
+Dim i As Long
+Dim D As Dictionary
+Dim str
+
+Sheet_Cal2.Activate
+
+Columns(4).ClearContents
+Columns(5).ClearContents
+Cells(1, 4).Value = "3Nzl"
+Cells(1, 5).Value = "4Nzl"
+
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+    If Cells(i, 1).Value <> "" Then
+        Set D = New Dictionary
+        D.Add CStr(Cells(i, 1).Value), ""
+        str = Cal_Capa(D)
+        If Split(str, ",")(2) = "" Then
+            Cells(i, 4).Value = 90# - CDbl(Split(str, ",")(0))
+            Cells(i, 5).Value = 300# - CDbl(Split(str, ",")(1))
+        Else
+            Cells(i, 4).Value = "DB未登録"
+        End If
+    End If
+Next i
+
+End Sub
+
+'効率悪い製品見つける
+Sub Cal_Dup_btn()
+
+Dim i As Long
+Dim j As Long
+Dim str As String
+Dim rtn As String
+
+Sheet_Cal2.Activate
+
+If Selection.Areas.Count <> 1 Or Selection.Columns.Count <> 1 Or Selection.Column <> 1 Then
+    MsgBox "選択範囲が不正です。"
+    Exit Sub
+End If
+
+Columns(4).ClearContents
+Columns(5).ClearContents
+
+Cells(1, 4).Value = "専用Slot数"
+Cells(1, 5).Value = "効率"
+
+For i = Selection.Item(1).Row To Selection.Item(Selection.Count).Row
+    str = ""
+    For j = Selection.Item(1).Row To Selection.Item(Selection.Count).Row
+        If j <> i Then
+            If str = "" Then
+                str = "'" & Cells(j, 1).Value & "'"
+            Else
+                str = str & ",'" & Cells(j, 1).Value & "'"
+            End If
+        End If
+    Next j
+    rtn = Cal_Duplicate("'" & Cells(i, 1).Value & "'", str)
+    Cells(i, 4).Value = Split(rtn, ",")(1)
+    Cells(i, 5).Formula2R1C1 = "=RC[-2]/RC[-1]"
+Next i
+
+ActiveSheet.Sort.SortFields.Clear
+ActiveSheet.Sort.SortFields.Add2 key:=Selection.Offset(0, 4), _
+    SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
+With ActiveSheet.Sort
+    .SetRange Selection.Resize(, 5)
+    .Header = xlNo
+    .MatchCase = False
+    .Orientation = xlTopToBottom
+    .SortMethod = xlPinYin
+    .Apply
+End With
+
+MsgBox "上から順に効率悪い品目です。"
+
+End Sub
+
+
+
+
+Sub mail(Optional ByVal ManualSendFlag As Boolean = False)
+
+Dim cnt As Long
+Dim flag As Boolean
+Dim i As Long
+
+With Sheets("祝日")
+For i = 1 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If .Cells(i, 1).Value > Date Then flag = True
+Next i
+End With
+
+If flag = False Then
+    MsgBox "祝日データが入力されていません！正しく表示されない可能性があります｡"
+End If
+
+Sheet_Mail.Activate
+
+'Outlookオブジェクト生成
+Dim OL As Outlook.Application
+Dim MI As Outlook.MailItem
+Set OL = CreateObject("Outlook.Application")
+Set MI = OL.CreateItem(olMailItem)
+
+MI.BodyFormat = 2 'HTML形式
+
+'MI.SentOnBehalfOfName = ""
+MI.To = Cells(8, 2).Value
+MI.CC = Cells(8, 3).Value
+MI.BCC = Cells(8, 4).Value
+MI.Subject = Cells(8, 1).Text
+
+MI.Body = ""
+
+Range(Cells(10, 1), Cells(75, 14)).CopyPicture
+
+'メール表示
+MI.display
+
+MI.GetInspector().WordEditor.Windows(1).Selection.Paste
+
+If ManualSendFlag Then
+    '何か書く？
+Else
+    MI.Send
+End If
+
+End Sub
+
+Sub ImportBOSS(Optional Flag_Skip As Boolean = False)
+
+Dim ws As Worksheet
+Set ws = Sheet_BOSS
+Dim tmp
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+Dim F As File
+Set F = fso.GetFile("\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\AccessDB\SMT_Schedule2\BOSSファイル置場\指図情報全データ.xlsx")
+
+Application.ScreenUpdating = False
+Application.Calculation = xlCalculationManual
+
+Sheet_BOSS_Format.Cells.Copy ws.Cells
+
+With Workbooks.Open(F.Path, ReadOnly:=True)
+    tmp = .Sheets(1).UsedRange
+    ws.Cells(1, 1).Resize(UBound(tmp, 1), UBound(tmp, 2)) = tmp
+    .Close False
+End With
+
+Sheet_Param.Cells(1, 1).Value = "取得日時"
+Sheet_Param.Cells(2, 1).Value = F.DateLastModified
+
+Application.Calculation = xlCalculationAutomatic
+Application.ScreenUpdating = True
+
+If Not Flag_Skip Then MsgBox "取り込み完了"
+
+End Sub
+
+Sub saitekika()
+Dim i As Long
+Dim j As Long
+Dim uni As Range
+Dim rng As Range
+Dim DT As Date
+Dim tmp2
+
+Dim reg  As RegExp
+Set reg = New RegExp
+
+'対象指図タイプ
+reg.Pattern = "^(LA|ZP1\d|ZP2\d)$"
+
+Load Msg
+Msg.Show vbModeless
+
+'最適化
+DT = Now
+For i = Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).Row To 2 Step -1
+    If Not reg.test(Sheet_BOSS.Cells(i, 4).Value) Or InStr(Sheet_BOSS.Cells(i, 2).Value, "KV") = 1 Then
+        'Sheet_BOSS.Rows(i).Delete
+        If uni Is Nothing Then
+            Set uni = Sheet_BOSS.Rows(i)
+        Else
+            Set uni = Union(uni, Sheet_BOSS.Rows(i))
+        End If
+    End If
+    If Now > DT + 0.5 / 86400 Then
+        Msg.Label.Caption = "最適化中:" & i
+        DoEvents
+        DT = DT + 0.5 / 86400
+    End If
+Next i
+
+Msg.Label.Caption = "余計なデータ削除中"
+DoEvents
+Application.ScreenUpdating = False
+
+If Not uni Is Nothing Then uni.Delete
+'今後もデータは増え続けると思うので前後2年で絞る
+Sheet_BOSS.AutoFilterMode = False
+Set rng = Sheet_BOSS.Range(Sheet_BOSS.Rows(2), Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).EntireRow)
+Sheet_BOSS.Cells(1, 1).AutoFilter Field:=14, Criteria1:="<=" & Format(DateValue(Now - 730), "yyyy/m/d"), Operator:=xlOr, Criteria2:=">=" & Format(DateValue(Now + 730), "yyyy/m/d")
+If WorksheetFunction.Subtotal(3, rng) <> 0 Then rng.SpecialCells(xlCellTypeVisible).Delete
+Sheet_BOSS.AutoFilterMode = False
+
+Application.ScreenUpdating = True
+
+Unload Msg
+MsgBox "完了"
+Exit Sub
+
+End Sub
+
+
+Sub Custom()
+
+Dim i As Long
+Dim j As Long
+Dim cnt As Long
+
+Application.Calculation = xlCalculationManual
+Application.ScreenUpdating = False
+
+For i = 2 To Sheet_Custom.Cells(Sheet_Custom.Rows.Count, 12).End(xlUp).Row
+    With Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp)
+        .Offset(1, 0) = "'000000000"
+        .Offset(1, 1) = Sheet_Custom.Cells(i, 12).Value
+        .Offset(1, 3) = "ZP21"
+        .Offset(1, 11) = Sheet_Custom.Cells(i, 13).Value
+        .Offset(1, 13) = Sheet_Custom.Cells(i, 14).Value
+    End With
+    
+    'Do While Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp).Offset(0, 13) - Now < 300
+    '    With Sheet_BOSS.Cells(Sheet_BOSS.Rows.Count, 1).End(xlUp)
+    '        .Offset(1, 0) = "'000000000"
+    '        .Offset(1, 1) = Sheet_Custom.Cells(i, 12).Value
+    '        .Offset(1, 3) = "ZP21"
+    '        .Offset(1, 11) = Sheet_Custom.Cells(i, 13).Value
+    '        .Offset(1, 13) = Application.WorksheetFunction.WorkDay(.Offset(0, 13).Value, Sheet_Custom.Cells(i, 15).Value, Sheets("休日").Range("A:A"))
+    '    End With
+    '
+    '    DoEvents
+    'Loop
+    
+    DoEvents
+Next i
+
+
+Application.ScreenUpdating = True
+Application.Calculation = xlCalculationAutomatic
+
+MsgBox "一時的に追加しました。"
+
+End Sub
+
+
+
+
+
+
+Function Cal_Tray(ByRef D As Dictionary) As String
+
+Dim HINMOKU As Dictionary
+Set HINMOKU = New Dictionary
+Dim tmp As Variant
+Dim i As Long
+Dim cnt As Double
+Dim NonHit As String
+Dim cnt_Tray As Long
+cnt_Tray = 0
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+Dim DB_Path As String
+DB_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\部品リスト.accdb"
+
+Dim TMP_Path As String
+TMP_Path = fso.GetSpecialFolder(TemporaryFolder).Path & "\部品リスト.accdb"
+
+
+If fso.FileExists(TMP_Path) Then
+    If fso.GetFile(DB_Path).DateLastModified <> fso.GetFile(TMP_Path).DateLastModified Then
+        Call fso.DeleteFile(TMP_Path)
+        Call fso.CopyFile(DB_Path, TMP_Path)
+    End If
+Else
+    Call fso.CopyFile(DB_Path, TMP_Path)
+End If
+
+
+
+
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+Set con = New ADODB.Connection
+
+con.Mode = adModeRead
+con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.16.0;" _
+                        & "Data Source=" & TMP_Path & ""
+con.Open
+
+
+Dim strSQL As String
+
+
+'品目リスト取得
+For Each tmp In D
+    If strSQL = "" Then
+        strSQL = "'" & tmp & "'"
+    Else
+        strSQL = strSQL & ",'" & tmp & "'"
+    End If
+Next tmp
+
+Set rs = con.Execute("SELECT Sum(IIf( [PartList].[供給種別] = 'トレイ', 1, 0 )) AS トレイ部品数 FROM ( SELECT DISTINCT 部品名 FROM [egproBOM] WHERE 品目名 IN(" & strSQL & ") ) AS filteredBOM INNER JOIN PartList ON  [filteredBOM].[部品名] = [PartList].[部品名]")
+
+If rs.EOF Or IsNull(rs!トレイ部品数) Then
+    cnt_Tray = 0
+Else
+    cnt_Tray = rs!トレイ部品数
+End If
+
+rs.Close
+con.Close
+Set rs = Nothing
+Set con = Nothing
+
+Cal_Tray = cnt_Tray
+
+End Function
+
+
+
+Sub openMacro()
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+
+Dim Macro_Path As String
+Macro_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\マクロ等\bin\TOOL.xlam"
+
+If Not fso.FileExists(Macro_Path) Then
+    MsgBox "File Not Found"
+End If
+
+Workbooks.Open Macro_Path, UpdateLinks:=False, ReadOnly:=True
+
+End Sub
+
+Sub 一週間ちょい分のフリーとる()
+
+Dim sttDate As Date
+sttDate = Date + 2
+
+Dim i As Long
+Dim j As Long
+Dim TargetCell As Range
+
+If Sheet_Job.Cells(Sheet_Job.Rows.Count, 16).End(xlUp).Row < 14 Then
+    Set TargetCell = Sheet_Job.Cells(13, 16)
+Else
+    Set TargetCell = Sheet_Job.Cells(Sheet_Job.Rows.Count, 16).End(xlUp).Offset(1, 0)
+End If
+
+For i = 1 To 14
+    Sheet_Cal2.Cells(2, 7).Value = sttDate
+    Sheet_Cal2.Cells(2, 7).Copy TargetCell
+    Set TargetCell = TargetCell.Offset(1, 0)
+    Sheet_Cal2.Activate
+    Call getBOSS_btn
+    Application.ScreenUpdating = False
+    For j = 2 To Sheet_Cal2.Cells(Sheet_Cal2.Rows.Count, 1).End(xlUp).Row
+        If Sheet_Cal2.Cells(j, 2).Value = "L1試作" Or Sheet_Cal2.Cells(j, 2).Value = "フリー" Then
+            
+            TargetCell.Value = Sheet_Cal2.Cells(j, 1).Value
+            TargetCell.Offset(0, 1).Value = Sheet_Cal2.Cells(j, 3).Value
+            
+            'Union(Sheet_Cal2.Cells(j, 1), Sheet_Cal2.Cells(j, 3)).Copy
+            'TargetCell.PasteSpecial xlPasteValues
+            Set TargetCell = TargetCell.Offset(1, 0)
+        End If
+        If GetInputState() <> 0 Then DoEvents
+    Next j
+    Set TargetCell = TargetCell.Offset(1, 0)
+    sttDate = sttDate + 1
+    If GetInputState() <> 0 Then DoEvents
+Next i
+Sheet_Job.Activate
+
+Application.ScreenUpdating = True
+
+End Sub
+
+Sub すべて更新()
+ActiveWorkbook.RefreshAll
+End Sub
+
+Sub RPA_Main()
+
+Open "\\nksv523.ad.nkc.co.jp\第二工場実装課用\RPA\ロボット(本番)\全指図情報\連携.txt" For Output As #1
+Print #1, "Start"
+Close #1
+Open "\\nksv523.ad.nkc.co.jp\第二工場実装課用\RPA\ロボット(本番)\全指図情報\連携_msg.txt" For Output As #1
+Print #1, "RPA動作待機中(1分以上かかる場合要確認)"
+Close #1
+
+Dim strm As ADODB.Stream
+Set strm = New ADODB.Stream
+
+strm.Charset = "shift-JIS"
+
+Dim buf As String
+
+Load Msg
+Msg.Show vbModeless
+
+Do While True
+    strm.Open
+        strm.LoadFromFile "\\nksv523.ad.nkc.co.jp\第二工場実装課用\RPA\ロボット(本番)\全指図情報\連携_msg.txt"
+        buf = strm.ReadText
+    strm.Close
+    If buf = "OK" Then Exit Do
+    Msg.Label.Caption = buf
+    DoEvents
+Loop
+Set strm = Nothing
+Msg.Label.Caption = "結果取り込み中"
+DoEvents
+Call ImportBOSS(True)
+Unload Msg
+Call Main
+
+End Sub
+
+-------------------------------------------------------------------------------
+VBA MACRO BUHIN_Class.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/BUHIN_Class'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+
+
+Public 部品名 As String
+Public 供給種別 As String
+Public ノズル As String
+Public フィーダーサイズ As Double
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_BOSS.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_BOSS'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Cal.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Cal'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Msg.frm 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Msg'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Private Sub UserForm_Initialize()
+Left = Application.Width / 2 + Application.Left - 100
+Top = Application.Height / 2 + Application.Top
+End Sub
+
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    If CloseMode = 0 Then
+        Application.Calculation = xlCalculationAutomatic
+        Application.ScreenUpdating = True
+        MsgBox "中断"
+        End
+    End If
+End Sub
+-------------------------------------------------------------------------------
+VBA MACRO Job_Class.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Job_Class'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+ 
+Private D_hinmoku As Dictionary
+
+
+
+Sub setHinmoku(val As String)
+If D_hinmoku Is Nothing Then
+    Set D_hinmoku = New Dictionary
+    D_hinmoku.Add val, val
+Else
+    D_hinmoku.Add val, val
+End If
+End Sub
+
+
+Function getCapa() As String
+
+
+
+End Function
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Group.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Group'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_CycleTime.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_CycleTime'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Kumitori.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Kumitori'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_BOSS_Format.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_BOSS_Format'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet4.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet4'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Sisaku.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Sisaku'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Mail.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Mail'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Custom.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Custom'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Holiday.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Holiday'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet6.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet6'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Param.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Param'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+(empty macro)
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Junbi.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Junbi'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+Sub Reflection_Junbi()
+Dim i As Long
+Sheet_Junbi.Activate
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+    If InStr(Cells(i, 2).Formula, "XLOOKUP") <> 0 Then
+        Cells(i, 2).Resize(1, 4).Copy
+        Cells(i, 2).Resize(1, 4).PasteSpecial Paste:=xlPasteValues
+        Application.CutCopyMode = False
+    End If
+    If Cells(i, 1).Text = Format(Now, "yyyy/mm/dd") Then
+        Rows(i).Select
+        Exit Sub
+    End If
+Next i
+End Sub
+
+
+Private Sub Worksheet_Activate()
+Dim i As Long
+Sheet_Junbi.Activate
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+    If Cells(i, 1).Text = Format(Now, "yyyy/mm/dd") Then
+        Rows(i).Select
+        Exit Sub
+    End If
+Next i
+End Sub
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_tenken.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_tenken'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO CalFee.bas 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/CalFee'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+
+Function Cal_Fee(ByRef D As Dictionary) As String
+
+Dim HINMOKU As Dictionary
+Set HINMOKU = New Dictionary
+Dim tmp As Variant
+Dim i As Long
+Dim cnt As Double
+Dim NonHit As String
+
+Dim fso As FileSystemObject
+Set fso = New FileSystemObject
+
+Dim DB_Path As String
+DB_Path = "\\nksv523.ad.nkc.co.jp\第二工場実装課用\1係用\Job作成\部品リスト.accdb"
+
+Dim TMP_Path As String
+TMP_Path = fso.GetSpecialFolder(TemporaryFolder).Path & "\部品リスト.accdb"
+
+
+If fso.FileExists(TMP_Path) Then
+    If fso.GetFile(DB_Path).DateLastModified <> fso.GetFile(TMP_Path).DateLastModified Then
+        Call fso.DeleteFile(TMP_Path)
+        Call fso.CopyFile(DB_Path, TMP_Path)
+    End If
+Else
+    Call fso.CopyFile(DB_Path, TMP_Path)
+End If
+
+
+
+
+Dim con As ADODB.Connection
+Dim rs As ADODB.Recordset
+Dim rs2 As ADODB.Recordset
+
+Set con = New ADODB.Connection
+
+con.Mode = adModeRead
+con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.16.0;" _
+                        & "Data Source=" & TMP_Path & ""
+con.Open
+
+
+Dim strSQL As String
+
+
+'有鉛DB作成
+Dim D_PB As Dictionary
+Set D_PB = New Dictionary
+Dim cnt_PB As Long
+cnt_PB = 0
+
+With Sheet_PB
+For i = 1 To .Cells(.Rows.Count, 1).End(xlUp).Row
+    If Not D_PB.Exists(CStr(.Cells(i, 1).Value)) Then
+        D_PB.Add CStr(.Cells(i, 1).Value), True
+    End If
+Next i
+End With
+
+'品目リスト取得
+For Each tmp In D
+    '有鉛チェック
+    If D_PB.Exists(tmp) Then
+        cnt_PB = cnt_PB + 1
+    End If
+    '存在チェック
+    Set rs = con.Execute("SELECT DISTINCT 品目名 FROM egproBOM WHERE 品目名='" & tmp & "';")
+    If rs.EOF Then
+        If NonHit = "" Then
+            NonHit = tmp
+        Else
+            NonHit = NonHit & "|" & tmp
+        End If
+        
+    End If
+    If tmp <> "" Or Not rs.EOF Then
+        If strSQL = "" Then
+            strSQL = "'" & tmp & "'"
+        Else
+            strSQL = strSQL & ",'" & tmp & "'"
+        End If
+    End If
+Next tmp
+
+rs.Close
+Set rs = Nothing
+
+
+'JOBの部品リストを辞書型で作成。ITEMに詳細情報をClassで作成。
+Dim JOB_HINMOKU As Dictionary
+Set JOB_HINMOKU = New Dictionary
+Dim myBUHIN As BUHIN_Class
+Dim HINMOKU_SIZE As Double
+Dim BUHINSU As Long
+
+Set rs = con.Execute("SELECT DISTINCT egproBOM.部品名, PartList.供給種別, PartList.ノズル, PartList.フィーダーサイズ, PartList.テープ幅 " & _
+                     "FROM egproBOM LEFT JOIN PartList ON (egproBOM.部品名 = PartList.部品名)" & _
+                     "WHERE egproBOM.品目名 IN (" & strSQL & ");")
+
+
+Dim DBG_3H As Double
+Dim DBG_other3H As Double
+
+Do Until rs.EOF
+
+    Set myBUHIN = New BUHIN_Class
+    myBUHIN.部品名 = CStr(rs.Fields("部品名"))
+    If IsNull(rs.Fields("供給種別")) Then
+        myBUHIN.供給種別 = ""
+        myBUHIN.ノズル = ""
+        myBUHIN.フィーダーサイズ = 0
+    Else
+        myBUHIN.供給種別 = CStr(rs.Fields("供給種別"))
+        myBUHIN.ノズル = CStr(rs.Fields("ノズル"))
+        myBUHIN.フィーダーサイズ = CDbl(rs.Fields("テープ幅"))
+    End If
+    JOB_HINMOKU.Add CStr(rs.Fields("部品名")), myBUHIN
+    
+    HINMOKU_SIZE = HINMOKU_SIZE + CDbl(myBUHIN.フィーダーサイズ)
+    BUHINSU = BUHINSU + 1
+        
+    Dim str
+    For Each str In Split(CStr(myBUHIN.ノズル), ",")
+        If CLng(str) > 1000 Then
+            DBG_3H = DBG_3H + CDbl(myBUHIN.フィーダーサイズ)
+            Exit For
+        End If
+        'If CLng(str) < 1000 Then
+        '    DBG_other3H = DBG_other3H + CDbl(rs.Fields("フィーダーサイズ"))
+        '    Exit For
+        'End If
+    Next str
+    
+    rs.MoveNext
+Loop
+
+Application.ScreenUpdating = False
+Application.EnableEvents = False
+
+For Each tmp In JOB_HINMOKU
+    Sheet_Cal2.Cells(Rows.Count, 14).End(xlUp).Offset(1, 0).Value = tmp
+    Sheet_Cal2.Cells(Rows.Count, 15).End(xlUp).Offset(1, 0).Value = JOB_HINMOKU(tmp).フィーダーサイズ
+    DoEvents
+Next tmp
+Application.ScreenUpdating = True
+Application.EnableEvents = True
+
+rs.Close
+Set rs = Nothing
+Set rs2 = Nothing
+
+Cal_Fee = 90# - DBG_3H & "," & 300# - (HINMOKU_SIZE - DBG_3H) & "," & NonHit & "," & cnt_PB & "," & BUHINSU
+
+End Function
+
+
+Sub Cal_Fee_btn()
+
+Dim D As Dictionary
+Set D = New Dictionary
+Dim tmp As Variant
+
+Columns(1).Interior.Pattern = xlNone
+
+For Each tmp In Selection
+    If tmp.Column = 1 And tmp.Value <> "" Then
+        D.Add CStr(tmp.Value), tmp.Value
+        tmp.Interior.Color = 65535
+    End If
+Next tmp
+
+Dim str As String
+
+If D.Count = 0 Then Exit Sub
+
+str = Cal_Fee(D)
+
+Cells(4, 9).Value = Split(str, ",")(0)
+Cells(6, 9).Value = Split(str, ",")(1)
+Cells(8, 9).Value = Split(str, ",")(2)
+End Sub
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_CalumSetting.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_CalumSetting'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+(empty macro)
+-------------------------------------------------------------------------------
+VBA MACRO Sheet1.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet1'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+(empty macro)
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Job.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Job'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet_Tray.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet_Tray'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA MACRO Sheet2.cls 
+in file: xl/vbaProject.bin - OLE stream: 'VBA/Sheet2'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Option Explicit
+
+-------------------------------------------------------------------------------
+VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'Msg/o'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+MS UI Gothic
+-------------------------------------------------------------------------------
+VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'Msg/o'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+MS UI Gothic
+-------------------------------------------------------------------------------
+VBA FORM Variable "b'Label'" IN 'xl/vbaProject.bin' - OLE stream: 'Msg'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+None
+-------------------------------------------------------------------------------
+VBA FORM Variable "b'Label2'" IN 'xl/vbaProject.bin' - OLE stream: 'Msg'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+None
++----------+--------------------+---------------------------------------------+
+|Type      |Keyword             |Description                                  |
++----------+--------------------+---------------------------------------------+
+|Suspicious|Open                |May open a file                              |
+|Suspicious|Output              |May write to a file (if combined with Open)  |
+|Suspicious|Print #             |May write to a file (if combined with Open)  |
+|Suspicious|CopyFile            |May copy a file                              |
+|Suspicious|ADODB.Stream        |May create a text file                       |
+|Suspicious|Call                |May call a DLL using Excel 4 Macros (XLM/XLF)|
+|Suspicious|CreateObject        |May create an OLE object                     |
+|Suspicious|Windows             |May enumerate application windows (if        |
+|          |                    |combined with Shell.Application object)      |
+|Suspicious|Lib                 |May run code from a DLL                      |
+|Suspicious|Hex Strings         |Hex-encoded strings were detected, may be    |
+|          |                    |used to obfuscate strings (option --decode to|
+|          |                    |see all)                                     |
+|Suspicious|Base64 Strings      |Base64-encoded strings were detected, may be |
+|          |                    |used to obfuscate strings (option --decode to|
+|          |                    |see all)                                     |
++----------+--------------------+---------------------------------------------+
+

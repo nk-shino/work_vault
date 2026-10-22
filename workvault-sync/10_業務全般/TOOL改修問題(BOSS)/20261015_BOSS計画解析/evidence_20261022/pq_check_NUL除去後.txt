@@ -1,0 +1,40 @@
+--- customXml/item1.xml (219 chars) ---
+<?mso-contentType?><FormTemplates xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms"><Display>DocumentLibraryForm</Display><Edit>DocumentLibraryForm</Edit><New>DocumentLibraryForm</New></FormTemplates>
+
+--- customXml/itemProps1.xml (335 chars) ---
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{49C00309-F4F0-44A6-A7A9-D717939DBC75}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms"/></ds:schemaRefs></ds:datastoreItem>
+
+--- customXml/item2.xml (30452 chars) ---
+��<?xml version="1.0" encoding="utf-16"?><DataMashup sqmid="8a219248-863d-4638-a330-6fb672a8f501" xmlns="http://schemas.microsoft.com/DataMashup">AAAAANsGAABQSwMEFAACAAgABzxPXfga29mkAAAA9gAAABIAHABDb25maWcvUGFja2FnZS54bWwgohgAKKAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAhU89DoIwGL0K6U4LNUZDPsrgZiQhMTGuTalQhWJosdzNwSN5BWsUdXN4w/tL3rtfb5CNbRNcZG9Up1MU4wgFUouuVLpK0WAP4RJlDAouTrySgQ9rk4xGpai29pwQ4pzDboa7viI0imKyzzd
+
+--- customXml/itemProps2.xml (314 chars) ---
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{74BB4C51-0386-4F0C-B60E-BB5CC2EEC0B9}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/DataMashup"/></ds:schemaRefs></ds:datastoreItem>
+
+--- customXml/item3.xml (769 chars) ---
+<?xml version="1.0" encoding="utf-8"?><p:properties xmlns:p="http://schemas.microsoft.com/office/2006/metadata/properties" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"><documentManagement><lcf76f155ced4ddcb4097134ff3c332f xmlns="ea180fb7-6417-4417-bcc2-1a1988547c9d"><Terms xmlns="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"></Terms></lcf76f155ced4ddcb4097134ff3c332f><TaxCatchAll xmlns="a7e61ba0-4c47-4710-ac4c-031e401f92bd" xsi:nil="true"/><SharedWithUsers xmlns="a7e61ba0-4c47-4710-ac4c-031e401f92bd"><UserInfo><DisplayName>第二生産部生産一課一係 メンバー</DisplayName><AccountId>7</AccountId><AccountType/></UserInfo></SharedWithUsers></documentManagement></p:properties>
+
+--- customXml/itemProps3.xml (954 chars) ---
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{E18FA76B-BB4A-4B3B-8A7B-5879D936A397}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/documentManagement/types"/><ds:schemaRef ds:uri="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"/><ds:schemaRef ds:uri="http://purl.org/dc/elements/1.1/"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/properties"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"/><ds:schemaRef ds:uri="http://purl.org/dc/terms/"/><ds:schemaRef ds:uri="a7e61ba0-4c47-4710-ac4c-031e401f92bd"/><ds:schemaRef ds:uri="ea180fb7-6417-4417-bcc2-1a1988547c
+
+--- customXml/item4.xml (13798 chars) ---
+<?xml version="1.0" encoding="utf-8"?><ct:contentTypeSchema ct:_="" ma:_="" ma:contentTypeName="ドキュメント" ma:contentTypeID="0x010100AFC8BC07E3BBA34EB92D3ED2768D585A" ma:contentTypeVersion="18" ma:contentTypeDescription="新しいドキュメントを作成します。" ma:contentTypeScope="" ma:versionID="6448ab97ff154a9b57c31f88aa65a4c6" xmlns:ct="http://schemas.microsoft.com/office/2006/metadata/contentType" xmlns:ma="http://schemas.microsoft.com/office/2006/metadata/properties/metaAttributes">
+<xsd:schema targetNamespace="http://schemas.microsoft.com/office/2006/metadata/properties" ma:root="true" ma:fieldsID="6cef2ced9b3848fd3c059a9736d94822" ns2:_="" ns3:_="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://schemas.microsoft.com/office/2006/metadata/properties" 
+
+--- customXml/itemProps4.xml (1149 chars) ---
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{FB10A232-84C5-4B9F-8DED-81CAE1E4EB40}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/contentType"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/properties/metaAttributes"/><ds:schemaRef ds:uri="http://www.w3.org/2001/XMLSchema"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/properties"/><ds:schemaRef ds:uri="ea180fb7-6417-4417-bcc2-1a1988547c9d"/><ds:schemaRef ds:uri="a7e61ba0-4c47-4710-ac4c-031e401f92bd"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/documentManagement/types"/><ds:schemaRef ds:uri="http://schemas.microsof
+
+=== item1 ===
+<?mso-contentType?><FormTemplates xmlns="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms"><Display>DocumentLibraryForm</Display><Edit>DocumentLibraryForm</Edit><New>DocumentLibraryForm</New></FormTemplates>
+=== itemProps ===
+customXml/itemProps1.xml <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{49C00309-F4F0-44A6-A7A9-D717939DBC75}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/sharepoint/v3/contenttype/forms"/></ds:schemaRefs></ds:datastoreItem>
+customXml/itemProps2.xml <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{74BB4C51-0386-4F0C-B60E-BB5CC2EEC0B9}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/DataMashup"/></ds:schemaRefs></ds:datastoreItem>
+customXml/itemProps3.xml <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{E18FA76B-BB4A-4B3B-8A7B-5879D936A397}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/documentManagement/types"/><ds:schemaRef ds:uri="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"/
+customXml/itemProps4.xml <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ds:datastoreItem ds:itemID="{FB10A232-84C5-4B9F-8DED-81CAE1E4EB40}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/contentType"/><ds:schemaRef ds:uri="http://schemas.microsoft.com/office/2006/metadata/properties/metaAttributes"/
