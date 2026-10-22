@@ -1,0 +1,74 @@
+[
+  {
+    "query": "提案キューの画面（src/glossary/web/templates/proposals.html）がごちゃごちゃしてきた。GitHubのプルリク一覧みたいに整理したい。まず公開デザインシステムを調べて、部分採用の候補をまとめてほしい",
+    "should_trigger": true
+  },
+  {
+    "query": "用語一覧の画面がちょっと古びて見える。Stripe のダッシュボードっぽくモダンにしたいんだけど、できる?",
+    "should_trigger": true
+  },
+  {
+    "query": "社内ツールの空状態をちゃんとした形にしたい。方針は Atlassian の公式ページの使用指針を確認してから改修してほしい",
+    "should_trigger": true
+  },
+  {
+    "query": "リファレンスサイトをいくつか調べて、うちの用語詳細画面に合う部分だけ採用して改修してほしい。完全な模倣はしないで",
+    "should_trigger": true
+  },
+  {
+    "query": "MDNみたいに読みやすい画面にしたい。指針を一次資料で確認してから手を入れて",
+    "should_trigger": true
+  },
+  {
+    "query": "テーブルが見にくい。Carbon の data table の指針を調べて、並べ方とソート表示を改善してほしい",
+    "should_trigger": true
+  },
+  {
+    "query": "UIを直したい。作りの良いサービスのいいとこだけ借りたい。まず調査からお願い",
+    "should_trigger": true
+  },
+  {
+    "query": "エラーメッセージの出し方が雑。GOV.UK の warning text あたりを参考に、警告の見せ方をちゃんとしたい",
+    "should_trigger": true
+  },
+  {
+    "query": "申請画面のフォームが使いにくい。優れたサービスのフォーム指針を調べて部分採用したい",
+    "should_trigger": true
+  },
+  {
+    "query": "管理画面を新規で作ってほしい。サイドバー付きの2カラムで。まだ画面は存在しない",
+    "should_trigger": false
+  },
+  {
+    "query": "このボタンの色だけ #2563eb に変えて",
+    "should_trigger": false
+  },
+  {
+    "query": "Figma のデザインカンプどおりにコンポーネントを実装して",
+    "should_trigger": false
+  },
+  {
+    "query": "このフォームに必須チェックのバリデーションを追加して",
+    "should_trigger": false
+  },
+  {
+    "query": "CSV取り込みでエラーが出て先に進めないので直して。トレースバックはこうです",
+    "should_trigger": false
+  },
+  {
+    "query": "この画面のスクリーンショットを撮って添付して",
+    "should_trigger": false
+  },
+  {
+    "query": "ダークモード用のCSSを追加して。配色は既存の変数を流用して",
+    "should_trigger": false
+  },
+  {
+    "query": "style.css をリファクタして、重複したルールをまとめて",
+    "should_trigger": false
+  },
+  {
+    "query": "モックアップのHTMLを 01_Templates に置いたので見ておいて",
+    "should_trigger": false
+  }
+]
