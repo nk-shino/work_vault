@@ -82,3 +82,39 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 - 発生コマンド/状況: ツールが書き出した .ps1 が BOM 無しの場合、PowerShell 5.1 は ANSI(CP932)で解読し、日本語文字列を含む行の引用符解釈が崩れて「')' が存在しません」等のパースエラー。同内容でも BOM 付きなら正常動作する。発生が断続的(ツール側で BOM が付く/付かないが揺れる)のため厄介。
 - 解決法: 実行前に `[System.IO.File]::WriteAllText($p, [System.IO.File]::ReadAllText($p,[Text.Encoding]::UTF8), (New-Object Text.UTF8Encoding $true))` で BOM を付けてから実行(セッション内で常套化)。
 - Pattern-Key: ps1.bom-required-for-japanese
+
+## [ERR-20261022-008] VBAモジュールの全行削除+単一関数のみ再挿入でプロジェクト全体がコンパイルエラーになりRun不能・COMハング
+
+- 発生コマンド/状況: ExportBarcodePdf だけ差し替えるつもりで CodeModule.DeleteLines(1, CountOfLines) → AddFromString(新関数のみ)。同モジュール内の ExportBarcodeFromFilter/WriteSerialCsv も消え、他モジュールから呼ばれる SaveSpliceBarcode_Core が未定義に→プロジェクト全体がコンパイルエラー。Application.Run は「マクロ 'xxx' を実行できません。このブックでマクロが使用できないか…」を返し、VBAから呼ぶとコンパイルエラーのモーダルダイアログが出て PS の COM 呼び出しが永久ブロック(タイムアウトに見える。VBE が該当モジュールを開いたまま残る)。
+- 解決法: モジュール差し替えは「元の他メンバーを残して目的の関数だけ置換」(元ダンプの頭部+新関数を連結して全行再構成)。Run 失敗時は EXCEL.EXE の MainWindowTitle に「Visual Basic for Applications」と出ているゾンビを PID 確認して停止。
+- Pattern-Key: vba.module-full-replace-breaks-compile
+
+## [ERR-20261022-009] OneDrive配下(C:\work)のブックをCOMで開くとFullNameがSharePoint URLになりSave()がローカルに反映されない
+
+- 発生コマンド/状況: C:\work\splicing_review\fixcheck2\dev_qr.xlsm を Workbooks.Open → readonly=True・FullName が https://nk365-my.sharepoint.com/... に。モジュール編集+Save() してもローカルファイルは無反応(クラウド側へ飛ぶ)。再読込で編集が消えたように見え、原因切り分けに数回の再実行を要した。
+- 解決法: VBA編集を伴う検証は OneDrive 配下でないフォルダ(C:\Users\ss80751\AppData\Local\Temp\kohden-code など)で実施し、完成物をファイルコピーで戻す。Open 時は第7引数 IgnoreReadOnlyRecommended:=$true を付け、Open 直後に wb.FullName がローカルパスか・wb.ReadOnly が False かを必ずアサート。
+- Pattern-Key: com.excel-onedrive-save-goes-to-cloud
+
+## [ERR-20261022-010] PrintArea+IgnorePrintAreas:=Falseでアンカー列からはみ出すOLEが全て印刷対象から消える
+
+- 発生コマンド/状況: S2 に PrintArea "$A$1:$E$49" を設定し ExportAsFixedFormat(IgnorePrintAreas:=False)。QRのOLEはアンカー列の幅より広く(90pt)、はみ出し分が印刷範囲外扱いでQR描画が全滅(文字ラベルだけ出る。ファイルサイズが半分になったことで発覚)。
+- 解決法: OLEを含むシートのPDF出力は IgnorePrintAreas:=True のまま(範囲絞り込みはオブジェクト配置側で解決)。PrintArea と ActiveX の併用は避ける。
+- Pattern-Key: vba.printarea-drops-ole-overflow
+
+## [ERR-20261022-011] OLE幅がページ幅境界を跨ぐとQRごと「負座標の迷入QR」右ページが各バンドに1枚生成される
+
+- 発生コマンド/状況: 列ピッチ108pt+QR90pt で5列目QR右端=549.75pt がS2の印刷可能幅(約549.6pt)を0.15pt跨ぎ。シート内のOLEは正しく103個(Left<0は0個)なのに、PDFは8ページ(各バンドの右に白背景+黒モジュールのQR断片が x=-64〜28 で出現)。dbgダンプ(出力直前のOLE全Left/Top)でシート側は正常と証明してから PDF 側のページングと断定した。
+- 解決法: 列ピッチを104ptに下げて5列目右端を533.75ptに収める。PageSetup の Left/RightMargin 代入はハングする環境がある(ERR-012)ため、レイアウト微調整はマージンではなくピッチで行う。
+- Pattern-Key: vba.ole-crosses-page-width-phantom-page
+
+## [ERR-20261022-012] PageSetupのLeft/RightMargin代入がCOMで確定的にハングする
+
+- 発生コマンド/状況: ExportBarcodePdf 内で S2.PageSetup.LeftMargin/RightMargin へ 0.25in を代入→PrintSplice_Core が毎回停止(2回再現。TopMargin/BottomMargin の代入は問題なし)。VBE がモジュールを開いたままのゾンビ EXCEL.EXE が残る。
+- 解決法: L/Rマージン代入をやめ、列ピッチ変更で同じ効果を得る。ゾンビは PID 確認後に Stop-Process -Id で停止。
+- Pattern-Key: com.excel-pagesetup-lrmargin-hang
+
+## [ERR-20261022-013] cv2のページ全体detectAndDecodeMultiが1〜2件取りこぼす
+
+- 発生コマンド/状況: QR 30個/ページのPDFを300dpiで一括 detectAndDecodeMulti → 29件(1件欠け)。個別に見るとQR自体は正常。
+- 解決法: 全数検証は QR白背景矩形(幅高さ80〜100ptの白fill)でグリッド抽出→ソート→個別クロップ→300/450/650dpiの順で再試行。103/103完全一致を確認できた。
+- Pattern-Key: cv2.qr-fullpage-detect-misses
