@@ -2,7 +2,7 @@
 """Power Query定義抽出: customXml/dataMashup確認"""
 import zipfile, sys, io, re
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-SRC = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題\BOSS計画.xlsm"
+SRC = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題(BOSS)\BOSS計画.xlsm"
 z = zipfile.ZipFile(SRC)
 
 # customXml item2/item4 are large - check for mashup

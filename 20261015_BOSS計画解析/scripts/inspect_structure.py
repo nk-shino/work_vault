@@ -3,7 +3,7 @@
 import zipfile, re, json, os, sys
 from xml.etree import ElementTree as ET
 
-SRC = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題\BOSS計画.xlsm"
+SRC = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題(BOSS)\BOSS計画.xlsm"
 OUT = r"C:\Users\ss80751\kohden-code-workspace\20261015_BOSS計画解析"
 os.makedirs(OUT, exist_ok=True)
 

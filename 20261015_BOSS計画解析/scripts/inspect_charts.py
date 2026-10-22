@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import zipfile, re
-z = zipfile.ZipFile(r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題\BOSS計画.xlsm")
+z = zipfile.ZipFile(r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\TOOL改修問題(BOSS)\BOSS計画.xlsm")
 for i in range(1, 22):
     d = z.read(f"xl/charts/chart{i}.xml").decode("utf-8")
     refs = sorted(set(re.findall(r"<c:f>([^<]+)</c:f>", d)))

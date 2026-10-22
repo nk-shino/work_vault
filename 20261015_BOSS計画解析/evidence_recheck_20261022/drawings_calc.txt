@@ -1,0 +1,54 @@
+=== グラフ配置 ===
+sheet2: charts=[] drawings=['../drawings/drawing1.xml'] queryTables=[]
+sheet5: charts=[] drawings=['../drawings/drawing2.xml'] queryTables=[]
+sheet6: charts=[] drawings=['../drawings/drawing3.xml'] queryTables=[]
+sheet9: charts=[] drawings=['../drawings/drawing5.xml'] queryTables=[]
+sheet10: charts=[] drawings=['../drawings/drawing6.xml'] queryTables=[]
+sheet13: charts=[] drawings=['../drawings/drawing7.xml'] queryTables=[]
+sheet16: charts=[] drawings=['../drawings/drawing8.xml'] queryTables=[]
+sheet18: charts=[] drawings=['../drawings/drawing9.xml'] queryTables=[]
+
+=== drawing一覧とshape数 ===
+drawing1: shapes=0 pics=0 charts=1 cols=['21']
+drawing2: shapes=4 pics=0 charts=0 cols=['8', '6', '6', '8']
+drawing3: shapes=5 pics=1 charts=5 cols=['17', '21', '20', '17', '17', '16', '30', '21', '17', '21']
+drawing4: shapes=0 pics=0 charts=0 cols=[]
+drawing5: shapes=1 pics=0 charts=0 cols=['5']
+drawing6: shapes=1 pics=2 charts=0 cols=['1', '1', '0', '0']
+drawing7: shapes=3 pics=0 charts=0 cols=['17', '19', '0']
+drawing8: shapes=12 pics=0 charts=15 cols=['2', '0', '2', '4', '6', '0', '0', '4', '6', '0']
+drawing9: shapes=2 pics=0 charts=0 cols=['4', '1']
+
+=== VML(フォームコントロール)のマクロ割当 ===
+xl/drawings/vmlDrawing1.vml: []
+
+=== 計算 sheet6 構造 ===
+rows=183
+col1: '日付' sample='46296' filled=182
+col2: 'DBにBOM無し' sample=None filled=11
+col3: 'DBにサイクルタイム無し' sample=None filled=18
+col4: 'フリー容量' sample=' 64.5| 157.0' filled=111
+col5: 'フリー部品種類数' sample='235' filled=111
+col6: 'フリー' sample='4.3587301587301601' filled=111
+col7: 'L1試作' sample=None filled=9
+col8: 'NKV' sample=None filled=21
+col9: 'L1停止時間' sample='1.75' filled=124
+col10: 'L2試作' sample=None filled=0
+col11: 'TEC-5600' sample='2.3714285714285701' filled=101
+col12: 'TEC-1000' sample=None filled=85
+col13: '送信機_L2' sample='4.9359999999999999' filled=60
+col14: 'L2停止時間' sample='1.75' filled=124
+col15: 'L3試作' sample=None filled=0
+col16: 'AED' sample='7.0077119047619103' filled=107
+col17: 'L3停止時間' sample='1.75' filled=124
+col18: None sample=None filled=0
+col19: None sample=None filled=0
+col20: None sample=None filled=0
+col21: None sample=None filled=0
+日付: 2026-10-01 ～ 2027-03-31 (182件)
+
+過去データrows=1020 / 計算rows=183
+mail r8 A: 【自動配信】10/15計画情報 ※試験運用
+mail r8 B: 生産一課 <4500622000@mb.nkc.co.jp>; 実装技術課 <4500620500@mb.nkc.co.jp>
+mail r8 C:  NISHIYAMA Hideyuki (西山 秀行) <Hideyuki_Nishiyama@mb5.nkc.co.jp>
+mail r8 D: YAMADA Mami (山田 マミ) <Mami_Yamada@mb1.nkc.co.jp>
