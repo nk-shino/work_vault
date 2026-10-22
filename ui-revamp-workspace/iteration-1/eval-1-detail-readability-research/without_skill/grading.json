@@ -1,0 +1,123 @@
+{
+  "expectations": [
+    {
+      "text": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+      "passed": false,
+      "evidence": "表形式の「システム名・参照箇所・URL」の表は存在しない。§3 は DADS/MDN の散文解説で出典は文中に混在、§6「一次資料一覧」はシステム別の箇条書き（ページ名+更新日: URL）。3項目を併せた表はない。"
+    },
+    {
+      "text": "公式usageページ: 挙げられたURLが公式の使用指針(usage)ページであり、ルートページ・APIリファレンス・ブログ記事でない",
+      "passed": true,
+      "evidence": "指針の根拠として使うURLは design.digital.go.jp の guidance/foundations ページで、local-design-system・typography・layout・spacing を webfetch で取得確認（残りは同サイトのナビで存在確認）。MDN の書き方指針（Page_types・Glossary_page_template・Write_a_new_entry_in_the_glossary・Writing_style_guide）は MDN ナビで存在確認、Glossary_page_template は取得済み。トップ（design.digital.go.jp/）は「トップ（β版 v2.18.2）」と、digital.go.jp のニュースページは「ライセンス・活用案内（デジタル庁ニュース）」と役割を明示した上での付加列挙で、指針の根拠は各指針ページに置かれている。GitHub の mdn-minimalist・discussion 822 は「MDN は指針を公開していない」の傍証として位置づけ。"
+    },
+    {
+      "text": "採用と不採用: 各システムについて、採用する指針と採用しない指針(または見送り)の両方が書かれている",
+      "passed": true,
+      "evidence": "DADS: 採用（A1 タイポ基準・A6 注意様式・A7 ローカルトークン、B1〜B4）＋不採用（C1 フル採用・C3 Display 48〜64px と行高 170/175%・C5 ブレークポイント規定のそのまま適用）。MDN: 採用（A2 定義ファースト・A3 h3 メタ分離・A4 See also・A5 操作系分離）＋不採用（C2 disambiguation ページ分割）。両システムとも採用/不採用が明確に分かれている。"
+    },
+    {
+      "text": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+      "passed": false,
+      "evidence": "P1/P2/P3 の表記は文書全体に存在しない。§4 は 採用（A）/条件付き（B）/不採用（C）の3表で、A 表は No/採用内容/出典/対応する現状の課題 の構成。優先度ラベルと「候補・適用先・備考」を備えた P1/P2/P3 表は存在しない。"
+    },
+    {
+      "text": "見送りと理由: 実装しない項目とその理由が明記されている",
+      "passed": true,
+      "evidence": "§4C「採用しない」の表に5件（C1 DADS フル採用・コンポーネント全面置換、C2 MDN 式ページ分割、C3 Display 級と行高 170/175%、C4 行政向け作例・イラスト、C5 ブレークポイント規定のそのまま適用）で、各項目に理由（読み物中心・既存仕様との衝突・用途不一致・既存未確認等）。"
+    },
+    {
+      "text": "判断が必要な点: 実装前にユーザーの決定が必要な設計分岐が明示されている",
+      "passed": true,
+      "evidence": "§4B「条件付きで採用する」が B1（フォント配信方法: セルフホストか Google Fonts か+読み込みコスト）、B2（余白スケールの段数決め）、B3（コードスニペットの書き換え前提）、B5（目次の設置条件）を「条件が確定してから採用」の分岐として明示。§5 に「ライセンスの帰属表示の要否を社内規程に沿って確認する」という組織判断を含む引き継ぎ事項。実装前に確定すべき分岐が列挙されている。"
+    },
+    {
+      "text": "部分採用: 参照先UIの全面移植(MDNのページ構成の丸ごと導入等)を提案せず、指針単位の部分採用に留まっている",
+      "passed": true,
+      "evidence": "C1 で DADS のフル採用・コンポーネント全面置換を不採用、C2 で MDN 式の多義語ページ分割を不採用、B4 で「12 カラム規定そのものは使わない」と明示。§3.1 は DADS 自身がローカルデザインシステム経由の部分採用を前提にしていると根拠付け。A1〜A7 は値・情報順序・様式の指針単位の採用で、ページ構成の丸ごと導入はない。"
+    },
+    {
+      "text": "実在する出典: 挙げられたURLは実在し、そのページ内容と記載が一致する(捏造された出典がない)",
+      "passed": true,
+      "evidence": "主要URLを webfetch で取得照合: DADS local-design-system（β版 v2.18.2、2026-10-14 更新、プラットフォーム型/ローカルDS前提/編集範囲/アクセシビリティ骨格 4.5:1・3:1・16px・行高 1.5 倍・フォーカスインジケーター変更不可・WAI-ARIA 保持）、typography（Noto Sans JP/Mono・SIL OFL 1.1・N400/B700・16px 以上・14px は制約時のみ・行高 100〜175%・Display 48〜64px）、layout（ブレークポイント1つ・768px・12カラム・カラム幅=文字サイズ整数倍・ガター=2倍）、spacing（基準単位 8 CSS px・スケール 3〜5段・適用例 8/24/64）は文書の記載と一致。mdn-minimalist は 'archived … on Feb 11, 2022' で文書の「2022-02-11 アーカイブ」と一致。discussion 822 は「MDN has a new frontend!」（2025-08-21 公布）で実在。Glossary/HTML（ja）は太字見出し語+1文定義を確認。Glossary page template は「冒頭の自己完結した 1〜2 文・page-type: glossary-definition/disambiguation・See also」で一致。文書が採用した一次資料の値（768px・8px/3〜5段）は取得結果と一致し、二次情報（520/960px・フィボナッチ）を退けた判断も正しい。捏造は見つからず。軽微な不正確さ2点: 「Display・Heading・Standard・Dense など 5 種」の Heading は実際の5種（Display/Standard/Dense/Oneline/Mono）にない、「fred（2025 年末稼働）」の公布は 2025-08-21。"
+    },
+    {
+      "text": "現状踏まえ: 対象テンプレートの既存要素(語義・出自・関連語・履歴等)に触れた提案になっている",
+      "passed": true,
+      "evidence": "§1 に term_detail.html（119 行・Jinja2）の構成（パンくず・hero の dl と履歴リンク・混同注意・語義ループの h3 に5種ラベル+係争中警告+定義+用例+評価フォーム・関連語の h3+リスト・details 2件）と構造由来の課題6点。A2〜A6 が定義の位置・h3・関連語・評価フォーム・警告様式に対応し、履歴・出自（採用者・AI）の扱いにも言及。"
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 2,
+    "total": 9,
+    "pass_rate": 0.78
+  },
+  "execution_metrics": {
+    "output_chars": 18621
+  },
+  "claims": [
+    {
+      "claim": "DADS は β版 v2.18.2 で、ローカルデザインシステム（スタイルガイド）ページは 2026-10-14 更新",
+      "type": "factual",
+      "verified": true,
+      "evidence": "取得したページのヘッダに「デジタル庁デザインシステムβ版 v2.18.2」、ページ冒頭に「2026年10月14日更新」を確認。"
+    },
+    {
+      "claim": "一次資料ではブレークポイント 768px（1箇所）、余白は基準単位 8 CSS px・スケール 3〜5 段。技術ブログの 520/960px・フィボナッチ数列は二次情報の誤り",
+      "type": "factual",
+      "verified": true,
+      "evidence": "layout ページ: ブレークポイントは1つ・設定例 768px。spacing ページ: 「一般的に利用されることの多い基準単位は8 CSS px」「余白スケールは3つから5つ程度」、適用例 8/24/64。一次側の値は確認。ブログ記事側の主張自体は未確認だが、退けた判断（一次を採用）は正しい。"
+    },
+    {
+      "claim": "mdn-minimalist は 2022-02-11 にアーカイブされ更新停止",
+      "type": "factual",
+      "verified": true,
+      "evidence": "GitHub リポジトリに 'This repository was archived by the owner on Feb 11, 2022. It is now read-only.' と表示。文書の「2022-02-11 アーカイブ」と日付まで一致。"
+    },
+    {
+      "claim": "現行フロントエンド fred は 2025 年末に稼働した",
+      "type": "factual",
+      "verified": false,
+      "evidence": "discussion 822「MDN has a new frontend!」の公布は 2025-08-21 で「2025 年末」より早い。fred の存在（github.com/mdn/fred への言及あり）と指針未公開の主旨は支持されるが、日付の記述は不正確。"
+    },
+    {
+      "claim": "DADS の用途別テキストスタイルは「Display・Heading・Standard・Dense など 5 種」",
+      "type": "factual",
+      "verified": false,
+      "evidence": "実際の5種は Display/Standard/Dense/Oneline/Mono で「Heading」は含まれない（サイズ・行高の記述自体は一致）。軽微な名称の不正確。"
+    },
+    {
+      "claim": "DADS のライセンスは政府標準利用規約（第2.0版、CC BY 4.0 互換）",
+      "type": "factual",
+      "verified": false,
+      "evidence": "出典として挙げられた digital.go.jp のニュースページを取得していないため未検証（公式ドメインかつ役割を明示した参照だが内容照合は未実施）。"
+    },
+    {
+      "claim": "AI チップ・マスキング表記・係争中ステータスはこのアプリ特有の情報で DADS に対応コンポーネントがない",
+      "type": "quality",
+      "verified": false,
+      "evidence": "DADS コンポーネント一覧の全数確認はしておらず、合理的な推定だが未検証。"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+        "reason": "Run 2 と同様に表の要件（3項目を1つの表に）が明示でないため裁量が入る。Run 4 の §6 一覧は情報としては揃っている。要件の明文化を推奨"
+      },
+      {
+        "assertion": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+        "reason": "Run 4 は 採用/条件付き/不採用 の3層で優先順位を表現した。P1/P2/P3 というラベル自体を要求するのか、優先順位づけ一般でよいのか意図を明確にすると、ラベル形式だけの合否になるのを防げる"
+      },
+      {
+        "reason": "Run 4 の特徴的な挙動（二次情報と一次資料の差異を検証し一次を採用、検証結果を文書化）を検査する assertion がない。「一次資料の値を二次情報と照合した記述がある」系の assertion は一次資料主義の実効性を測る識別子になる"
+      }
+    ],
+    "overall": "表形式の2点で落ちたが、内容・出典とも採点側の取得で裏付けが取れた高品質な出力。一次資料の値の照合（768px・8px/3〜5段・アーカイブ日付）まで正確で、捏造の兆候はない。"
+  }
+}

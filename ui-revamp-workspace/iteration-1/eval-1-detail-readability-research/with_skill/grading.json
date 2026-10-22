@@ -1,0 +1,116 @@
+{
+  "expectations": [
+    {
+      "text": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+      "passed": true,
+      "evidence": "§2「参照した一次資料」に システム/参照箇所/URL の3列×6行の表（Atlassian Typography・Empty state usage・Section message usage、Carbon Typography overview、GOV.UK Details・Warning text）。"
+    },
+    {
+      "text": "公式usageページ: 挙げられたURLが公式の使用指針(usage)ページであり、ルートページ・APIリファレンス・ブログ記事でない",
+      "passed": true,
+      "evidence": "6URL とも公式ドメインの指針ページで webfetch により取得確認済み: atlassian.design/foundations/typography、…/components/empty-state/usage、…/components/section-message/usage、carbondesignsystem.com/guidelines/typography/overview/（現行 URL 構成では /building-blocks/foundations/typography/overview だが同一内容の Typography overview が応答）、design-system.service.gov.uk/components/details/、…/components/warning-text/。ルートページ・APIリファレンス・ブログ記事は含まれない。"
+    },
+    {
+      "text": "採用と不採用: 各システムについて、採用する指針と採用しない指針(または見送り)の両方が書かれている",
+      "passed": true,
+      "evidence": "§3 が3システム別の採用指針。§4「現状のまま維持するもの」が各システムの指針に照らした不変更判断（Atlassian Typography/Empty state/Section message、Carbon expressive、GOV.UK Details/Warning text に照らし既存が適合）、§6 見送りに GOV.UK Typography の参照見送り・MDN 模倣見送り・「採用候補 3 システムの指針に根拠がない」項目（アンカーリンク等）を明記。"
+    },
+    {
+      "text": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+      "passed": true,
+      "evidence": "§5 の表は 候補/適用先/出典/優先度 で A1〜A4=P1、A5=P2、A6=P3。備考は表の列ではなく直後の「備考（実装上の制約）」節（テスト文言の維持・A1 の移動と読み上げ順・A4 の HTML 順序不変）として候補表に付随しており、内容は揃っている。"
+    },
+    {
+      "text": "見送りと理由: 実装しない項目とその理由が明記されている",
+      "passed": true,
+      "evidence": "§6「見送りとその理由」の表に9件（MDN 模倣、GOV.UK Typography 参照、本文カラム読み幅、サイドナビ等レイアウト移植、見出しアンカーリンク、fieldset/legend 変更、hero grid 置換、関連語表形式化、絵文字）で、各項目に理由（根拠を示せない・部分採用の失敗パターン・現行で同等機能等）。"
+    },
+    {
+      "text": "判断が必要な点: 実装前にユーザーの決定が必要な設計分岐が明示されている",
+      "passed": true,
+      "evidence": "§7「判断が必要な点」に3件を「実装前に決定が必要な設計上の分岐」として明示（評価フォーム折りたたみの要否と A6 の依存関係、語義メタ行の並び順、隠し接頭語の文言確定）。各項目に分岐の帰結（畳む場合/畳まない場合の対応）まで書かれている。"
+    },
+    {
+      "text": "部分採用: 参照先UIの全面移植(MDNのページ構成の丸ごと導入等)を提案せず、指針単位の部分採用に留まっている",
+      "passed": true,
+      "evidence": "§6 で「MDN 自体の模倣（レイアウト・部品の移植）」と「サイドナビ・目次・タブ等のレイアウト移植（部分採用の失敗パターンに該当）」を見送り。§2 では MDN の雰囲気を「長文の定義を読みやすく示す/メタ情報の分離/注意は本文で伝える」に分解し指針で裏取りする方法を明示。候補 A1〜A6 は見出しの情報分離・h2 調整・隠し接頭語・余白・折りたたみ等の指針単位。"
+    },
+    {
+      "text": "実在する出典: 挙げられたURLは実在し、そのページ内容と記載が一致する(捏造された出典がない)",
+      "passed": true,
+      "evidence": "6URL とも webfetch で取得し内容照合済み。Atlassian Typography（「見出しは新しい内容の区切りを導入するために使う」「heading styles, rather than bold or a change of font size」「h1 は1ページ1つ・レベルを飛ばさない」「Body L は長文の既定」「視覚階層と余白で複雑な情報を整理」）、Empty state usage（見出し/説明/ボタンの構成・CTA の絞り込み）、Section message usage（色だけに頼らない・行き止まりを避け対応手段を示す）、Carbon Typography overview（expressive/productive の使い分け・「SemiBold … ideal for section headers, but should not be used for long text」・本文色はニュートラルで主要色は主操作とリンク）、GOV.UK Details（「一部の利用者にだけ必要な情報」「大半の利用者に必要な情報は畳まない」「タブやアコーディオンより目立たない」）、Warning text（aria-hidden の『!』アイコン+太字+govuk-visually-hidden の 'Warning'）。一致しない記載は見つからず。"
+    },
+    {
+      "text": "現状踏まえ: 対象テンプレートの既存要素(語義・出自・関連語・履歴等)に触れた提案になっている",
+      "passed": true,
+      "evidence": "§1 に term_detail.html の構成（パンくず・hero の読み/英語/略語/版と履歴リンク・混同注意・語義カードの h3 に6種併記と評価フォーム・関連語・details 2件）と課題3点、テスト検査文字列の保護対象表。A1〜A6 の適用先が語義 h3・h2・混同注意セクション・.evaluate・メタ行に紐づく。"
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 11710
+  },
+  "claims": [
+    {
+      "claim": "GOV.UK Typography は2回取得したが本文を取得できず、参照を見送った（行長の指針は根拠に使えない）",
+      "type": "process",
+      "verified": false,
+      "evidence": "トランスクリプト不在のため試行自体を検証できない。ただし文書は GOV.UK Typography を出典表・採用候補の双方から外して扱っており、失敗を隠していない（URL も挙げていない）。"
+    },
+    {
+      "claim": "MDN 自体は使用指針を公開しておらず、一次資料に使えない",
+      "type": "factual",
+      "verified": true,
+      "evidence": "別 run の検証と整合（mdn-minimalist は 2022-02-11 アーカイブ、新フロントエンド fred の発表 discussion は存在するが使用指針の公開は確認できていない）。本 run も「雰囲気」を3項目に分解して3システムの公開指針で裏取りする方針で処理しており、妥当。"
+    },
+    {
+      "claim": "GOV.UK Warning text はアイコン（装飾）+太字本文で伝え、アイコンの意味は隠しテキストで補う",
+      "type": "factual",
+      "verified": true,
+      "evidence": "取得結果: span.govuk-warning-text__icon（aria-hidden の『!』）+ strong.govuk-warning-text__text + span.govuk-visually-hidden の 'Warning'（iconFallbackText、文脈に合わせて書き換え可の明記あり）。"
+    },
+    {
+      "claim": "現行 h2 は 1.15rem、混同注意は 17〜22 行目、語義 h3 は 33〜40 行目等の行番号・値の記述は正確",
+      "type": "factual",
+      "verified": false,
+      "evidence": "対象テンプレート/CSS がワークスペース外で照合できないため未検証。"
+    },
+    {
+      "claim": "テスト検査文字列の一覧（tests/test_e2e.py:111 ほか9点）は正確",
+      "type": "factual",
+      "verified": false,
+      "evidence": "tests/ がワークスペース外で照合できないため未検証。"
+    },
+    {
+      "claim": "空状態は「見出し+説明+次の操作」で構成し操作は1つに絞る（Atlassian）",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Empty state usage 取得結果: parts は illustration/heading/description/button、'Do: 関連する CTA を入れる / Don't: 1ページに CTA ボタンを多すぎない'。『1つに絞る』は要約表現として整合。"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+        "reason": "Run 3 は備考を表の列ではなく直後の備考節で充足した。列として要求するか節でもよいかを明文化しないと採点が割れる（今回は節での充足を PASS と判定）"
+      },
+      {
+        "reason": "「取得に失敗した出典を候補から外して明記する」挙動（GOV.UK Typography の打ち切り報告）は一次資料主義の実効性を示す観測だが、どの assertion も検査しない。追加候補になる"
+      },
+      {
+        "reason": "現状の行番号・rem 値等のテンプレート詳細は採点側から検証できない。現状把握の assertion に「検証可能な参照（行番号・クラス名・テスト名）を含める」を要求すると、確認済みの現状把握と不明確な現状把握を区別できる"
+      }
+    ],
+    "overall": "9件とも実在出典の内容照合まで含めて妥当に機能した。改善点は備考の様式定義と、取得失敗の扱いを検査する assertion の有無。"
+  }
+}

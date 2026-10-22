@@ -1,0 +1,117 @@
+{
+  "expectations": [
+    {
+      "text": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+      "passed": false,
+      "evidence": "§2.2 調査対象の表は システム/採用した根拠/選定理由 の3列で URL を含まない。URL は §7「参照 URL」に箇条書き（ページ名: URL）で分離しており、「システム名・参照箇所・URL」を併せ持つ表は存在しない。情報自体は揃っているが様式の要件を満たさない。"
+    },
+    {
+      "text": "公式usageページ: 挙げられたURLが公式の使用指針(usage)ページであり、ルートページ・APIリファレンス・ブログ記事でない",
+      "passed": true,
+      "evidence": "挙げられたURLはすべて公式ドメイン。取得確認済み: primer.style …/scenario-patterns/filter/、…/components/state-label/、…/components/pagination/、…/components/progress-bar/、…/ui-patterns/empty-states/、design-system.service.gov.uk …/components/task-list/、…/patterns/complete-multiple-tasks/。Label・ActionList は同サイトのナビで存在確認。atlassian.design …/content/writing-guidelines/empty-state/ と …/foundations/content/designing-messages/ は検索で存在確認（取得ツールが本文を返さなかったため、ドメイン+内容照合で判定）。シナリオパターン・コンポーネント文書・UIパターン・コンテンツ指針であって、ルートページ・APIリファレンス・ブログ記事は含まれない。"
+    },
+    {
+      "text": "採用と不採用: 各システムについて、採用する指針と採用しない指針(または見送り)の両方が書かれている",
+      "passed": true,
+      "evidence": "Primer: 採用（Filter/ActionList/Label/StateLabel/Pagination/ProgressBar/Blankslate）＋不採用・見送り（Primer React・SelectPanel 等の JS 製コンポーネント導入、RelativeTime は参考留め、PageLayout 相当のサイドバー化、ホバー開示）。GOV.UK: 採用（Task list のステータス扱い・hint 基準）＋不採用（D2 で「行全体をリンクにする」考え方を明示的に不採用、Complete multiple tasks は構造ごと借りない）。Atlassian: 採用（空状態文言基準）＋D10 の現状維持判断（現行が基準に適合し変更なし）。Atlassian 固有の不採用項目の明示は薄いが、取捨の構造は3システムで成立している。"
+    },
+    {
+      "text": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+      "passed": false,
+      "evidence": "P1/P2/P3 の表記は文書全体に存在しない。§4.1 判断一覧は 対象要素/判断/借りる指針/主な出典 の表で優先度の概念がなく、§6 の「着手順の目安」（影響の大きい順の5段階）も優先度ラベルではない。"
+    },
+    {
+      "text": "見送りと理由: 実装しない項目とその理由が明記されている",
+      "passed": true,
+      "evidence": "§4.1 に見送り行（サイドバー化・表形式への全面変更・JS 製コンポーネント導入・無限スクロール）、D11 見送りリストに7件の表（見送り項目/理由）。各理由は列正規化の不可能性・URL 状態保持との矛盾・監査要件など具体的。"
+    },
+    {
+      "text": "判断が必要な点: 実装前にユーザーの決定が必要な設計分岐が明示されている",
+      "passed": false,
+      "evidence": "実装前のユーザー決定を要する設計分岐の明示的な一覧がない。§6「実装を始めるときの留意点」の6点は読み上げ順の確認・noscript 対応・レスポンシブ・CSS 整合といった実装時チェックで、「実装前にユーザーが決めるべき分岐」として提示していない。D1「実装の可否含め、実装時に app.js と一体で検討する」等は決定を先送りにする記述にとどまる。"
+    },
+    {
+      "text": "部分採用: 参照先UIの全面移植(サイドバーやコマンドパレット等の構成の丸ごと導入)を提案せず、指針単位の部分採用に留まっている",
+      "passed": true,
+      "evidence": "§0 で「指針の『考え方と構造』を部分採用する」と明言。§1.3 は GitHub 一覧の構成を整理した上で「この構成をそのまま真似るのではなく…取捨する」と明示し、D11 で表形式への全面変更・JS 製コンポーネント導入・サイドバー化・状態タブを見送り。提案は行の3領域化・バッジ分離等の指針単位でサーバーレンダリング構成に収まっている。"
+    },
+    {
+      "text": "実在する出典: 挙げられたURLは実在し、そのページ内容と記載が一致する(捏造された出典がない)",
+      "passed": true,
+      "evidence": "引用の要諦を取得で照合: Filter（dropdown/Filter/SelectPanel の使い分け・「選択が明確な dropdown には即時適用」・URL 保持・revert・適用中フィルタの表示・ゼロ件時の空状態・role=\"status\" での通知・実例 'Filter the list of issues in a repository'）、Task list（ステータスをボタンと誤解された改良経緯・大文字回避・Completed は背景色なし黒文字・hint は短文1つ句点なし・hint 内リンク禁止・aria-describedby）、Pagination（'Previous and next links only' が公式形態・番号付きは先頭末尾保持+省略記号）、ProgressBar（値テキスト併記が既定・省略は意図的に曖昧にする場合のみ）、Empty states（主/副テキスト・主/副操作・code ブロック変形・枠線）、StateLabel（'used for rendering the status of an issue or pull request'）。Atlassian 空状態指針も 'Include the reason for the empty state and where they can go next / Avoid repeating content from the title / one to two sentences' で一致。未直接取得分（Primer Label 等）は公式ドメインと内容整合で判定。捏造は見つからなかった。"
+    },
+    {
+      "text": "現状踏まえ: 対象テンプレートの既存要素(提案カード・状態・確からしさ表示等)に触れた提案になっている",
+      "passed": true,
+      "evidence": "§1.1 に13要素の現状表（提案行 article.proposal・種別/状態バッジ・判定メモ・メタ行・meter-wrap の aria-label・独立検証バッジ・種別本文・行内操作の採用/却下/修正して採用・処理記録・ページャ）と課題5点。D1〜D11 が各要素に対応する。"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 3,
+    "total": 9,
+    "pass_rate": 0.67
+  },
+  "execution_metrics": {
+    "output_chars": 30890
+  },
+  "claims": [
+    {
+      "claim": "Filter シナリオパターンは「リポジトリの issue 一覧を絞り込む」を実例として挙げる",
+      "type": "factual",
+      "verified": true,
+      "evidence": "取得したページの Where this happens の第1項が 'Filter the list of issues in a repository'。"
+    },
+    {
+      "claim": "GOV.UK Task list の改良経緯: ステータスをボタンと誤解する利用者がいたためボタンらしくない形に再設計、大文字は読みにくく「完了」は背景色なしの黒文字",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Task list の Research セクションに 'some users currently try to select task statuses, thinking they are buttons or links'、'The use of uppercase … makes them harder to read'、'Completed … black text with no background colour' の記述。"
+    },
+    {
+      "claim": "Primer Pagination は「前後リンクのみ」が公式に用意された形態で、番号付きは先頭・末尾を常に残し省略記号でつなぐ",
+      "type": "factual",
+      "verified": true,
+      "evidence": "'Previous and next links only' の例（showPages={false}）と、marginPageCount/surroundingPageCount による番号表示制御・省略記号の説明を確認。"
+    },
+    {
+      "claim": "行内操作を常時表示+低彩度にする等の判断は参照指針と矛盾しない設計判断として妥当",
+      "type": "quality",
+      "verified": false,
+      "evidence": "文書内で理由（タッチ環境・キーボード利用への配慮）は示されているが、設計判断の妥当性自体は外部から検証できない。"
+    },
+    {
+      "claim": "base.html の skip link・role=\"status\"・aria 属性等の現状記述は正確",
+      "type": "factual",
+      "verified": false,
+      "evidence": "対象アプリがワークスペース外でテンプレートを照合できないため未検証。"
+    },
+    {
+      "claim": "Polaris は行構成の指針として引用できる記述に到達できず主根拠から外した（参考扱い）",
+      "type": "process",
+      "verified": false,
+      "evidence": "トランスクリプト不在のため到達試行を検証できない。文書は参考扱いとして一貫して処理しており、根拠のない採用はしていない。"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+        "reason": "「表」に URL を同梱する要件が明示でないため、表+URL一覧の分離形式（Run 2 の §2.2 と §7）を落とすかどうかが採点者の裁量になる。「1つの表に3項目」と明文化するか、「システム名・参照箇所・URL の対応が取れていればよい」と緩めるかを決めると再現性が上がる"
+      },
+      {
+        "assertion": "判断が必要な点: 実装前にユーザーの決定が必要な設計分岐が明示されている",
+        "reason": "「明示」の形（専用節が必要か、文中の言及でよいか）と「ユーザーの決定」の定義がない。Run 2 は実装時チェック形式の留意点のみ。専用節を要求するなら明記し、緩めるなら「実装前に確定すべき分岐の列挙」と書くべき"
+      },
+      {
+        "reason": "Run 2 は内容水準が高い（引用の出典文言が取得結果とほぼ一致することを採点側の取得で確認）にもかかわらず、形式系3 assertion で落ちる。引用文言の出典一致を検査する内容系 assertion を追加すると、形式差と内容差を分けて測定できる"
+      }
+    ],
+    "overall": "形式系 assertion（統合表・P1/P2/P3・判断事項の専用提示）が without_skill の差として機能している。一方で内容検証系の assertion がなく、出典内容の一致は採点者の検証に依存している。"
+  }
+}

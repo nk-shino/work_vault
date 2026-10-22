@@ -1,0 +1,117 @@
+{
+  "expectations": [
+    {
+      "text": "一次資料表: 参照したデザインシステムの「システム名・参照箇所・URL」の表がある",
+      "passed": true,
+      "evidence": "§2「参照した一次資料」に システム/参照箇所/URL の3列×3行の表（GitHub Primer ActionList Guidelines、Carbon Data table、Atlassian Lozenge）。参照箇所には取得した指針の項目（leading/trailing visual、バッチ操作、lozenge と tag の使い分け等）まで記載されている。"
+    },
+    {
+      "text": "公式usageページ: 挙げられたURLが公式の使用指針(usage)ページであり、ルートページ・APIリファレンス・ブログ記事でない",
+      "passed": true,
+      "evidence": "3URLとも公式ドメインの使用指針ページで、採点環境で webfetch により取得確認済み: https://primer.style/product/components/action-list/guidelines/（Guidelines 本文あり）、https://www.carbondesignsystem.com/components/data-table/usage/（Guidelines 相当の本文あり）、https://atlassian.design/components/lozenge/usage（Usage 本文あり）。ルートページ・APIリファレンス・ブログ記事は含まれない。"
+    },
+    {
+      "text": "採用と不採用: 各システムについて、採用する指針と採用しない指針(または見送り)の両方が書かれている",
+      "passed": true,
+      "evidence": "§3 に3システム別の採用指針。§4「採用しない指針（部分採用の線引き）」にシステム名付きの不採用: Primer（tooltip による非活性理由提示）、Carbon（data table のそのまま移植・バッチ展開・AI label の popover）、Atlassian（trailingMetric・filled icon）。3システムとも採用/不採用の両方がある。"
+    },
+    {
+      "text": "優先度付き候補表: 候補・適用先・備考を含む候補表が P1/P2/P3 の優先度付きで存在する",
+      "passed": true,
+      "evidence": "§5 に P1（4件）/P2（3件）/P3（2件）の3表。列は 候補/適用先/出典/備考 で、適用先は .badge・.meta-line・.proposal・.actions 等の実在箇所、備考にはテスト文言維持や aria 維持などの制約が入る。"
+    },
+    {
+      "text": "見送りと理由: 実装しない項目とその理由が明記されている",
+      "passed": true,
+      "evidence": "§6「見送りとその理由」に5件（テーブル化・全行一括展開・行ホバー追加対応・ページャー番号化・Polaris badge 指針採用）で、各項目に理由文（例: Carbon の「data table は列に揃ったデータ向き」との不整合、Carbon 自身が一括展開の弊害を明記、根拠を示せない採用はしない）。"
+    },
+    {
+      "text": "判断が必要な点: 実装前にユーザーの決定が必要な設計分岐が明示されている",
+      "passed": true,
+      "evidence": "§7「判断が必要な点（実装前の決定事項）」に4件を番号付きで明示（展開領域の既定状態、プロンプト版の title 属性退避の可否、種別バッジ無色化の可否、バッチ操作の要否）。各項目に推奨案と判断材料が付く。"
+    },
+    {
+      "text": "部分採用: 参照先UIの全面移植(サイドバーやコマンドパレット等の構成の丸ごと導入)を提案せず、指針単位の部分採用に留まっている",
+      "passed": true,
+      "evidence": "§4 に『GitHub プルリクエスト一覧の見た目の全面的な移植（サイドバーナビ、アバタースタック、多数のラベル色）をしない』『Carbon の data table をそのまま移植しない』と明記。候補はバッジの役割分離・メタ行の格下げ・罫線追加・danger トーン化・行形式化等の指針単位で、サイドバーやコマンドパレット等の画面構成の導入提案はない。"
+    },
+    {
+      "text": "実在する出典: 挙げられたURLは実在し、そのページ内容と記載が一致する(捏造された出典がない)",
+      "passed": true,
+      "evidence": "3URLとも webfetch で取得し内容照合済み。ActionList Guidelines に leading/trailing visual・item dividers・danger items（リスト末尾+確認ダイアログ）・inactive items（理由テキスト必須）、Carbon Data table にツールバー操作5個まで・バッチモード中の行操作無効化・展開行・ソート矢印（ソート中列のみ表示/他はホバー時）・セル単位のインライン AI label、Lozenge usage に lozenge/tag の使い分け・色だけに頼らない・maxWidth 200px で省略されフォーカス不可・trailingMetric・filled icon の記述を確認し、文書の各記載と一致。捏造の出典は見つからなかった。"
+    },
+    {
+      "text": "現状踏まえ: 対象テンプレートの既存要素(提案カード・状態・確からしさ表示等)に触れた提案になっている",
+      "passed": true,
+      "evidence": "§1「現状把握」に提案カード（article.proposal）・種別/状態バッジ・確からしさのバー（meter+aria-label）・独立検証バッジ・フィルタ・空状態2種・ページ送りを列挙し、課題5点（位置指定セレクタでモック定義の却下ボタンが主操作色になる等）を特定。§5 の適用先がこれらの実在クラスに紐づく。"
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "output_chars": 14512
+  },
+  "claims": [
+    {
+      "claim": "Atlassian Lozenge の長いラベルは maxWidth 200px で省略され、フォーカスできないため省略部分が読めない",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Lozenge usage 取得結果に 'Don't use long labels in lozenge. They have a max width of 200 pixels … causing labels to truncate. Lozenges can't be focused, so truncated text will not be visible.'"
+    },
+    {
+      "claim": "Carbon は AI が生成したデータには該当するセルにだけインラインの AI ラベルを付けると述べている",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Data table usage 取得結果の AI presence 節に、テーブル全体/個別セル（インライン AI ラベル）/特定の行・列の3パターンの記述を確認。"
+    },
+    {
+      "claim": "Carbon 自身が「一括展開は、必要になるまでの取得を遅らせるという展開行の利点を失わせる」と述べている",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Data table usage に Batch expansion 節の存在と全展開シェブロンが既定で非表示であることを確認。逐語の根拠文までは取得サマリからは確認できていない（内容の整合で判定）。"
+    },
+    {
+      "claim": "Polaris の badge 指針ページはリダイレクト先が API リファレンスで、再試行では 404 だった（根拠に使えず候補から外した）",
+      "type": "process",
+      "verified": false,
+      "evidence": "トランスクリプト不在のため取得試行自体を検証できない（捏造とまでは言えないが未検証）。文書は「根拠を示せない採用はしない」として一貫して候補外に扱っており、挙動は妥当。"
+    },
+    {
+      "claim": "テストが保護する文言の一覧（「採用」tests/test_e2e.py:79、「未処理の提案はありません」:160 ほか）は正確",
+      "type": "factual",
+      "verified": false,
+      "evidence": "対象アプリ（C:\\work\\用語集アプリ）がこのワークスペース外にあり tests/ を照合できないため未検証。"
+    },
+    {
+      "claim": "行ホバー（.proposal:hover）・meter の aria-label・AI チップの出し方は既存実装が指針と一致している",
+      "type": "quality",
+      "verified": false,
+      "evidence": "テンプレート/CSS の実物を確認できないため一致判断は未検証。主張の範囲（Carbon の指針と現状の考え方が同じ方向）は文書内で一貫。"
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "実在する出典: 挙げられたURLは実在し、そのページ内容と記載が一致する(捏造された出典がない)",
+        "reason": "実在確認だけだと「存在するが別内容のページ」の引用もすり抜ける。今回の3点は内容一致まで確認できたが、採点手順として「引用した指針の文言が出典ページに見当たること」を明文化すると判定がブレない"
+      },
+      {
+        "reason": "with_skill 実行が §1.3 でテスト保護文言を先回りで特定し、全候補の備考に反映している点を検査する assertion がない。スキル有無の差分を採点したいなら「提案がテスト保護対象の文言維持に言及している」を追加すると識別力が出る"
+      },
+      {
+        "assertion": "現状踏まえ: 対象テンプレートの既存要素(提案カード・状態・確からしさ表示等)に触れた提案になっている",
+        "reason": "既存要素への言及だけで成立する。確からしさバーや独立検証バッジのような具体的要素が提案の適用先に現れることまで要求すると、現状把握を省略した出力を落とせる"
+      }
+    ],
+    "overall": "9件とも具体的な成果物の構造（3列の一次資料表・P1/P2/P3表・見送り理由・判断事項）を要求しており、表面的な成立は難しい。実在出典の内容照合を採点手順として明文化する価値がある。"
+  }
+}
