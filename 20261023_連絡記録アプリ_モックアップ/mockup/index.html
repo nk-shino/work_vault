@@ -624,6 +624,13 @@ $('#tablist').addEventListener('keydown', (e) => {
   if (next) { e.preventDefault(); switchView(next); tabs[next].focus(); }
 });
 
+$('#tablist').addEventListener('click', (e) => {
+  const btn = e.target.closest('[role="tab"]');
+  if (!btn) return;
+  const name = Object.keys(tabs).find((k) => tabs[k] === btn);
+  if (name) { switchView(name); btn.focus(); }
+});
+
 /* ============ 記録一覧（ソート・ページ表示・空状態） ============ */
 const tbody = $('#records-tbody');
 
