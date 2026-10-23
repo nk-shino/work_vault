@@ -1,0 +1,1310 @@
+{
+  "exit_reason": "max_iterations (5)",
+  "original_description": "\u65e2\u5b58\u30a2\u30d7\u30ea\u306eUI/UX\u3092\u3001\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u7b49\u306e\u4e00\u6b21\u8cc7\u6599\uff08\u516c\u5f0f\u306e\u4f7f\u7528\u6307\u91dd\u30da\u30fc\u30b8\uff09\u306b\u57fa\u3065\u3044\u3066\u90e8\u5206\u63a1\u7528\u3057\u3001\u6539\u4fee\u3059\u308b\u624b\u9806\u3002\u8abf\u67fb\u2192\u512a\u5148\u5ea6\u4ed8\u3051\u2192\u7bc4\u56f2\u5408\u610f\u2192\u5b9f\u88c5\u2192\u5b9f\u753b\u9762\u691c\u8a3c\u2192\u8a18\u9332\u307e\u3067\u4e00\u9023\u3067\u884c\u3046\u3002\u300cUI\u3092\u6539\u5584\u3057\u3066\u300d\u300c\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u8e0f\u307e\u3048\u3066\u6539\u4fee\u3057\u3066\u300d\u300c\u25ef\u25ef\u307f\u305f\u3044\u306aUI\u306b\u3057\u3066\u300d\u300c\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300c\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u53c2\u8003\u306b\u300d\u3068\u3044\u3046\u4f9d\u983c\u3001\u753b\u9762\u306e\u898b\u305f\u76ee\u30fb\u64cd\u4f5c\u6027\u306e\u6539\u5584\u5168\u822c\u3067\u4f7f\u3046\u3002\u30bc\u30ed\u304b\u3089\u306e\u65b0\u898f\u753b\u9762\u4f5c\u6210\u30841\u884c\u306e\u8272\u5909\u66f4\u306a\u3069\u4e9b\u7d30\u306a\u4fee\u6b63\u3067\u306f\u4f7f\u308f\u306a\u3044\u3002",
+  "best_description": "\u65e2\u5b58\u30a2\u30d7\u30ea\u306eUI/UX\u3092\u3001\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u7b49\u306e\u4e00\u6b21\u8cc7\u6599\uff08\u516c\u5f0f\u306e\u4f7f\u7528\u6307\u91dd\u30da\u30fc\u30b8\uff09\u306b\u57fa\u3065\u3044\u3066\u90e8\u5206\u63a1\u7528\u3057\u3001\u6539\u4fee\u3059\u308b\u624b\u9806\u3002\u8abf\u67fb\u2192\u512a\u5148\u5ea6\u4ed8\u3051\u2192\u7bc4\u56f2\u5408\u610f\u2192\u5b9f\u88c5\u2192\u5b9f\u753b\u9762\u691c\u8a3c\u2192\u8a18\u9332\u307e\u3067\u4e00\u9023\u3067\u884c\u3046\u3002\u300cUI\u3092\u6539\u5584\u3057\u3066\u300d\u300c\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u8e0f\u307e\u3048\u3066\u6539\u4fee\u3057\u3066\u300d\u300c\u25ef\u25ef\u307f\u305f\u3044\u306aUI\u306b\u3057\u3066\u300d\u300c\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300c\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u53c2\u8003\u306b\u300d\u3068\u3044\u3046\u4f9d\u983c\u3001\u753b\u9762\u306e\u898b\u305f\u76ee\u30fb\u64cd\u4f5c\u6027\u306e\u6539\u5584\u5168\u822c\u3067\u4f7f\u3046\u3002\u30bc\u30ed\u304b\u3089\u306e\u65b0\u898f\u753b\u9762\u4f5c\u6210\u30841\u884c\u306e\u8272\u5909\u66f4\u306a\u3069\u4e9b\u7d30\u306a\u4fee\u6b63\u3067\u306f\u4f7f\u308f\u306a\u3044\u3002",
+  "best_score": "3/6",
+  "best_train_score": "6/12",
+  "best_test_score": "3/6",
+  "final_description": "\u300c\u753b\u9762\u304c\u898b\u306b\u304f\u3044\uff0f\u4f7f\u3044\u306b\u304f\u3044\uff0f\u3054\u3061\u3083\u3054\u3061\u3083\u300d\u300c\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u300d\u300c\u53e4\u3044\u304b\u3089\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300cGitHub\u30fbStripe\u30fbMDN\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u300d\u300c\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\uff08Atlassian\u30fbCarbon\u7b49\uff09\u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\uff0f\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u300d\u300c\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u300d\u2014\u2014\u65e2\u5b58\u306e\u753b\u9762\u30fbUI\uff08Web\u30a2\u30d7\u30ea\u30fb\u793e\u5185\u30c4\u30fc\u30eb\u7b49\uff09\u306e\u898b\u305f\u76ee\u30fb\u8aad\u307f\u3084\u3059\u3055\u30fb\u4f7f\u3044\u3084\u3059\u3055\u30fb\u4f7f\u3044\u52dd\u624b\u3092\u6539\u5584\u30fb\u6539\u4fee\u3057\u305f\u3044\u4f9d\u983c\u3059\u3079\u3066\u306b\u4f7f\u3046\u3002\u753b\u9762\u5168\u4f53\u3067\u3082\u3001\u30d5\u30a9\u30fc\u30e0\u30fb\u30c6\u30fc\u30d6\u30eb\u30fb\u4e00\u89a7\u30fb\u7a7a\u72b6\u614b\u30fb\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306a\u3069\u4e00\u90e8\u3060\u3051\u3067\u3082\u3088\u3044\u3002\u8abf\u67fb\u3084\u51fa\u5178\u78ba\u8a8d\u306e\u8a00\u3044\u65b9\u304c\u5148\u306b\u51fa\u3066\u304d\u3066\u3082\u3001\u6700\u7d42\u76ee\u7684\u304c\u753b\u9762\u306e\u6539\u5584\u306a\u3089\u672c\u30b9\u30ad\u30eb\u304c\u8abf\u67fb\u2192\u5019\u88dc\u63d0\u793a\u2192\u5b9f\u88c5\u2192\u691c\u8a3c\u307e\u3067\u4e00\u62ec\u3067\u62c5\u3044\u3001\u6c4e\u7528\u306e\u8abf\u67fb\u30fb\u51fa\u5178\u78ba\u8a8d\u30fb\u6539\u4fee\u7cfb\u30b9\u30ad\u30eb\u3088\u308a\u672c\u30b9\u30ad\u30eb\u3092\u512a\u5148\u3059\u308b\u3002Not for: \u65b0\u898f\u753b\u9762\u306e\u30bc\u30ed\u304b\u3089\u306e\u4f5c\u6210\u30011\u8272\u5909\u66f4\u7a0b\u5ea6\u306e\u4e9b\u7d30\u306a\u4fee\u6b63\u3001\u30d0\u30b0\u4fee\u6b63\u3001\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u8ffd\u52a0\u3002",
+  "iterations_run": 5,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 6,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "\u65e2\u5b58\u30a2\u30d7\u30ea\u306eUI/UX\u3092\u3001\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u7b49\u306e\u4e00\u6b21\u8cc7\u6599\uff08\u516c\u5f0f\u306e\u4f7f\u7528\u6307\u91dd\u30da\u30fc\u30b8\uff09\u306b\u57fa\u3065\u3044\u3066\u90e8\u5206\u63a1\u7528\u3057\u3001\u6539\u4fee\u3059\u308b\u624b\u9806\u3002\u8abf\u67fb\u2192\u512a\u5148\u5ea6\u4ed8\u3051\u2192\u7bc4\u56f2\u5408\u610f\u2192\u5b9f\u88c5\u2192\u5b9f\u753b\u9762\u691c\u8a3c\u2192\u8a18\u9332\u307e\u3067\u4e00\u9023\u3067\u884c\u3046\u3002\u300cUI\u3092\u6539\u5584\u3057\u3066\u300d\u300c\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u8e0f\u307e\u3048\u3066\u6539\u4fee\u3057\u3066\u300d\u300c\u25ef\u25ef\u307f\u305f\u3044\u306aUI\u306b\u3057\u3066\u300d\u300c\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300c\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u53c2\u8003\u306b\u300d\u3068\u3044\u3046\u4f9d\u983c\u3001\u753b\u9762\u306e\u898b\u305f\u76ee\u30fb\u64cd\u4f5c\u6027\u306e\u6539\u5584\u5168\u822c\u3067\u4f7f\u3046\u3002\u30bc\u30ed\u304b\u3089\u306e\u65b0\u898f\u753b\u9762\u4f5c\u6210\u30841\u884c\u306e\u8272\u5909\u66f4\u306a\u3069\u4e9b\u7d30\u306a\u4fee\u6b63\u3067\u306f\u4f7f\u308f\u306a\u3044\u3002",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 3,
+      "test_failed": 3,
+      "test_total": 6,
+      "test_results": [
+        {
+          "query": "\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u3044\u304f\u3064\u304b\u8abf\u3079\u3066\u3001\u3046\u3061\u306e\u7528\u8a9e\u8a73\u7d30\u753b\u9762\u306b\u5408\u3046\u90e8\u5206\u3060\u3051\u63a1\u7528\u3057\u3066\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3002\u5b8c\u5168\u306a\u6a21\u5023\u306f\u3057\u306a\u3044\u3067",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "UI\u3092\u76f4\u3057\u305f\u3044\u3002\u4f5c\u308a\u306e\u826f\u3044\u30b5\u30fc\u30d3\u30b9\u306e\u3044\u3044\u3068\u3053\u3060\u3051\u501f\u308a\u305f\u3044\u3002\u307e\u305a\u8abf\u67fb\u304b\u3089\u304a\u9858\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u306e\u51fa\u3057\u65b9\u304c\u96d1\u3002GOV.UK \u306e warning text \u3042\u305f\u308a\u3092\u53c2\u8003\u306b\u3001\u8b66\u544a\u306e\u898b\u305b\u65b9\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "style.css \u3092\u30ea\u30d5\u30a1\u30af\u30bf\u3057\u3066\u3001\u91cd\u8907\u3057\u305f\u30eb\u30fc\u30eb\u3092\u307e\u3068\u3081\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Figma \u306e\u30c7\u30b6\u30a4\u30f3\u30ab\u30f3\u30d7\u3069\u304a\u308a\u306b\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u3092\u5b9f\u88c5\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u753b\u9762\u306e\u30b9\u30af\u30ea\u30fc\u30f3\u30b7\u30e7\u30c3\u30c8\u3092\u64ae\u3063\u3066\u6dfb\u4ed8\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "\u65e2\u5b58\u306e\u753b\u9762\u30fbUI\u306e\u898b\u305f\u76ee\u3084\u4f7f\u3044\u3084\u3059\u3055\u3092\u6539\u5584\u3057\u305f\u3044\u3068\u304d\u306b\u4f7f\u3046\u3002\u300c\u4f7f\u3044\u306b\u304f\u3044\u300d\u300c\u898b\u306b\u304f\u3044\u300d\u300c\u8aad\u307f\u3084\u3059\u304f\u3057\u305f\u3044\u300d\u300c\u53e4\u3073\u3066\u898b\u3048\u308b\u300d\u300c\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300cGitHub\u3084Stripe\u307f\u305f\u3044\u306b/\u3063\u307d\u304f\u6574\u7406\u3057\u305f\u3044\u300d\u3068\u3044\u3046\u4f9d\u983c\u304c\u5178\u578b\u3002\u30d5\u30a9\u30fc\u30e0\u3001\u30c6\u30fc\u30d6\u30eb\u3001\u4e00\u89a7\u3001\u7a7a\u72b6\u614b\u306a\u3069\u500b\u5225\u90e8\u54c1\u306e\u6539\u5584\u3082\u542b\u3080\u3002\u516c\u5f0f\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\uff08Atlassian\u3001Carbon\u7b49\uff09\u3084\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u4f7f\u7528\u6307\u91dd\u30da\u30fc\u30b8\u3092\u4e00\u6b21\u8cc7\u6599\u3068\u3057\u3066\u8abf\u67fb\u3057\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u304b\u3089\u6539\u4fee\u3059\u308b\u624b\u9806\u3092\u63d0\u4f9b\u3059\u308b\u3002\u300c\u6307\u91dd\u3092\u8abf\u3079\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066\u300d\u300c\u516c\u5f0f\u30da\u30fc\u30b8\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u300d\u306e\u3088\u3046\u306a\u6839\u62e0\u91cd\u8996\u306e\u4f9d\u983c\u3067\u3082\u8d77\u52d5\u3059\u308b\u3002\u753b\u9762\u3092\u30bc\u30ed\u304b\u3089\u65b0\u898f\u4f5c\u6210\u3059\u308b\u5834\u5408\u30011\u884c\u306e\u8272\u5909\u66f4\u306a\u3069\u5358\u7d14\u306a\u4fee\u6b63\u3001\u30d0\u30b0\u4fee\u6b63\u3084\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u8ffd\u52a0\u3067\u306f\u4f7f\u308f\u306a\u3044\u3002",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 3,
+      "test_failed": 3,
+      "test_total": 6,
+      "test_results": [
+        {
+          "query": "\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u3044\u304f\u3064\u304b\u8abf\u3079\u3066\u3001\u3046\u3061\u306e\u7528\u8a9e\u8a73\u7d30\u753b\u9762\u306b\u5408\u3046\u90e8\u5206\u3060\u3051\u63a1\u7528\u3057\u3066\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3002\u5b8c\u5168\u306a\u6a21\u5023\u306f\u3057\u306a\u3044\u3067",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "UI\u3092\u76f4\u3057\u305f\u3044\u3002\u4f5c\u308a\u306e\u826f\u3044\u30b5\u30fc\u30d3\u30b9\u306e\u3044\u3044\u3068\u3053\u3060\u3051\u501f\u308a\u305f\u3044\u3002\u307e\u305a\u8abf\u67fb\u304b\u3089\u304a\u9858\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u306e\u51fa\u3057\u65b9\u304c\u96d1\u3002GOV.UK \u306e warning text \u3042\u305f\u308a\u3092\u53c2\u8003\u306b\u3001\u8b66\u544a\u306e\u898b\u305b\u65b9\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "style.css \u3092\u30ea\u30d5\u30a1\u30af\u30bf\u3057\u3066\u3001\u91cd\u8907\u3057\u305f\u30eb\u30fc\u30eb\u3092\u307e\u3068\u3081\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Figma \u306e\u30c7\u30b6\u30a4\u30f3\u30ab\u30f3\u30d7\u3069\u304a\u308a\u306b\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u3092\u5b9f\u88c5\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u753b\u9762\u306e\u30b9\u30af\u30ea\u30fc\u30f3\u30b7\u30e7\u30c3\u30c8\u3092\u64ae\u3063\u3066\u6dfb\u4ed8\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 3,
+      "description": "Use this skill whenever the user wants to improve the look, layout, readability, or usability of an existing screen/UI \u2014 a whole page or any single part (\u30d5\u30a9\u30fc\u30e0\u3001\u30c6\u30fc\u30d6\u30eb\u3001\u4e00\u89a7\u3001\u7a7a\u72b6\u614b). Typical asks: \u300c\u898b\u306b\u304f\u3044\u300d\u300c\u4f7f\u3044\u306b\u304f\u3044\u300d\u300c\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u300d\u300c\u3054\u3061\u3083\u3054\u3061\u3083\u300d\u300c\u53e4\u3073\u3066\u898b\u3048\u308b\u300d\u300c\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300cGitHub/Stripe/MDN\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u300d. Use it also for evidence-first requests: \u516c\u5f0f\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\uff08Atlassian\u3001Carbon\u7b49\uff09\u3084\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u4f7f\u7528\u6307\u91dd\u30da\u30fc\u30b8\u3092\u8abf\u3079\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044 \u2014 even when the request sounds research-only, because this skill runs \u8abf\u67fb\u2192\u5019\u88dc\u63d0\u793a\u2192\u5408\u610f\u2192\u5b9f\u88c5\u2192\u691c\u8a3c as one flow. Whenever the object is a UI, prefer this skill over generic \u8abf\u67fb\u30fb\u6539\u4fee\u30fb\u51fa\u5178\u30fb\u30b3\u30fc\u30c9\u6574\u7406 workflows. Not for: creating a screen from scratch, one-line color/style tweaks, bug fixes, or validation logic.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 3,
+      "test_failed": 3,
+      "test_total": 6,
+      "test_results": [
+        {
+          "query": "\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u3044\u304f\u3064\u304b\u8abf\u3079\u3066\u3001\u3046\u3061\u306e\u7528\u8a9e\u8a73\u7d30\u753b\u9762\u306b\u5408\u3046\u90e8\u5206\u3060\u3051\u63a1\u7528\u3057\u3066\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3002\u5b8c\u5168\u306a\u6a21\u5023\u306f\u3057\u306a\u3044\u3067",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "UI\u3092\u76f4\u3057\u305f\u3044\u3002\u4f5c\u308a\u306e\u826f\u3044\u30b5\u30fc\u30d3\u30b9\u306e\u3044\u3044\u3068\u3053\u3060\u3051\u501f\u308a\u305f\u3044\u3002\u307e\u305a\u8abf\u67fb\u304b\u3089\u304a\u9858\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u306e\u51fa\u3057\u65b9\u304c\u96d1\u3002GOV.UK \u306e warning text \u3042\u305f\u308a\u3092\u53c2\u8003\u306b\u3001\u8b66\u544a\u306e\u898b\u305b\u65b9\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "style.css \u3092\u30ea\u30d5\u30a1\u30af\u30bf\u3057\u3066\u3001\u91cd\u8907\u3057\u305f\u30eb\u30fc\u30eb\u3092\u307e\u3068\u3081\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Figma \u306e\u30c7\u30b6\u30a4\u30f3\u30ab\u30f3\u30d7\u3069\u304a\u308a\u306b\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u3092\u5b9f\u88c5\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u753b\u9762\u306e\u30b9\u30af\u30ea\u30fc\u30f3\u30b7\u30e7\u30c3\u30c8\u3092\u64ae\u3063\u3066\u6dfb\u4ed8\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 4,
+      "description": "Use this skill when the user wants an existing screen/UI to look or work better \u2014 \u753b\u9762\u306e\u898b\u305f\u76ee\u30fb\u8aad\u307f\u3084\u3059\u3055\u30fb\u4f7f\u3044\u3084\u3059\u3055\u306e\u6539\u5584\uff08Web\u30a2\u30d7\u30ea\u30fb\u793e\u5185\u30c4\u30fc\u30eb\u7b49\uff09\u3002\u5bfe\u8c61\u306f\u753b\u9762\u5168\u4f53\u3067\u3082\u3001\u30d5\u30a9\u30fc\u30e0\u30fb\u30c6\u30fc\u30d6\u30eb\u30fb\u4e00\u89a7\u30fb\u7a7a\u72b6\u614b\u30fb\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306a\u3069\u4e00\u90e8\u3067\u3082\u3088\u3044\u3002\u4f9d\u983c\u306e\u578b\u306f3\u3064\u3002(1)\u300c\u25ef\u25ef\u304c\u898b\u306b\u304f\u3044/\u4f7f\u3044\u306b\u304f\u3044/\u3054\u3061\u3083\u3054\u3061\u3083/\u53e4\u3073\u3066\u898b\u3048\u308b\u3002\u6539\u5584\u3057\u3066\u300d(2)\u300cMDN\u3084GitHub\u3001Stripe\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u30fb\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d(3)\u300cAtlassian\u3084Carbon\u7b49\u306e\u516c\u5f0f\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u306e\u4f7f\u7528\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3068\u3057\u3066\u8abf\u3079\u3066\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u300d\u300c\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u300d\u3002(3)\u306f\u8abf\u67fb\u3060\u3051\u306b\u898b\u3048\u3066\u3082\u6700\u7d42\u76ee\u7684\u304cUI\u6539\u5584\u306a\u306e\u3067\u3001\u8abf\u67fb\u2192\u5019\u88dc\u63d0\u793a\u2192\u5408\u610f\u2192\u5b9f\u88c5\u2192\u691c\u8a3c\u3092\u672c\u30b9\u30ad\u30eb\u304c\u4e00\u62ec\u3057\u3066\u62c5\u3046\u3002\u6700\u7d42\u76ee\u7684\u304cUI\u306e\u6539\u5584\u306a\u3089\u3001\u6c4e\u7528\u306e\u8abf\u67fb\u30fb\u51fa\u5178\u78ba\u8a8d\u30fb\u6539\u4fee\u7cfb\u306e\u30b9\u30ad\u30eb\u3088\u308a\u672c\u30b9\u30ad\u30eb\u3092\u512a\u5148\u3059\u308b\u3002Not for: \u753b\u9762\u306e\u30bc\u30ed\u304b\u3089\u306e\u65b0\u898f\u4f5c\u6210\u30011\u884c\u306e\u8272\u5909\u66f4\u7a0b\u5ea6\u306e\u4e9b\u7d30\u306a\u4fee\u6b63\u3001\u30d0\u30b0\u4fee\u6b63\u3001\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u8ffd\u52a0\u3002",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 3,
+      "test_failed": 3,
+      "test_total": 6,
+      "test_results": [
+        {
+          "query": "\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u3044\u304f\u3064\u304b\u8abf\u3079\u3066\u3001\u3046\u3061\u306e\u7528\u8a9e\u8a73\u7d30\u753b\u9762\u306b\u5408\u3046\u90e8\u5206\u3060\u3051\u63a1\u7528\u3057\u3066\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3002\u5b8c\u5168\u306a\u6a21\u5023\u306f\u3057\u306a\u3044\u3067",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "UI\u3092\u76f4\u3057\u305f\u3044\u3002\u4f5c\u308a\u306e\u826f\u3044\u30b5\u30fc\u30d3\u30b9\u306e\u3044\u3044\u3068\u3053\u3060\u3051\u501f\u308a\u305f\u3044\u3002\u307e\u305a\u8abf\u67fb\u304b\u3089\u304a\u9858\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u306e\u51fa\u3057\u65b9\u304c\u96d1\u3002GOV.UK \u306e warning text \u3042\u305f\u308a\u3092\u53c2\u8003\u306b\u3001\u8b66\u544a\u306e\u898b\u305b\u65b9\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "style.css \u3092\u30ea\u30d5\u30a1\u30af\u30bf\u3057\u3066\u3001\u91cd\u8907\u3057\u305f\u30eb\u30fc\u30eb\u3092\u307e\u3068\u3081\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Figma \u306e\u30c7\u30b6\u30a4\u30f3\u30ab\u30f3\u30d7\u3069\u304a\u308a\u306b\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u3092\u5b9f\u88c5\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u753b\u9762\u306e\u30b9\u30af\u30ea\u30fc\u30f3\u30b7\u30e7\u30c3\u30c8\u3092\u64ae\u3063\u3066\u6dfb\u4ed8\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 5,
+      "description": "\u300c\u753b\u9762\u304c\u898b\u306b\u304f\u3044\uff0f\u4f7f\u3044\u306b\u304f\u3044\uff0f\u3054\u3061\u3083\u3054\u3061\u3083\u300d\u300c\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u300d\u300c\u53e4\u3044\u304b\u3089\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u300d\u300cGitHub\u30fbStripe\u30fbMDN\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u300d\u300c\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\uff08Atlassian\u30fbCarbon\u7b49\uff09\u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\uff0f\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u300d\u300c\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u300d\u2014\u2014\u65e2\u5b58\u306e\u753b\u9762\u30fbUI\uff08Web\u30a2\u30d7\u30ea\u30fb\u793e\u5185\u30c4\u30fc\u30eb\u7b49\uff09\u306e\u898b\u305f\u76ee\u30fb\u8aad\u307f\u3084\u3059\u3055\u30fb\u4f7f\u3044\u3084\u3059\u3055\u30fb\u4f7f\u3044\u52dd\u624b\u3092\u6539\u5584\u30fb\u6539\u4fee\u3057\u305f\u3044\u4f9d\u983c\u3059\u3079\u3066\u306b\u4f7f\u3046\u3002\u753b\u9762\u5168\u4f53\u3067\u3082\u3001\u30d5\u30a9\u30fc\u30e0\u30fb\u30c6\u30fc\u30d6\u30eb\u30fb\u4e00\u89a7\u30fb\u7a7a\u72b6\u614b\u30fb\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306a\u3069\u4e00\u90e8\u3060\u3051\u3067\u3082\u3088\u3044\u3002\u8abf\u67fb\u3084\u51fa\u5178\u78ba\u8a8d\u306e\u8a00\u3044\u65b9\u304c\u5148\u306b\u51fa\u3066\u304d\u3066\u3082\u3001\u6700\u7d42\u76ee\u7684\u304c\u753b\u9762\u306e\u6539\u5584\u306a\u3089\u672c\u30b9\u30ad\u30eb\u304c\u8abf\u67fb\u2192\u5019\u88dc\u63d0\u793a\u2192\u5b9f\u88c5\u2192\u691c\u8a3c\u307e\u3067\u4e00\u62ec\u3067\u62c5\u3044\u3001\u6c4e\u7528\u306e\u8abf\u67fb\u30fb\u51fa\u5178\u78ba\u8a8d\u30fb\u6539\u4fee\u7cfb\u30b9\u30ad\u30eb\u3088\u308a\u672c\u30b9\u30ad\u30eb\u3092\u512a\u5148\u3059\u308b\u3002Not for: \u65b0\u898f\u753b\u9762\u306e\u30bc\u30ed\u304b\u3089\u306e\u4f5c\u6210\u30011\u8272\u5909\u66f4\u7a0b\u5ea6\u306e\u4e9b\u7d30\u306a\u4fee\u6b63\u3001\u30d0\u30b0\u4fee\u6b63\u3001\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u8ffd\u52a0\u3002",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 3,
+      "test_failed": 3,
+      "test_total": 6,
+      "test_results": [
+        {
+          "query": "\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u30b5\u30a4\u30c8\u3092\u3044\u304f\u3064\u304b\u8abf\u3079\u3066\u3001\u3046\u3061\u306e\u7528\u8a9e\u8a73\u7d30\u753b\u9762\u306b\u5408\u3046\u90e8\u5206\u3060\u3051\u63a1\u7528\u3057\u3066\u6539\u4fee\u3057\u3066\u307b\u3057\u3044\u3002\u5b8c\u5168\u306a\u6a21\u5023\u306f\u3057\u306a\u3044\u3067",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "UI\u3092\u76f4\u3057\u305f\u3044\u3002\u4f5c\u308a\u306e\u826f\u3044\u30b5\u30fc\u30d3\u30b9\u306e\u3044\u3044\u3068\u3053\u3060\u3051\u501f\u308a\u305f\u3044\u3002\u307e\u305a\u8abf\u67fb\u304b\u3089\u304a\u9858\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u306e\u51fa\u3057\u65b9\u304c\u96d1\u3002GOV.UK \u306e warning text \u3042\u305f\u308a\u3092\u53c2\u8003\u306b\u3001\u8b66\u544a\u306e\u898b\u305b\u65b9\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "style.css \u3092\u30ea\u30d5\u30a1\u30af\u30bf\u3057\u3066\u3001\u91cd\u8907\u3057\u305f\u30eb\u30fc\u30eb\u3092\u307e\u3068\u3081\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Figma \u306e\u30c7\u30b6\u30a4\u30f3\u30ab\u30f3\u30d7\u3069\u304a\u308a\u306b\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u3092\u5b9f\u88c5\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u753b\u9762\u306e\u30b9\u30af\u30ea\u30fc\u30f3\u30b7\u30e7\u30c3\u30c8\u3092\u64ae\u3063\u3066\u6dfb\u4ed8\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "MDN\u307f\u305f\u3044\u306b\u8aad\u307f\u3084\u3059\u3044\u753b\u9762\u306b\u3057\u305f\u3044\u3002\u6307\u91dd\u3092\u4e00\u6b21\u8cc7\u6599\u3067\u78ba\u8a8d\u3057\u3066\u304b\u3089\u624b\u3092\u5165\u308c\u3066",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7533\u8acb\u753b\u9762\u306e\u30d5\u30a9\u30fc\u30e0\u304c\u4f7f\u3044\u306b\u304f\u3044\u3002\u512a\u308c\u305f\u30b5\u30fc\u30d3\u30b9\u306e\u30d5\u30a9\u30fc\u30e0\u6307\u91dd\u3092\u8abf\u3079\u3066\u90e8\u5206\u63a1\u7528\u3057\u305f\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u793e\u5185\u30c4\u30fc\u30eb\u306e\u7a7a\u72b6\u614b\u3092\u3061\u3083\u3093\u3068\u3057\u305f\u5f62\u306b\u3057\u305f\u3044\u3002\u65b9\u91dd\u306f Atlassian \u306e\u516c\u5f0f\u30da\u30fc\u30b8\u306e\u4f7f\u7528\u6307\u91dd\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u6539\u4fee\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c6\u30fc\u30d6\u30eb\u304c\u898b\u306b\u304f\u3044\u3002Carbon \u306e data table \u306e\u6307\u91dd\u3092\u8abf\u3079\u3066\u3001\u4e26\u3079\u65b9\u3068\u30bd\u30fc\u30c8\u8868\u793a\u3092\u6539\u5584\u3057\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u63d0\u6848\u30ad\u30e5\u30fc\u306e\u753b\u9762\uff08src/glossary/web/templates/proposals.html\uff09\u304c\u3054\u3061\u3083\u3054\u3061\u3083\u3057\u3066\u304d\u305f\u3002GitHub\u306e\u30d7\u30eb\u30ea\u30af\u4e00\u89a7\u307f\u305f\u3044\u306b\u6574\u7406\u3057\u305f\u3044\u3002\u307e\u305a\u516c\u958b\u30c7\u30b6\u30a4\u30f3\u30b7\u30b9\u30c6\u30e0\u3092\u8abf\u3079\u3066\u3001\u90e8\u5206\u63a1\u7528\u306e\u5019\u88dc\u3092\u307e\u3068\u3081\u3066\u307b\u3057\u3044",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u7528\u8a9e\u4e00\u89a7\u306e\u753b\u9762\u304c\u3061\u3087\u3063\u3068\u53e4\u3073\u3066\u898b\u3048\u308b\u3002Stripe \u306e\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3063\u307d\u304f\u30e2\u30c0\u30f3\u306b\u3057\u305f\u3044\u3093\u3060\u3051\u3069\u3001\u3067\u304d\u308b?",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\u30c0\u30fc\u30af\u30e2\u30fc\u30c9\u7528\u306eCSS\u3092\u8ffd\u52a0\u3057\u3066\u3002\u914d\u8272\u306f\u65e2\u5b58\u306e\u5909\u6570\u3092\u6d41\u7528\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u7ba1\u7406\u753b\u9762\u3092\u65b0\u898f\u3067\u4f5c\u3063\u3066\u307b\u3057\u3044\u3002\u30b5\u30a4\u30c9\u30d0\u30fc\u4ed8\u304d\u306e2\u30ab\u30e9\u30e0\u3067\u3002\u307e\u3060\u753b\u9762\u306f\u5b58\u5728\u3057\u306a\u3044",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30d5\u30a9\u30fc\u30e0\u306b\u5fc5\u9808\u30c1\u30a7\u30c3\u30af\u306e\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\u3057\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "CSV\u53d6\u308a\u8fbc\u307f\u3067\u30a8\u30e9\u30fc\u304c\u51fa\u3066\u5148\u306b\u9032\u3081\u306a\u3044\u306e\u3067\u76f4\u3057\u3066\u3002\u30c8\u30ec\u30fc\u30b9\u30d0\u30c3\u30af\u306f\u3053\u3046\u3067\u3059",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u3053\u306e\u30dc\u30bf\u30f3\u306e\u8272\u3060\u3051 #2563eb \u306b\u5909\u3048\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\u30e2\u30c3\u30af\u30a2\u30c3\u30d7\u306eHTML\u3092 01_Templates \u306b\u7f6e\u3044\u305f\u306e\u3067\u898b\u3066\u304a\u3044\u3066",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}
