@@ -10,8 +10,11 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 HERE = os.path.dirname(os.path.abspath(__file__))
 REF = {"xl/printerSettings/printerSettings2.bin": os.path.join(HERE, "printerSettings2.bin"),
        "xl/printerSettings/printerSettings3.bin": os.path.join(HERE, "printerSettings3.bin")}
-F = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\PanaCIM_LNB\01_成果物\20261015_管理手順書案\Pana-CIM管理手順書案_未承認.xlsx"
+# 対象は第1引数で指定する(ERR-20261023-007: 引数を無視して既定ファイルを検査していた事故の修正)。
+# 省略時の既定は保管庫の現行ファイル。
+F = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\10_業務全般\PanaCIM_LNB\01_成果物\20261015_管理手順書案\Pana-CIM管理手順書案_未承認.xlsx"
 TMP = F + ".restore_tmp"
+print(f"対象: {F}")
 
 refdata = {k: open(v, "rb").read() for k, v in REF.items()}
 zin = zipfile.ZipFile(F)
