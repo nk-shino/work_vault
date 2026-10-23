@@ -53,3 +53,9 @@ status: done
 - QRコントロールは Style=11 で既に二次元(Style 0〜20 実機プローブ+デコード検証)。紙印刷での崩れは低DPIラスタライズ+モジュール0.65mmが原因→QR 61→90pt(モジュール1.12mm)に拡大、1ページ30件へ再レイアウト。103個全QRのCSV一致デコード検証済み。
 - E:ブックと共有原本へバックアップ取得の上反映(対応表7行+SpliceBarcodeSave v6)。再読込検証済み。検証済みブックと出力一式は C:\work\splicing_review\fixcheck2\。
 - 変更記録 §11〜15、実行ログ エントリ3、ERRORS 008〜013(モジュール全行削除によるコンパイルエラー、OneDrive配下でSaveが飛ぶ、PrintArea+OLE消失、ページ境界跨ぎの迷入QR、PageSetup L/Rハング、cv2全ページ検出の取りこぼし)。
+
+## 追加: 全体回帰テスト(変更部分以外も含めて)完了
+
+- regression.xlsm(dev_qrコピー)で静的検査(シート11種・対応表L2/L3・モジュール5メンバー・ボタン15個の割当)+全Core実行(SaveSplice 103件/FaildSetUp 対象無し/FaildSplice 4件→PrintSplice 103件の上書き連鎖/ManualNyuko 23頁)+PDF印刷ドライラン+Utf8ToSjis検査+出力物検査(4PDFページ数一致・QR 103個全デコードCSV一致 fails=0)。
+- 当初4件FAILは全てテストスクリプト側の前提ミス(シート名「セットアップレポート」、#N/A 437件=A=0空テンプレート行564-1000由来で実データ2-563は全件解決、WriteSerialCsv=Private Sub、ExportBarcodePdf=Public Sub)。修正不要。
+- 未テスト=取込系3ボタン(FileDialog必須)と実印刷は現場確認事項のまま。ログ real_dump24.txt。
