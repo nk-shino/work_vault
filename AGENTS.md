@@ -18,6 +18,7 @@ This is the default workspace. The rules below are a default starting point; ada
 - **issue 起票・看板(Project V2)への追加・Status 移動(Todo/In Progress/Done)・タスク完了時の Done 移動は `github-issue-board` スキル**（`~/.config/kohden-code/skills/github-issue-board/SKILL.md`）の統一手順で行う。全セッション共通。完了時は forced-logging による記録検証 → issue へ完了コメント → Done 移動の順。close はユーザーの確認後
 - 100MB 超の2ファイル（`自動はんだ不良入力.zip`・`NPM-DGS.PDF`）は `.gitignore` 済み。履歴に再登録しないこと（push が拒否される）
 - `98_Pass`（認証情報）を含むためリポジトリは必ず Private 維持。public 化やスコープ拡大をしてはいけない
+- 開発において必要な情報（Kohden Code のスキル・失敗記録 `.learnings/`・設計判断など）を、ローカル設定や gitignore 配下だけに置かない。保管庫へ控えを出力し、更新時に上書きする（2026-10-26 指示）。サイト開発系の控え置き場は `00_site-devlops/03_共通と運用/`
 
 ## 文書作成の言い回し(管理文書・報告書)
 
