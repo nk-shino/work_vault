@@ -39,7 +39,7 @@ zout.close(); zin.close()
 za, zb = zipfile.ZipFile(TMP), zipfile.ZipFile(F)
 diffs = [n for n in zb.namelist() if za.read(n) != zb.read(n)]
 za.close(); zb.close()
-assert set(diffs) == set(REF), f"予期しない差分: {diffs}"
+assert set(diffs) == set(REF) - same, f"予期しない差分: {diffs}"
 for _ in range(5):
     try:
         shutil.move(TMP, F)
