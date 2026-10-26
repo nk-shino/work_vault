@@ -84,6 +84,12 @@
   .b-dense td, .b-dense th { padding: 3px 6px; }
 }
 
+/* ===== 共通: 文書表現（2026-10-26 調査まとめ A-1/A-2） ===== */
+/* 見出しと短いキャプションは行長を均す（MDN text-wrap: 短いブロックに balance） */
+h1, h2, h3, .a-caption { text-wrap: balance; }
+/* 本文段落は孤行を避ける（MDN text-wrap: 本文に pretty・未対応環境は既定） */
+.lead, dd, .c-trace { text-wrap: pretty; }
+
 /* [DEPLOY] Cloudflare Pages 公開準備: JavaScript 無効時の案内 */
 .noscript-note {
   margin: var(--space-2) 0 0;
