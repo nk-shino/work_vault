@@ -1,3 +1,11 @@
+---
+type: spec
+phase: operate
+status: active
+project: PanaCIM_LNB
+updated: 2026-10-27
+---
+
 # PanaCIM・LNB点検文書にSOPと管理書の二層を採用する理由
 
 ## 1. この資料の目的
