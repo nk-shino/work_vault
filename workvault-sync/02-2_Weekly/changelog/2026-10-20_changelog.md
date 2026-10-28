@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # Changelog 2026-10-20
 
 ## 1. ver.2 の要件充足判定と旧版同等性の検証(08ノート新設)

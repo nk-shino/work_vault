@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # 用語集PoC Phase 0：社用PCで確認すること
 
 作成: 2026-09-24

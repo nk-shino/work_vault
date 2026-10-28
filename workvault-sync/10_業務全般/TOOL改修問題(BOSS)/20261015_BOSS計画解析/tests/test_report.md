@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # BOSS計画.xlsm 検証結果判定表
 
 解析日: 2026-10-15 ／ 実行環境: Windows 11 ja-JP・Excel不使用・Python 3.13.15（openpyxl 3.1.5 / pandas 3.0.6 / oletools 0.60.2）

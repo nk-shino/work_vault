@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # Changelog 2026-10-19
 
 ## 1. 00_site-devlops: 開発者向け情報整理シートと変更履歴ノートの新設

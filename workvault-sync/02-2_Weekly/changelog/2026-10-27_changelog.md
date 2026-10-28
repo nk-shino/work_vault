@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # 2026-10-27 変更履歴
 
 ## 1. `10_業務全般/点検文書の設計/`の廃止と`PanaCIM_LNB/`への統合(利用者指示)

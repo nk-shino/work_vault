@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # Changelog 2026-10-16
 
 ## 1. 鹿島引き込み: 差分確認マクロver2.3a.xlsm 分析一式を業務内容フォルダへ納品

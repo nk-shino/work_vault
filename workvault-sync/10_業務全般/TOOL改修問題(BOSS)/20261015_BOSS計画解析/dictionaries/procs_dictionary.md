@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # BOSS計画.xlsm VBAプロシージャ辞書
 
 解析日: 2026-10-15 ／ 根拠: evidence/vba_code_all.txt（olevba 0.60.2 抽出・全1,765行）

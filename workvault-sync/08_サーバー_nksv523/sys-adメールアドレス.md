@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # 本フォルダで実行する全アプリのsys-adメールアドレスを記述する。
 # "#" で始まる行はコメント行。空白行は無視。
 # 1行の構成：氏名(空白)<メールアドレス>

@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-13
+---
+
 # ImportExcel 7.8.10 静的レビュー報告
 
 日付: 2026-10-13

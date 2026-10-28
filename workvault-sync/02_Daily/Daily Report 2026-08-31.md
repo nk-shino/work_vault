@@ -1,3 +1,11 @@
+---
+type: report
+phase: operate
+status: done
+project:
+updated: 2026-10-27
+---
+
 ## WIP
 
 ## データ整理

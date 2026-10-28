@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # 2026-10-23 変更履歴
 
 ## 1. 固定テーブル棚卸し作業手順書（統合版）の作成

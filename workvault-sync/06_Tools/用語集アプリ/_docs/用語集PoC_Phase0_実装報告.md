@@ -1,3 +1,11 @@
+---
+type: report
+phase: operate
+status: done
+project:
+updated: 2026-10-27
+---
+
 # 用語集PoC Phase 0：実装報告
 
 作成: 2026-09-24　／　置き場所: 開発PCの `C:\Projects\glossary-poc`（git 初期化のみ・未コミット・リモートなし）

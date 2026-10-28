@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-13
+---
+
 # 開発用PC(環境B) 異常系テスト実施手順
 
 日付: 2026-10-13

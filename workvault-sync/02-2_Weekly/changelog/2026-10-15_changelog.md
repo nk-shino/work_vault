@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # Changelog 2026-10-15
 
 ## 1. DeAIプロンプトの改修(第3次調査の反映)

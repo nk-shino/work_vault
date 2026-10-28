@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # changelog 2026-10-21
 
 ## 1. リール消費マクロ等のリファクタリング(動作維持・機能コメント付与)

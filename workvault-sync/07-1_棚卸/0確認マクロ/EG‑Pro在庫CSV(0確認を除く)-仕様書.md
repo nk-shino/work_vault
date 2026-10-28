@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 
 [ノートブック](https://x.gd/gaDjh)から出力することができる。
 「0確認を除く」と「0確認を含む」の二種類が存在する。

@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # 2026-10-22 変更履歴
 
 ## 1. 0確認マクロ_ver2 正式版の保存(◎棚卸し/2026_10 新設)

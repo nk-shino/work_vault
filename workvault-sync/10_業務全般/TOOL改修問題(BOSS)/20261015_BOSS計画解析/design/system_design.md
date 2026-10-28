@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # BOSS計画.xlsm システム設計ドキュメント（静的解析によるリバースエンジニアリング結果）
 
 解析日: 2026-10-15 ／ 方式: Excel起動なしの静的解析（OOXML直読み・olevba）

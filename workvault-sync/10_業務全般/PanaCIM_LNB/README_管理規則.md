@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # PanaCIM_LNB フォルダ 管理規則
 
 **このフォルダの目的**: Pana-CIM と LNB の管理文書作成に関わる成果物・参照元・記録を一元管理する。

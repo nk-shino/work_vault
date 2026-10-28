@@ -1,3 +1,11 @@
+---
+type: report
+phase: operate
+status: done
+project:
+updated: 2026-10-27
+---
+
 Daily Report 2026-09-29
 日付：2026-09-29
 曜日：火曜日

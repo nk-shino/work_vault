@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 ## 推奨実行手順
 
 ### 1. EG-Pro在庫データを取り込む

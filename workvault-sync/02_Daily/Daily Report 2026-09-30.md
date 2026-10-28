@@ -1,3 +1,11 @@
+---
+type: report
+phase: operate
+status: done
+project:
+updated: 2026-10-27
+---
+
 title：Daily Report 2026-09-30
 date：2026-09-30
 day：水曜日

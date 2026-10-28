@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # BOSS計画.xlsm シート辞書
 
 解析日: 2026-10-15 ／ 根拠: evidence/structure_report.txt, sheets_detail*.txt, formulas_detail.txt

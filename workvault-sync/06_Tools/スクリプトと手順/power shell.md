@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 
 CPUとメモリを1台分だけ眺める用途
 ~~~

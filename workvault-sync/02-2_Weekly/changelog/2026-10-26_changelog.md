@@ -1,3 +1,11 @@
+---
+type: report
+phase: maintain
+status: done
+project:
+updated: 2026-10-27
+---
+
 # 2026-10-26 変更履歴
 
 ## 1. セットアップレポート計算機v2.0の本番2ブックへv7配備(1ファイル化仕様変更)

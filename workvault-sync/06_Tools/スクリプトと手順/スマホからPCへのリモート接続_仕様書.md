@@ -1,3 +1,11 @@
+---
+type: note
+phase: operate
+status: active
+project:
+updated: 2026-10-27
+---
+
 # スマホからPCへのリモート接続_仕様書
 
 作成日 2026-09-17
