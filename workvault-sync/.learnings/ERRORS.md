@@ -118,3 +118,15 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 - 発生コマンド/状況: QR 30個/ページのPDFを300dpiで一括 detectAndDecodeMulti → 29件(1件欠け)。個別に見るとQR自体は正常。
 - 解決法: 全数検証は QR白背景矩形(幅高さ80〜100ptの白fill)でグリッド抽出→ソート→個別クロップ→300/450/650dpiの順で再試行。103/103完全一致を確認できた。
 - Pattern-Key: cv2.qr-fullpage-detect-misses
+
+## [ERR-20261028-001] 密なスライドへの注記追加が既存本文と衝突する(レンダリング目視検証の初回で検出)
+
+- 発生コマンド/状況: 固定テーブル棚卸し方法_v2.pptxへの注記追加(apply_edits_v15.py初回適用)後、PowerPoint COMで全27枚をPNG化した目視検証で、S9の注記が本文の②行と最終行に、S10の注記がボタンモック[7]の3行目にそれぞれ衝突。python-pptxの追加時点では既存図形との重なりを自動判定していなかった。
+- 解決法: 対象スライドの既存図形の外接矩形を実測(inspect_shapes.py)して空き帯を特定し、S9注記Aを1行9pt(T9.95)・S9注記Bを右側空き帯(L18.3/T13.7)・S10注記を最下部帯(T18.3)へ配置し直して解消(2回目のレンダリングで全8枚衝突なし)。テキストボックス追加を含むスライド編集は、座標実測→適用→全枚レンダリング→目視衝突確認を検証工程に含める。
+- Pattern-Key: pptx.textbox-overlaps-existing-shapes
+
+## [ERR-20261028-002] 読み取り専用推奨のxlsmをCOMで開くと無音でReadOnlyになりSaveが無音で不反映する
+
+- 発生コマンド/状況: セットアップレポート計算機原本_v2.0.xlsm(読み取り専用推奨で保存されている)のdevコピーへVBAモジュール注入+ボタン追加後、Workbooks.Open(DisplayAlerts=False)→Save()がエラー無しで完了するがファイルは無変更(警告ダイアログが抑制され既定の「読み取り専用で開く」扱いになる)。Save後のwb.SavedはTrueを返すため検出できない。IgnoreReadOnlyRecommended名前付き引数は動的ディスパッチ(DispatchEx)では効かなかった。
+- 解決法: devコピーではZIPを直接編集しxl/workbook.xmlの<fileSharing readOnlyRecommended="1"/>を除去してから開く(検証用・flag除去はdevのみ)。本番配備では、(a)元のfileSharing要素を事前取得→(b)ZIP一時除去→(c)COM編集+保存→(d)ZIPでフラグを復元、またはmakepy早期バインディング(EnsureDispatch)でIgnoreReadOnlyRecommendedを正しく渡す。Save後は必ずmd5比較でディスク反映を確認する。
+- Pattern-Key: excel.com-readonly-recommended-silent-nosave
