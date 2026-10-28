@@ -1,0 +1,208 @@
+{
+ "ok": true,
+ "pid": 27308,
+ "heads": {
+  "band_a_head": {
+   "x": 0.0,
+   "y": 0.0,
+   "w": 200.0,
+   "h": 30.0,
+   "margin_top": 1.0,
+   "margin_left": 2.0,
+   "bound_h": 5.76,
+   "bound_w": 199.67,
+   "font_size": 12.0,
+   "ink_bottom_rel": 6.76,
+   "text_head": "PanaCIM管理側ネットワーク — 上位網 192.1"
+  },
+  "band_b_head": {
+   "x": 0.0,
+   "y": 316.0,
+   "w": 300.0,
+   "h": 18.0,
+   "margin_top": 1.0,
+   "margin_left": 2.0,
+   "bound_h": 5.36,
+   "bound_w": 253.11,
+   "font_size": 12.0,
+   "ink_bottom_rel": 322.36,
+   "text_head": "ライン設備側ネットワーク — 内部網 192.168.1"
+  }
+ },
+ "labels": {
+  "E01": {
+   "w_design": 129,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 86.59,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -42.41
+  },
+  "E02": {
+   "w_design": 140,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 20.71,
+   "bound_w": 138.21,
+   "wrapped_lines": 2.09,
+   "overflow_h": -1.59,
+   "overflow_w": -1.79
+  },
+  "E03": {
+   "w_design": 212,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 114.71,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -97.29
+  },
+  "E04": {
+   "w_design": 180,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 20.71,
+   "bound_w": 154.53,
+   "wrapped_lines": 2.09,
+   "overflow_h": -1.59,
+   "overflow_w": -25.47
+  },
+  "E05": {
+   "w_design": 212,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 20.71,
+   "bound_w": 208.5,
+   "wrapped_lines": 2.09,
+   "overflow_h": -1.59,
+   "overflow_w": -3.5
+  },
+  "E06": {
+   "w_design": 174,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 10.71,
+   "bound_w": 163.86,
+   "wrapped_lines": 1.08,
+   "overflow_h": -11.59,
+   "overflow_w": -10.14
+  },
+  "E07": {
+   "w_design": 148,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 20.71,
+   "bound_w": 140.14,
+   "wrapped_lines": 2.09,
+   "overflow_h": -1.59,
+   "overflow_w": -7.86
+  },
+  "E08": {
+   "w_design": 122,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 108.43,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -13.57
+  },
+  "E09": {
+   "w_design": 80,
+   "lines_design": 4,
+   "model_h": 42.1,
+   "bound_h": 30.71,
+   "bound_w": 76.6,
+   "wrapped_lines": 3.1,
+   "overflow_h": -11.39,
+   "overflow_w": -3.4
+  },
+  "E10": {
+   "w_design": 85,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 10.71,
+   "bound_w": 76.78,
+   "wrapped_lines": 1.08,
+   "overflow_h": -11.59,
+   "overflow_w": -8.22
+  },
+  "E12": {
+   "w_design": 172,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 134.98,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -37.02
+  },
+  "E13": {
+   "w_design": 212,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 101.77,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -110.23
+  },
+  "E14": {
+   "w_design": 212,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 10.71,
+   "bound_w": 157.74,
+   "wrapped_lines": 1.08,
+   "overflow_h": -11.59,
+   "overflow_w": -54.26
+  },
+  "E15": {
+   "w_design": 85,
+   "lines_design": 3,
+   "model_h": 32.2,
+   "bound_h": 20.71,
+   "bound_w": 84.34,
+   "wrapped_lines": 2.09,
+   "overflow_h": -11.49,
+   "overflow_w": -0.66
+  },
+  "E16": {
+   "w_design": 85,
+   "lines_design": 3,
+   "model_h": 32.2,
+   "bound_h": 20.71,
+   "bound_w": 83.52,
+   "wrapped_lines": 2.09,
+   "overflow_h": -11.49,
+   "overflow_w": -1.48
+  },
+  "E17": {
+   "w_design": 205,
+   "lines_design": 2,
+   "model_h": 22.3,
+   "bound_h": 20.71,
+   "bound_w": 202.11,
+   "wrapped_lines": 2.09,
+   "overflow_h": -1.59,
+   "overflow_w": -2.89
+  },
+  "E18": {
+   "w_design": 210,
+   "lines_design": 1,
+   "model_h": 12.4,
+   "bound_h": 10.71,
+   "bound_w": 133.22,
+   "wrapped_lines": 1.08,
+   "overflow_h": -1.69,
+   "overflow_w": -76.78
+  }
+ },
+ "shape_count": 23,
+ "errors": [
+  "killed residual 27308"
+ ]
+}

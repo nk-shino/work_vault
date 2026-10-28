@@ -1,0 +1,253 @@
+{
+ "ok": false,
+ "pid": 28124,
+ "edges": {
+  "E01": {
+   "name": "edge_E01",
+   "points": 2,
+   "dash": false,
+   "arrow": false
+  },
+  "E02": {
+   "name": "edge_E02",
+   "points": 4,
+   "dash": false,
+   "arrow": true
+  },
+  "E03": {
+   "name": "edge_E03",
+   "points": 5,
+   "dash": false,
+   "arrow": false
+  },
+  "E04": {
+   "name": "edge_E04",
+   "points": 5,
+   "dash": false,
+   "arrow": false
+  },
+  "E05": {
+   "name": "edge_E05",
+   "points": 2,
+   "dash": false,
+   "arrow": false
+  },
+  "E06": {
+   "name": "edge_E06",
+   "points": 2,
+   "dash": true,
+   "arrow": true
+  },
+  "E07": {
+   "name": "edge_E07",
+   "points": 4,
+   "dash": false,
+   "arrow": false
+  },
+  "E08": {
+   "name": "edge_E08",
+   "points": 3,
+   "dash": false,
+   "arrow": true
+  },
+  "E09": {
+   "name": "edge_E09",
+   "points": 6,
+   "dash": true,
+   "arrow": true
+  },
+  "E10": {
+   "name": "edge_E10",
+   "points": 5,
+   "dash": true,
+   "arrow": false
+  },
+  "E12": {
+   "name": "edge_E12",
+   "points": 4,
+   "dash": true,
+   "arrow": false
+  },
+  "E13": {
+   "name": "edge_E13",
+   "points": 2,
+   "dash": true,
+   "arrow": false
+  },
+  "E14": {
+   "name": "edge_E14",
+   "points": 2,
+   "dash": false,
+   "arrow": false
+  },
+  "E15": {
+   "name": "edge_E15",
+   "points": 2,
+   "dash": false,
+   "arrow": true
+  },
+  "E16": {
+   "name": "edge_E16",
+   "points": 2,
+   "dash": false,
+   "arrow": true
+  },
+  "E17": {
+   "name": "edge_E17",
+   "points": 4,
+   "dash": false,
+   "arrow": true
+  },
+  "E18": {
+   "name": "edge_E18",
+   "points": 7,
+   "dash": false,
+   "arrow": true
+  }
+ },
+ "labels": {
+  "E01": {
+   "w": 129,
+   "lines_design": 1,
+   "bound_w": 86.59,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E02": {
+   "w": 140,
+   "lines_design": 2,
+   "bound_w": 138.21,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E03": {
+   "w": 212,
+   "lines_design": 1,
+   "bound_w": 114.71,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E04": {
+   "w": 180,
+   "lines_design": 2,
+   "bound_w": 154.53,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E05": {
+   "w": 212,
+   "lines_design": 2,
+   "bound_w": 208.5,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E06": {
+   "w": 174,
+   "lines_design": 2,
+   "bound_w": 163.86,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E07": {
+   "w": 148,
+   "lines_design": 2,
+   "bound_w": 140.14,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E08": {
+   "w": 122,
+   "lines_design": 1,
+   "bound_w": 108.43,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E09": {
+   "w": 80,
+   "lines_design": 4,
+   "bound_w": 76.6,
+   "bound_h": 30.71,
+   "fit": true
+  },
+  "E10": {
+   "w": 85,
+   "lines_design": 2,
+   "bound_w": 76.78,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E12": {
+   "w": 172,
+   "lines_design": 1,
+   "bound_w": 134.98,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E13": {
+   "w": 212,
+   "lines_design": 1,
+   "bound_w": 101.77,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E14": {
+   "w": 212,
+   "lines_design": 2,
+   "bound_w": 157.74,
+   "bound_h": 10.71,
+   "fit": true
+  },
+  "E15": {
+   "w": 85,
+   "lines_design": 3,
+   "bound_w": 84.34,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E16": {
+   "w": 85,
+   "lines_design": 3,
+   "bound_w": 83.52,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E17": {
+   "w": 205,
+   "lines_design": 2,
+   "bound_w": 202.11,
+   "bound_h": 20.71,
+   "fit": true
+  },
+  "E18": {
+   "w": 210,
+   "lines_design": 1,
+   "bound_w": 133.22,
+   "bound_h": 10.71,
+   "fit": true
+  }
+ },
+ "counts": {
+  "shapes": 57,
+  "edges": 17,
+  "labels": 17,
+  "expected_total": 57
+ },
+ "assert_fails": [
+  "edge E01 dash=1 arrow=1 w=1.0",
+  "edge E03 dash=1 arrow=1 w=1.0",
+  "edge E04 dash=1 arrow=1 w=1.0",
+  "edge E05 dash=1 arrow=1 w=1.0",
+  "edge E07 dash=1 arrow=1 w=1.0",
+  "edge E10 dash=4 arrow=1 w=1.0",
+  "edge E12 dash=4 arrow=1 w=1.0",
+  "edge E13 dash=4 arrow=1 w=1.0",
+  "edge E14 dash=1 arrow=1 w=1.0"
+ ],
+ "fit_adjust": {},
+ "errors": [],
+ "render": {
+  "pdf": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\issue6263_work\\corr_pana_15_stage5.pdf",
+  "png": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\issue6263_work\\corr_pana_15_stage5_p1.png",
+  "pdf_pages": 1
+ }
+}

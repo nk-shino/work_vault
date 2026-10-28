@@ -1,0 +1,75 @@
+{
+ "errors": [
+  "killed residual 9000"
+ ],
+ "assert_fails": [],
+ "file_backup": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\issue6263_work\\Pana-CIM管理手順書案_未承認_before_apply_20261028.xlsx",
+ "pid": 9000,
+ "orig_sheets": [
+  "表紙",
+  "目次",
+  "用語",
+  "構成と管理情報",
+  "相関図",
+  "管理体制",
+  "月次再起動",
+  "バックアップ",
+  "復旧",
+  "異常時の対応",
+  "チェックシート(月次・異常時)",
+  "会議課題一覧(一時)",
+  "付録 引用元と確認範囲",
+  "要確認事項一覧",
+  "7-5仮_サービス起動停止"
+ ],
+ "old_sheet": {
+  "index": 5,
+  "shapes": 34
+ },
+ "refs_to_相関図": [
+  "name:相関図!Print_Area",
+  "name:相関図!Print_Titles"
+ ],
+ "backup_sheet": {
+  "name": "相関図_old",
+  "shapes": 34
+ },
+ "moved_to_index": 5,
+ "verify": {
+  "shapes": 57,
+  "print_area": "$A$1:$AY$60",
+  "fit": [
+   1,
+   1
+  ],
+  "zoom": false,
+  "B11_top": 180.0,
+  "sheets": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "月次再起動",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "付録 引用元と確認範囲",
+   "要確認事項一覧",
+   "7-5仮_サービス起動停止"
+  ],
+  "spot": {
+   "n02_text_head": "【サーバ(VM)】PanaCIMアプリケーション",
+   "edge_E09_left": 382.0
+  }
+ },
+ "pdf": {
+  "path": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\20261015_管理手順書案\\Pana-CIM管理手順書案_未承認.pdf",
+  "size": 2403321
+ },
+ "ok": false
+}

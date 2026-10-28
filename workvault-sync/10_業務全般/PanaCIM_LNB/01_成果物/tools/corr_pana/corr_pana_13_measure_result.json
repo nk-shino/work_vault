@@ -1,0 +1,35 @@
+{
+ "ok": true,
+ "pid": 15356,
+ "cases": {
+  "A_node_n02": {
+   "box_w": 105.0,
+   "p1_bound_w": 87.7,
+   "p1_bound_h": 54.5,
+   "p2_bound_h": 66.0,
+   "total_h": 120.5
+  },
+  "B_x02_full": {
+   "box_w": 180.0,
+   "p1_bound_w": 175.6,
+   "p1_bound_h": 379.7,
+   "total_h": 379.7
+  },
+  "C_label_e02": {
+   "box_w": 150.0,
+   "p1_bound_w": 141.2,
+   "p1_bound_h": 33.0,
+   "total_h": 33.0
+  },
+  "D_node_n08": {
+   "box_w": 135.0,
+   "p1_bound_w": 125.9,
+   "p1_bound_h": 36.3,
+   "p2_bound_h": 49.5,
+   "total_h": 85.8
+  }
+ },
+ "errors": [
+  "killed residual 15356"
+ ]
+}

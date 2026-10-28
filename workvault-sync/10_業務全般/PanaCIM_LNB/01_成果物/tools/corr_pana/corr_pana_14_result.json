@@ -1,0 +1,179 @@
+{
+ "ok": true,
+ "pid": 440,
+ "shapes": {
+  "band_a_head": {
+   "x": 0.0,
+   "y": 0.0,
+   "w": 200.0,
+   "h": 30.0,
+   "fit": true
+  },
+  "band_b_head": {
+   "x": 0.0,
+   "y": 316.0,
+   "w": 300.0,
+   "h": 18.0,
+   "fit": true
+  },
+  "n01_esxi": {
+   "x": 0.0,
+   "y": 34.0,
+   "w": 390.0,
+   "h": 142.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n02_app": {
+   "x": 8.0,
+   "y": 52.0,
+   "w": 186.0,
+   "h": 50.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n03_ctrl": {
+   "x": 202.0,
+   "y": 52.0,
+   "w": 180.0,
+   "h": 50.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n04_maint": {
+   "x": 8.0,
+   "y": 108.0,
+   "w": 150.0,
+   "h": 40.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n05_note": {
+   "x": 395.0,
+   "y": 34.0,
+   "w": 225.0,
+   "h": 84.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n06_dgs": {
+   "x": 164.0,
+   "y": 108.0,
+   "w": 218.0,
+   "h": 60.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n07_lnb": {
+   "x": 0.0,
+   "y": 294.0,
+   "w": 176.0,
+   "h": 36.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n08_line": {
+   "x": 0.0,
+   "y": 340.0,
+   "w": 220.0,
+   "h": 26.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n09_andon": {
+   "x": 430.0,
+   "y": 340.0,
+   "w": 220.0,
+   "h": 26.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n10_monitor": {
+   "x": 0.0,
+   "y": 192.0,
+   "w": 130.0,
+   "h": 50.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n11_lws": {
+   "x": 168.0,
+   "y": 250.0,
+   "w": 185.0,
+   "h": 36.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n12_pda": {
+   "x": 0.0,
+   "y": 250.0,
+   "w": 160.0,
+   "h": 36.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n13_ap": {
+   "x": 434.0,
+   "y": 192.0,
+   "w": 110.0,
+   "h": 40.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n14_tablet": {
+   "x": 552.0,
+   "y": 192.0,
+   "w": 100.0,
+   "h": 40.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n15_cima_pc": {
+   "x": 138.0,
+   "y": 192.0,
+   "w": 140.0,
+   "h": 40.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n16_cimc_pc": {
+   "x": 286.0,
+   "y": 192.0,
+   "w": 140.0,
+   "h": 40.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n17_backup": {
+   "x": 625.0,
+   "y": 34.0,
+   "w": 125.0,
+   "h": 53.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n18_extif": {
+   "x": 625.0,
+   "y": 93.0,
+   "w": 125.0,
+   "h": 50.0,
+   "fit": true,
+   "attempts": 0
+  },
+  "n19_cima_sv": {
+   "x": 395.0,
+   "y": 124.0,
+   "w": 225.0,
+   "h": 26.0,
+   "fit": true,
+   "attempts": 0
+  }
+ },
+ "assert_adjust": {},
+ "errors": [
+  "killed residual 440"
+ ],
+ "x0": 15.0,
+ "y0": 180.0,
+ "assert_fails": []
+}

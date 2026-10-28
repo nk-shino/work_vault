@@ -1,0 +1,162 @@
+{
+ "ok": true,
+ "checks": [
+  {
+   "name": "count_外部インターフェース構成",
+   "pass": true,
+   "detail": "live=60 expect=60"
+  },
+  {
+   "name": "names_外部インターフェース構成",
+   "pass": true,
+   "detail": "missing="
+  },
+  {
+   "name": "line_s1_ln_data",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_ln_musen",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_ln_web",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_ln_fan1",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_ln_fan2",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_ln_fan3",
+   "pass": true,
+   "detail": "arrow=2(expect 2) dash=1(expect 1)"
+  },
+  {
+   "name": "line_s1_leg_sw5_ln",
+   "pass": true,
+   "detail": "arrow=1(expect None) dash=1(expect 1)"
+  },
+  {
+   "name": "print_外部インターフェース構成",
+   "pass": true,
+   "detail": "{\"orientation\": 2.0, \"paper\": 9.0, \"zoom\": false, \"fit_w\": 1, \"fit_h\": 1, \"left\": 22.7, \"top\": 22.7, \"print_area\": \"$A$1:$Q$31\"}"
+  },
+  {
+   "name": "count_ネットワーク構成例",
+   "pass": true,
+   "detail": "live=38 expect=38"
+  },
+  {
+   "name": "names_ネットワーク構成例",
+   "pass": true,
+   "detail": "missing="
+  },
+  {
+   "name": "line_s2_ln_stub",
+   "pass": true,
+   "detail": "arrow=1(expect None) dash=4(expect 4)"
+  },
+  {
+   "name": "print_ネットワーク構成例",
+   "pass": true,
+   "detail": "{\"orientation\": 2.0, \"paper\": 9.0, \"zoom\": false, \"fit_w\": 1, \"fit_h\": 1, \"left\": 22.7, \"top\": 22.7, \"print_area\": \"$A$1:$Q$31\"}"
+  },
+  {
+   "name": "no_overlap",
+   "pass": true,
+   "detail": "0 conflicts"
+  },
+  {
+   "name": "no_overflow",
+   "pass": true,
+   "detail": "0 boxes"
+  }
+ ],
+ "overlaps": [],
+ "overflow": [],
+ "lines": {
+  "s1_ln_data": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_ln_musen": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_ln_web": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_ln_fan1": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_ln_fan2": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_ln_fan3": {
+   "present": true,
+   "arrow": 2,
+   "dash": 1,
+   "pass": true
+  },
+  "s1_leg_sw5_ln": {
+   "present": true,
+   "arrow": 1,
+   "dash": 1,
+   "pass": true
+  },
+  "s2_ln_stub": {
+   "present": true,
+   "arrow": 1,
+   "dash": 4,
+   "pass": true
+  }
+ },
+ "print": {
+  "外部インターフェース構成": {
+   "orientation": 2.0,
+   "paper": 9.0,
+   "zoom": false,
+   "fit_w": 1,
+   "fit_h": 1,
+   "left": 22.7,
+   "top": 22.7,
+   "print_area": "$A$1:$Q$31"
+  },
+  "ネットワーク構成例": {
+   "orientation": 2.0,
+   "paper": 9.0,
+   "zoom": false,
+   "fit_w": 1,
+   "fit_h": 1,
+   "left": 22.7,
+   "top": 22.7,
+   "print_area": "$A$1:$Q$31"
+  }
+ },
+ "errors": [
+  "stopped residual EXCEL PID 21808 (Stop-Process -Id)"
+ ]
+}

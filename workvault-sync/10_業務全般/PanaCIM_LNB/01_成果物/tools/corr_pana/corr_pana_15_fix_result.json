@@ -1,0 +1,183 @@
+{
+ "ok": false,
+ "pid": 6544,
+ "nodes": {
+  "n01_esxi": {
+   "bound_h": 24.26,
+   "h": 142.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n02_app": {
+   "bound_h": 47.79,
+   "h": 50.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n03_ctrl": {
+   "bound_h": 47.79,
+   "h": 50.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n04_maint": {
+   "bound_h": 37.88,
+   "h": 40.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n05_note": {
+   "bound_h": 80.01,
+   "h": 84.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n06_dgs": {
+   "bound_h": 53.99,
+   "h": 60.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n07_lnb": {
+   "bound_h": 27.97,
+   "h": 36.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "n08_line": {
+   "bound_h": 20.05,
+   "h": 26.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "n09_andon": {
+   "bound_h": 20.05,
+   "h": 26.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "n10_monitor": {
+   "bound_h": 47.79,
+   "h": 50.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n11_lws": {
+   "bound_h": 24.26,
+   "h": 36.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n12_pda": {
+   "bound_h": 27.97,
+   "h": 36.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "n13_ap": {
+   "bound_h": 37.88,
+   "h": 40.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n14_tablet": {
+   "bound_h": 37.88,
+   "h": 40.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n15_cima_pc": {
+   "bound_h": 37.88,
+   "h": 40.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n16_cimc_pc": {
+   "bound_h": 37.88,
+   "h": 40.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n17_backup_fallback": "label 10pt",
+  "n17_backup": {
+   "bound_h": 48.77,
+   "h": 53.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "n18_extif": {
+   "bound_h": 37.88,
+   "h": 50.0,
+   "space": 0.75,
+   "fit": true
+  },
+  "n19_cima_sv": {
+   "bound_h": 20.05,
+   "h": 26.0,
+   "space": 0.6,
+   "fit": true
+  }
+ },
+ "heads": {
+  "geometry": {
+   "band_a_head": [
+    0.0,
+    0.0,
+    470.0,
+    30.0
+   ],
+   "band_b_head": [
+    178.0,
+    315.0,
+    248.0,
+    18.0
+   ]
+  },
+  "band_a_head": {
+   "a1_pt": 11.0,
+   "bound_h": 22.33,
+   "bound_w": 401.1,
+   "ink_bottom": 23.33,
+   "h": 30.0,
+   "space": 0.6,
+   "fit": true
+  },
+  "band_b_head": {
+   "b1_pt": 11.0,
+   "bound_h": 12.58,
+   "bound_w": 166.3,
+   "ink_bottom": 328.08,
+   "h": 18.0,
+   "space": 0.6,
+   "fit": true
+  }
+ },
+ "label_E18": {
+  "pos": [
+   666.0,
+   314.0
+  ],
+  "wh": [
+   82.0,
+   34.2
+  ],
+  "text_head": "外部I/F(XML/DB/ソケッ"
+ },
+ "validate": {
+  "hard": 0,
+  "crossings": 0,
+  "soft": 13,
+  "rc": 0
+ },
+ "assert_fails": [],
+ "errors": [
+  "killed residual 6544",
+  "render: AttributeError('Excel.Application.Quit')"
+ ],
+ "print": {
+  "before": "$A$1:$AY$60",
+  "after": "$A$1:$AY$60",
+  "fig_bottom_abs": 546.0,
+  "row60_bottom_abs": 551.0
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "hard": [],
+ "soft": [
+  {
+   "code": "S2-remote",
+   "subject": "E02",
+   "detail": "label 146pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E05",
+   "detail": "label 352pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E06",
+   "detail": "label 122pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E07",
+   "detail": "label 159pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E10",
+   "detail": "label 250pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E13",
+   "detail": "label 38pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E14",
+   "detail": "label 268pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E15",
+   "detail": "label 499pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E16",
+   "detail": "label 319pt from own route"
+  },
+  {
+   "code": "S2-remote",
+   "subject": "E18",
+   "detail": "label 200pt from own route"
+  },
+  {
+   "code": "S3-border",
+   "subject": "E09",
+   "detail": "x2 vertical runs ~0.9pt inside N01 container border (2.25pt frame centered x0) — documented deviation"
+  },
+  {
+   "code": "S4-bandhug",
+   "subject": "E04",
+   "detail": "ink bottom 310.3 hugs band split y=312.0"
+  },
+  {
+   "code": "S4-bandhug",
+   "subject": "E05",
+   "detail": "ink bottom 311.8 hugs band split y=312.0"
+  }
+ ],
+ "crossings_measured": 10,
+ "crossings_expected": 10,
+ "remote_labels": [
+  "E02(146pt)",
+  "E05(352pt)",
+  "E06(122pt)",
+  "E07(159pt)",
+  "E10(250pt)",
+  "E13(38pt)",
+  "E14(268pt)",
+  "E15(499pt)",
+  "E16(319pt)",
+  "E18(200pt)"
+ ],
+ "pass": true
+}

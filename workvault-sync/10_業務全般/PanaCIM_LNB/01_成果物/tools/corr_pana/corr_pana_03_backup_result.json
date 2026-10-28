@@ -1,0 +1,12 @@
+{
+ "method": "A:sheet copy positional",
+ "shapes_old": 34,
+ "name_ok": true,
+ "geom_ok": true,
+ "cell_ok": true,
+ "pid": 6096,
+ "errors": [
+  "killed residual 6096"
+ ],
+ "done": true
+}

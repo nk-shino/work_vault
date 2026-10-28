@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "pid": 29352,
+ "errors": [
+  "font:AttributeError(\"Property '<unknown>.NameFarEast' can not be set.\")",
+  "font:AttributeError(\"Property '<unknown>.NameFarEast' can not be set.\")",
+  "killed residual 29352"
+ ],
+ "measured": {
+  "width_pt": 765.0,
+  "height_pt": 525.6,
+  "height_mm": 185.4
+ },
+ "preface": "確定事項と推定事項を区別して記載する。実線=確定/グレー破線=推定(未確認)。出典符の意味は凡例パネルによる。現行版からの変更: A4横1頁化・ネットワークセグメント帯の追加・推定事項の明示。"
+}

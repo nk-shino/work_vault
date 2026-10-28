@@ -1,0 +1,39 @@
+{
+ "errors": [
+  "killed residual 23632"
+ ],
+ "assert_fails": [],
+ "pid": 23632,
+ "edge_E09": {
+  "points": [
+   [
+    382,
+    95
+   ],
+   [
+    386,
+    95
+   ],
+   [
+    386,
+    190
+   ],
+   [
+    662,
+    190
+   ],
+   [
+    662,
+    353
+   ],
+   [
+    650,
+    353
+   ]
+  ],
+  "count_before": 57,
+  "count_after": 57
+ },
+ "origin_on_n03_edge": true,
+ "ok": false
+}
