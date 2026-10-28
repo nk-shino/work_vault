@@ -47,7 +47,7 @@ Git 接続連携ではなく **wrangler 直接アップロード** を標準と�
 
    `robots.txt` に `Sitemap: https://<ドメイン>/sitemap.xml` を追記してコミットし、手順2・3 を再実行。
 
-6. 更新時: テスト（`improve/` で `node tools/run-tests.js`、112/112 を確認）→ 手順2・3 を再実行。
+6. 更新時: テスト（`improve/` で `node tools/run-tests.js`、117/117 を確認）→ 手順2・3 を再実行。
 
 ## 独自ドメイン（後日・任意）
 

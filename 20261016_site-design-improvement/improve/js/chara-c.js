@@ -15,12 +15,7 @@ const text = (s) => esc(s ?? "（未記録）");
 
 let catalogByRef = {};
 
-const BADGE = {
-  confirmed: { label: "確認済", cls: "ok" },
-  supplement: { label: "要補足", cls: "sup" },
-  unverified: { label: "未検証", cls: "" },
-  none: { label: "出典なし", cls: "none" },
-};
+// BADGE は js/verify.js の共通定義（C-2）を使う
 
 function worksOf(id) {
   return works

@@ -73,23 +73,31 @@ fs.rmSync(tmp, { recursive: true, force: true });
 const htmls = fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"));
 const jsFiles = fs.readdirSync(path.join(ROOT, "js")).filter((f) => f.endsWith(".js"));
 
-// 1. html が読み込む js は実在する
-const htmlToJs = new Map();
+// 1. html が読み込む js は実在する（1頁が複数 script を読む・1 js が複数頁から読まれる構成の両方を扱う）
+const htmlToJs = new Map(); // html → js 配列（記載順）
 for (const h of htmls) {
   const src = fs.readFileSync(path.join(ROOT, h), "utf8");
-  const m = src.match(/<script[^>]*src="js\/([^"]+)"/);
-  if (m) htmlToJs.set(h, m[1]);
+  const js = [...src.matchAll(/<script[^>]*src="js\/([^"]+)"/g)].map((m) => m[1]);
+  if (js.length) htmlToJs.set(h, js);
 }
-for (const [h, j] of htmlToJs) {
-  ok(`ITA ${h} → js/${j} 実在`, fs.existsSync(path.join(ROOT, "js", j)));
+for (const [h, js] of htmlToJs) {
+  for (const j of js) {
+    ok(`ITA ${h} → js/${j} 実在`, fs.existsSync(path.join(ROOT, "js", j)));
+  }
 }
 
 // 2. すべての js はどこかの html から読まれる
-const usedJs = new Set(htmlToJs.values());
+const usedJs = new Set([...htmlToJs.values()].flat());
 for (const j of jsFiles) ok(`ITA js/${j} は少なくとも1頁から読まれる`, usedJs.has(j));
 
 // 3. js が fetch する data は実在し、JSON として解釈できる
-const jsToHtml = new Map([...htmlToJs].map(([h, j]) => [j, h]));
+const jsToHtmls = new Map(); // js → 読み込み元 html の配列（1 js を複数頁が読む場合も保持）
+for (const [h, js] of htmlToJs) {
+  for (const j of js) {
+    if (!jsToHtmls.has(j)) jsToHtmls.set(j, []);
+    jsToHtmls.get(j).push(h);
+  }
+}
 for (const j of jsFiles) {
   const src = fs.readFileSync(path.join(ROOT, "js", j), "utf8");
   const fetches = [...src.matchAll(/fetch\("data\/([^"]+)"\)/g)].map((m) => m[1]);
@@ -122,15 +130,18 @@ for (const [f, keys] of Object.entries(expectedKeys)) {
   ok(`ITA data/${f} の最上位キー`, keys.every((k) => Array.isArray(d[k])), `期待=${keys.join(",")}`);
 }
 
-// 5. js が getElementById / querySelector("#…") で拾う id は、対応する html に存在する
-for (const [j, h] of jsToHtml) {
+// 5. js が getElementById / querySelector("#…") で拾う id は、読み込み元の各 html に存在する
+for (const [j, hs] of jsToHtmls) {
   const src = fs.readFileSync(path.join(ROOT, "js", j), "utf8");
-  const html = fs.readFileSync(path.join(ROOT, h), "utf8");
   const ids = new Set();
   for (const m of src.matchAll(/getElementById\("([^"]+)"\)/g)) ids.add(m[1]);
   for (const m of src.matchAll(/querySelector(?:All)?\("#([A-Za-z0-9_-]+)"/g)) ids.add(m[1]);
-  for (const id of ids) {
-    ok(`ITA js/${j} の #${id} は ${h} に存在`, new RegExp(`id="${id}"`).test(html));
+  if (!ids.size) continue;
+  for (const h of hs) {
+    const html = fs.readFileSync(path.join(ROOT, h), "utf8");
+    for (const id of ids) {
+      ok(`ITA js/${j} の #${id} は ${h} に存在`, new RegExp(`id="${id}"`).test(html));
+    }
   }
 }
 

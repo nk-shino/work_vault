@@ -90,6 +90,9 @@ h1, h2, h3, .a-caption { text-wrap: balance; }
 /* 本文段落は孤行を避ける（MDN text-wrap: 本文に pretty・未対応環境は既定） */
 .lead, dd, .c-trace { text-wrap: pretty; }
 
+/* 長文折返し（A-3・2026-10-28 実施）: 出典 URL 等の長い英字列の溢れを防ぐ（MDN 折返しガイド） */
+td, dd, ol.srcs, .b-links a { overflow-wrap: break-word; }
+
 /* [DEPLOY] Cloudflare Pages 公開準備: JavaScript 無効時の案内 */
 .noscript-note {
   margin: var(--space-2) 0 0;

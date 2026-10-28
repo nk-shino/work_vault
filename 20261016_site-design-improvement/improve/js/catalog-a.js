@@ -9,12 +9,7 @@ let rows = [];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const VERIFY = {
-  confirmed: { label: "確認済", cls: "ok" },
-  supplement: { label: "要補足", cls: "sup" },
-  unverified: { label: "未検証", cls: "" },
-  none: { label: "出典なし", cls: "none" },
-};
+// VERIFY は js/verify.js の共通定義（C-2）を使う
 
 function render(list) {
   empty.hidden = list.length > 0;
