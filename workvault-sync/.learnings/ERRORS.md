@@ -150,3 +150,15 @@ eport202610alidate.py`(8月版とのXML差分検証)。前セッションで作
 - 発生コマンド/状況: ws.Range("A5").Resize(1,7).Valueがstrを返し(期待は1行7列のタプル)forで回すとIndexError: string index out of range。Resize(3,7).Valueは右下セル3行目7列目の値そのもの(例 "対象なし")。動的ディスパッチ(gencache無し)の既知事象。
 - 解決法: 範囲一括読みは使わずws.Cells(i,j).Valueの実セル単位で読む。n=1のResizeは特に罠(スカラーstrが返り文字列を1文字ずつ反復する)。
 - Pattern-Key: pywin32.dynamic-dispatch-resize-returns-scalar
+
+## [ERR-20261029-004] bash(WindowsのMSYS系シェル)はUNC引数の先頭「\\」をクォートに関係なく潰す
+
+- 発生コマンド/状況: bashからpython deploy_and_verify.py --target-seihon '\\nksv569.ad.nkc.co.jp\...'と渡すと、引数が\nksv569...(先頭バックスラッシュ1個)に化けて「見つかりません」。シングルクォートでも防げなかった(MSYSのパス解決層での変換)。
+- 解決法: UNCパスをコマンドライン引数に渡さず、スクリプト内でraw文字列(r"\\server\...")として組み立てる。deploy_v18_run.pyのような薄いラッパーを作るのが確実。cmd /c経由の実行も代替可。
+- Pattern-Key: bash.windows-unc-argument-mangled
+
+## [ERR-20261029-005] 取込するセットアップレポートの製品系(L番号)がブックの配列データと違うと紐づけ用キーが反転し計算結果_整形が全空になる
+
+- 発生コマンド/状況: v18検証のprobeでE盤スクラッチにTEC1000(Line-2のレポート)を取込したところ、GenbaListが「対象無し」・⑨が「印刷対象無し」となりG1/N1全滅(46-101秒で正常終了するため例外も出ない)。診断の結果: セットアップレポート_紐づけ用は数式で自動構築され(=セットアップレポート!A2等+キー式C&RIGHT(G,5)&K)、レポート差し替えでキーがL2系⇔L3系へ反転→計算結果のXLOOKUPが#N/A→整形のシリアル列が全空→フィルタで全行非表示。ブック(配列シート)はE盤=Line-3(AED)・正本=Line-2(TEC5600)の実データが残っている。
+- 解決法: 検証ではブックの実データの系に合うレポートを取込む(E盤=AED・正本=TEC5600)。切り分けの近道は計算結果F2のXLOOKUPが#N/Aかを確認し、Application.Matchで紐づけ用!A:Aの照合を見ること。診断中に判明した副次知識: pywin32の早期バインディング(gencache)オブジェクトにはApplication.Matchが無い(AttributeError)→WorksheetFunction.Matchを使う。End(xlUp)は""を返す数式セルをスキップするため、数式が行1000まである列ではlastrowは空判定にならない(空判定はフィルタ後の可視行数で行う)。
+- Pattern-Key: vba.setupreport-hikizuke-key-flip-on-product-mismatch
