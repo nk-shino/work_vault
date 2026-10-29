@@ -37,7 +37,8 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 
 ## [ERR-20261021-006] 一時作業フォルダの検証スクリプトが次セッションで消失していた
 
-- 発生コマンド/状況: `Temp\kohden-codeeport202610alidate.py`(8月版とのXML差分検証)。前セッションで作成・使用したが、同日午後の再実行時にファイルが存在しなかった(build.py は残存)。
+- 発生コマンド/状況: `Temp\kohden-code
+eport202610alidate.py`(8月版とのXML差分検証)。前セッションで作成・使用したが、同日午後の再実行時にファイルが存在しなかった(build.py は残存)。
 - 解決法: 再作成せず、PowerPoint COM でのオープン+PNGエクスポート(パース成功が妥当性の証拠)と markitdown 全文確認で代替検証。長期で使う検証スクリプトは保管庫側かワークスペースの恒久場所に置く。
 - Pattern-Key: temp.transient-script-loss-between-sessions
 
@@ -130,3 +131,22 @@ Recurrence-Count>=2・resolved・別セッション発生の3条件を満たし�
 - 発生コマンド/状況: セットアップレポート計算機原本_v2.0.xlsm(読み取り専用推奨で保存されている)のdevコピーへVBAモジュール注入+ボタン追加後、Workbooks.Open(DisplayAlerts=False)→Save()がエラー無しで完了するがファイルは無変更(警告ダイアログが抑制され既定の「読み取り専用で開く」扱いになる)。Save後のwb.SavedはTrueを返すため検出できない。IgnoreReadOnlyRecommended名前付き引数は動的ディスパッチ(DispatchEx)では効かなかった。
 - 解決法: devコピーではZIPを直接編集しxl/workbook.xmlの<fileSharing readOnlyRecommended="1"/>を除去してから開く(検証用・flag除去はdevのみ)。本番配備では、(a)元のfileSharing要素を事前取得→(b)ZIP一時除去→(c)COM編集+保存→(d)ZIPでフラグを復元、またはmakepy早期バインディング(EnsureDispatch)でIgnoreReadOnlyRecommendedを正しく渡す。Save後は必ずmd5比較でディスク反映を確認する。
 - Pattern-Key: excel.com-readonly-recommended-silent-nosave
+- 追記(2026-10-29): Workbooks.Open(名前付き引数 IgnoreReadOnlyRecommended=True)は動的ディスパッチのprobe_v17.pyでも有効だった(ro=False実測・Save後md5で永続化確認)。前項の「効かなかった」は別要因(呼び出し方や環境差)の可能性があるため、まず名前付き引数で試し、ro属性とSave後md5で実効を確認するのが早い。
+
+## [ERR-20261029-001] VBAは識別子の大小文字を区別しないためローカル変数名が既存関数名と衝突するとコンパイルエラーになる
+
+- 発生コマンド/状況: 新規モジュール内でローカル変数egKeyを宣言した行に到達すると「コンパイル エラー: 配列がありません」が出てモーダル停止(どこでStopしたか分からない・特定プロシージャ内)。VBEが保存時に変数宣言をDim EgKey As Stringへ正規化してModuleDiffで判明。既存関数EgKey(引数なしで呼べる形に見える)を配列として参照したことになる。
+- 解決法: ローカル変数名を既存のPublic/Private関数名と重複しない名前(egStamp)へ改名。モジュール全文のDiff照合(ビルド前後のLines)で宣言の正規化を確認するのが確実。
+- Pattern-Key: vba.identifier-case-insensitive-collision
+
+## [ERR-20261029-002] NumberFormatにhh:nn:ssを指定すると実行時エラー1004
+
+- 発生コマンド/状況: 取込履歴シートの列にNumberFormat = "hh:nn:ss"を設定したプロシージャ呼び出しで実行時エラー1004(表示形式が無効)。Excelの表示形式コードにnnは存在しない(Access/VBの日付書式と混同)。
+- 解決法: hh:mm:ssを使う。分はmm(前後がhやsのときのみ分と解釈される慣習に依存しないためdate型セル+hh:mm:ssが安全)。
+- Pattern-Key: excel.numberformat-nn-invalid
+
+## [ERR-20261029-003] pywin32動的ディスパッチでRange.Resize(n,m).Valueが2次元タプルでなく右下セルのスカラーを返す
+
+- 発生コマンド/状況: ws.Range("A5").Resize(1,7).Valueがstrを返し(期待は1行7列のタプル)forで回すとIndexError: string index out of range。Resize(3,7).Valueは右下セル3行目7列目の値そのもの(例 "対象なし")。動的ディスパッチ(gencache無し)の既知事象。
+- 解決法: 範囲一括読みは使わずws.Cells(i,j).Valueの実セル単位で読む。n=1のResizeは特に罠(スカラーstrが返り文字列を1文字ずつ反復する)。
+- Pattern-Key: pywin32.dynamic-dispatch-resize-returns-scalar
