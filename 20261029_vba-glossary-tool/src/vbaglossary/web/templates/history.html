@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}履歴 - VBA 学習辞書{% endblock %}
+{% block content %}
+<h1>{{ title }}の履歴</h1>
+<p class="dim mono small">{{ entity_id }}</p>
+<table class="list">
+  <thead><tr><th>日時</th><th>操作</th><th>理由</th><th>内容</th></tr></thead>
+  <tbody>
+  {% for h in rows %}
+  <tr>
+    <td class="num small">{{ h.created_at }}</td>
+    <td><span class="chip">{{ h.action }}</span></td>
+    <td>{{ h.reason or '—' }}</td>
+    <td class="mono small wrap-anywhere">{{ h.payload or '' }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4" class="dim">履歴はまだありません</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

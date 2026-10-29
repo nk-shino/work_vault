@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}VBA 学習辞書{% endblock %}</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2335566b'/%3E%3Ctext x='8' y='12' font-size='10' text-anchor='middle' fill='white' font-family='serif'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">VBA 学習辞書</a>
+  <nav class="pillnav" aria-label="メイン">
+    <a href="/" {% if nav == 'home' %}class="active"{% endif %}>ホーム</a>
+    <a href="/procedures" {% if nav == 'procedures' %}class="active"{% endif %}>プロシージャ</a>
+    <a href="/proposals" {% if nav == 'proposals' %}class="active"{% endif %}>提案{% if open_proposals %}<span class="badge" title="未処理の提案があります"></span>{% endif %}</a>
+    <a href="/review" {% if nav == 'review' %}class="active"{% endif %}>見直し</a>
+  </nav>
+  <button id="theme-toggle" class="theme-toggle" type="button" title="明 / 暗 / 自動">◐</button>
+</header>
+{% if msg %}<div class="flash ok" role="status">{{ msg }}</div>{% endif %}
+{% if err %}<div class="flash err" role="alert">{{ err }}</div>{% endif %}
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+<footer class="foot">学習用の辞書です。語義の編集と評価はすべて履歴に残ります。</footer>
+</body>
+</html>

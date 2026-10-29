@@ -1,0 +1,5 @@
+# 自動採用の設定。Phase 0 では人が全提案を確認する（コメント由来のドラフトでも自動採用しない）
+auto_adopt: false
+auto_adopt_conditions:
+  min_meaning_chars: 20
+  source: comment

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>ホーム</h1>
+<section class="cards">
+  <a class="card stat" href="/procedures">
+    <div class="num">{{ stats.procedures }}</div>
+    <div class="label">プロシージャ</div>
+  </a>
+  <a class="card stat" href="/procedures?learned=yes">
+    <div class="num">{{ stats.senses }}</div>
+    <div class="label">学習済みの語義</div>
+  </a>
+  <a class="card stat" href="/procedures?learned=no">
+    <div class="num">{{ stats.procedures - stats.senses }}</div>
+    <div class="label">未学習</div>
+  </a>
+  <a class="card stat" href="/proposals">
+    <div class="num">{{ stats.open_proposals }}</div>
+    <div class="label">未処理の提案</div>
+    {% if stats.held_proposals %}<div class="sub">保留 {{ stats.held_proposals }}</div>{% endif %}
+  </a>
+  <a class="card stat" href="/review">
+    <div class="num">{{ stats.needs_review }}</div>
+    <div class="label">見直し対象</div>
+  </a>
+</section>
+
+<section class="panel">
+  <h2>最近の提案</h2>
+  {% if recent %}
+  <table class="list">
+    <thead><tr><th>プロシージャ</th><th>状態</th><th>ドラフト</th></tr></thead>
+    <tbody>
+    {% for row in recent %}
+      <tr>
+        <td><a href="/procedures/{{ row.procedure_id }}">{{ row.procedure_name }}</a><div class="dim">{{ row.module_name }}</div></td>
+        <td>{% with state = row.state %}{% include "_proposal_state.html" %}{% endwith %}</td>
+        <td class="draft">{{ row.draft_text }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="dim">提案はまだありません。<code>python tasks.py analyze ブック</code> で解析すると提案が積まれます。</p>
+  {% endif %}
+</section>
+{% endblock %}

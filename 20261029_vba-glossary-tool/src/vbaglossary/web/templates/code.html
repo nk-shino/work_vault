@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }} のコード - VBA 学習辞書{% endblock %}
+{% block content %}
+<p class="crumbs"><a href="/procedures/{{ p.id }}">{{ p.name }}</a> / コード全文</p>
+<h1>{{ file_name }}</h1>
+<p class="dim">{{ p.book_name }} から書き出したものです（{{ p.module_name }}）。</p>
+<pre class="code full" data-vba>{{ code }}</pre>
+{% endblock %}

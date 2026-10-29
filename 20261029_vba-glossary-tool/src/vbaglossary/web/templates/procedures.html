@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}プロシージャ一覧 - VBA 学習辞書{% endblock %}
+{% block content %}
+<h1>プロシージャ</h1>
+<form class="filters" method="get" action="/procedures">
+  <input id="q" name="q" type="search" placeholder="名前・シグネチャ・モジュールで検索（/ でここに移動）" value="{{ filt.q }}">
+  <select name="kind">
+    <option value="">種別:すべて</option>
+    {% for k in ['Sub', 'Function', 'Property Get', 'Property Let', 'Property Set'] %}
+    <option value="{{ k }}" {% if filt.kind == k %}selected{% endif %}>{{ k }}</option>
+    {% endfor %}
+  </select>
+  <select name="module">
+    <option value="">モジュール:すべて</option>
+    {% for m in modules %}
+    <option value="{{ m.id }}" {% if filt.module == m.id %}selected{% endif %}>{{ m.name }}</option>
+    {% endfor %}
+  </select>
+  <select name="learned">
+    <option value="">学習:すべて</option>
+    <option value="yes" {% if filt.learned == 'yes' %}selected{% endif %}>学習済みのみ</option>
+    <option value="no" {% if filt.learned == 'no' %}selected{% endif %}>未学習のみ</option>
+  </select>
+  <button type="submit">絞り込む</button>
+  {% if filt.q or filt.kind or filt.module or filt.tag or filt.learned %}
+  <a class="btn ghost" href="/procedures">解除</a>
+  {% endif %}
+</form>
+
+{% if filt.tag %}
+<p class="dim">タグ <span class="chip">{{ filt.tag }}</span> で絞り込み中（<a href="/procedures">解除</a>）</p>
+{% endif %}
+
+<div class="tagcloud">
+  {% for tag, count in tag_counts.items() %}
+  <a class="chip link" href="/procedures?tag={{ tag }}">{{ tag }} <span class="dim">{{ count }}</span></a>
+  {% endfor %}
+</div>
+
+<p class="dim">{{ rows | length }} 件</p>
+<table class="list hover">
+  <thead><tr><th>名前</th><th>種別</th><th>モジュール</th><th>行数</th><th>タグ</th><th>語義</th></tr></thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td><a href="/procedures/{{ row.id }}">{{ row.name }}</a><div class="dim mono small">{{ row.signature }}</div></td>
+      <td><span class="chip kind">{{ row.kind }}</span></td>
+      <td>{{ row.module_name }}</td>
+      <td class="num">{{ row.line_count }}</td>
+      <td>{% for t in row.tags %}<span class="chip tag">{{ t }}</span>{% endfor %}</td>
+      <td>{% if row.sense_count %}<span class="chip yes">あり</span>{% else %}<span class="chip dim2">未学習</span>{% endif %}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6" class="dim">条件に合うプロシージャがありません</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

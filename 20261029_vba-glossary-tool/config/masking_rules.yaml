@@ -1,0 +1,10 @@
+# 保存前に検査する禁止情報の正規表現。1件でも残っていれば、そのプロシージャの提案は保留になり全文を保持しない
+rules:
+  - name: password_assign
+    pattern: '(?i)\b(password|passwd|pwd)\s*(?:=|:=)\s*"?[^"\r\n]{3,}'
+  - name: secret_token
+    pattern: '(?i)\b(api[_-]?key|access[_-]?token|secret[_-]?key|client[_-]?secret)\s*(?:=|:=)\s*"?[A-Za-z0-9_\-./]{8,}'
+  - name: odbc_pwd
+    pattern: '(?i)\bpwd\s*=\s*[^;"\r\n]{3,}'
+  - name: private_key_block
+    pattern: '-----BEGIN [A-Z ]*PRIVATE KEY-----'

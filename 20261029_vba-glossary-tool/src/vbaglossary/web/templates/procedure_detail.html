@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }} - VBA 学習辞書{% endblock %}
+{% block content %}
+<p class="crumbs"><a href="/procedures">プロシージャ</a> / {{ p.book_name }} / {{ p.module_name }}</p>
+
+<div class="title-row">
+  <h1>{{ p.name }}</h1>
+  <span class="chip kind">{{ p.kind }}</span>
+  {% if p.access == 'Private' %}<span class="chip tag">Private</span>{% endif %}
+  {% for t in p.tags %}<span class="chip tag">{{ t }}</span>{% endfor %}
+</div>
+
+{% if p.same_name %}
+<div class="notice warn">
+  <strong>混同注意</strong>：同じ名前のプロシージャが他にもあります。
+  {% for s in p.same_name %}<a href="/procedures/{{ s.id }}">{{ s.id }}</a> {% endfor %}
+  どちらのものか確認してから使ってください。
+</div>
+{% endif %}
+
+<div class="panel">
+  <div class="panel-head">
+    <h2>定義</h2>
+    {% if code_path %}<a class="btn ghost" href="/procedures/{{ p.id }}/code">コード全文を開く</a>{% endif %}
+  </div>
+  <pre class="code sig" data-vba>{{ p.signature }}</pre>
+  <table class="kv">
+    <tr><th>引数</th><td>
+      {% if p.params %}
+      <table class="params">
+        <thead><tr><th>名前</th><th>型</th><th>渡し方</th><th>省略可</th><th>初期値</th></tr></thead>
+        <tbody>
+        {% for a in p.params %}
+        <tr><td class="mono">{{ a.name }}</td><td>{{ a.type or '—' }}</td><td>{{ a.modifier or '（既定）' }}</td><td>{{ '○' if a.optional else '—' }}</td><td class="mono">{{ a.default or '—' }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% else %}なし{% endif %}
+    </td></tr>
+    <tr><th>戻り値</th><td class="mono">{{ p.returns or '—' }}</td></tr>
+    <tr><th>位置</th><td>{{ p.module_name }} の {{ p.start_line }}〜{{ p.end_line }} 行目（{{ p.line_count }} 行）</td></tr>
+    <tr><th>呼び出している</th><td>
+      {% for c in calls %}{% if c.id %}<a class="chip link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}<span class="chip">{{ c.name }}</span>{% endif %}{% else %}—{% endfor %}
+    </td></tr>
+    <tr><th>呼び出されている</th><td>
+      {% for c in called_by %}<a class="chip link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}—{% endfor %}
+    </td></tr>
+  </table>
+</div>
+
+<section class="senses">
+  <h2>語義（{{ p.senses | length }}）</h2>
+  {% if not p.senses %}<p class="dim">まだ語義がありません。下の提案を受理するか、後で書きます。</p>{% endif %}
+  {% for s in p.senses %}
+  <article class="sense-card">
+    <div class="sense-head">
+      <span class="version">第 {{ s.version }} 版</span>
+      <span class="chip src">{{ 'コメント由来' if s.source == 'comment' else '手入力' }}</span>
+      {% if s.last_change_reason %}<span class="dim small">理由: {{ s.last_change_reason }}</span>{% endif %}
+      <a class="small" href="/history/senses/{{ s.id }}">履歴</a>
+    </div>
+    <p class="sense-text">{{ s.text }}</p>
+    {% for e in s.evidences %}
+    <pre class="code ev" data-vba>{{ e.excerpt }}</pre>
+    <div class="dim small">出典 {{ e.source_key }}{% if e.masked %}（解析由来・マスキング済み）{% endif %}</div>
+    {% endfor %}
+
+    <details class="edit">
+      <summary>編集する</summary>
+      <form method="post" action="/senses/{{ s.id }}/edit" class="stack">
+        <input type="hidden" name="expected_revision" value="{{ s.version }}">
+        <label>語義<textarea name="text" rows="3" required>{{ s.text }}</textarea></label>
+        <label>理由（必須・履歴に残ります）<input name="reason" required placeholder="例: 戻り値の説明を修正"></label>
+        <button type="submit">保存する</button>
+      </form>
+    </details>
+
+    <details class="eval">
+      <summary>評価する</summary>
+      <form method="post" action="/senses/{{ s.id }}/evaluate" class="stack">
+        <input type="hidden" name="seen_version" value="{{ s.version }}">
+        <label>正確さ
+          <select name="accuracy">
+            <option value="correct">正しい</option>
+            <option value="needs_fix">修正が必要</option>
+            <option value="unsure">わからない</option>
+          </select>
+        </label>
+        <label>役に立ったか
+          <select name="usefulness">
+            <option value="useful">役に立つ</option>
+            <option value="not_useful">役に立たない</option>
+          </select>
+        </label>
+        <label>コメント<input name="reason" placeholder="任意"></label>
+        <button type="submit">評価を記録</button>
+      </form>
+    </details>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="proposals">
+  <h2>待ち受け中の提案（{{ p.open_proposals | length }}）</h2>
+  {% for pr in p.open_proposals %}
+  <article class="proposal-card">
+    <div class="sense-head">
+      {% with state = pr.state %}{% include "_proposal_state.html" %}{% endwith %}
+      <span class="chip src">{{ 'コメント由来' if pr.draft_source == 'comment' else '自動ドラフト' }}</span>
+      {% if pr.reason %}<span class="dim small">{{ pr.reason }}</span>{% endif %}
+    </div>
+    <form method="post" action="/proposals/{{ pr.id }}/accept" class="stack">
+      <label>語義（直してから受理してもよい）<textarea name="text" rows="3">{{ pr.draft_text }}</textarea></label>
+      <label>受理の理由<input name="reason" value="提案どおり受理"></label>
+      <div class="row">
+        <button type="submit">受理して語義にする</button>
+      </div>
+    </form>
+    <pre class="code ev" data-vba>{{ pr.excerpt }}</pre>
+    <details class="reject">
+      <summary>見送る</summary>
+      <form method="post" action="/proposals/{{ pr.id }}/reject" class="stack">
+        <label>見送る理由（必須）<input name="reason" required placeholder="例: 既に別の語義がある"></label>
+        <button type="submit" class="danger">見送る</button>
+      </form>
+    </details>
+  </article>
+  {% else %}
+  <p class="dim">待ち受け中の提案はありません。</p>
+  {% endfor %}
+</section>
+
+<section class="panel">
+  <h2>更新履歴</h2>
+  {% if histories %}
+  <table class="list">
+    <thead><tr><th>日時</th><th>操作</th><th>理由</th><th>内容</th></tr></thead>
+    <tbody>
+    {% for h in histories %}
+    <tr><td class="num small">{{ h.created_at }}</td><td><span class="chip">{{ h.action }}</span></td><td>{{ h.reason or '—' }}</td><td class="mono small">{{ h.payload or '' }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="dim">履歴はまだありません。</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}提案キュー - VBA 学習辞書{% endblock %}
+{% block content %}
+<h1>提案キュー</h1>
+<nav class="pillnav sub">
+  <a href="/proposals" {% if not state %}class="active"{% endif %}>未処理</a>
+  <a href="/proposals?state=new" {% if state == 'new' %}class="active"{% endif %}>新規</a>
+  <a href="/proposals?state=update" {% if state == 'update' %}class="active"{% endif %}>更新</a>
+  <a href="/proposals?state=hold" {% if state == 'hold' %}class="active"{% endif %}>保留</a>
+</nav>
+<p class="dim">{{ rows | length }} 件。受理すると語義になり、履歴に残ります。</p>
+
+{% for row in rows %}
+<article class="proposal-card">
+  <div class="sense-head">
+    <a href="/procedures/{{ row.procedure_id }}"><strong>{{ row.procedure_name }}</strong></a>
+    <span class="dim">{{ row.module_name }}</span>
+    {% with state = row.state %}{% include "_proposal_state.html" %}{% endwith %}
+    <span class="chip src">{{ 'コメント由来' if row.draft_source == 'comment' else '自動ドラフト' }}</span>
+  </div>
+  <pre class="code sig" data-vba>{{ row.signature }}</pre>
+  <form method="post" action="/proposals/{{ row.id }}/accept" class="stack">
+    <label>語義（直してから受理してもよい）<textarea name="text" rows="2">{{ row.draft_text }}</textarea></label>
+    <label>受理の理由<input name="reason" value="提案どおり受理"></label>
+    <button type="submit">受理して語義にする</button>
+  </form>
+  <pre class="code ev" data-vba>{{ row.excerpt }}</pre>
+  <details class="reject">
+    <summary>見送る</summary>
+    <form method="post" action="/proposals/{{ row.id }}/reject" class="stack">
+      <label>見送る理由（必須）<input name="reason" required></label>
+      <button type="submit" class="danger">見送る</button>
+    </form>
+  </details>
+</article>
+{% else %}
+<p class="dim">提案はありません。</p>
+{% endfor %}
+{% endblock %}

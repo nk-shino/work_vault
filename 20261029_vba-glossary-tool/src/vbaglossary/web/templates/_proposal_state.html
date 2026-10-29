@@ -1,0 +1,4 @@
+{% if state == 'hold' %}<span class="chip hold">保留</span>
+{% elif state == 'update' %}<span class="chip update">更新</span>
+{% elif state == 'new' %}<span class="chip new">新規</span>
+{% else %}<span class="chip">{{ state }}</span>{% endif %}
