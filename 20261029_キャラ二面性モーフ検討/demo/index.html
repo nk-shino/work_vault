@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>二面性の間 — モーフ試作（静かな資料館）</title>
+<meta name="description" content="人物題箋の二面性を条件で切り替える試作。濃色モード・hover をトリガーに、ぼけとグリッチの遷移で相が入れ替わる。外部リクエストなし。">
+<style>
+/* ============================================================
+   二面性の間 — 試作デモ（単体・外部リクエストなし）
+   improve/css/style.css のトークンを写して拡張している。
+   実装の際は improve 側の変数を直接参照すればよい。
+   ============================================================ */
+
+/* ---- 1. トークン（style.css と同一の値）＋モーフ用の追加 ---- */
+:root {
+  --bg: #f6f1ea;
+  --bg-raise: #fdfaf5;
+  --bg-sink: #ece4d8;
+  --text: #2b2320;
+  --text-sub: #6f625a;
+  --accent: #7c1d24;
+  --foil: #9a7b2d;
+  --blue: #27415e;
+  --blood: #7c1d24;
+  --rule: rgba(43, 35, 32, 0.16);
+  --rule-strong: rgba(43, 35, 32, 0.34);
+  --rule-solid: rgba(124, 29, 36, 0.55);
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --dur-base: 240ms;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --grain: rgba(43, 35, 32, 0.03);
+  /* 本提案で新設するモーフ用トークン */
+  --morph-dur: 640ms;
+  --morph-ease: cubic-bezier(0.4, 0.1, 0.2, 1);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #191410;
+    --bg-raise: #221b15;
+    --bg-sink: #120e0b;
+    --text: #e8ddcd;
+    --text-sub: #a8937a;
+    --accent: #c9a13b;
+    --foil: #c9a13b;
+    --blue: #7d99b8;
+    --blood: #a33b41;
+    --rule: rgba(232, 221, 205, 0.14);
+    --rule-strong: rgba(232, 221, 205, 0.3);
+    --rule-solid: rgba(201, 161, 59, 0.5);
+    --grain: rgba(232, 221, 205, 0.03);
+  }
+}
+
+/* 手動固定（灯＝ライト / 煤＝ダーク）。OS 設定より優先する */
+html[data-theme="light"] {
+  --bg: #f6f1ea; --bg-raise: #fdfaf5; --bg-sink: #ece4d8;
+  --text: #2b2320; --text-sub: #6f625a;
+  --accent: #7c1d24; --foil: #9a7b2d; --blue: #27415e; --blood: #7c1d24;
+  --rule: rgba(43, 35, 32, 0.16);
+  --rule-strong: rgba(43, 35, 32, 0.34);
+  --rule-solid: rgba(124, 29, 36, 0.55);
+  --grain: rgba(43, 35, 32, 0.03);
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --bg: #191410; --bg-raise: #221b15; --bg-sink: #120e0b;
+  --text: #e8ddcd; --text-sub: #a8937a;
+  --accent: #c9a13b; --foil: #c9a13b; --blue: #7d99b8; --blood: #a33b41;
+  --rule: rgba(232, 221, 205, 0.14);
+  --rule-strong: rgba(232, 221, 205, 0.3);
+  --rule-solid: rgba(201, 161, 59, 0.5);
+  --grain: rgba(232, 221, 205, 0.03);
+  color-scheme: dark;
+}
+
+/* ---- 2. 土台 ---- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    repeating-linear-gradient(0deg, var(--grain) 0 1px, transparent 1px 3px),
+    var(--bg);
+  color: var(--text);
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  line-height: 1.85;
+}
+
+a { color: var(--blue); }
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) calc(var(--space-4) * 2);
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--space-1);
+}
+
+h1 + .lead {
+  color: var(--text-sub);
+  font-size: 13px;
+  max-width: 44em;
+  margin: 0 0 var(--space-3);
+}
+
+section { margin-top: var(--space-4); }
+
+h2 {
+  font-size: 15px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  border-left: 1px solid var(--rule-solid);
+  padding-left: var(--space-2);
+  margin: 0 0 var(--space-1);
+}
+
+.axis {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  margin: 0 0 var(--space-1);
+  padding-left: calc(var(--space-2) + 1px);
+}
+
+.note {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin: 0 0 var(--space-3);
+  padding-left: calc(var(--space-2) + 1px);
+  max-width: 46em;
+}
+
+.foot {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-3) var(--space-4);
+  color: var(--text-sub);
+  font-size: 11px;
+}
+
+.noscript-note {
+  margin: var(--space-2) var(--space-3) 0;
+  padding: 12px 16px;
+  border: 1px solid var(--rule);
+  color: var(--text-sub);
+  background: var(--bg-raise);
+  font-size: 12px;
+}
+
+/* ---- 3. 見開き票（二面プレート）の共通 ---- */
+.row {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+
+.tile { margin: 0; }
+
+.plate {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--rule);
+  outline: 1px solid var(--rule);
+  outline-offset: 3px;
+  background:
+    repeating-linear-gradient(45deg, var(--grain) 0 1px, transparent 1px 7px),
+    var(--bg-sink);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition:
+    opacity var(--morph-dur) var(--morph-ease),
+    filter var(--morph-dur) var(--morph-ease);
+  transition-delay: 0ms;
+}
+
+.face svg { width: 72%; height: 72%; }
+
+.face-omote { color: var(--text-sub); opacity: 1; filter: blur(0); z-index: 1; }
+.face-ura   { color: var(--accent);  opacity: 0; filter: blur(6px); z-index: 2; }
+
+/* 館の札: 相の名も同じ呼吸で入れ替える */
+.cap {
+  position: relative;
+  min-height: 3.2em;
+  margin: 12px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-sub);
+  text-align: center;
+}
+.cap span {
+  display: block;
+  transition: opacity var(--morph-dur) var(--morph-ease);
+}
+.cap .cap-b { position: absolute; inset: 0; opacity: 0; }
+
+/* ---- 4. 案1 静溶け: 濃色で2枚がぼけながら入れ替わる ---- */
+/* 煤へ入る側は僅かな段差（--i 枚目ごとに 110ms）を付け、灯へ戻る側はすぐ戻す */
+html[data-theme="dark"] .d-dark .face-omote {
+  opacity: 0; filter: blur(4px);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+html[data-theme="dark"] .d-dark .face-ura {
+  opacity: 1; filter: blur(0);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .d-dark .face-omote {
+    opacity: 0; filter: blur(4px);
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+  html:not([data-theme="light"]) .d-dark .face-ura {
+    opacity: 1; filter: blur(0);
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+}
+
+/* hover 軸（触れると煤の相）。キーボードの focus でも開く */
+@media (hover: hover) {
+  .d-hover:hover .face-omote, .d-hover:focus-within .face-omote { opacity: 0; filter: blur(4px); }
+  .d-hover:hover .face-ura,   .d-hover:focus-within .face-ura   { opacity: 1; filter: blur(0); }
+}
+
+/* 札の文字も同じ呼吸で */
+html[data-theme="dark"] .d-dark .cap-a,
+html[data-theme="dark"] .d-dark .cap-b { transition-delay: calc(var(--i, 0) * 110ms); }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .d-dark .cap-a,
+  html:not([data-theme="light"]) .d-dark .cap-b { transition-delay: calc(var(--i, 0) * 110ms); }
+}
+html[data-theme="dark"] .d-dark .cap-a { opacity: 0; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .d-dark .cap-a { opacity: 0; }
+}
+html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .d-dark .cap-b { opacity: 1; }
+}
+@media (hover: hover) {
+  .d-hover:hover .cap-a, .d-hover:focus-within .cap-a { opacity: 0; }
+  .d-hover:hover .cap-b, .d-hover:focus-within .cap-b { opacity: 1; }
+}
+
+/* ---- 5. 案2 罫走: マスクが走って煤の相を現す（ぼけ縁つき） ---- */
+.d-wipe .face-ura {
+  opacity: 1; filter: blur(3px);
+  -webkit-mask-image: linear-gradient(100deg, #000 0 40%, transparent 50% 100%);
+          mask-image: linear-gradient(100deg, #000 0 40%, transparent 50% 100%);
+  -webkit-mask-size: 260% 100%;
+          mask-size: 260% 100%;
+  -webkit-mask-position: 100% 0;
+          mask-position: 100% 0;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  transition:
+    -webkit-mask-position var(--morph-dur) var(--morph-ease),
+            mask-position var(--morph-dur) var(--morph-ease),
+    filter var(--morph-dur) var(--morph-ease);
+}
+@media (hover: hover) {
+  .d-wipe:hover .face-ura, .d-wipe:focus-within .face-ura {
+    -webkit-mask-position: 0 0;
+            mask-position: 0 0;
+    filter: blur(0);
+  }
+  .d-wipe:hover .face-omote, .d-wipe:focus-within .face-omote { opacity: 0.9; filter: blur(2px); }
+}
+/* マスク位置の遷移が使えない環境は案1と同じ交差に落ちる */
+@supports not ((-webkit-mask-position: 0 0) or (mask-position: 0 0)) {
+  .d-wipe .face-ura {
+    -webkit-mask: none; mask: none;
+    opacity: 0; filter: blur(6px);
+    transition: opacity var(--morph-dur) var(--morph-ease), filter var(--morph-dur) var(--morph-ease);
+  }
+  @media (hover: hover) {
+    .d-wipe:hover .face-ura, .d-wipe:focus-within .face-ura { opacity: 1; filter: blur(0); }
+  }
+}
+
+/* ---- 6. 案3 燈の走り: 切替の瞬間だけ走るスライス（ canvas を使わない） ---- */
+.grit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+.grit svg { width: 72%; height: 72%; }
+
+@keyframes grit-a {
+  0%   { opacity: 0.9; clip-path: inset(8% 0 78% 0);  transform: translateX(-3px); filter: hue-rotate(35deg) saturate(1.6); }
+  20%  { opacity: 0.9; clip-path: inset(42% 0 40% 0); transform: translateX(2px);  filter: hue-rotate(-50deg); }
+  40%  { opacity: 0;   clip-path: inset(0 0 100% 0);  transform: none; filter: none; }
+  60%  { opacity: 0.9; clip-path: inset(64% 0 18% 0); transform: translateX(-2px); filter: saturate(2) hue-rotate(20deg); }
+  80%  { opacity: 0.7; clip-path: inset(24% 0 64% 0); transform: translateX(3px);  filter: none; }
+  100% { opacity: 0;   clip-path: inset(0 0 100% 0);  transform: none; }
+}
+@keyframes grit-b {
+  0%   { opacity: 0.85; clip-path: inset(58% 0 26% 0); transform: translateX(3px);  filter: hue-rotate(-40deg) saturate(1.8); }
+  25%  { opacity: 0.85; clip-path: inset(14% 0 66% 0); transform: translateX(-2px); filter: hue-rotate(60deg); }
+  45%  { opacity: 0;    clip-path: inset(0 0 100% 0);  transform: none; }
+  70%  { opacity: 0.8;  clip-path: inset(36% 0 46% 0); transform: translateX(2px);  filter: saturate(2.2); }
+  100% { opacity: 0;    clip-path: inset(0 0 100% 0);  transform: none; }
+}
+@keyframes grit-jolt {
+  0%, 100% { transform: translateX(0); }
+  25%  { transform: translateX(1.5px); }
+  50%  { transform: translateX(-1.5px); }
+  75%  { transform: translateX(0.5px); }
+}
+
+/* hover 軸: 指が触れた瞬間に一度だけ走る（外すと初期化され、次に触れると再び走る） */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .g-hover:hover .plate { animation: grit-jolt 460ms steps(2, jump-none) both; }
+  .g-hover:hover .grit.g1 { animation: grit-a 460ms steps(1, end) both; }
+  .g-hover:hover .grit.g2 { animation: grit-b 460ms steps(1, end) 60ms both; }
+}
+/* 濃色軸: JS が切替のたびに .theme-flipped を 1 秒だけ html に付ける */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-flipped .g-dark .plate { animation: grit-jolt 460ms steps(2, jump-none) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  .theme-flipped .g-dark .grit.g1 { animation: grit-a 460ms steps(1, end) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  .theme-flipped .g-dark .grit.g2 { animation: grit-b 460ms steps(1, end) both; animation-delay: calc(var(--i, 0) * 90ms + 60ms); }
+}
+
+/* ---- 7. 開閉器（自動 / 灯 / 煤） ---- */
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button {
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-sub);
+  background: none;
+  border: 1px solid var(--rule);
+  min-height: 44px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+.seg button[aria-pressed="true"] { color: var(--accent); border-color: var(--rule-solid); }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---- 8. 冒頭の静かな出現（縮小設定では停止） ---- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.tile { animation: rise 600ms var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+
+/* ---- 9. 縮小動作: 走らず、ぼけず、即時に切り替わる ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .face-omote, .face-ura, .cap span, .grit { filter: none !important; }
+  .grit { display: none !important; }
+  .tile { animation: none !important; opacity: 1 !important; }
+}
+
+/* ---- 10. 狭い折返し（390px） ---- */
+@media (max-width: 768px) {
+  main { padding: var(--space-3) var(--space-2) var(--space-4); }
+  .row { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-2); }
+}
+</style>
+</head>
+<body>
+
+<noscript><p class="noscript-note">手動の灯／煤の固定には JavaScript を使う。無効のときは OS の設定（自動）に従い、開閉器だけが動かない。</p></noscript>
+
+<!-- 二面の肖像: 全 portrait を symbol で一度だけ定義して <use> で参照する（要求はゼロ） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- 燭守 セラフ -->
+    <symbol id="p-ser-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="30" r="13" stroke-dasharray="1.5 5" opacity=".7"/>
+        <path d="M60 20 C55.5 27 55.5 33 60 35 C64.5 33 64.5 27 60 20 Z" fill="currentColor" stroke="none"/>
+        <line x1="60" y1="40" x2="60" y2="48"/>
+        <path d="M49 54 h22 l-2.5 48 h-17 Z"/>
+        <line x1="43" y1="102" x2="77" y2="102"/>
+        <line x1="47" y1="110" x2="73" y2="110"/>
+        <path d="M40 126 q20 -7 40 0" opacity=".8"/>
+      </g>
+    </symbol>
+    <symbol id="p-ser-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M47 32 a13 13 0 0 1 8 -11" stroke-dasharray="1.5 5" opacity=".7"/>
+        <path d="M75 26 a13 13 0 0 1 -6 12" stroke-dasharray="1.5 5" opacity=".5"/>
+        <path d="M60 44 C55 37 65 31 60 24 C57 19 63 15 60 9" opacity=".85"/>
+        <line x1="60" y1="44" x2="60" y2="48"/>
+        <path d="M49 54 h22 l-2.5 48 h-17 Z"/>
+        <line x1="43" y1="102" x2="77" y2="102"/>
+        <line x1="47" y1="110" x2="73" y2="110"/>
+        <path d="M40 126 q20 -7 40 0" opacity=".8"/>
+        <circle cx="50" cy="86" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="70" cy="74" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="56" cy="66" r=".8" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- 灯番 リュミエ -->
+    <symbol id="p-ryu-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 106 C37.5 110 37.5 114 40 115.5 C42.5 114 42.5 110 40 106 Z" fill="currentColor" stroke="none"/>
+        <path d="M60 98 C57 103 57 108 60 109.8 C63 108 63 103 60 98 Z" fill="currentColor" stroke="none"/>
+        <path d="M80 108 C78 111.5 78 114.5 80 116 C82 114.5 82 111.5 80 108 Z" fill="currentColor" stroke="none"/>
+        <path d="M36 118 v-10 h8 v10"/>
+        <path d="M56 118 v-14 h8 v14"/>
+        <path d="M76 118 v-8 h8 v8"/>
+        <line x1="28" y1="118" x2="92" y2="118"/>
+        <line x1="34" y1="128" x2="86" y2="128" opacity=".8"/>
+        <circle cx="60" cy="78" r="9" stroke-dasharray="1.5 5" opacity=".6"/>
+      </g>
+    </symbol>
+    <symbol id="p-ryu-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 106 C37.5 110 37.5 114 40 115.5 C42.5 114 42.5 110 40 106 Z" fill="currentColor" stroke="none"/>
+        <path d="M80 108 C78 111.5 78 114.5 80 116 C82 114.5 82 111.5 80 108 Z" fill="currentColor" stroke="none"/>
+        <path d="M60 116 q-3 -8 0 -14 q3 -5 0 -9" opacity=".7"/>
+        <line x1="56" y1="112" x2="64" y2="104" opacity=".5"/>
+        <path d="M56 118 v-14 h8 v14"/>
+        <path d="M36 118 v-10 h8 v10"/>
+        <path d="M76 118 v-8 h8 v8"/>
+        <line x1="28" y1="118" x2="92" y2="118"/>
+        <line x1="34" y1="128" x2="86" y2="128" opacity=".8"/>
+        <circle cx="62" cy="80" r="1" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- 写本屋 ヴェル -->
+    <symbol id="p-ver-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="60" cy="72" rx="24" ry="32"/>
+        <line x1="36.5" y1="60" x2="83.5" y2="52"/>
+        <rect x="47" y="51" width="21" height="17" transform="rotate(-6 57.5 59.5)" fill="currentColor" stroke="none" opacity=".92"/>
+        <path d="M70 74 q4 3.5 8 1"/>
+        <path d="M53 98 q7 2.5 13 0"/>
+        <circle cx="43" cy="102" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="47" cy="105" r=".8" fill="currentColor" stroke="none"/>
+        <path d="M42 122 h36" opacity=".7"/>
+      </g>
+    </symbol>
+    <symbol id="p-ver-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="60" cy="72" rx="24" ry="32"/>
+        <line x1="36.5" y1="48" x2="83.5" y2="40"/>
+        <rect x="72" y="42" width="14" height="11" transform="rotate(-6 79 47.5)" fill="currentColor" stroke="none" opacity=".92"/>
+        <circle cx="70" cy="72" r="5.5"/>
+        <circle cx="70" cy="72" r="2.2" fill="var(--foil)" stroke="none"/>
+        <path d="M50 74 q3.5 3 7 .5"/>
+        <path d="M53 98 q7 2.5 13 0"/>
+        <path d="M42 122 h36" opacity=".7"/>
+      </g>
+    </symbol>
+    <!-- 異端吏 オクタヴィア -->
+    <symbol id="p-okt-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M42 44 h36 v44 q0 24 -18 28 q-18 -4 -18 -28 Z"/>
+        <line x1="60" y1="50" x2="60" y2="88"/>
+        <circle cx="47" cy="50" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="73" cy="50" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="47" cy="86" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="73" cy="86" r="1" fill="currentColor" stroke="none"/>
+        <path d="M52 124 q8 4 16 0"/>
+        <path d="M42 134 h36" opacity=".7"/>
+      </g>
+    </symbol>
+    <symbol id="p-okt-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M42 44 h36 v22 q-18 9 -36 0 Z"/>
+        <line x1="60" y1="48" x2="60" y2="62"/>
+        <circle cx="47" cy="49" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="73" cy="49" r="1" fill="currentColor" stroke="none"/>
+        <path d="M50 80 q4 3 8 0"/>
+        <path d="M62 80 q4 3 8 0"/>
+        <path d="M52 98 q8 6 16 0"/>
+        <path d="M84 94 l8 -2" opacity=".6"/>
+        <path d="M84 100 l8 0" opacity=".4"/>
+        <path d="M42 134 h36" opacity=".7"/>
+      </g>
+    </symbol>
+    <!-- 調律師 カノン -->
+    <symbol id="p-kan-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M48 30 v34 a12 12 0 0 0 24 0 V30"/>
+        <line x1="60" y1="76" x2="60" y2="118"/>
+        <circle cx="60" cy="124" r="4"/>
+        <path d="M82 38 a26 26 0 0 1 0 28" stroke-dasharray="2 5" opacity=".65"/>
+        <path d="M38 38 a26 26 0 0 0 0 28" stroke-dasharray="2 5" opacity=".65"/>
+        <line x1="40" y1="138" x2="80" y2="138" opacity=".8"/>
+      </g>
+    </symbol>
+    <symbol id="p-kan-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M48 30 v34 a12 12 0 0 0 24 0 V30"/>
+        <line x1="50" y1="44" x2="46" y2="52" opacity=".9"/>
+        <line x1="47" y1="60" x2="50" y2="66" opacity=".5"/>
+        <line x1="60" y1="76" x2="60" y2="118"/>
+        <circle cx="60" cy="124" r="4"/>
+        <polyline points="80,36 90,44 80,52 90,60" opacity=".7"/>
+        <polyline points="40,40 30,46 40,54" opacity=".45"/>
+        <line x1="40" y1="138" x2="80" y2="138" opacity=".8"/>
+      </g>
+    </symbol>
+    <!-- 囁き ノクス -->
+    <symbol id="p-noks-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60 30 Q34 40 36 74 Q38 104 60 128 Q82 104 84 74 Q86 40 60 30 Z"/>
+        <ellipse cx="60" cy="72" rx="15" ry="19" opacity=".55"/>
+        <path d="M51 70 q4 3 8 0"/>
+        <path d="M63 70 q4 3 8 0"/>
+        <path d="M46 118 q14 8 28 0" opacity=".7"/>
+      </g>
+    </symbol>
+    <symbol id="p-noks-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60 30 Q34 40 36 74 Q38 104 60 128 Q82 104 84 74 Q86 40 60 30 Z"/>
+        <ellipse cx="60" cy="72" rx="15" ry="19" opacity=".55"/>
+        <circle cx="60" cy="70" r="5"/>
+        <circle cx="60" cy="70" r="1.8" fill="currentColor" stroke="none"/>
+        <circle cx="49" cy="62" r="2.4"/>
+        <circle cx="70" cy="60" r="2.4"/>
+        <circle cx="53" cy="80" r="2.2"/>
+        <circle cx="68" cy="82" r="2.2"/>
+        <circle cx="60" cy="55" r="2"/>
+        <path d="M46 118 q14 8 28 0" opacity=".7"/>
+      </g>
+    </symbol>
+    <!-- 祝祭主 アレルイ -->
+    <symbol id="p-are-omote" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M46 138 Q40 80 60 60 Q80 80 74 138 Z"/>
+        <path d="M52 70 q8 -13 16 0 q-8 6 -16 0 Z"/>
+        <path d="M55 63 q3 2.4 6 0"/>
+        <path d="M62 63 q3 2.4 6 0"/>
+        <circle cx="52" cy="94" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="61" cy="90" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="69" cy="97" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="55" cy="108" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="66" cy="112" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="50" cy="122" r="1.2" fill="currentColor" stroke="none"/>
+        <circle cx="63" cy="124" r="1.2" fill="currentColor" stroke="none"/>
+        <path d="M46 96 q-8 12 -5 24" opacity=".6"/>
+        <path d="M74 96 q8 12 5 24" opacity=".6"/>
+      </g>
+    </symbol>
+    <symbol id="p-are-ura" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M46 138 Q40 80 60 60 Q80 80 74 138 Z"/>
+        <path d="M52 70 q8 -13 16 0 q-8 6 -16 0 Z"/>
+        <circle cx="56" cy="63" r="1.6" fill="currentColor" stroke="none"/>
+        <circle cx="64" cy="63" r="1.6" fill="currentColor" stroke="none"/>
+        <path d="M53 92 h6 M56 89 v6" opacity=".9"/>
+        <path d="M64 100 h6 M67 97 v6" opacity=".7"/>
+        <path d="M51 116 h6 M54 113 v6" opacity=".8"/>
+        <path d="M63 122 h5 M65.5 119.5 v5" opacity=".5"/>
+        <path d="M46 96 q-8 12 -5 24" opacity=".6"/>
+        <path d="M74 96 q8 12 5 24" opacity=".6"/>
+        <path d="M50 138 h9 M65 138 h7" opacity=".8"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="masthead">
+  <p class="site">
+    <svg class="mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+      <rect x="3" y="3" width="8" height="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <rect x="13" y="3" width="8" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 3"/>
+      <circle cx="7" cy="9" r="1.5" fill="currentColor"/>
+      <circle cx="17" cy="15" r="1.5" fill="currentColor"/>
+    </svg>
+    <span>回廊の記録<small>二面性の間・試作 — 提案パターン目録の添付</small></span>
+  </p>
+  <div class="seg" role="group" aria-label="表示の相（テーマ）">
+    <button type="button" data-mode="auto" aria-pressed="true">自動</button>
+    <button type="button" data-mode="light" aria-pressed="false">灯（ライト）</button>
+    <button type="button" data-mode="dark" aria-pressed="false">煤（ダーク）</button>
+  </div>
+</header>
+
+<main>
+  <h1>二面性の間 — 条件で相が変わる題箋</h1>
+  <p class="lead">人物ごとに二つの相（面）を持ち、条件が揃ったときだけもう一つの相を見せる仕組みの試作。
+    切替には必ずぼけか走りが入り、周囲の紙面は動かない。ここでは採用候補の上位3案を並べている。</p>
+
+  <section aria-label="試し方">
+    <p class="note">開閉器の「自動」は OS の濃色設定に従う。「灯」「煤」はこの頁だけ固定する。
+      「触れると」の題箋は、ポインタのある環境でのみ反応する（タッチ環境では濃色軸の題箋で確認する）。</p>
+  </section>
+
+  <!-- ============ 案1 ============ -->
+  <section aria-labelledby="s1">
+    <h2 id="s1">案1｜静溶け（しずみ）</h2>
+    <p class="axis">トリガー: 濃色（手動・OS 自動）・hover／技法: 二層交差＋ぼけ</p>
+    <p class="note">灯の相がぼけて沈み、煤の相が浮かぶ。濃色へ入るとき 2 枚に僅かな段差を付け、
+      灯へ戻るときは段差なしですぐ戻す。もっとも静かで、一覧の並びにも馴染む。</p>
+    <ul class="row">
+      <li class="tile d-dark" style="--i:0" data-trigger="dark" data-morph="settle">
+        <div class="plate dual" role="img" aria-label="燭守 セラフの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ser-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ser-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">燭守 セラフ — 灯の相</span><span class="cap-b">燭守 セラフ — 煤の相</span></p>
+      </li>
+      <li class="tile d-dark" style="--i:1" data-trigger="dark" data-morph="settle">
+        <div class="plate dual" role="img" aria-label="灯番 リュミエの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ryu-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ryu-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">灯番 リュミエ — 灯の相</span><span class="cap-b">灯番 リュミエ — 煤の相</span></p>
+      </li>
+      <li class="tile d-hover" data-trigger="hover" data-morph="settle">
+        <div class="plate dual" role="img" aria-label="写本屋 ヴェルの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ver-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ver-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">写本屋 ヴェル — 灯の相（触れると）</span><span class="cap-b">写本屋 ヴェル — 煤の相</span></p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ 案2 ============ -->
+  <section aria-labelledby="s2">
+    <h2 id="s2">案2｜罫走（けいそう）</h2>
+    <p class="axis">トリガー: hover（ポインタ環境）／技法: マスク走査＋ぼけ縁</p>
+    <p class="note">煤の相が一枚の罫のように走って現れる。縁はぼけており、渡り終えると静止する。
+      触れる行為と相の移ろいが直接対応するので、仮面や眼帯を外す字に向く。</p>
+    <ul class="row">
+      <li class="tile d-hover d-wipe" style="--i:0" data-trigger="hover" data-morph="wipe">
+        <div class="plate dual" role="img" aria-label="異端吏 オクタヴィアの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-okt-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-okt-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">異端吏 オクタヴィア — 灯の相（触れると）</span><span class="cap-b">異端吏 オクタヴィア — 煤の相</span></p>
+      </li>
+      <li class="tile d-hover d-wipe" style="--i:1" data-trigger="hover" data-morph="wipe">
+        <div class="plate dual" role="img" aria-label="調律師 カノンの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-kan-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-kan-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">調律師 カノン — 灯の相（触れると）</span><span class="cap-b">調律師 カノン — 煤の相</span></p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ 案3 ============ -->
+  <section aria-labelledby="s3">
+    <h2 id="s3">案3｜燈の走り（ひのはしり）</h2>
+    <p class="axis">トリガー: 濃色の切替瞬間・hover の入瞬間／技法: スライス断片＋色相ずれ（一射のみ）</p>
+    <p class="note">相が替わる瞬間の約 0.5 秒だけ断片が走り、すぐ静まる。二面性が「名の書き換え」や
+      「彩の乱れ」である字に限定して使う。縮小設定では走らず、切替は即時になる。</p>
+    <ul class="row">
+      <li class="tile d-dark g-dark" style="--i:0" data-trigger="dark" data-morph="grit">
+        <div class="plate dual" role="img" aria-label="囁き ノクスの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-noks-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-noks-ura"/></svg></div>
+          <div class="grit g1" aria-hidden="true"><svg viewBox="0 0 120 160" focusable="false"><use href="#p-noks-ura"/></svg></div>
+          <div class="grit g2" aria-hidden="true"><svg viewBox="0 0 120 160" focusable="false"><use href="#p-noks-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">囁き ノクス — 灯の相（煤モードへ切替）</span><span class="cap-b">囁き ノクス — 煤の相</span></p>
+      </li>
+      <li class="tile d-hover g-hover" style="--i:1" data-trigger="hover" data-morph="grit">
+        <div class="plate dual" role="img" aria-label="祝祭主 アレルイの肖像（灯の相／煤の相）">
+          <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-are-omote"/></svg></div>
+          <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-are-ura"/></svg></div>
+          <div class="grit g1" aria-hidden="true"><svg viewBox="0 0 120 160" focusable="false"><use href="#p-are-ura"/></svg></div>
+          <div class="grit g2" aria-hidden="true"><svg viewBox="0 0 120 160" focusable="false"><use href="#p-are-ura"/></svg></div>
+        </div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">祝祭主 アレルイ — 灯の相（触れると）</span><span class="cap-b">祝祭主 アレルイ — 煤の相</span></p>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  試作（模擬データ）。開閉器の状態は保存しない。本試作は 20261016_site-design-improvement/improve/ を変更しない。
+  実装の詳細と残りの案は 同フォルダの 提案パターン.md を参照。
+</footer>
+
+<script>
+"use strict";
+
+/* 開閉器: 自動（OS 設定に従う）／灯／煤 の固定。
+   濃色軸の走り（案3）は、切替が実際に起きたときだけ一時的な .theme-flipped を
+   html に付けて発火させ、1 秒後に外して次の切替に備える。 */
+const root = document.documentElement;
+const seg = Array.from(document.querySelectorAll(".seg button"));
+let mode = "auto";
+let flipTimer = 0;
+
+function armFlip() {
+  root.classList.remove("theme-flipped");
+  void root.offsetWidth; /* 強制再描画の1フレームでアニメーションを確実に再始動させる */
+  root.classList.add("theme-flipped");
+  clearTimeout(flipTimer);
+  flipTimer = setTimeout(() => root.classList.remove("theme-flipped"), 1000);
+}
+
+function setMode(next) {
+  if (next === mode) return;
+  mode = next;
+  seg.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  if (mode === "auto") {
+    root.removeAttribute("data-theme");
+  } else {
+    root.setAttribute("data-theme", mode);
+  }
+  armFlip();
+}
+
+seg.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+/* OS 側の濃色切替（自動モードのとき）にも一射を合わせる */
+const mq = window.matchMedia("(prefers-color-scheme: dark)");
+function onSchemeChange() {
+  if (!root.hasAttribute("data-theme")) armFlip();
+}
+if (typeof mq.addEventListener === "function") {
+  mq.addEventListener("change", onSchemeChange);
+} else if (typeof mq.addListener === "function") {
+  mq.addListener(onSchemeChange);
+}
+</script>
+</body>
+</html>
