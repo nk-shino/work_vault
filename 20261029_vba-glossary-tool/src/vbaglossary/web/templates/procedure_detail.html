@@ -50,7 +50,12 @@
 
 <section class="senses">
   <h2>語義（{{ p.senses | length }}）</h2>
-  {% if not p.senses %}<p class="dim">まだ語義がありません。下の提案を受理するか、後で書きます。</p>{% endif %}
+  {% if not p.senses %}
+  <div class="empty">
+    <p class="empty-title">まだ語義がありません</p>
+    <p class="empty-text">下の提案を受理するか、後で書きます。</p>
+  </div>
+  {% endif %}
   {% for s in p.senses %}
   <article class="sense-card">
     <div class="sense-head">
@@ -126,7 +131,7 @@
     </details>
   </article>
   {% else %}
-  <p class="dim">待ち受け中の提案はありません。</p>
+  <p class="dim">待ち受け中の提案はありません。解析を再実行すると提案が追加されます。</p>
   {% endfor %}
 </section>
 

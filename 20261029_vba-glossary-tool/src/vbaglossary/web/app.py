@@ -17,7 +17,7 @@ from fastapi import Depends, FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from vbaglossary.db.guards import register_guards
@@ -56,13 +56,11 @@ def create_app(database_url: str) -> FastAPI:
     ) -> HTMLResponse:
         ctx.update(_flash(request))
         ctx["nav"] = nav
-        ctx["open_proposals"] = (
-            db.scalar(
-                select(Proposal.id)
-                .where(Proposal.decided_at.is_(None), Proposal.state != "hold")
-                .limit(1)
+        # 未処理の提案の件数（保留を除く）。0 のときはナビにバッジを出さない
+        ctx["open_proposals"] = db.scalar(
+            select(func.count(Proposal.id)).where(
+                Proposal.decided_at.is_(None), Proposal.state != "hold"
             )
-            is not None
         )
         return TEMPLATES.TemplateResponse(request, name, ctx)
 

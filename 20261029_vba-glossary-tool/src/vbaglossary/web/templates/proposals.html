@@ -34,6 +34,9 @@
   </details>
 </article>
 {% else %}
-<p class="dim">提案はありません。</p>
+<div class="empty">
+  <p class="empty-title">提案はありません</p>
+  <p class="empty-text"><code>python tasks.py analyze ブック</code> で解析すると、プロシージャごとの語義案がここに積まれます。</p>
+</div>
 {% endfor %}
 {% endblock %}

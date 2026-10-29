@@ -37,6 +37,7 @@
   {% endfor %}
 </div>
 
+{% if rows %}
 <p class="dim">{{ rows | length }} 件</p>
 <table class="list hover">
   <thead><tr><th>名前</th><th>種別</th><th>モジュール</th><th>行数</th><th>タグ</th><th>語義</th></tr></thead>
@@ -50,9 +51,17 @@
       <td>{% for t in row.tags %}<span class="chip tag">{{ t }}</span>{% endfor %}</td>
       <td>{% if row.sense_count %}<span class="chip yes">あり</span>{% else %}<span class="chip dim2">未学習</span>{% endif %}</td>
     </tr>
-  {% else %}
-    <tr><td colspan="6" class="dim">条件に合うプロシージャがありません</td></tr>
   {% endfor %}
   </tbody>
 </table>
+{% else %}
+<div class="empty">
+  <p class="empty-title">条件に合うプロシージャがありません</p>
+  {% if filt.q or filt.kind or filt.module or filt.tag or filt.learned %}
+  <p class="empty-text">検索語やフィルタを変えてもう一度試してください。 <a href="/procedures">解除</a></p>
+  {% else %}
+  <p class="empty-text"><code>python tasks.py analyze ブック</code> で解析すると表示されます。</p>
+  {% endif %}
+</div>
+{% endif %}
 {% endblock %}

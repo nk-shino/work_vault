@@ -29,6 +29,9 @@
   </details>
 </article>
 {% else %}
-<p class="dim">見直し対象はありません。</p>
+<div class="empty">
+  <p class="empty-title">見直し対象はありません</p>
+  <p class="empty-text">語義に「修正が必要」の評価が付くと、ここに集まります。</p>
+</div>
 {% endfor %}
 {% endblock %}

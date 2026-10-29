@@ -74,6 +74,12 @@ body {
 .wrap-anywhere { overflow-wrap: anywhere; }
 .num { text-align: right; font-variant-numeric: tabular-nums; }
 
+/* キーボードフォーカスの共通リング（明暗は --accent 経由で自動追従） */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* すりガラスのヘッダー */
 .topbar {
   position: sticky;
@@ -109,11 +115,16 @@ body {
 .pillnav a.active { background: var(--accent); color: var(--accent-ink); }
 .pillnav .badge {
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  min-width: 18px;
   margin-left: 6px;
-  border-radius: 50%;
+  padding: 0 5px;
+  border-radius: 999px;
   background: #d1683b;
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
   vertical-align: middle;
 }
 
@@ -164,6 +175,11 @@ h2 { font-size: 15px; margin: 18px 0 8px; color: var(--ink); }
 .panel-head { display: flex; align-items: center; justify-content: space-between; }
 .panel-head h2 { margin: 0; }
 
+/* 空状態: タイトル＋次の操作の短い説明（左揃え・CTA は1つまで） */
+.empty { margin: 12px 0; }
+.empty .empty-title { margin: 0; font-weight: 700; color: var(--ink); }
+.empty .empty-text { margin: 4px 0 0; color: var(--dim); }
+
 /* 一覧表 */
 table.list { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
 table.list th, table.list td { padding: 8px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
@@ -193,11 +209,12 @@ table.params thead th { background: var(--chip-bg); color: var(--dim); font-size
 .chip.tag { background: transparent; border: 1px solid var(--line); color: var(--dim); }
 .chip.yes { background: color-mix(in srgb, var(--ok) 20%, var(--paper)); }
 .chip.new { background: color-mix(in srgb, var(--accent) 24%, var(--paper)); }
-.chip.update { background: var(--warn-bg); color: var(--warn-ink); }
-.chip.hold { background: var(--err-bg); color: var(--err-ink); }
+/* 更新は情報（中性）・保留は注意（黄）。赤はエラー専用（Carbon severity levels） */
+.chip.update { background: transparent; border: 1px solid var(--line); color: var(--dim); }
+.chip.hold { background: var(--warn-bg); color: var(--warn-ink); }
 .chip.src { border: 1px dashed var(--line); background: transparent; color: var(--dim); }
 .chip.link:hover { background: var(--accent); color: var(--accent-ink); }
-.tagcloud { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.tagcloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 
 /* コード面 */
 pre.code {
@@ -240,7 +257,7 @@ html[data-theme="dark"] .tok-num { color: #c99ae8; }
   font-size: 15.5px;
   margin: 4px 0 10px;
 }
-.eval-line { display: flex; gap: 6px; align-items: center; margin: 4px 0; }
+.eval-line { display: flex; gap: 8px; align-items: center; margin: 4px 0; }
 
 /* フォーム */
 form.stack { display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }

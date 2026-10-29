@@ -41,7 +41,10 @@
     </tbody>
   </table>
   {% else %}
-  <p class="dim">提案はまだありません。<code>python tasks.py analyze ブック</code> で解析すると提案が積まれます。</p>
+  <div class="empty">
+    <p class="empty-title">提案はまだありません</p>
+    <p class="empty-text"><code>python tasks.py analyze ブック</code> で解析すると提案が積まれます。</p>
+  </div>
   {% endif %}
 </section>
 {% endblock %}

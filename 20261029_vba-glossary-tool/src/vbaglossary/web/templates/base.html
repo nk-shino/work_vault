@@ -14,7 +14,7 @@
   <nav class="pillnav" aria-label="メイン">
     <a href="/" {% if nav == 'home' %}class="active"{% endif %}>ホーム</a>
     <a href="/procedures" {% if nav == 'procedures' %}class="active"{% endif %}>プロシージャ</a>
-    <a href="/proposals" {% if nav == 'proposals' %}class="active"{% endif %}>提案{% if open_proposals %}<span class="badge" title="未処理の提案があります"></span>{% endif %}</a>
+    <a href="/proposals" {% if nav == 'proposals' %}class="active"{% endif %}>提案{% if open_proposals %}<span class="badge" title="未処理の提案があります">{{ open_proposals }}</span>{% endif %}</a>
     <a href="/review" {% if nav == 'review' %}class="active"{% endif %}>見直し</a>
   </nav>
   <button id="theme-toggle" class="theme-toggle" type="button" title="明 / 暗 / 自動">◐</button>
