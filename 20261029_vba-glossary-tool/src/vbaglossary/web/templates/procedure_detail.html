@@ -40,10 +40,10 @@
     <tr><th>戻り値</th><td class="mono">{{ p.returns or '—' }}</td></tr>
     <tr><th>位置</th><td>{{ p.module_name }} の {{ p.start_line }}〜{{ p.end_line }} 行目（{{ p.line_count }} 行）</td></tr>
     <tr><th>呼び出している</th><td>
-      {% for c in calls %}{% if c.id %}<a class="chip link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}<span class="chip">{{ c.name }}</span>{% endif %}{% else %}—{% endfor %}
+      {% for c in calls %}{% if c.id %}<a class="ref-link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}<span class="chip">{{ c.name }}</span>{% endif %}{% else %}—{% endfor %}
     </td></tr>
     <tr><th>呼び出されている</th><td>
-      {% for c in called_by %}<a class="chip link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}—{% endfor %}
+      {% for c in called_by %}<a class="ref-link" href="/procedures/{{ c.id }}">{{ c.name }}</a>{% else %}—{% endfor %}
     </td></tr>
   </table>
 </div>

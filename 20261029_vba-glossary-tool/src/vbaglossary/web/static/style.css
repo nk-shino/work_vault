@@ -214,6 +214,9 @@ table.params thead th { background: var(--chip-bg); color: var(--dim); font-size
 .chip.hold { background: var(--warn-bg); color: var(--warn-ink); }
 .chip.src { border: 1px dashed var(--line); background: transparent; color: var(--dim); }
 .chip.link:hover { background: var(--accent); color: var(--accent-ink); }
+/* 詳細画面の呼び出し関係はリンク表記（タグを遷移リンクに使わない: Carbon P3） */
+.ref-link { color: var(--accent); text-decoration: none; margin-right: 10px; }
+.ref-link:hover { text-decoration: underline; }
 .tagcloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 
 /* コード面 */
