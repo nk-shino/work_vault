@@ -11,6 +11,9 @@
    二面性の間 — 試作デモ（単体・外部リクエストなし）
    improve/css/style.css のトークンを写して拡張している。
    実装の際は improve 側の変数を直接参照すればよい。
+   2026-10-30: 確定仕様（めもB・台帳 S-19）を反映。
+   濃色軸を主軸として二面の題箋すべてに効かせ、hover は補助軸
+   （@media (hover: hover) 内のみ）。押印の操作子は設けていない。
    ============================================================ */
 
 /* ---- 1. トークン（style.css と同一の値）＋モーフ用の追加 ---- */
@@ -215,6 +218,17 @@ h2 {
 }
 .cap .cap-b { position: absolute; inset: 0; opacity: 0; }
 
+/* duality を持たない字の単面の題箋（データモデルの既定。相は替わらない） */
+.plate.single {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  color: var(--text-sub);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
 /* ---- 4. 案1 静溶け: 濃色で2枚がぼけながら入れ替わる ---- */
 /* 煤へ入る側は僅かな段差（--i 枚目ごとに 110ms）を付け、灯へ戻る側はすぐ戻す */
 html[data-theme="dark"] .d-dark .face-omote {
@@ -240,6 +254,31 @@ html[data-theme="dark"] .d-dark .face-ura {
 @media (hover: hover) {
   .d-hover:hover .face-omote, .d-hover:focus-within .face-omote { opacity: 0; filter: blur(4px); }
   .d-hover:hover .face-ura,   .d-hover:focus-within .face-ura   { opacity: 1; filter: blur(0); }
+}
+
+/* 濃色主軸は二面の題箋すべてに効く（S-19 後の運用）。罫走の題箋も濃色では
+   罫が走って煤の相を現す。煤へ入るときは --i 枚目ごとの段差、灯へ戻るときは段差なし */
+html[data-theme="dark"] .d-dark.d-wipe .face-ura {
+  -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+  filter: blur(0);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+html[data-theme="dark"] .d-dark.d-wipe .face-omote {
+  opacity: 0; filter: blur(4px);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .d-dark.d-wipe .face-ura {
+    -webkit-mask-position: 0 0;
+            mask-position: 0 0;
+    filter: blur(0);
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+  html:not([data-theme="light"]) .d-dark.d-wipe .face-omote {
+    opacity: 0; filter: blur(4px);
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
 }
 
 /* 札の文字も同じ呼吸で */
@@ -605,36 +644,43 @@ html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
 
   <section aria-label="試し方">
     <p class="note">開閉器の「自動」は OS の濃色設定に従う。「灯」「煤」はこの頁だけ固定する。
-      「触れると」の題箋は、ポインタのある環境でのみ反応する（タッチ環境では濃色軸の題箋で確認する）。</p>
+      二面の題箋はすべて濃色（煤の相）で裏の面を確認できる（主軸）。「触れると」の題箋は、
+      ポインタのある環境でのみ反応する補助軸で、タッチ環境では濃色軸で確認する。
+      押印（押下）による切替はこの試作の対象外で、操作子は設けていない。</p>
   </section>
 
   <!-- ============ 案1 ============ -->
   <section aria-labelledby="s1">
     <h2 id="s1">案1｜静溶け（しずみ）</h2>
-    <p class="axis">トリガー: 濃色（手動・OS 自動）・hover／技法: 二層交差＋ぼけ</p>
-    <p class="note">灯の相がぼけて沈み、煤の相が浮かぶ。濃色へ入るとき 2 枚に僅かな段差を付け、
-      灯へ戻るときは段差なしですぐ戻す。もっとも静かで、一覧の並びにも馴染む。</p>
+    <p class="axis">トリガー: 濃色（主軸・手動・OS 自動）＋ hover（補助）／技法: 二層交差＋ぼけ</p>
+    <p class="note">灯の相がぼけて沈み、煤の相が浮かぶ。濃色へ入るとき 3 枚に僅かな段差を付け、
+      灯へ戻るときは段差なしですぐ戻す。もっとも静かで、一覧の並びにも馴染む。
+      最後の一題は duality を持たない字の例で、単面のまま動かない。</p>
     <ul class="row">
-      <li class="tile d-dark" style="--i:0" data-trigger="dark" data-morph="settle">
+      <li class="tile d-dark" data-char="c001" style="--i:0" data-trigger="dark" data-morph="settle">
         <div class="plate dual" role="img" aria-label="燭守 セラフの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ser-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ser-ura"/></svg></div>
         </div>
         <p class="cap" aria-hidden="true"><span class="cap-a">燭守 セラフ — 灯の相</span><span class="cap-b">燭守 セラフ — 煤の相</span></p>
       </li>
-      <li class="tile d-dark" style="--i:1" data-trigger="dark" data-morph="settle">
+      <li class="tile d-dark" data-char="c003" style="--i:1" data-trigger="dark" data-morph="settle">
         <div class="plate dual" role="img" aria-label="灯番 リュミエの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ryu-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ryu-ura"/></svg></div>
         </div>
         <p class="cap" aria-hidden="true"><span class="cap-a">灯番 リュミエ — 灯の相</span><span class="cap-b">灯番 リュミエ — 煤の相</span></p>
       </li>
-      <li class="tile d-hover" data-trigger="hover" data-morph="settle">
+      <li class="tile d-dark d-hover" data-char="c002" style="--i:2" data-trigger="hover" data-morph="settle">
         <div class="plate dual" role="img" aria-label="写本屋 ヴェルの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ver-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-ver-ura"/></svg></div>
         </div>
         <p class="cap" aria-hidden="true"><span class="cap-a">写本屋 ヴェル — 灯の相（触れると）</span><span class="cap-b">写本屋 ヴェル — 煤の相</span></p>
+      </li>
+      <li class="tile" data-char="c013">
+        <div class="plate single" role="img" aria-label="看取り ヴィゴルの肖像（準備中）">看取り ヴィゴル</div>
+        <p class="cap" aria-hidden="true"><span class="cap-a">看取り ヴィゴル — 単面</span></p>
       </li>
     </ul>
   </section>
@@ -642,18 +688,20 @@ html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
   <!-- ============ 案2 ============ -->
   <section aria-labelledby="s2">
     <h2 id="s2">案2｜罫走（けいそう）</h2>
-    <p class="axis">トリガー: hover（ポインタ環境）／技法: マスク走査＋ぼけ縁</p>
+    <p class="axis">トリガー: 濃色（主軸）＋ hover（補助・ポインタ環境）／技法: マスク走査＋ぼけ縁</p>
     <p class="note">煤の相が一枚の罫のように走って現れる。縁はぼけており、渡り終えると静止する。
-      触れる行為と相の移ろいが直接対応するので、仮面や眼帯を外す字に向く。</p>
+      触れる行為と相の移ろいが直接対応するので、仮面や眼帯を外す字に向く。
+      濃色でも罫が走って煤の相を現す。hover はポインタのある環境だけの補助軸で、
+      タッチ環境では濃色軸で確認する。</p>
     <ul class="row">
-      <li class="tile d-hover d-wipe" style="--i:0" data-trigger="hover" data-morph="wipe">
+      <li class="tile d-dark d-hover d-wipe" data-char="c004" style="--i:0" data-trigger="hover" data-morph="wipe">
         <div class="plate dual" role="img" aria-label="異端吏 オクタヴィアの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-okt-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-okt-ura"/></svg></div>
         </div>
         <p class="cap" aria-hidden="true"><span class="cap-a">異端吏 オクタヴィア — 灯の相（触れると）</span><span class="cap-b">異端吏 オクタヴィア — 煤の相</span></p>
       </li>
-      <li class="tile d-hover d-wipe" style="--i:1" data-trigger="hover" data-morph="wipe">
+      <li class="tile d-dark d-hover d-wipe" data-char="c005" style="--i:1" data-trigger="hover" data-morph="wipe">
         <div class="plate dual" role="img" aria-label="調律師 カノンの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-kan-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-kan-ura"/></svg></div>
@@ -668,9 +716,10 @@ html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
     <h2 id="s3">案3｜燈の走り（ひのはしり）</h2>
     <p class="axis">トリガー: 濃色の切替瞬間・hover の入瞬間／技法: スライス断片＋色相ずれ（一射のみ）</p>
     <p class="note">相が替わる瞬間の約 0.5 秒だけ断片が走り、すぐ静まる。二面性が「名の書き換え」や
-      「彩の乱れ」である字に限定して使う。縮小設定では走らず、切替は即時になる。</p>
+      「彩の乱れ」である字に限定して使う。走らせる字は ノクス と アレルイ の二題に限る
+      （字の限定は確定済み）。縮小設定では走らず、切替は即時になる。</p>
     <ul class="row">
-      <li class="tile d-dark g-dark" style="--i:0" data-trigger="dark" data-morph="grit">
+      <li class="tile d-dark g-dark" data-char="c008" style="--i:0" data-trigger="dark" data-morph="grit">
         <div class="plate dual" role="img" aria-label="囁き ノクスの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-noks-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-noks-ura"/></svg></div>
@@ -679,7 +728,7 @@ html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
         </div>
         <p class="cap" aria-hidden="true"><span class="cap-a">囁き ノクス — 灯の相（煤モードへ切替）</span><span class="cap-b">囁き ノクス — 煤の相</span></p>
       </li>
-      <li class="tile d-hover g-hover" style="--i:1" data-trigger="hover" data-morph="grit">
+      <li class="tile d-dark g-dark d-hover g-hover" data-char="c009" style="--i:1" data-trigger="hover" data-morph="grit">
         <div class="plate dual" role="img" aria-label="祝祭主 アレルイの肖像（灯の相／煤の相）">
           <div class="face face-omote"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-are-omote"/></svg></div>
           <div class="face face-ura"><svg viewBox="0 0 120 160" aria-hidden="true" focusable="false"><use href="#p-are-ura"/></svg></div>
@@ -694,11 +743,100 @@ html[data-theme="dark"] .d-dark .cap-b { opacity: 1; }
 
 <footer class="foot">
   試作（模擬データ）。開閉器の状態は保存しない。本試作は 20261016_site-design-improvement/improve/ を変更しない。
-  実装の詳細と残りの案は 同フォルダの 提案パターン.md を参照。
+  実装の詳細と残りの案は 同フォルダの 提案パターン.md を参照。2026-10-30 の確定仕様の反映内容は
+  実装記録_20261030.md を参照。
 </footer>
+
+<!-- characters.json 相当のデータ。本番では data/characters.json への duality フィールド拡張が
+     この役割を担う（めもB 確認事項2 の確定どおり）。試作は単体動作（file:// 直・要求ゼロ）のため
+     埋め込みにしている。trigger は主軸（濃色・全員）に加える補助軸を示す:
+     dark＝補助軸なし、hover＝ポインタ環境の補助。manual（押印）は台帳 S-19 のとおり
+     詳細頁での提供を待つため、この試作では濃色へ寄せる。 -->
+<script type="application/json" id="characters-data">
+[
+  { "id": "c001", "name": "燭守 セラフ", "role": "封印の継ぎ手", "affiliation": "回廊聖堂", "image": "",
+    "duality": { "trigger": "dark", "morph": "settle",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c002", "name": "写本屋 ヴェル", "role": "記録の写し手", "affiliation": "独立", "image": "",
+    "duality": { "trigger": "hover", "morph": "settle",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c003", "name": "灯番 リュミエ", "role": "燭台の管理人", "affiliation": "回廊聖堂", "image": "",
+    "duality": { "trigger": "dark", "morph": "settle",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c004", "name": "異端吏 オクタヴィア", "role": "禁書の検閲官", "affiliation": "教団", "image": "",
+    "duality": { "trigger": "hover", "morph": "wipe",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c005", "name": "調律師 カノン", "role": "音の封印師", "affiliation": "回廊聖堂", "image": "",
+    "duality": { "trigger": "hover", "morph": "wipe",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c008", "name": "囁き ノクス", "role": "名を盗む者", "affiliation": "不明", "image": "",
+    "duality": { "trigger": "dark", "morph": "grit",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c009", "name": "祝祭主 アレルイ", "role": "断章を集める祭官", "affiliation": "祝祭庁", "image": "",
+    "duality": { "trigger": "hover", "morph": "grit",
+      "faces": { "omote": { "image": "", "label": "灯の相" }, "ura": { "image": "", "label": "煤の相" } } } },
+  { "id": "c013", "name": "看取り ヴィゴル", "role": "最期の記録係", "affiliation": "回廊聖堂", "image": "" }
+]
+</script>
 
 <script>
 "use strict";
+
+/* ---- 二面性データの適用（characters.json 相当 → 題箋への割当） ----
+   正規化は 提案パターン.md §3-1 の規則どおり。duality の省略は単面、
+   不明な trigger/morph は既定（dark/settle）へ落とし、壊れたデータが頁を壊さないようにする。 */
+const CHARACTERS = JSON.parse(document.getElementById("characters-data").textContent);
+const TRIGGERS = ["dark", "hover", "manual"];
+const MORPHS = ["settle", "wipe", "grit", "veil", "bleed"];
+
+function dualityOf(c) {
+  const d = c && c.duality;
+  if (!d || !d.faces || !d.faces.ura) return null; /* 単面の扱い */
+  let trigger = TRIGGERS.includes(d.trigger) ? d.trigger : "dark";
+  /* 押印軸（manual）は詳細頁の提供を待つ（台帳 S-19）。整備までは濃色で代替する */
+  if (trigger === "manual") trigger = "dark";
+  return {
+    trigger: trigger, /* hover の字は濃色主軸に加えて hover 補助軸を持つ */
+    morph: MORPHS.includes(d.morph) ? d.morph : "settle",
+    faces: d.faces,
+  };
+}
+
+function axisClasses(d) {
+  if (!d) return [];
+  const cs = ["d-dark"]; /* 主軸: 濃色は二面の字すべてに効く（全環境で煤の相を確認できる） */
+  if (d.trigger === "hover") cs.push("d-hover"); /* 補助軸: CSS 側で @media (hover: hover) 内に限る */
+  if (d.morph === "wipe") cs.push("d-wipe");
+  if (d.morph === "grit") {
+    cs.push("g-dark");
+    if (d.trigger === "hover") cs.push("g-hover");
+  }
+  return cs;
+}
+
+function applyDuality() {
+  for (const c of CHARACTERS) {
+    const tile = document.querySelector(`.tile[data-char="${c.id}"]`);
+    if (!tile) continue;
+    const d = dualityOf(c);
+    tile.classList.remove("d-dark", "d-hover", "d-wipe", "g-dark", "g-hover");
+    for (const name of axisClasses(d)) tile.classList.add(name);
+    const plate = tile.querySelector(".plate");
+    if (!plate) continue;
+    if (!d) {
+      plate.classList.remove("dual");
+      plate.classList.add("single");
+      plate.setAttribute("aria-label", `${c.name}の肖像（準備中）`);
+    } else {
+      plate.setAttribute("aria-label",
+        `${c.name}の肖像（${d.faces.omote.label || "灯の相"}／${d.faces.ura.label || "煤の相"}）`);
+    }
+  }
+}
+applyDuality();
+
+/* 点検（tools/verify-demo.js）から参照できるように開いておく。見た目には出ない */
+window.__duality = { characters: CHARACTERS, dualityOf, axisClasses };
 
 /* 開閉器: 自動（OS 設定に従う）／灯／煤 の固定。
    濃色軸の走り（案3）は、切替が実際に起きたときだけ一時的な .theme-flipped を
