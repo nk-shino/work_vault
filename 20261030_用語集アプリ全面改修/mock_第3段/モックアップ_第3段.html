@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>社内用語集 UIモックアップ 第3段（設計案の見え方）</title>
+<style>
+/* ---- 色の決め事。本体 style.css と同じ変数名と明暗の組（値は第2段モックと同系） ---- */
+:root {
+  --fg: #26262e; --muted: #6b6b78; --line: #d9d9e2; --line-soft: #e9e9f0;
+  --bg: #f6f6f2; --bg-top: #f8f8f4; --surface: #ffffff; --surface-2: #f4f4f8;
+  --zebra: #fbfbf9; --accent: #3a4db8; --accent-strong: #2c3c99; --accent-soft: #eef1fc;
+  --good: #1e7a3f; --good-bg: #e9f5ec; --good-border: #b4d6bd;
+  --warn-fg: #8a5800; --warn-bg: #fdf3dd; --warn-border: #e4c98a;
+  --danger-fg: #b3261e; --danger-bg: #fdeaea; --danger-border: #e8b7b3;
+  --shadow-1: 0 1px 2px rgba(32,32,64,.05), 0 1px 6px rgba(32,32,64,.06);
+  --shadow-2: 0 6px 16px rgba(32,32,64,.12); --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fg: #e2e4ee; --muted: #9aa0b5; --line: #3c3f50; --line-soft: #2c2f3d;
+    --bg: #17181f; --bg-top: #1b1c25; --surface: #1f2029; --surface-2: #262834;
+    --zebra: #22232e; --accent: #8fa0f5; --accent-strong: #b0bcf8; --accent-soft: #262c47;
+    --good: #6cc98a; --good-bg: #1d3326; --good-border: #2f5a3d;
+    --warn-fg: #e0b45c; --warn-bg: #332a17; --warn-border: #5c4c22;
+    --danger-fg: #ef918a; --danger-bg: #3a2020; --danger-border: #5c3230;
+    --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 1px 6px rgba(0,0,0,.25);
+    --shadow-2: 0 6px 16px rgba(0,0,0,.45);
+  }
+}
+html[data-theme="dark"] {
+  --fg: #e2e4ee; --muted: #9aa0b5; --line: #3c3f50; --line-soft: #2c2f3d;
+  --bg: #17181f; --bg-top: #1b1c25; --surface: #1f2029; --surface-2: #262834;
+  --zebra: #22232e; --accent: #8fa0f5; --accent-strong: #b0bcf8; --accent-soft: #262c47;
+  --good: #6cc98a; --good-bg: #1d3326; --good-border: #2f5a3d;
+  --warn-fg: #e0b45c; --warn-bg: #332a17; --warn-border: #5c4c22;
+  --danger-fg: #ef918a; --danger-bg: #3a2020; --danger-border: #5c3230;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 1px 6px rgba(0,0,0,.25);
+  --shadow-2: 0 6px 16px rgba(0,0,0,.45);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Yu Gothic UI", "Meiryo UI", "Segoe UI", sans-serif;
+  font-feature-settings: "palt"; background: linear-gradient(180deg, var(--bg-top), var(--bg) 28rem), var(--bg);
+  color: var(--fg); line-height: 1.65;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-strong); text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3, h4 { text-wrap: balance; }
+main p { text-wrap: pretty; }
+kbd { font: inherit; font-size: .78rem; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; background: var(--surface); color: var(--muted); padding: 0 .3em; }
+
+/* ---- モックである旨の帯とタブ ---- */
+.mock-banner { background: var(--warn-bg); border-bottom: 1px solid var(--warn-border); color: var(--warn-fg); font-size: .82rem; padding: .4rem 1.2rem; }
+.topbar { display: flex; align-items: center; gap: 1rem; padding: .5rem 1.2rem; border-bottom: 1px solid var(--line); background: var(--surface); position: sticky; top: 0; z-index: 20; }
+.tabs { display: flex; gap: .3rem; flex-wrap: wrap; }
+.tabs button { font: inherit; font-size: .88rem; padding: .32rem .9rem; border-radius: 999px; border: 1px solid transparent; background: transparent; color: var(--muted); cursor: pointer; }
+.tabs button.on { background: var(--accent-soft); color: var(--accent-strong); font-weight: bold; border-color: var(--line); }
+.topbar .spacer { flex: 1; }
+.topbar small { color: var(--muted); font-size: .78rem; }
+.topbar button { font: inherit; font-size: .8rem; padding: .25rem .7rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
+
+main { max-width: 60rem; margin: 0 auto; padding: 1.4rem 1.5rem 4rem; }
+.screen { display: none; }
+.screen.on { display: block; }
+.note { background: var(--bg); border: 1px dashed var(--line); border-radius: 8px; padding: .55rem .9rem; margin: 0 0 1rem; font-size: .82rem; color: var(--muted); }
+.note strong { color: var(--fg); }
+h1 { font-size: 1.4rem; letter-spacing: .02em; margin: .2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); position: relative; }
+h1::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 3.2rem; height: 3px; border-radius: 2px; background: var(--accent); }
+
+/* ---- 成功帯（D-C2・D-P1）。エラー帯と同じ部品系統の緑版 ---- */
+.success { background: var(--good-bg); color: var(--good); border: 1px solid var(--good-border); padding: .5rem .9rem; border-radius: 8px; }
+.success strong { font-weight: bold; }
+.band-label { font-size: .72rem; color: var(--muted); margin: 1.2rem 0 .2rem; }
+
+/* ---- 統計カード（現行と同じ） ---- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin: .2rem 0 1rem; }
+.stat { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: .6rem .9rem .5rem; position: relative; overflow: hidden; }
+.stat::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--accent), #7a8ae0); opacity: .65; }
+.stat .n { display: block; font-size: 1.5rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+.stat .k { display: block; color: var(--muted); font-size: .8rem; }
+
+/* ---- 件数行と密度・出力（D-X2 は推奨案） ---- */
+.table-tools { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: .8rem 0 .4rem; }
+.table-tools p { margin: 0; font-size: .92rem; color: var(--muted); }
+
+/* ---- 表（更新列 D-T1・プレビュー D-T3） ---- */
+table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-1); border: 1px solid var(--line-soft); overflow: hidden; }
+th, td { border-bottom: 1px solid var(--line-soft); padding: .5rem .7rem; text-align: left; }
+thead th { background: var(--surface-2); font-size: .82rem; font-weight: bold; color: var(--muted); border-bottom: 1px solid var(--line); white-space: nowrap; }
+tbody tr:nth-child(even) { background: var(--zebra); }
+tbody tr:hover { background: var(--accent-soft); }
+tbody tr:last-child td { border-bottom: none; }
+td .word { font-weight: bold; }
+td a { font-weight: bold; }
+/* プレビュー展開中も1列目の幅を保つ（D-T3。width 固定 + max-width: 100%） */
+td .prev-body { display: block; width: 44rem; max-width: 100%; margin: .3rem 0 .1rem; padding: .15rem 0 .15rem .7rem; border-left: 2px solid var(--line); font-family: "Yu Mincho", "YuMincho", serif; font-size: .95rem; line-height: 1.75; }
+.prev-meta { color: var(--muted); font-size: .78rem; margin: 0; }
+.col-upd { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); }
+
+/* ---- badge（色と文字の併記。現行規則どおり） ---- */
+.badge { display: inline-block; font-size: .76rem; padding: .06rem .6rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); white-space: nowrap; }
+.badge::before { content: ""; display: inline-block; width: .42em; height: .42em; border-radius: 50%; background: var(--muted); margin-right: .4em; vertical-align: .08em; }
+.badge.st-active, .badge.st-accepted, .badge.st-confirmed { background: var(--good-bg); color: var(--good); border-color: var(--good-border); }
+.badge.st-active::before, .badge.st-accepted::before, .badge.st-confirmed::before { background: var(--good); }
+.badge.st-disputed, .badge.st-pending { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-border); }
+.badge.st-disputed::before, .badge.st-pending::before { background: var(--warn-fg); }
+.badge.st-rejected { color: var(--muted); }
+
+/* ---- 提案カード（用例の省略 D-P3） ---- */
+.proposal { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: .8rem 1.2rem; margin: 1rem 0; box-shadow: var(--shadow-1); }
+.proposal h2 { font-size: 1.12rem; margin: 0 0 .2rem; }
+.meta-line { font-size: .8rem; color: var(--muted); margin: 0 0 .4rem; }
+.meter-wrap { display: flex; align-items: center; gap: .6rem; margin: 0 0 .4rem; }
+.meter-k { font-size: .78rem; color: var(--muted); }
+.meter { width: 8rem; height: .5rem; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-soft); overflow: hidden; }
+.meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #7a8ae0); }
+.definition { font-family: "Yu Mincho", "YuMincho", serif; font-size: 1.05rem; line-height: 1.8; border-left: 3px solid var(--line); padding-left: .85rem; margin: .4rem 0; }
+.ai-chip { display: inline-block; font-size: .7rem; font-weight: bold; padding: 0 .45em; border-radius: 4px; border: 1px solid var(--accent); color: var(--accent); vertical-align: .1em; margin-right: .35em; }
+.evidences { padding-left: 1.2rem; margin: .4rem 0; }
+.evidences li { margin: .25rem 0; }
+.evidences q { background: var(--bg); padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」"; }
+.evidences small, .ev-more { color: var(--muted); }
+details.ev-more { margin: .2rem 0 0; font-size: .85rem; }
+details.ev-more summary { cursor: pointer; color: var(--accent); padding: .1rem .3rem; border-radius: 4px; }
+details.ev-more summary:hover { background: var(--accent-soft); }
+
+/* ---- 評価の折りたたみ（D-D1） ---- */
+details.evaluate { border-top: 1px dashed var(--line); margin-top: .7rem; padding-top: .4rem; }
+details.evaluate summary { cursor: pointer; font-size: .95rem; font-weight: bold; padding: .15rem .3rem; margin-left: -.3rem; border-radius: 4px; }
+details.evaluate summary:hover { background: var(--accent-soft); color: var(--accent-strong); }
+.hint { color: var(--muted); font-size: .85rem; }
+.ev-buttons { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
+.ev-buttons button { font: inherit; padding: .2rem .85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; margin-top: .25rem; }
+.ev-buttons button[value="correct"], .ev-buttons button[value="useful"] { color: var(--good); border-color: var(--good-border); }
+.ev-buttons button[value="needs_fix"], .ev-buttons button[value="not_useful"] { color: var(--danger-fg); border-color: var(--danger-border); }
+.ev-buttons button[value="unsure"] { color: var(--muted); }
+
+/* ---- 選択バー（現行どおり sticky） ---- */
+.bulk-bar { position: sticky; top: 3rem; z-index: 5; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-2); padding: .55rem 1.1rem; margin: .5rem 0 .8rem; }
+.bulk-count { margin: 0; font-weight: bold; font-variant-numeric: tabular-nums; }
+.bulk-bar button { font: inherit; font-size: .9rem; padding: .3rem 1rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; margin-top: 0; }
+.bulk-bar button.pri { background: linear-gradient(180deg, #4a5ec9, var(--accent-strong)); border-color: var(--accent-strong); color: #fff; font-weight: bold; }
+
+/* ---- 見直しの種類ナビ ---- */
+.review-kinds { display: flex; gap: .4rem; flex-wrap: wrap; margin: .8rem 0 1rem; }
+.review-kinds a { padding: .25rem .85rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: .92rem; box-shadow: var(--shadow-1); }
+.review-kinds a[aria-current="page"] { font-weight: bold; background: var(--accent-soft); border-color: var(--accent); color: var(--accent-strong); }
+.count-line { color: var(--muted); font-size: .92rem; margin: 0 0 .4rem; }
+.pager { margin: 1rem 0; color: var(--muted); font-size: .92rem; }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">
+  <strong>UIモックアップ 第3段</strong>
+  <span>設計案（D-C2 成功帯・D-T1 更新列・D-T3 プレビュー幅・D-P1 成功帯＋詳細リンク・D-P3 用例省略・D-D1 評価の折りたたみ・D-R1 集計の badge・D-R2 表記統一・D-X2 条件付き出力〔推奨・採否待ち〕）の見え方。アプリ本体には未反映。データは架空のもの。</span>
+</div>
+
+<div class="topbar">
+  <div class="tabs" id="tabs">
+    <button class="on" data-s="v1" aria-pressed="true">1 用語一覧</button>
+    <button data-s="v2" aria-pressed="false">2 提案キュー</button>
+    <button data-s="v3" aria-pressed="false">3 語詳細</button>
+    <button data-s="v4" aria-pressed="false">4 見直し</button>
+  </div>
+  <span class="spacer"></span>
+  <small>明るさ: 自動（OS に従う）</small>
+  <button type="button" id="theme">自動 → 明 → 暗</button>
+</div>
+
+<main>
+
+<!-- ============ 1 用語一覧 ============ -->
+<section class="screen on" id="v1">
+  <h1>用語一覧</h1>
+  <p class="note"><strong>D-C2（成功帯）</strong> 書き込み操作のあと、redirect 先の画面の上に緑の帯が 1 回出る。赤（エラー）・黄（注意）と同じ帯の部品系統。</p>
+  <div class="success" role="status">3 件の提案を却下しました。</div>
+  <p class="band-label">↑ 成功帯（D-C2）。以降は現行画面に D-T1・D-T3・D-X2 を重ねた形。</p>
+
+  <div class="stats">
+    <div class="stat"><span class="n">154</span><span class="k">登録された語</span></div>
+    <div class="stat"><span class="n">20</span><span class="k">未処理の提案</span></div>
+    <div class="stat"><span class="n">2</span><span class="k">係争中の語義</span></div>
+    <div class="stat"><span class="n">131</span><span class="k">確定した語義</span></div>
+  </div>
+
+  <div class="table-tools">
+    <p>154 件（1 / 8 ページ）</p>
+    <p>行を狭く ／ <a href="#" aria-disabled="true">この条件で出力</a> <small>（D-X2 推奨・採否待ち）</small></p>
+  </div>
+
+  <table>
+    <thead><tr>
+      <th scope="col">見出し</th><th scope="col">読み</th><th scope="col">略語</th><th scope="col">状態</th><th scope="col" aria-sort="descending">更新 ▼</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="word">卵温計</span>
+          <details class="prev" open>
+            <summary style="font-size:.8rem;color:var(--muted)">語義プレビューを開く</summary>
+            <p class="prev-body">孵化器の中の温度を測る計器。点検の記録では FLT の点検の前の工程で値を読み取る。</p>
+            <p class="prev-meta">最初の語義（ほかの語義 1 件）</p>
+          </details>
+        </td>
+        <td>らんおんけい</td><td>—</td><td><span class="badge st-disputed">係争中</span></td><td class="col-upd">2026-10-28</td>
+      </tr>
+      <tr><td><span class="word">FLT点検</span></td><td>えふえるてぃーてんけん</td><td>FLT</td><td><span class="badge st-active">有効</span></td><td class="col-upd">2026-10-27</td></tr>
+      <tr><td><span class="word">スカイポスト</span></td><td>すかいぽすと</td><td>SP</td><td><span class="badge st-active">有効</span></td><td class="col-upd">2026-10-26</td></tr>
+      <tr><td><span class="word">竜舎</span></td><td>りゅうしゃ</td><td>—</td><td><span class="badge st-active">有効</span></td><td class="col-upd">2026-10-25</td></tr>
+    </tbody>
+  </table>
+  <p class="pager">前のページ ／ 次のページ</p>
+  <p class="note"><strong>D-T1（更新列）</strong> 列見出しのリンクで昇順/降順を切り替えられる（この見本は更新の降順）。既定の並びは見出し昇順のまま（D-T2）。<br>
+  <strong>D-T3（プレビュー幅）</strong> 1 行目を展開しても 1 列目の幅は width: 44rem に固定され、右の列が折り返さない。</p>
+</section>
+
+<!-- ============ 2 提案キュー ============ -->
+<section class="screen" id="v2">
+  <h1>提案キュー</h1>
+  <p class="note"><strong>D-P1（成功帯＋詳細リンク）</strong> 単独採用のあとは、帯に採用結果の語詳細へのリンクを付ける（導線の補強）。一括処理は件数のみ。</p>
+  <div class="success" role="status"><strong>「卵温計」の提案を採用しました。</strong> ／ <a href="#">語の詳細を確認</a></div>
+  <p class="band-label">↑ 成功帯（D-P1）。以下は現行のキューに D-P3 を重ねた形。</p>
+
+  <p class="count-line">20 件（1 / 1 ページ）　状態: 未処理　種類: すべて</p>
+  <p class="count-line" style="font-size:.8rem">キーボードでも処理できます。<kbd>j</kbd>／<kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>r</kbd> で却下、<kbd>x</kbd> で選択の切り替え。</p>
+
+  <form class="bulk-bar" aria-label="選択した提案の一括処理">
+    <p class="bulk-count">選択 2 件</p>
+    <button type="button">このページをすべて選択</button>
+    <button type="button" class="pri">チェックした提案を採用</button>
+    <button type="button">チェックした提案を却下</button>
+  </form>
+
+  <article class="proposal">
+    <h2>卵温計 <span class="badge">語義</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line">スコア 0.88 ／ 生成元 mock-1 ／ プロンプト版 v3</p>
+    <div class="meter-wrap"><span class="meter-k">確からしさ</span><span class="meter" role="img" aria-label="確からしさ 88 パーセント"><i style="width:88%"></i></span></div>
+    <p class="definition"><span class="ai-chip" title="この定義文は AI が生成しました">AI</span>孵化器の中の温度を測る計器。点検の記録では FLT の点検の前の工程で値を読み取る。</p>
+    <ul class="evidences">
+      <li><q>卵温計の値が朝と昼で安定しない。</q> <small>10-12 ／ eml:42</small></li>
+      <li><q>卵温計を交換する。</q> <small>／ doc:09_引継ぎ/手順.md</small></li>
+    </ul>
+    <details class="ev-more">
+      <summary>ほかの用例 1 件</summary>
+      <ul class="evidences"><li><q>卵温計の読みを朝一で控える。</q> <small>10-20 ／ doc:日報.md</small></li></ul>
+    </details>
+    <p class="hint">用例が 3 件以上のときは、最初の 2 件を表示して残りを折りたたむ（D-P3）。開けば全件見える。</p>
+    <div class="ev-buttons"><button type="button">採用</button> <button type="button">却下</button> <a href="#">修正して採用…</a></div>
+  </article>
+
+  <article class="proposal">
+    <h2>竜舎 ⇔ 竜車 <span class="badge">関係</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line">スコア — ／ 生成元 human ／ プロンプト版 v3</p>
+    <p>関係：関連（human）</p>
+    <div class="ev-buttons"><button type="button">採用</button> <button type="button">却下</button></div>
+  </article>
+</section>
+
+<!-- ============ 3 語詳細 ============ -->
+<section class="screen" id="v3">
+  <h1>語詳細（語義 2 件の語の例）</h1>
+  <p class="note"><strong>D-D1（評価の折りたたみ）</strong> 評価フォームを details で閉じる。summary に評価の有無を出し、閉じていても状態が分かる。開けば集計・フォーム・コメントが見える。</p>
+
+  <article class="proposal">
+    <h2>語義 1 <span class="badge st-disputed">状態：係争中</span> <span class="ai-chip">AI</span></h2>
+    <p class="definition">孵化器の中の温度を測る計器。点検の記録では FLT の点検の前の工程で値を読み取る。</p>
+    <p class="hint">この語義は係争中です。解釈が割れているので、確定するまで引用しないでください。</p>
+    <details class="evaluate">
+      <summary>まだ評価はありません。評価する（版 1）</summary>
+      <p class="hint">自動で採用された定義なので、読んだら評価してください。評価は定義を書き換えません。</p>
+      <form>
+        <div class="ev-buttons"><span>正確性：</span><button type="button" value="correct">正しい</button><button type="button" value="needs_fix">修正が必要</button><button type="button" value="unsure">判断できない</button></div>
+        <div class="ev-buttons"><span>有用性：</span><button type="button" value="useful">役に立つ</button><button type="button" value="not_useful">役に立たない</button></div>
+      </form>
+    </details>
+  </article>
+
+  <article class="proposal">
+    <h2>語義 2 <span class="badge st-confirmed">状態：確定</span></h2>
+    <p class="definition">竜を飼う建物。搬入口の高さは竜車の規格に合わせる。</p>
+    <details class="evaluate">
+      <summary>この定義を評価する（版 2）</summary>
+      <p class="hint">この版への評価：正しい 3 回・修正が必要 1 回 ／ 役に立つ 4 回（押された回数です。評価した人は区別していないので、人数ではありません）</p>
+      <form>
+        <div class="ev-buttons"><span>正確性：</span><button type="button" value="correct">正しい</button><button type="button" value="needs_fix">修正が必要</button><button type="button" value="unsure">判断できない</button></div>
+        <div class="ev-buttons"><span>有用性：</span><button type="button" value="useful">役に立つ</button><button type="button" value="not_useful">役に立たない</button></div>
+      </form>
+    </details>
+  </article>
+  <p class="note">語義が複数ある語では、常時展開だった評価フォーム（現行）が閉じるため、縦長が解消される。</p>
+</section>
+
+<!-- ============ 4 見直し ============ -->
+<section class="screen" id="v4">
+  <h1>見直し</h1>
+  <p class="note"><strong>D-R1（集計の badge 化）</strong> 区切り無しの連結文字列を、色と文字を併記した badge の列挙に替える。<strong>D-R2（表記統一）</strong> 「採用」列を「自動採用／人が採用」にする（語詳細と同じ表記）。</p>
+  <nav class="review-kinds" aria-label="見直しの種類">
+    <a href="#" aria-current="page">「修正が必要」が付いている（3）</a>
+    <a href="#">「正しい」と「修正が必要」の両方が付いている（1）</a>
+    <a href="#">「役に立たない」が付いている（2）</a>
+    <a href="#">自動採用のまま、まだ誰も評価していない（7）</a>
+    <a href="#">まだ誰も評価していない（9）</a>
+  </nav>
+  <table>
+    <thead><tr><th scope="col">見出し</th><th scope="col">定義</th><th scope="col">採用</th><th scope="col">この版への評価（押された回数）</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a href="#">卵温計</a></td>
+        <td>孵化器の中の温度を測る計器。点検の記録では FLT の点検の前…</td>
+        <td>自動採用</td>
+        <td><span class="badge">修正が必要 2</span> <span class="badge">役に立つ 1</span></td>
+      </tr>
+      <tr>
+        <td><a href="#">竜舎</a></td>
+        <td>竜を飼う建物。搬入口の高さは竜車の規格に合わせる。</td>
+        <td>人が採用</td>
+        <td><span class="badge st-accepted">正しい 3</span> <span class="badge st-accepted">役に立つ 4</span></td>
+      </tr>
+      <tr>
+        <td><a href="#">FLT点検</a></td>
+        <td>卵温計の値を確認してから実施する点検。</td>
+        <td>自動採用</td>
+        <td><span class="badge">未評価</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">badge の色は状態の意味にだけ使い（緑=肯定・中性=数値の列挙・未評価）、分類には使わない。</p>
+</section>
+
+</main>
+
+<script>
+"use strict";
+// 案の切り替えだけ。装飾モーションは無し
+document.getElementById("tabs").addEventListener("click", function (ev) {
+  var b = ev.target.closest("button");
+  if (!b) return;
+  document.querySelectorAll("#tabs button").forEach(function (x) {
+    x.classList.toggle("on", x === b);
+    x.setAttribute("aria-pressed", x === b ? "true" : "false");
+  });
+  document.querySelectorAll(".screen").forEach(function (s) {
+    s.classList.toggle("on", s.id === b.dataset.s);
+  });
+});
+// 明るさ: 自動 → 明 → 暗 → 自動（本体は自動追従のみ。切替は見本確認用）
+var order = ["auto", "light", "dark"], i = 0;
+document.getElementById("theme").addEventListener("click", function () {
+  i = (i + 1) % 3;
+  if (order[i] === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", order[i]);
+});
+</script>
+</body>
+</html>
