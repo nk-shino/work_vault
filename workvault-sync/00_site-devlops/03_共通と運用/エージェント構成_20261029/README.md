@@ -2,7 +2,7 @@
 title: エージェント構成案 README（サイト運営開発サイクル）
 type: report
 phase: develop
-status: 配備済み（Claude Code 側・2026-10-30）
+status: 配備済み（Claude Code 側・Kohden Code 側・2026-10-30）
 project: 既存サイト改善
 updated: 2026-10-29
 ---
@@ -11,7 +11,7 @@ updated: 2026-10-29
 
 ノート `00_site-devlops/2026-10-29.md` の再開事項（§9）1〜7に応じて作成した構成案。提案であり、実際のエージェントフォルダへの配備・読み込み検証は未実施（§9-5 の区別どおり）。
 
-## 1. 構成（進行管理＋4専門役）
+## 1. 構成（進行管理＋専門役）
 
 | 役割 | ファイル | 権限の要点 |
 | --- | --- | --- |
@@ -21,6 +21,13 @@ updated: 2026-10-29
 | 設計・UI/UX | agent/site-design.md | edit: 可（動画・URL・アニメーションの設計前提を含む） |
 | 実装・デバッグ | agent/site-implement.md | edit: 可（fixture・基準値を維持） |
 | 独立レビュー・検証 | agent/site-review.md | edit: deny／公開前の権利・秘密・混入チェックを含む |
+| 安全・脆弱性検証 | agent/site-security.md | edit: deny／OWASP ベースの点検・security-review 相当と osv-scanner を流用 |
+| 技術スタック監視 | agent/site-techwatch.md | edit: deny／bash は読み取り専用の実測のみ・GitHub 公式 MCP を流用 |
+| 動画処理 | agent/site-video.md | edit: 可（素材と派生物）／ffmpeg・ffprobe 直接（公式の動画MCPは無い） |
+| 分析（GA4） | agent/site-analytics.md | edit: deny／Google 公式 analytics-mcp を読み取り専用で流用・設定変更は承認後 |
+| 意見・新機能の検証 | 判断プロトコル_意見と新機能の検証.md | エージェントではなく標準手順（テンプレート）。提出者と検証者を分ける |
+
+新規4役と判断プロトコルは、運営者の提案（`00_site-devlops/提案.md`・2026-10-29）に基づき追加した。**提案（未配備）**であり、配備手順は §3 のとおり。並行実行の上限（2体）は追加後も変わらない。
 
 ## 2. 役割数の判断根拠（2026-10-29 の事例調査より）
 
@@ -29,11 +36,12 @@ updated: 2026-10-29
 - 個人報告（2026-08〜09）: 並列は2〜3体が実用上限。レビューと仲裁が労働の約半分になる例あり
 - 結論: 提示済み4役（§5）を基本に、設計と実装を分担（逐次実行）・独立レビューを分離。専門役ファイルは5本だが、**同時並行で動かすのは2体まで**。安全・権利は進行管理の承認台帳＋レビュー担当の公開前チェックに組み込み、専任役を置かない
 - 対象が BMAD Method（8専門役）級の大規模開発なら専門役の追加を検討する。ソロの静的サイト運用では、レビューと仲裁のコストが専門性の利得を上回る
+- 2026-10-29 の運営者提案による追加4役の根拠: セキュリティ点検と分析は渡す権限・守秘の区分が既存役と異なるため分離（点検と修正の分離を保つ）。技術監視と動画処理は手順が専業的で既存役の業務を太らせないため独立させた。**同時並行の上限（2体）は追加後も変わらない。動かす役を選ぶのは進行管理**
 
 ## 3. 配備手順（未実施・実施時にこのとおり行う）
 
 1. 配置先を選ぶ。プロジェクト単位ならワークスペース `.kohden-code/agent/<name>.md`、全プロジェクト共通なら `~/.config/kohden-code/agent/<name>.md`（Kohden Code 公式仕様: frontmatter は description／mode／model／permission など。unknown フィールドは options へ退避される）
-2. agent/ 配下の5ファイルを上記フォルダへコピーする（ファイル名を変えない）
+2. agent/ 配下の9ファイル（当初5本＋2026-10-29 提案追加の4本）を上記フォルダへコピーする（ファイル名を変えない）。判断プロトコルはサブエージェントでないためコピーしない
 3. 進行管理.md の内容は AGENTS.md への追記か、セッション開始プロンプトとして使う（サブエージェントファイルにはしない）
 4. Kohden Code を再起動する（設定は起動時に読み込まれ、実行中のセッションには反映されない）
 5. 起動後、各エージェントが起動できること・権限（site-review の edit: deny など）が効いていることを検証する
@@ -53,6 +61,15 @@ updated: 2026-10-29
 
 §3 の手順は別ツール側へ配備するときの手順として**そのまま残す。** 書き換えない。
 
+## 3c. 配備の実績（2026-10-30・社用PC側 Kohden Code）
+
+U2 の承認（エージェント5本）により、このPCの Kohden Code へ配備した。
+
+- 配備先は `.kohden-code/agent/`（ワークスペース単位）。5本を原文のままコピー（書式は Kohden Code 向けのため移植不要）
+- 追加4役（site-security／site-techwatch／site-video／site-analytics）は**未配備**。含めるかは台帳S-20で確認中
+- 進行管理.md は未配備（§3-3 のとおり）。再起動後の実読み込み検証は未実施（§3-5）
+- 検証の詳細は `検証記録.md` §4d
+
 ## 4. 利用するスキル・ツール（2026-10-29 時点で導入済みを確認）
 
 | スキル | 利用する役割 | 用途 |
@@ -61,8 +78,17 @@ updated: 2026-10-29
 | ui-revamp | 設計 | 改修手順（調査→範囲合意→実装→検証→記録） |
 | frontend-design | 設計 | 視覚設計の原則（token・type・motion の意図的な選択） |
 | verification-before-completion / forced-logging | 実装・進行管理 | 完了報告前の記録確認 |
+| security-review（内蔵スキル） | 安全検証 | OWASP Top 10 ベースの点検手順 |
 | anthropic-skills（docx/xlsx/pptx/pdf） | 情報整理・進行管理 | 報告書・台帳を Office 形式で出すとき。使用前に最新版を取得 |
 | vault-change-and-report / vault-sync | 進行管理 | 保管庫への登録と GitHub 同期（同期は承認後に実行） |
+
+公式 MCP の流用（2026-10-29 実測。接続設定は `設定例_MCP_20261029.md`・いずれも承認待ち）:
+
+| MCP | 利用する役割 | 公式性 |
+| --- | --- | --- |
+| @playwright/mcp（Microsoft 公式） | 実画面検証（設計・実装・レビュー・安全検証） | 公式・`--headless --isolated` 固定で運用 |
+| github-mcp-server（GitHub 公式） | 技術スタック監視 | 公式・dependabot／security_advisories／repos toolsets・read-only |
+| analytics-mcp（Google 公式） | 分析（GA4） | 公式・実験的・読み取り専用（readonly）で接続 |
 
 ## 5. 今回作成したものと検証
 
