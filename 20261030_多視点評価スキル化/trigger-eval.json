@@ -1,0 +1,22 @@
+[
+  {"query": "この提案、採否を決める前に複数の立場で評価しておきたい。法務とか運営者とか利用者の目で、互いの意見を見せずに", "should_trigger": true},
+  {"query": "投票機能の検討資料を、閲覧者・運営者・セキュリティ担当の役割で独立に評価して。あとで一致点と対立点をまとめてほしい", "should_trigger": true},
+  {"query": "盲評価で意見を集めたい。各役割のAIを別々に動かして結論を出させるにはどう進めればいい？", "should_trigger": true},
+  {"query": "会議の前に新機能の妥当性を多視点で検証しておいて。AIでいいから各役割の視点で率直な反論も欲しい", "should_trigger": true},
+  {"query": "この文書の改訂案を、読者・編集者・法務・運用担当の立場で別々に評価してほしい。評1から評4みたいな形で記録も残したい", "should_trigger": true},
+  {"query": "ペルソナ評価をお願いしたい。5人くらいの立場でこの仕様を検証して、多数決はしないで残る異論も見たい", "should_trigger": true},
+  {"query": "役割別にAI評価を回したい。評価者には同じ前提資料を読ませて、結論は私が統合する", "should_trigger": true},
+  {"query": "利用者・費用対効果・アクセシビリティの3つの視点でこの方針を評価したい。独立した評価で、最初から全部の意見を1つにまとめないで", "should_trigger": true},
+  {"query": "提案キューの接続方式案を複数の立場からチェックして。採用判断の前に残る異論を確認したい", "should_trigger": true},
+  {"query": "外部向けお知らせ文の下書きを、読者・法務・広報の立場で独立に評価してから出したい", "should_trigger": true},
+  {"query": "このコードをセキュリティ観点で点検して。脆弱性があったら指摘して", "should_trigger": false},
+  {"query": "さっきの修正が完了したか、変更前後と検証範囲で確認して報告して", "should_trigger": false},
+  {"query": "この報告書の文体を点検して。AIっぽい表現を自然な日本語に直して", "should_trigger": false},
+  {"query": "A案とB案のpros consを箇条書きで比較して", "should_trigger": false},
+  {"query": "コードレビューお願い。このブランチの変更を見てコメントして", "should_trigger": false},
+  {"query": "このエラーの原因を切り分けて。ログはこれ", "should_trigger": false},
+  {"query": "1人の第三者としてこの設計をレビューして。意見は1つでいい", "should_trigger": false},
+  {"query": "スキルのdescriptionを改善してトリガー精度を上げたい", "should_trigger": false},
+  {"query": "この手順書をわかりやすく書き直して", "should_trigger": false},
+  {"query": "テストを書いてカバレッジを上げて", "should_trigger": false}
+]
