@@ -10,7 +10,18 @@
   </select>
   <button type="submit">表示</button>
 </form>
+{% set bulk_error = request.query_params.get("error") %}
+{% if bulk_error %}
+<div class="error" role="alert">
+  {% if bulk_error == "mock" %}モック草案の定義 {{ request.query_params.get("n") or 0 }} 件を含むため、一括採用は中止しました。それらは「修正して採用」で定義を書いてから採用してください。
+  {% elif bulk_error == "stale" %}選択した提案を処理できませんでした。処理済みのものが混ざっているか、先に他で処理された可能性があります。一覧を更新して選び直してください。
+  {% elif bulk_error == "empty" %}提案が選ばれていません。一覧でチェックを付けてからボタンを押してください。
+  {% else %}操作の指定が正しくありません。一覧からやり直してください。
+  {% endif %}
+</div>
+{% endif %}
 <p>{{ total }} 件（{{ page }} / {{ pages }} ページ）</p>
+<p class="hint js-only" hidden>キーボードでも処理できます。<kbd>j</kbd>／<kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>r</kbd> で却下、<kbd>x</kbd> で選択の切り替え。入力欄やボタンにいるときは効きません。</p>
 {% if not rows %}
 <div class="empty">
   {% if status == "pending" %}
@@ -23,8 +34,15 @@
   {% endif %}
 </div>
 {% endif %}
+<div id="proposals-list">
 {% for p, payload in rows %}
-<article class="proposal" aria-labelledby="p-{{ p.id }}">
+<article class="proposal{% if p.status == "pending" %} is-pending{% endif %}" aria-labelledby="p-{{ p.id }}" tabindex="-1"{% if p.status == "pending" and p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME %} data-protected="1"{% endif %}>
+  {% if p.status == "pending" %}
+  <div class="prop-check">
+    <input type="checkbox" id="sel-{{ p.id }}" name="ids" value="{{ p.id }}" form="bulk-bar-form">
+    <label class="sr-only" for="sel-{{ p.id }}">この提案を選択</label>
+  </div>
+  {% endif %}
   <h2 id="p-{{ p.id }}">
     {% if p.proposal_type in ("sense", "evidence") %}{{ payload.headword }}{% else %}{{ payload.from_headword }} ⇔ {{ payload.to_headword }}{% endif %}
     <span class="badge">{{ label(p.proposal_type) }}</span>
@@ -61,11 +79,11 @@
     {% if p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME %}
     <p class="hint">定義文はモック（仮の文）です。採用するなら「修正して採用」で定義を書いてください。</p>
     {% else %}
-    <form method="post" action="/proposals/{{ p.id }}/accept" class="busy-on-submit">
+    <form method="post" action="/proposals/{{ p.id }}/accept" class="busy-on-submit" data-kaction="accept">
       <button type="submit">採用</button>
     </form>
     {% endif %}
-    <form method="post" action="/proposals/{{ p.id }}/reject" class="busy-on-submit">
+    <form method="post" action="/proposals/{{ p.id }}/reject" class="busy-on-submit" data-kaction="reject">
       <button type="submit">却下</button>
     </form>
     {% if p.proposal_type == "sense" %}<a href="/proposals/{{ p.id }}/edit">修正して採用…</a>{% endif %}
@@ -75,8 +93,21 @@
   {% endif %}
 </article>
 {% endfor %}
+</div>
 <nav aria-label="ページ送り" class="pager">
   {% if page > 1 %}<a href="/proposals?status={{ status }}&page={{ page - 1 }}" rel="prev">前のページ</a>{% endif %}
   {% if page < pages %}<a href="/proposals?status={{ status }}&page={{ page + 1 }}" rel="next">次のページ</a>{% endif %}
 </nav>
+{% if has_pending %}
+<form id="bulk-bar-form" method="post" action="/proposals/bulk" class="bulk-bar busy-on-submit" aria-label="選択した提案の一括処理">
+  <input type="hidden" name="status" value="{{ status }}">
+  <input type="hidden" name="page" value="{{ page }}">
+  <p class="bulk-count" id="bulk-count" aria-live="polite">選択 0 件</p>
+  <button type="button" id="bulk-select-all" class="js-only" hidden>このページをすべて選択</button>
+  <button type="submit" name="action" value="accept">チェックした提案を採用</button>
+  <button type="submit" name="action" value="reject">チェックした提案を却下</button>
+  <p class="bulk-warn" id="bulk-warn" aria-live="polite" hidden>モック草案の定義が選択されています。採用は「修正して採用」から行うか、その提案のチェックを外してください。</p>
+</form>
+{% endif %}
+<p id="knav-status" class="sr-only" role="status" aria-live="polite"></p>
 {% endblock %}

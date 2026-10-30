@@ -24,6 +24,39 @@ class TermPage:
     total: int
     page: int
     pages: int
+    # 一覧行を展開したときに見せる語義プレビュー。term_id → 要約。語義が無い語は入らない
+    previews: dict[str, SensePreview] = field(default_factory=dict)
+
+
+@dataclass
+class SensePreview:
+    """行の展開で見せる要約。最初の語義の冒頭と、その語の語義の件数。"""
+
+    count: int
+    text: str
+
+
+def _sense_previews(session: Session, term_ids: list[str]) -> dict[str, SensePreview]:
+    """一覧に載っている語の語義を1回の問い合わせで集め、語ごとに要約を作る。
+
+    却下済みの語義は数えない（消した扱いのものを読み用に見せる必要は無い）。
+    最初の語義は relation の解決と同じく created_at 順の先頭。
+    """
+    previews: dict[str, SensePreview] = {}
+    if not term_ids:
+        return previews
+    senses = session.scalars(
+        select(Sense)
+        .where(Sense.term_id.in_(term_ids), Sense.status != "rejected")
+        .order_by(Sense.created_at)
+    ).all()
+    for s in senses:
+        pv = previews.setdefault(s.term_id, SensePreview(0, ""))
+        pv.count += 1
+        if not pv.text:
+            text = s.definition.strip()
+            pv.text = text[:100] + ("…" if len(text) > 100 else "")
+    return previews
 
 
 def list_terms(
@@ -60,7 +93,8 @@ def list_terms(
     items = session.scalars(
         stmt.order_by(order, Term.headword.asc()).offset((page - 1) * PER_PAGE).limit(PER_PAGE)
     ).all()
-    return TermPage(list(items), total, page, pages)
+    previews = _sense_previews(session, [t.id for t in items])
+    return TermPage(list(items), total, page, pages, previews)
 
 
 def context_tags(session: Session) -> list[str]:

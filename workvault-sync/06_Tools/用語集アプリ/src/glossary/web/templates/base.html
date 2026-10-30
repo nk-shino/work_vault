@@ -13,7 +13,7 @@
     <span class="brand"><strong>社内用語集</strong></span>
     <nav aria-label="メイン">
       <a href="/terms">用語一覧</a>
-      <a href="/proposals">提案キュー</a>
+      <a href="/proposals">提案キュー{% if nav_pending %} <span class="nav-badge" title="未処理の提案の件数">{{ nav_pending }}</span>{% endif %}</a>
       <a href="/review">見直し</a>
       <a href="/new">用語を登録</a>
       <a href="/export.csv">CSV出力</a>

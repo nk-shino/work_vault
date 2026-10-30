@@ -100,6 +100,13 @@ html { scroll-behavior: smooth; }
 .skip { position: absolute; left: -999px; }
 .skip:focus { left: 1rem; top: .5rem; background: var(--surface); color: var(--fg); padding: .3rem .6rem; z-index: 10; box-shadow: var(--shadow-2); border-radius: 6px; }
 
+/* 見た目には出さず、読み上げとラベル付けのためだけにある文字 */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
+
 /* ---- ヘッダー ---- */
 
 header {
@@ -133,6 +140,17 @@ header nav a {
 }
 header nav a:hover { background: var(--accent-soft); color: var(--accent-strong); }
 header nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent-strong); font-weight: bold; }
+/* 数値入りバッジ（未処理の提案の件数）。0件のときは出さない */
+.nav-badge {
+  display: inline-block; min-width: 1.5em; text-align: center;
+  margin-left: .35em; padding: 0 .4em; border-radius: 999px;
+  background: var(--accent); color: #fff;
+  font-size: .78rem; font-weight: bold; line-height: 1.6;
+  font-variant-numeric: tabular-nums; vertical-align: .08em;
+}
+@media (prefers-color-scheme: dark) {
+  .nav-badge { color: #14161f; }
+}
 .notice {
   margin-left: auto; color: var(--muted); font-size: .8rem;
   border: 1px solid var(--line-soft); border-radius: 999px; padding: .1rem .7rem;
@@ -293,6 +311,34 @@ th:not(.sorted) a.sort::after {
 }
 th:hover a.sort::after { opacity: .55; }
 
+/* 件数行と密度切替のボタン */
+.table-tools { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.table-tools p { margin: 0; }
+.table-tools button { margin-top: 0; }
+/* 狭い表示。行の余白だけ詰めて、文字の大きさは変えない */
+table.compact th, table.compact td { padding: .16rem .55rem; }
+
+/* 一覧行を展開した語義プレビュー。details/summary なので JS が無くても開閉できる */
+td .prev { display: block; margin-top: .15rem; }
+td .prev summary {
+  display: inline-flex; align-items: center; gap: .3rem;
+  list-style: none; cursor: pointer; color: var(--muted); font-size: .8rem;
+  padding: .05rem .35rem; margin-left: .3rem; border-radius: 4px;
+  transition: background-color .12s ease, color .12s ease;
+}
+td .prev summary::-webkit-details-marker { display: none; }
+td .prev summary:hover { color: var(--accent); background: var(--accent-soft); }
+.prev-arrow { display: inline-block; font-size: .66rem; transition: transform .15s ease; }
+.prev[open] .prev-arrow { transform: rotate(90deg); }
+/* プレビューも定義文なので、詳細と同じ明朝の組版を小さめで使う */
+.prev-body {
+  margin: .3rem 0 .1rem; padding: .15rem 0 .15rem .7rem;
+  border-left: 2px solid var(--line); max-width: 46rem;
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: .95rem; line-height: 1.75; letter-spacing: .01em; color: var(--fg);
+}
+.prev-meta { margin: 0; color: var(--muted); font-size: .78rem; }
+
 /* ---- 状態の表示 ---- */
 
 .badge {
@@ -307,6 +353,9 @@ th:hover a.sort::after { opacity: .55; }
 }
 .st-disputed { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-border); }
 .st-disputed::before { background: var(--warn-fg); }
+/* 保留（未処理）は「対応待ち」の意味。エラーではないので黄で示す（赤は破壊的な操作だけに使う） */
+.st-pending { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-border); }
+.st-pending::before { background: var(--warn-fg); }
 .st-archived, .st-rejected { color: var(--muted); }
 .st-confirmed, .st-active, .st-accepted {
   background: var(--good-bg); color: var(--good); border-color: var(--good-border);
@@ -333,6 +382,36 @@ th:hover a.sort::after { opacity: .55; }
 .sense:hover, .proposal:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); border-color: var(--hover-line); }
 .sense.disputed { border: 2px solid var(--warn-fg); }
 
+/* 一括処理の選択。チェック欄をカードの左端に置き、本文はその分下がる */
+.proposal.is-pending { position: relative; padding-left: 2.7rem; }
+.prop-check { position: absolute; left: 1.05rem; top: 1.2rem; }
+.prop-check input {
+  width: 1.05rem; height: 1.05rem; margin: 0; cursor: pointer;
+  accent-color: var(--accent);
+}
+/* キーボードトリアージ（j/k）でいま指している提案。枠の色と影で示し、位置はフォーカス輪郭でも分かる */
+.proposal.kcursor { border-color: var(--accent); box-shadow: var(--shadow-2); }
+
+/* 選択バー（画面の下端に置く）。チェックが0件のときは JS が隠す。JS が無ければ常に見えている */
+.bulk-bar {
+  position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%);
+  z-index: 6; box-sizing: border-box; margin: 0;
+  display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
+  width: min(56rem, calc(100vw - 2rem));
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: var(--shadow-2); padding: .55rem 1.1rem;
+}
+.bulk-bar[hidden] { display: none; }
+.bulk-count { margin: 0; font-weight: bold; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bulk-warn { margin: 0; flex: 1 1 100%; color: var(--warn-fg); font-size: .85rem; }
+.bulk-bar button { margin-top: 0; }
+.bulk-bar button[value="accept"] {
+  background: linear-gradient(180deg, #4a5ec9, var(--accent-strong));
+  border-color: var(--accent-strong); color: #fff; font-weight: bold;
+}
+.bulk-bar button[value="accept"]:hover { background: linear-gradient(180deg, #5569d6, #35459f); color: #fff; }
+.bulk-bar button[value="reject"]:hover { border-color: var(--danger-fg); color: var(--danger-fg); background: var(--danger-bg); }
+
 .warn { background: var(--warn-bg); color: var(--warn-fg); padding: .35rem .7rem; border-radius: 6px; }
 
 .confused {
@@ -357,13 +436,13 @@ th:hover a.sort::after { opacity: .55; }
   background: var(--quote-bg); padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」";
 }
 .evidences small, .meta-line { color: var(--muted); }
+/* 空状態は見出し+説明+次の一手の3段。左揃えのブロックにして、状態と取れる手段をはっきり述べる */
 .empty {
   color: var(--muted);
   border: 1.5px dashed var(--line); border-radius: var(--radius);
   background: transparent;
-  padding: 1.2rem 1.4rem; text-align: center; margin: 1rem 0;
+  padding: 1.2rem 1.4rem; text-align: left; margin: 1rem 0;
 }
-/* 空状態は見出し+説明+次の一手の3段。斜体に頼らず、状態と取れる手段をはっきり述べる */
 .empty-h { font-weight: bold; color: var(--fg); margin: .1rem 0 .2rem; }
 .empty-d { color: var(--muted); margin: 0 0 .5rem; }
 .empty-actions { margin: 0; font-size: .92rem; }

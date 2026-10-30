@@ -9,7 +9,10 @@
   {% endfor %}
 </nav>
 {% if not items %}
-<p class="empty">該当する語義はありません。</p>
+<div class="empty">
+  <p class="empty-h">該当する語義はありません</p>
+  <p class="empty-d">評価の状態が変わると、この一覧から外れます。上の種類を選ぶと別の見直し対象が出ます。</p>
+</div>
 {% else %}
 <table>
   <thead><tr><th scope="col">見出し</th><th scope="col">定義</th><th scope="col">採用</th><th scope="col">この版への評価（押された回数）</th></tr></thead>

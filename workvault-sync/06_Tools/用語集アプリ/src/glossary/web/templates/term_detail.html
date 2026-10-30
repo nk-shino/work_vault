@@ -89,7 +89,10 @@
 <ul>{% for r in items %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a> <small>（{{ r.method }}{% if r.score is not none %}、スコア {{ "%.2f"|format(r.score) }}{% endif %}）</small></li>{% endfor %}</ul>
 {% endfor %}
 {% else %}
-<p class="empty">関連語はまだありません。</p>
+<div class="empty">
+  <p class="empty-h">関連語はまだありません</p>
+  <p class="empty-d">この下の「関連語を追加する」から、混同しやすい語や同義語を結べます。</p>
+</div>
 {% endif %}
 
 <details>

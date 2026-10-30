@@ -90,6 +90,11 @@ templates.env.globals["HUMAN"] = HUMAN
 PROPOSALS_PER_PAGE = 20
 
 
+def _is_protected_mock(p: Proposal) -> bool:
+    """モックの定義文のまま採用できない提案か。単独の一括を問わず、採用の入口で必ず見る。"""
+    return p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME
+
+
 def get_session(request: Request) -> Iterator[Session]:
     f: sessionmaker[Session] = request.app.state.factory
     with f() as session:
@@ -120,6 +125,15 @@ def create_app(database_url: str | None = None) -> FastAPI:
 
     # 引数名を status にしないこと。テンプレートへ渡す絞り込みの status とぶつかる
     def render(request: Request, name: str, code: int = 200, **ctx: Any) -> HTMLResponse:
+        # ナビのバッジに出す未処理の提案の件数。読み取り専用の小さな集計なので毎ページ数え直す
+        with factory() as s:
+            ctx.setdefault(
+                "nav_pending",
+                s.scalar(
+                    select(func.count()).select_from(Proposal).where(Proposal.status == "pending")
+                )
+                or 0,
+            )
         return templates.TemplateResponse(request, name, ctx, status_code=code)
 
     @app.exception_handler(NotFound)
@@ -317,17 +331,18 @@ def create_app(database_url: str | None = None) -> FastAPI:
             .limit(PROPOSALS_PER_PAGE)
         ).all()
         rows = [(p, json.loads(p.payload_json)) for p in items]
+        has_pending = any(p.status == "pending" for p, _ in rows)
         return render(
             request, "proposals.html", rows=rows, status=status, statuses=PROPOSAL_STATUSES,
-            page=page, pages=pages, total=total,
-        )
+            page=page, pages=pages, total=total, has_pending=has_pending,
+        )  # fmt: skip
 
     @app.post("/proposals/{pid}/accept")
     def proposal_accept(
         db: Db, pid: str
     ) -> RedirectResponse:
         p = db.get(Proposal, pid)
-        if p is not None and p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME:
+        if p is not None and _is_protected_mock(p):
             raise ValidationFailed(
                 "モックの定義文はそのまま採用できない。「修正して採用」で定義を書いてください"
             )
@@ -342,6 +357,52 @@ def create_app(database_url: str | None = None) -> FastAPI:
         proposals.reject(db, pid, reviewer=None)
         db.commit()
         return RedirectResponse("/proposals", status_code=303)
+
+    @app.post("/proposals/bulk")
+    def proposals_bulk(
+        request: Request,
+        db: Db,
+        action: Annotated[str, Form()] = "",
+        ids: Annotated[list[str] | None, Form()] = None,
+        status: Annotated[str, Form()] = "pending",
+        page: Annotated[int, Form()] = 1,
+    ) -> RedirectResponse:
+        """チェックを付けた提案をまとめて採用・却下する。
+
+        モック定義の保護は単独の採用と同じ検査（_is_protected_mock）を通す。一括でも
+        モックの定義文をそのまま確定させない。処理は全部か無しかで、1件でも失敗したら
+        コミットせず一覧へ戻り、理由を帯で出す。
+        """
+        params: dict[str, Any] = {"status": status}
+        if page > 1:
+            params["page"] = page
+        back = "/proposals?" + urlencode(params)
+        selected = ids or []
+        if action not in ("accept", "reject"):
+            return RedirectResponse(back + "&error=invalid", status_code=303)
+        if not selected:
+            return RedirectResponse(back + "&error=empty", status_code=303)
+        found = {
+            p.id: p for p in db.scalars(select(Proposal).where(Proposal.id.in_(selected))).all()
+        }
+        if len(found) != len(selected) or any(p.status != "pending" for p in found.values()):
+            return RedirectResponse(back + "&error=stale", status_code=303)
+        try:
+            if action == "accept":
+                protected = [p for p in found.values() if _is_protected_mock(p)]
+                if protected:
+                    return RedirectResponse(
+                        back + "&error=mock&n=" + str(len(protected)), status_code=303
+                    )
+                proposals.accept_many(db, selected, reviewer=None)
+            else:
+                proposals.reject_many(db, selected, reviewer=None)
+            db.commit()
+        except DomainError:
+            # 途中で失敗したら全部を無効にして戻す。採用済みと表示のずれを残さない
+            db.rollback()
+            return RedirectResponse(back + "&error=stale", status_code=303)
+        return RedirectResponse(back, status_code=303)
 
     @app.get("/proposals/{pid}/edit", response_class=HTMLResponse)
     def proposal_edit_form(request: Request, db: Db, pid: str) -> HTMLResponse:

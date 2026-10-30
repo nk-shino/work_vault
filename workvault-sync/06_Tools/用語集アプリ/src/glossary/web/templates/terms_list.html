@@ -24,9 +24,12 @@
   <button type="submit">絞り込む</button>
 </form>
 
-<p>{{ result.total }} 件（{{ result.page }} / {{ result.pages }} ページ）</p>
+<div class="table-tools">
+  <p>{{ result.total }} 件（{{ result.page }} / {{ result.pages }} ページ）</p>
+  <button type="button" id="density-toggle" class="js-only" aria-pressed="false" hidden>行を狭く</button>
+</div>
 {% if result.items %}
-<table>
+<table id="terms-table">
   <thead><tr>
     <th scope="col" {% if sort == "headword" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('headword') }}">見出し</a>{% if sort == "headword" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
     <th scope="col" {% if sort == "reading" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('reading') }}">読み</a>{% if sort == "reading" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
@@ -36,7 +39,13 @@
   <tbody>
   {% for t in result.items %}
     <tr>
-      <td><a href="/terms/{{ t.id }}">{{ t.headword }}</a></td>
+      <td>
+        <a href="/terms/{{ t.id }}">{{ t.headword }}</a>{% set pv = result.previews.get(t.id) %}{% if pv %} <details class="prev">
+          <summary><span class="prev-arrow" aria-hidden="true">▶</span><span class="sr-only">語義プレビューを開く</span></summary>
+          <p class="prev-body">{{ pv.text }}</p>
+          {% if pv.count > 1 %}<p class="prev-meta">最初の語義（ほかの語義 {{ pv.count - 1 }} 件）</p>{% endif %}
+        </details>{% endif %}
+      </td>
       <td>{{ t.reading or "" }}</td>
       <td>{{ t.abbreviation or "" }}</td>
       <td><span class="badge st-{{ t.status }}">{{ label(t.status) }}</span></td>

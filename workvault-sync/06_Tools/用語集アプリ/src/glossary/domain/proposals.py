@@ -199,6 +199,32 @@ def reject(session: Session, proposal_id: str, *, reviewer: str | None) -> Propo
     return p
 
 
+def accept_many(
+    session: Session, proposal_ids: list[str], *, reviewer: str | None
+) -> list[Proposal]:
+    """選択した提案をまとめて受理する。
+
+    1件でも処理できないものがあれば例外を出し、呼び出し側がコミットしないので
+    全体が無効になる（全部か無しか）。モック定義の保護は画面側（web/app.py）の
+    検査を通ったものだけがここへ届く前提だが、ここでも各提案は accept() の
+    未処理チェックを通る。途中で失敗したら以降の採用は行われない。
+    """
+    done: list[Proposal] = []
+    for pid in proposal_ids:
+        done.append(accept(session, pid, reviewer=reviewer))
+    return done
+
+
+def reject_many(
+    session: Session, proposal_ids: list[str], *, reviewer: str | None
+) -> list[Proposal]:
+    """選択した提案をまとめて却下する。扱いは accept_many と同じ（全部か無しか）。"""
+    done: list[Proposal] = []
+    for pid in proposal_ids:
+        done.append(reject(session, pid, reviewer=reviewer))
+    return done
+
+
 def register_manually(
     session: Session,
     *,
