@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>社内用語集 UIモックアップ 第2段</title>
+<style>
+/* ---- 色の決め事（20261021 モックアップと同じ。明るさは OS に従い、右上で強制もできる） ---- */
+:root {
+  --bg: #f4f4ef;
+  --bg-soft: #fbfbf8;
+  --surface: #ffffff;
+  --fg: #23232b;
+  --muted: #71717e;
+  --line: #e2e2ea;
+  --accent: #3a4db8;
+  --accent-strong: #2c3c99;
+  --accent-soft: #eef1fc;
+  --good: #1e7a3f;
+  --good-bg: #e7f4ec;
+  --warn: #8a5800;
+  --warn-bg: #fdf3dd;
+  --danger: #b3261e;
+  --danger-bg: #fdeaea;
+  --side-bg: linear-gradient(180deg, #232a55, #1a1f42);
+  --side-fg: #c9d0f2;
+  --shadow-1: 0 1px 2px rgba(30,30,60,.06), 0 2px 8px rgba(30,30,60,.07);
+  --shadow-2: 0 10px 28px rgba(30,30,60,.16);
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12131a; --bg-soft: #191b24; --surface: #1d1f2b; --fg: #e4e4ec; --muted: #9a9aae;
+    --line: #2d3040; --accent: #8fa1ff; --accent-strong: #b0bdff; --accent-soft: #262b45;
+    --good: #5fca8b; --good-bg: #1c2e24; --warn: #e8b45a; --warn-bg: #33291a;
+    --danger: #ff8d85; --danger-bg: #37201f;
+    --side-bg: linear-gradient(180deg, #171a30, #101223); --side-fg: #b9c0e8;
+    --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.35);
+    --shadow-2: 0 10px 28px rgba(0,0,0,.55);
+  }
+}
+html[data-theme="dark"] {
+  --bg: #12131a; --bg-soft: #191b24; --surface: #1d1f2b; --fg: #e4e4ec; --muted: #9a9aae;
+  --line: #2d3040; --accent: #8fa1ff; --accent-strong: #b0bdff; --accent-soft: #262b45;
+  --good: #5fca8b; --good-bg: #1c2e24; --warn: #e8b45a; --warn-bg: #33291a;
+  --danger: #ff8d85; --danger-bg: #37201f;
+  --side-bg: linear-gradient(180deg, #171a30, #101223); --side-fg: #b9c0e8;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.35);
+  --shadow-2: 0 10px 28px rgba(0,0,0,.55);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Yu Gothic UI", "Meiryo UI", "Segoe UI", sans-serif;
+  font-feature-settings: "palt";
+  background: radial-gradient(70rem 22rem at 80% -8rem, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%), var(--bg);
+  color: var(--fg); line-height: 1.65;
+  transition: background-color .3s ease, color .3s ease;
+}
+a { color: var(--accent); text-decoration: none; }
+kbd {
+  font-family: inherit; font-size: .78em; padding: 0 .45em;
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; background: var(--surface);
+}
+
+/* ---- モックアップである旨の帯 ---- */
+.mock-banner {
+  background: repeating-linear-gradient(-45deg, var(--warn-bg) 0 14px, transparent 14px 28px), var(--surface);
+  border-bottom: 1px solid var(--line);
+  color: var(--warn); font-size: .82rem; padding: .35rem 1.2rem;
+  display: flex; gap: 1rem; align-items: center;
+}
+
+/* ---- 上部バー（案の切り替え） ---- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 1rem;
+  padding: .5rem 1.2rem; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.tabs { display: flex; gap: .3rem; flex-wrap: wrap; }
+.tabs button {
+  font: inherit; font-size: .9rem; padding: .35rem 1rem; border-radius: 999px;
+  border: 1px solid transparent; background: transparent; color: var(--muted);
+  cursor: pointer; transition: all .18s ease;
+}
+.tabs button:hover { color: var(--fg); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.tabs button.on { background: var(--accent-soft); color: var(--accent); font-weight: bold; border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+.topbar .spacer { flex: 1; }
+.theme-state { font-size: .8rem; color: var(--muted); }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+  color: var(--muted); cursor: pointer; transition: all .2s ease;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(15deg); }
+
+/* ---- 画面の土台 ---- */
+main { padding: 1.4rem 2rem 4rem; max-width: 62rem; }
+.screen { display: none; animation: rise .3s ease-out; }
+.screen.on { display: block; }
+@keyframes rise { from { opacity: 0; transform: none; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+h1.screen-title { font-size: 1.4rem; margin: 0 0 .2rem; letter-spacing: .02em; }
+p.screen-sub { color: var(--muted); font-size: .88rem; margin: 0 0 1.2rem; }
+
+/* 案ごとの説明。採否の材料を画面の上に置く */
+.case-note {
+  background: var(--bg-soft); border: 1px dashed var(--line); border-radius: 10px;
+  padding: .6rem 1rem; margin: 0 0 1.2rem; font-size: .84rem; color: var(--muted);
+}
+.case-note b { color: var(--fg); }
+.case-note button {
+  font: inherit; font-size: .8rem; padding: .1rem .8rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--accent); cursor: pointer;
+}
+.case-note button:hover { border-color: var(--accent); }
+
+/* ---- 統計カード（現行の4枚。案2と案3で飾りを変える） ---- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin: 0 0 1.2rem; }
+.stat {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  padding: .7rem 1rem; box-shadow: var(--shadow-1); position: relative; overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.stat .row { display: flex; align-items: baseline; gap: .5rem; }
+.stat .n { font-size: 1.6rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+.stat .k { font-size: .78rem; color: var(--muted); }
+.delta {
+  font-size: .72rem; color: var(--muted); background: var(--bg-soft);
+  border: 1px solid var(--line); border-radius: 999px; padding: 0 .55em; white-space: nowrap;
+}
+.delta.up { color: var(--good); }
+.delta.down { color: var(--warn); }
+.stat .spark { display: block; margin-top: .3rem; }
+
+/* ---- 提案カード（現行の提案キューと同じ作り） ---- */
+.count-line { margin: 0 0 .6rem; font-size: .9rem; color: var(--muted); }
+.prop {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow-1); padding: .9rem 1.1rem .9rem 3rem; margin: 0 0 1rem; position: relative;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .3s ease;
+}
+.prop:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.prop.done { opacity: .55; }
+.prop-check { position: absolute; left: .95rem; top: 1.15rem; }
+.prop-check input { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); cursor: pointer; }
+.prop h2 { font-size: 1.12rem; margin: 0 0 .2rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.badge {
+  font-size: .72rem; font-weight: normal; border: 1px solid var(--line);
+  border-radius: 999px; padding: 0 .6em; color: var(--muted); background: var(--bg-soft);
+}
+.badge.st-pending { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.badge.st-accepted { background: var(--good-bg); color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+.badge.st-rejected { background: var(--bg-soft); color: var(--muted); }
+.meta-line { font-size: .8rem; color: var(--muted); margin: 0 0 .4rem; }
+.meter-wrap { display: flex; align-items: center; gap: .6rem; margin: 0 0 .4rem; }
+.meter-k { font-size: .78rem; color: var(--muted); }
+.meter { width: 8rem; height: .45rem; border-radius: 999px; background: color-mix(in srgb, var(--muted) 15%, transparent); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), #8fa1ff); animation: fill 1.1s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes fill { from { width: 0; } }
+.definition {
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: 1.02rem; line-height: 1.8; margin: .4rem 0; border-left: 3px solid var(--accent-soft); padding-left: .8rem;
+}
+.ai-chip {
+  display: inline-block; font-size: .68rem; font-family: "Yu Gothic UI", sans-serif;
+  background: var(--accent-soft); color: var(--accent); border-radius: 4px; padding: 0 .4em; margin-right: .4em; vertical-align: .15em;
+}
+.evidences { list-style: none; margin: .4rem 0; padding: 0; font-size: .85rem; color: var(--muted); }
+.evidences li { padding: .15rem 0; }
+.acts { display: flex; gap: .6rem; align-items: center; margin-top: .6rem; flex-wrap: wrap; }
+.btn {
+  font: inherit; font-size: .9rem; padding: .3rem 1.1rem; border-radius: 9px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer;
+  transition: all .16s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.btn.pri { background: linear-gradient(180deg, #4a5ec9, var(--accent-strong)); border-color: var(--accent-strong); color: #fff; font-weight: bold; }
+.btn.pri:hover { filter: brightness(1.08); }
+.btn.neg:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+.btn.link { border: none; background: none; color: var(--accent); padding-left: .2rem; }
+.btn.link:hover { text-decoration: underline; box-shadow: none; transform: none; }
+
+/* 選択バー（本体の第1段と同じ。案1の画面にも現行どおり出しておく） */
+.bulk-bar {
+  position: sticky; top: 2.9rem; z-index: 15; box-sizing: border-box; margin: .5rem 0 .8rem;
+  display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: var(--shadow-2); padding: .55rem 1.1rem;
+}
+.bulk-count { margin: 0; font-weight: bold; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bulk-bar .btn.pri { margin-top: 0; }
+
+/* ---- トースト（案1）。本体の「処理中…」表示と同じ右下の位置 ---- */
+#toast {
+  position: fixed; right: 1.2rem; bottom: 1.2rem; z-index: 50;
+  background: var(--fg); color: var(--bg); padding: .55rem 1.2rem; border-radius: 999px;
+  box-shadow: var(--shadow-2); font-size: .9rem; max-width: min(28rem, calc(100vw - 2.4rem));
+  opacity: 0; translate: 0 12px; transition: all .25s ease; pointer-events: none;
+}
+#toast.show { opacity: 1; translate: 0 0; }
+
+/* ---- 左サイドバー（案4） ---- */
+.shell { display: flex; gap: 1.6rem; margin: 0 -2rem; padding: 0 2rem; align-items: flex-start; }
+.side {
+  width: 204px; flex: none; padding: 1rem .8rem;
+  background: var(--side-bg); color: var(--side-fg);
+  display: flex; flex-direction: column; gap: .15rem;
+  position: sticky; top: 4.2rem; height: calc(100vh - 5rem);
+  border-radius: var(--r); box-shadow: var(--shadow-1);
+}
+.side .brand { display: flex; align-items: center; gap: .6rem; padding: .3rem .5rem .9rem; color: #fff; }
+.side .brand .mark {
+  display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: .55rem;
+  background: linear-gradient(135deg, #5b6ee0, #3a4db8); color: #fff; font-weight: bold; font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(90,110,224,.45);
+}
+.side .brand small { display: block; font-size: .66rem; color: var(--side-fg); font-weight: normal; }
+.side .group { font-size: .66rem; letter-spacing: .12em; color: color-mix(in srgb, var(--side-fg) 60%, transparent); padding: .7rem .6rem .15rem; }
+.side a {
+  display: flex; align-items: center; gap: .6rem;
+  color: var(--side-fg); padding: .42rem .65rem; border-radius: 9px; font-size: .9rem;
+  transition: background-color .18s ease, color .18s ease;
+}
+.side a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.side a.on { background: linear-gradient(90deg, rgba(96,120,255,.28), rgba(96,120,255,.06)); color: #fff; box-shadow: inset 2.5px 0 0 #8fa1ff; }
+.side a .cnt { margin-left: auto; font-size: .7rem; background: rgba(255,255,255,.14); border-radius: 999px; padding: 0 .5em; font-variant-numeric: tabular-nums; }
+.side .foot { margin-top: auto; font-size: .72rem; color: color-mix(in srgb, var(--side-fg) 75%, transparent); padding: .5rem .6rem; display: flex; align-items: center; gap: .5rem; }
+.livedot { width: .55rem; height: .55rem; border-radius: 50%; background: #4cd47c; flex: none; animation: pulse 2.4s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 .5rem rgba(76,212,124,0); } 100% { box-shadow: 0 0 0 0 rgba(76,212,124,0); } }
+.v4-main { flex: 1; min-width: 0; }
+
+/* 用語の一覧（案4の右側。現行の表と同じ列） */
+.tablewrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-1); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: .55rem .9rem; border-bottom: 1px solid var(--line); }
+th { font-size: .78rem; color: var(--muted); font-weight: normal; background: var(--bg-soft); }
+tr:last-child td { border-bottom: none; }
+td .word { font-weight: bold; margin-right: .5rem; }
+td .read { font-size: .78rem; color: var(--muted); }
+.pill { display: inline-flex; align-items: center; gap: .4em; font-size: .74rem; border-radius: 999px; padding: .05rem .7em; border: 1px solid var(--line); background: var(--bg-soft); color: var(--muted); }
+.pill i { width: .5rem; height: .5rem; border-radius: 50%; background: currentColor; }
+.pill.ok { background: var(--good-bg); color: var(--good); border-color: color-mix(in srgb, var(--good) 35%, transparent); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+
+.speed-chips { display: flex; gap: .4rem; align-items: center; margin: 0 0 .8rem; font-size: .84rem; color: var(--muted); flex-wrap: wrap; }
+.chip {
+  font: inherit; font-size: .82rem; padding: .15rem .9rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer;
+}
+.chip.on { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); font-weight: bold; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 900px) {
+  .side { display: none; }
+  .shell { margin: 0; padding: 0; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  main { padding: 1.2rem 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="mock-banner">
+  <strong>UIモックアップ 第2段</strong>
+  <span>採否判断用の画面案です。アプリ本体には未反映。データは架空のもの。</span>
+</div>
+
+<div class="topbar">
+  <div class="tabs" id="tabs">
+    <button class="on" data-s="v1" aria-pressed="true">案1 トースト通知</button>
+    <button data-s="v2" aria-pressed="false">案2 カウントアップ</button>
+    <button data-s="v3" aria-pressed="false">案3 ミニグラフ</button>
+    <button data-s="v4" aria-pressed="false">案4 左サイドバー</button>
+  </div>
+  <span class="spacer"></span>
+  <span class="theme-state" id="theme-state">明るさ: 自動（OS に従う）</span>
+  <button class="icon-btn" id="theme" title="明るさの切り替え（自動 → 明 → 暗）" aria-label="明るさの切り替え">
+    <svg id="ic-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg id="ic-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
+</div>
+
+<main>
+
+<!-- ============ 案1: トースト通知 ============ -->
+<section class="screen on" id="v1">
+  <h1 class="screen-title">提案キュー</h1>
+  <p class="screen-sub">採用・却下の直後に、右下に短い通知を出す案。</p>
+  <p class="case-note"><b>案1 トースト通知</b> — 1件ずつ処理したとき「今の操作が今の分かった」を残す。
+    本体では右下の「処理中…」表示と同じ位置を使い、処理の完了時に切り替える。キーボードの a/r でも同じ文を出す。
+    下のカードの採用・却下を押すと動きが分かる（処理済みの表示は見本用）。
+    <button type="button" id="toast-replay">通知をもう一度見る</button></p>
+
+  <p class="count-line">3 件（1 / 1 ページ）</p>
+  <p class="count-line" style="font-size:.8rem">キーボードでも処理できます。<kbd>j</kbd>／<kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>r</kbd> で却下、<kbd>x</kbd> で選択の切り替え。</p>
+
+  <form class="bulk-bar" aria-label="選択した提案の一括処理">
+    <p class="bulk-count" id="bulk-count">選択 0 件</p>
+    <button type="button" class="btn" id="select-all">このページをすべて選択</button>
+    <button type="button" class="btn pri" data-mocktoast="一括採用は本体で動作します（見本では通知の位置だけ確認できます）">チェックした提案を採用</button>
+    <button type="button" class="btn neg" data-mocktoast="モックアップです。実際の操作はアプリで行います">チェックした提案を却下</button>
+  </form>
+
+  <article class="prop" id="card-1">
+    <div class="prop-check"><input type="checkbox" class="pick" aria-label="この提案を選択"></div>
+    <h2>卵温計 <span class="badge">語義</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line">スコア 0.88 ／ 生成元 mock-1 ／ プロンプト版 v3</p>
+    <div class="meter-wrap">
+      <span class="meter-k">確からしさ</span>
+      <span class="meter" role="img" aria-label="確からしさ 88 パーセント"><i style="width: 88%"></i></span>
+    </div>
+    <p class="definition"><span class="ai-chip">AI</span>孵化器の中の温度を測る計器。点検の記録では FLT の点検の前の工程で値を読み取る。</p>
+    <ul class="evidences">
+      <li><q>卵温計の値が朝と昼で安定しない。</q> <small>10-12 ／ eml:42</small></li>
+      <li><q>卵温計を交換する。</q> <small>／ doc:09_引継ぎ/手順.md</small></li>
+    </ul>
+    <div class="acts">
+      <button type="button" class="btn pri" data-act="accept" data-word="卵温計">採用</button>
+      <button type="button" class="btn neg" data-act="reject" data-word="卵温計">却下</button>
+      <button type="button" class="btn link" data-mocktoast="モックアップです。修正して採用の画面は本体にあります">修正して採用…</button>
+    </div>
+  </article>
+
+  <article class="prop" id="card-2">
+    <div class="prop-check"><input type="checkbox" class="pick" aria-label="この提案を選択"></div>
+    <h2>竜舎 ⇔ 竜車 <span class="badge">関係</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line">スコア — ／ 生成元 human ／ プロンプト版 v3</p>
+    <p>関係：関連（human）</p>
+    <div class="acts">
+      <button type="button" class="btn pri" data-act="accept" data-word="竜舎 ⇔ 竜車">採用</button>
+      <button type="button" class="btn neg" data-act="reject" data-word="竜舎 ⇔ 竜車">却下</button>
+    </div>
+  </article>
+
+  <article class="prop" id="card-3">
+    <div class="prop-check"><input type="checkbox" class="pick" aria-label="この提案を選択"></div>
+    <h2>FLT点検 <span class="badge">用例</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line">スコア 0.91 ／ 生成元 mock-1 ／ プロンプト版 v3</p>
+    <ul class="evidences">
+      <li><q>FLT点検の前に卵温計の値を控える。</q> <small>10-20 ／ doc:日報.md</small></li>
+    </ul>
+    <div class="acts">
+      <button type="button" class="btn neg" data-act="reject" data-word="FLT点検">却下</button>
+    </div>
+  </article>
+</section>
+
+<!-- ============ 案2: カウントアップ統計カード ============ -->
+<section class="screen" id="v2">
+  <h1 class="screen-title">用語一覧</h1>
+  <p class="screen-sub">統計4枚の数値がゆっくり上がる案。速さの違いを比べられるようにした。</p>
+  <p class="case-note"><b>案2 カウントアップ統計カード</b> — 数値に目が行くようにする飾り。
+    本体には簡易版（0.5秒）が既に入っている。本案は時間と減速を強めた版で、採否の軸は「速さをどれにするか・残すか」。
+    数値自体は HTML に書いてあり、JS が無くても正しい数が出る（動きは飾り）。OS の「動きを減らす」設定では上げずに即座に出す。</p>
+  <div class="speed-chips">
+    速さ:
+    <button type="button" class="chip" data-speed="500">0.5秒（現行）</button>
+    <button type="button" class="chip on" data-speed="900">0.9秒（提案）</button>
+    <button type="button" class="chip" id="replay-count">もう一度</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="row"><span class="n" data-count="154">154</span></div><div class="k">登録された語</div></div>
+    <div class="stat"><div class="row"><span class="n" data-count="23">23</span></div><div class="k">未処理の提案</div></div>
+    <div class="stat"><div class="row"><span class="n" data-count="2">2</span></div><div class="k">係争中の語義</div></div>
+    <div class="stat"><div class="row"><span class="n" data-count="131">131</span></div><div class="k">確定した語義</div></div>
+  </div>
+  <p class="screen-sub">数字は本体と同じ4枚（登録された語／未処理の提案／係争中の語義／確定した語義）。未処理の提案は押すと提案キューへ飛ぶ。</p>
+</section>
+
+<!-- ============ 案3: ミニグラフ ============ -->
+<section class="screen" id="v3">
+  <h1 class="screen-title">用語一覧</h1>
+  <p class="screen-sub">統計カードに直近7日間の推移を重ねる案。</p>
+  <p class="case-note"><b>案3 ミニグラフ</b> — 「増えている・減っている」がひと目で分かる。
+    数値は現在値、折れ線は直近7日、右端の丸は今日。色は1色（濃濃紺）に絞り、意味のある色は状態表示だけに残した。
+    注意: 本体には日ごとの履歴がない。実装には日次の記録（取り込み時に1日1回数値を控える）が前提で、4案の中で実装の負担が最も大きい。</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="row"><span class="n">154</span><span class="delta up">先週比 +6</span></div>
+      <div class="k">登録された語</div>
+      <svg class="spark" width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,24 16,22 33,23 50,17 66,18 83,9 100,6" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="6" r="2.5" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <div class="stat">
+      <div class="row"><span class="n">23</span><span class="delta down">先週比 -3</span></div>
+      <div class="k">未処理の提案</div>
+      <svg class="spark" width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,8 16,10 33,9 50,14 66,16 83,20 100,22" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="22" r="2.5" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <div class="stat">
+      <div class="row"><span class="n">2</span><span class="delta">先週比 変化なし</span></div>
+      <div class="k">係争中の語義</div>
+      <svg class="spark" width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,15 16,15 33,14 50,15 66,15 83,14 100,15" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="15" r="2.5" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <div class="stat">
+      <div class="row"><span class="n">131</span><span class="delta up">先週比 +5</span></div>
+      <div class="k">確定した語義</div>
+      <svg class="spark" width="100%" height="30" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+        <polyline points="0,26 16,24 33,21 50,20 66,16 83,12 100,10" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="10" r="2.5" fill="var(--accent)"/>
+      </svg>
+    </div>
+  </div>
+  <p class="screen-sub">折れ線の高さは各カード内でだけ比較できる（軸は共有しない）。正確な増減は「先週比」の表示で伝える。</p>
+</section>
+
+<!-- ============ 案4: 左サイドバー ============ -->
+<section class="screen" id="v4">
+  <h1 class="screen-title">画面の形の案</h1>
+  <p class="screen-sub">上部のナビを左の縦列に置き換える案。案の見せ方として、帯の下に部品を置いています。</p>
+  <p class="case-note"><b>案4 左サイドバー</b> — 項目の現在位置と未処理の件数が常に見える。使う項目は現行の5つから変わらない。
+    第1段で不採用だった経緯（横幅の圧迫）を踏まえ、幅は 204px と細め、中身の最大幅は変えない。
+    900px 未満では隠して現行の上部ナビに戻す（本体では開閉の操作を別途検討）。
+    左の項目は押せます（見本では通知が出るだけ）。</p>
+
+  <div class="shell">
+    <nav class="side" aria-label="案4のナビ見本">
+      <div class="brand"><span class="mark">語</span><span><strong>社内用語集</strong><small>このPCの中だけ</small></span></div>
+      <div class="group">さがす</div>
+      <a class="on" href="#" aria-current="page"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>用語一覧</a>
+      <div class="group">処理する</div>
+      <a href="#"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3 12 12"/></svg>提案キュー<span class="cnt">23</span></a>
+      <a href="#"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>見直し<span class="cnt">13</span></a>
+      <div class="group">ふやす</div>
+      <a href="#"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>用語を登録</a>
+      <a href="#"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>CSV出力</a>
+      <div class="foot"><span class="livedot"></span>外部接続なし・このPCの中だけ</div>
+    </nav>
+
+    <div class="v4-main">
+      <p class="count-line">154 件（1 / 20 ページ）　並べ替え: 見出し ▲</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>見出し</th><th>読み</th><th>略語</th><th>状態</th><th>更新</th></tr></thead>
+          <tbody>
+            <tr><td><span class="word">竜舎</span><span class="read">りゅうしゃ</span></td><td>りゅうしゃ</td><td>—</td><td><span class="pill ok"><i></i>有効</span></td><td>10-28</td></tr>
+            <tr><td><span class="word">竜車</span><span class="read">りゅうしゃ</span></td><td>りゅうしゃ</td><td>—</td><td><span class="pill ok"><i></i>有効</span></td><td>10-28</td></tr>
+            <tr><td><span class="word">卵温計</span><span class="read">らんおんけい</span></td><td>らんおんけい</td><td>—</td><td><span class="pill warn"><i></i>係争中</span></td><td>10-27</td></tr>
+            <tr><td><span class="word">FLT点検</span><span class="read">えふえるてぃーてんけん</span></td><td>えふえるてぃーてんけん</td><td>—</td><td><span class="pill ok"><i></i>有効</span></td><td>10-27</td></tr>
+            <tr><td><span class="word">スカイポスト</span><span class="read">すかいぽすと</span></td><td>すかいぽすと</td><td>SP</td><td><span class="pill ok"><i></i>有効</span></td><td>10-26</td></tr>
+            <tr><td><span class="word">MGK</span><span class="read">えむじーけー</span></td><td>えむじーけー</td><td>MGK</td><td><span class="pill ok"><i></i>有効</span></td><td>10-25</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="screen-sub" style="margin-top:.8rem">次のページ →　／　項目の位置が常に分かる代わりに、横幅を 204px 使う。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---- トースト ----
+var toastTimer = null;
+function toast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+}
+
+// ---- 案の切り替え ----
+document.getElementById("tabs").addEventListener("click", function (ev) {
+  var b = ev.target.closest("button");
+  if (!b) return;
+  document.querySelectorAll("#tabs button").forEach(function (x) {
+    x.classList.toggle("on", x === b);
+    x.setAttribute("aria-pressed", x === b ? "true" : "false");
+  });
+  document.querySelectorAll(".screen").forEach(function (s) {
+    s.classList.toggle("on", s.id === b.dataset.s);
+  });
+  if (b.dataset.s === "v2") countUp(currentSpeed);
+});
+
+// ---- 明るさの切り替え（自動 → 明 → 暗 → 自動） ----
+var moon = document.getElementById("ic-moon"), sun = document.getElementById("ic-sun");
+function effectiveTheme() {
+  var t = document.documentElement.getAttribute("data-theme");
+  if (t === "dark" || t === "light") return t;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+function paintTheme(state) {
+  var labels = { auto: "明るさ: 自動（OS に従う）", light: "明るさ: 明", dark: "明るさ: 暗" };
+  var dark = effectiveTheme() === "dark";
+  moon.style.display = dark ? "" : "none";
+  sun.style.display = dark ? "none" : "";
+  document.getElementById("theme-state").textContent = labels[state];
+}
+var themeOrder = ["auto", "light", "dark"];
+var themeIndex = 0;
+document.getElementById("theme").addEventListener("click", function () {
+  themeIndex = (themeIndex + 1) % 3;
+  var state = themeOrder[themeIndex];
+  if (state === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", state);
+  paintTheme(state);
+});
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { paintTheme(themeOrder[themeIndex]); });
+paintTheme("auto");
+
+// ---- 案2: カウントアップ（速さを切り替えて比べられる） ----
+var currentSpeed = 900;
+function countUp(speedMs) {
+  document.querySelectorAll("#v2 .stat .n").forEach(function (el) {
+    var target = +el.dataset.count, t0 = null;
+    if (reduceMotion) { el.textContent = target; return; }
+    el.textContent = "0";
+    function step(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / speedMs, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+document.querySelectorAll(".speed-chips .chip[data-speed]").forEach(function (c) {
+  c.addEventListener("click", function () {
+    document.querySelectorAll(".speed-chips .chip[data-speed]").forEach(function (x) { x.classList.toggle("on", x === c); });
+    currentSpeed = +c.dataset.speed;
+    countUp(currentSpeed);
+  });
+});
+document.getElementById("replay-count").addEventListener("click", function () { countUp(currentSpeed); });
+
+// ---- 案1: カードの採用・却下でトーストを出す（処理済みの表示は見本用） ----
+function remaining() {
+  return document.querySelectorAll("#v1 .prop:not(.done)").length;
+}
+document.querySelectorAll("#v1 .prop [data-act]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var card = b.closest(".prop");
+    if (card.classList.contains("done")) return;
+    var word = b.dataset.word, act = b.dataset.act;
+    card.classList.add("done");
+    var st = card.querySelector(".badge.st-pending");
+    if (st) {
+      st.className = "badge " + (act === "accept" ? "st-accepted" : "st-rejected");
+      st.textContent = act === "accept" ? "採用済み（見本）" : "却下済み（見本）";
+    }
+    card.querySelectorAll(".acts .btn").forEach(function (x) { x.disabled = true; });
+    toast("「" + word + "」の提案を" + (act === "accept" ? "採用" : "却下") + "しました（残り " + remaining() + " 件）");
+  });
+});
+document.getElementById("toast-replay").addEventListener("click", function () {
+  toast("「卵温計」の提案を採用しました（残り 2 件）");
+});
+
+// ---- 案1: 選択バーの件数（本体と同じ動きの簡易版。0件でも見本では出しっぱなし） ----
+function refreshCount() {
+  var n = document.querySelectorAll("#v1 .pick:checked").length;
+  document.getElementById("bulk-count").textContent = "選択 " + n + " 件";
+}
+document.querySelectorAll("#v1 .pick").forEach(function (c) { c.addEventListener("change", refreshCount); });
+document.getElementById("select-all").addEventListener("click", function () {
+  var boxes = document.querySelectorAll("#v1 .pick");
+  var all = document.querySelectorAll("#v1 .pick:checked").length === boxes.length;
+  boxes.forEach(function (c) { c.checked = !all; });
+  refreshCount();
+});
+
+// ---- 動かないボタンは、押したことが分かるように通知だけ出す ----
+document.querySelectorAll("[data-mocktoast]").forEach(function (b) {
+  b.addEventListener("click", function () { toast(b.dataset.mocktoast); });
+});
+document.querySelectorAll(".side a:not(.on)").forEach(function (a) {
+  a.addEventListener("click", function (ev) { ev.preventDefault(); toast("モックアップです。実際の操作はアプリで行います"); });
+});
+</script>
+</body>
+</html>
