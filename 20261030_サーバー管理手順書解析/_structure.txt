@@ -1,0 +1,33 @@
+=== core properties ===
+title: 4030-0300-A3  手順書 用紙２
+author: 池田(志)
+last_modified_by: KURABAYASHI Makoto (倉林 誠)
+created: 2026-10-14 07:39:00+00:00
+modified: 2026-10-27 08:15:00+00:00
+subject: 
+comments: 
+
+=== sections ===
+[0] page 21.0x29.7cm margin T1.00 B1.00 L2.50 R1.70 orient=portrait
+
+=== paragraph style histogram ===
+    2  Normal
+
+=== fonts in styles.xml (rFonts) ===
+   15  Meiryo UI
+default:
+  Century
+  ＭＳ 明朝
+  Century
+  ja-JP
+
+=== body outline (headings only) ===
+
+paras=2 tables=1 images(drawing/pict)=0 inline_shapes=47
+
+=== full body dump ===
+<TABLE 1> 6x8
+  r0: 手 順 書 | 手 順 書 | 手 順 書 |  |  |  |  | 
+  r1: 手 順 書 | 手 順 書 | 手 順 書 | 管理番号 |  |  | 頁 | 
+  r2: 型 　名 |  |  | 工程番号 | － | － | － | －
+  ... 3 more rows
