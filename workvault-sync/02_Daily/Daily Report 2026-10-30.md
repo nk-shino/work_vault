@@ -69,11 +69,13 @@ updated: 2026-10-30
 - `C:\work\splicing_review\pptx_review\design_pass\固定テーブル棚卸し方法_v2_改善版.pptx`(v18反映版・34枚)
 - `C:\work\splicing_review\pptx_review\design_pass\固定テーブル棚卸し方法_v2_改善版_v17_backup_20261030.pptx`(編集前バックアップ)
 - `C:\work\splicing_review\pptx_review\design_pass\improve_stage4_v18.py`+`patch_stage4_pagenum.py`+`patch_stage4_fix1.py`(反映スクリプト)
+- `C:\work\splicing_review\clear_btn\成果物\固定テーブル棚卸し方法_v2.pptx`+`\\nksv569.ad.nkc.co.jp\Share\mnt\DGS-SV\★個人フォルダ\篠原\固定テーブル棚卸し方法_v2.pptx`(配備版port成果物・34枚・md5 4b72daf84d8b6745c77dd787897d4365・両先一致)
+- `C:\work\splicing_review\pptx_review\design_pass\port_stage4_deployed.py`+`port_fix2.py`(配備版portスクリプト)
 
 ### 確定・保留事項
 
 - 確定: design_passの改善版pptx(納品元)はv18反映済み(34枚)。変更記録§23・decision-logに記録済み。
-- 保留: 配備済みの手順書スライド(成果物フォルダ+個人配布・md5 595b84d0)にはv18内容は未反映。反映する場合は配備版への適用+配備承認(Tier A)が別途必要。
+- 確定(同日): 配備済みの手順書スライド(成果物フォルダ+個人配布)にもv18内容を配備した(配備承認・Tier A/33→34枚・md5 595b84d0→4b72daf8・両先一致)。埋め込みフォント2パーツとembedTrueTypeFonts属性は保存後も存続を確認。配備前バックアップはclear_btn\backupへ退避済み。
 
 ## 補記: vba-releaseスキルへの再利用手順追記(reflect)
 
