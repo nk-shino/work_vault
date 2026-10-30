@@ -1,5 +1,5 @@
 ---
-description: サイトの実装・デバッグ担当。設計差分案に基づく小さく可逆的なコード修正、テスト追加、デバッグを行う。fixture の基準値と run-tests を維持する。設計判断・要件判断はしない。
+description: サイトの実装・デバッグ担当。設計差分案に基づく小さく可逆的なコード修正、テスト追加、デバッグを行う。基準値と検査の全通を維持する。設計判断・要件判断はしない。
 mode: subagent
 permission:
   edit: allow
@@ -35,13 +35,14 @@ permission:
 | 成果物 | 内容 |
 | --- | --- |
 | 実装差分 | 変更ファイルと変更前後の要約 |
-| テスト結果 | run-tests.js の PASS/FAIL・実測基準値（BLOCKED・NOT RUN も区別） |
+| テスト結果 | 検査の PASS/FAIL・実測基準値（BLOCKED・NOT RUN も区別） |
 | 実装記録 | 変更理由・受け入れ条件との対応・変更しなかった範囲 |
 | 再開メモ | 進行中・保留・次の安全な手順 |
 
 ## 評価基準と完了条件
 
-- 受け入れ条件を満たし、`tools/run-tests.js` が全通していること（mock/improve 両側）
+- 受け入れ条件を満たし、**作業した側の検査が全通していること。**
+  fixture 側は `tools/run-tests.js`（mock/improve 両側）、本番リポジトリは `npm run check`・`npm test`・`npm run verify` の3本（run-tests.js は fixture 側にしか無い）
 - 新たな基準値が必要な変更は、テストノート側も同じ変更内で更新していること
 - 完了の判定は、実装差分・テスト結果・実装記録が揃い、検証担当へ引き継げるとき
 
