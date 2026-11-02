@@ -14,7 +14,7 @@ C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\09_佐藤さん引�
 
 
 外部からアクセスできる経路：
-PCD15575(事務NW×PanaCIM系NWの両方に接続するPC)← 最大の境界の穴
+PCD15575(事務NW×PanaCIM系NWの両方に接続するPC)←最大
 ファイル授受(IFID・PanaCIMレポート→RPA→PowerBI・BOSS計画の指図取得)
 無線AP(PDA・wpa2Wireless5=制限セグメントの意味不明点)
 USB迂回(nksv560廃止時にJob作成をUSBで行う運用が既に記載済み)
