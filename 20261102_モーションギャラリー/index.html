@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>モーションギャラリー 確認モックアップ</title>
+
+  <!-- Swiper 11（確認用のためCDN。本番採用時はファイル同梱の方針・§D） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+  <!-- フォント（モックアップ用・Google Fonts） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <!-- ===================== 操作バー: テーマ / 動きを減らす設定 ===================== -->
+  <div class="controls" role="region" aria-label="表示設定">
+    <span class="controls-brand">MOTION GALLERY</span>
+    <div class="seg" role="group" aria-label="テーマ切替">
+      <button type="button" class="seg-btn is-active" id="theme-dark" aria-pressed="true">暗</button>
+      <button type="button" class="seg-btn" id="theme-light" aria-pressed="false">明</button>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="reduce-motion">
+      <span class="switch-track" aria-hidden="true"></span>
+      <span class="switch-label">動きを減らす設定（シミュレーション）</span>
+    </label>
+    <span class="controls-hint">止めると速くなるのではなく、何も起きなくなる（§B-5）</span>
+  </div>
+
+  <div class="page">
+
+    <!-- ===================== ページ見出し ===================== -->
+    <header class="page-head">
+      <p class="overline">UI MOCKUP — MOTION GALLERY (§F)</p>
+      <h1>モーションギャラリー — 動きの追加候補</h1>
+      <p class="lead">モーションの現状と追加余地（2026-10-21 実測）の §F に挙がった追加候補と、トップページへの Swiper 部分採用案を、1ページで操作しながら比較できるギャラリーにしました。各パネルに層・時間・受け入れ条件を併記しています。</p>
+      <p class="note">守る線（§A）: 気配45〜75秒 ／ 呼吸720ms＝10px上へ＋不透明度のみ ／ 応答160〜320ms＝浮き2pxまで。scale拡大・20px超の移動・視差・擬似3Dは入口の主役部分だけ解除、バウンスは全面禁止、無限ループは気配のみ。</p>
+    </header>
+
+    <!-- ===================== パネル0: トップページ案（Swiper 部分採用） ===================== -->
+    <section class="panel" id="panel-hero">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">00</span>
+          <div>
+            <h2>トップページ案 — Swiper の部分採用（入口の主役）</h2>
+            <p class="chips">
+              <code class="chip">slidesPerView: 1</code>
+              <code class="chip">loop: true</code>
+              <code class="chip">autoplay: 3000ms</code>
+              <code class="chip">pauseOnMouseEnter</code>
+              <code class="chip">scrollbar draggable</code>
+              <code class="chip">speed: 650ms</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">入口の主役 — 例外適用</span>
+              <span class="spec">自動切替 3秒 ／ 切替 650ms</span>
+              <span class="spec spec--wide">例外提案: 横スクロール区画の却下（§A-3）と入口以外の静けさ（§A-2）に対する例外として、入口の主役部分だけ解除を前提に比較用に提示</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">約3秒ごとに自動で切り替わります。スライド上にカーソルを重ねると一時停止します。矢印・下のドット（クリック可）・スクロールバー、←→キーでも操作できます。先日の基本パネルと同じ構成からの部分採用です。</p>
+      </header>
+
+      <div class="swiper swiper--hero">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <article class="slide-card ph1">
+              <span class="slide-no" aria-hidden="true">01</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.001 ／ 撮影 6:42</p>
+                <h3 class="slide-title">廊下の朝</h3>
+                <p class="slide-text">東棟の渡り廊下。清掃を終えた床に朝の光が伸びる。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card ph2">
+              <span class="slide-no" aria-hidden="true">02</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.002 ／ 撮影 18:57</p>
+                <h3 class="slide-title">青の時間</h3>
+                <p class="slide-text">日没後の管理棟。窓の明かりがそろって灯り始める。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card ph3">
+              <span class="slide-no" aria-hidden="true">03</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.003 ／ 撮影 14:20</p>
+                <h3 class="slide-title">工場の午後</h3>
+                <p class="slide-text">組立棟の休憩時間。待機灯が静かに点滅している。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card ph4">
+              <span class="slide-no" aria-hidden="true">04</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.004 ／ 撮影 9:05</p>
+                <h3 class="slide-title">雨上がり</h3>
+                <p class="slide-text">敷地内の歩道。水たまりに映った空が乾いていく。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card ph5">
+              <span class="slide-no" aria-hidden="true">05</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.005 ／ 撮影 10:31</p>
+                <h3 class="slide-title">看板の手入れ</h3>
+                <p class="slide-text">正面玄関・年2回の清掃。足場を組んで洗浄する。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card ph6">
+              <span class="slide-no" aria-hidden="true">06</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.006 ／ 撮影 5:12</p>
+                <h3 class="slide-title">夜勤明け</h3>
+                <p class="slide-text">駐車場の出口。雲の切れ間に月が残っている。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <p class="inline-note">本番は外部CDN不使用の方針（§D）のため、採用時は swiper-bundle.min.css / swiper-bundle.min.js を同梱する。</p>
+    </section>
+
+    <!-- ===================== パネル1: F-1 絞り込みの手応え ===================== -->
+    <section class="panel" id="panel-f1">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">01</span>
+          <div>
+            <h2>F-1 絞り込みの手応え — 行を立て直さず容器が淡く切替る</h2>
+            <p class="chips">
+              <code class="chip">§E-1 の修正でもある</code>
+              <code class="chip">用語集の前例 0.15秒（§E-2）を横断目録へ</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 240ms</span>
+              <span class="spec spec--wide">受け入れ条件: 全件→絞込→全件で行の要素を作り直さない（出現の再生が起きないこと）／動きを減らす設定で即時に切替ること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">入力で61行を絞り込みます。改修後は行を作り直さず容器が淡く切替り、従来は行を立て直して出現から再生します。入力例: 灯／の／点検／白石</p>
+      </header>
+
+      <div class="f1-bar">
+        <label class="field">
+          <span>絞り込み</span>
+          <input id="f1-input" type="search" placeholder="例: 灯／点検／白石">
+        </label>
+        <span class="f1-count" id="f1-count" role="status">61件</span>
+        <div class="seg" role="group" aria-label="絞り込みの方式">
+          <button type="button" class="seg-btn is-active" data-f1mode="refined" aria-pressed="true">改修後 — 容器の淡い切替</button>
+          <button type="button" class="seg-btn" data-f1mode="legacy" aria-pressed="false">従来 — 行を立て直して再生</button>
+        </div>
+      </div>
+
+      <div class="f1-listwrap" id="f1-listwrap">
+        <ul class="f1-list" id="f1-list"></ul>
+      </div>
+      <p class="inline-note" id="f1-note">同じ行の要素を使い回すため、出現の再生は起きません。容器だけが240msで淡く切替ります（用語集の前例・§E-2）。</p>
+    </section>
+
+    <!-- ===================== パネル2: F-2 検証状態を色で示す ===================== -->
+    <section class="panel" id="panel-f2">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">02</span>
+          <div>
+            <h2>F-2 検証状態を色で示す — 文字併記・案内の青と混ぜない</h2>
+            <p class="chips">
+              <code class="chip">未検証 52</code>
+              <code class="chip">確認済 6</code>
+              <code class="chip">出典なし 2</code>
+              <code class="chip">要補足 1</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 240ms（浮き2pxまで）</span>
+              <span class="spec spec--wide">受け入れ条件: 色だけに頼らず文字でも区別が付くこと／本番組み込み時にコントラスト比を再測すること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">分布は未検証52・確認済6・出典なし2・要補足1（§F-2 実測）。確認済を目立たせると未検証が少なく見えるため、4種とも同じ形状・同じ強さで静かに分けます。</p>
+      </header>
+
+      <div class="f2-dist">
+        <div class="f2-bar" id="f2-bar" role="img" aria-label="検証状態の分布: 未検証52・確認済6・出典なし2・要補足1">
+          <span class="b-unchecked"></span>
+          <span class="b-checked"></span>
+          <span class="b-nosource"></span>
+          <span class="b-supplement"></span>
+        </div>
+        <ul class="f2-legend">
+          <li><span class="dot b-unchecked" aria-hidden="true"></span>未検証 <span class="num">52</span></li>
+          <li><span class="dot b-checked" aria-hidden="true"></span>確認済 <span class="num">6</span></li>
+          <li><span class="dot b-nosource" aria-hidden="true"></span>出典なし <span class="num">2</span></li>
+          <li><span class="dot b-supplement" aria-hidden="true"></span>要補足 <span class="num">1</span></li>
+        </ul>
+      </div>
+
+      <div class="f2-cols">
+        <ul class="f2-list">
+          <li class="f2-row"><span class="f2-no">P-012</span><span class="f2-cat">人物</span><span class="f2-name">白石 千鶴</span><span class="st-chip st-unchecked">未検証</span></li>
+          <li class="f2-row"><span class="f2-no">W-007</span><span class="f2-cat">作品</span><span class="f2-name">灯りの渡り廊下</span><span class="st-chip st-checked">確認済</span></li>
+          <li class="f2-row"><span class="f2-no">R-021</span><span class="f2-cat">記録</span><span class="f2-name">組立棟の巡視</span><span class="st-chip st-supplement">要補足</span></li>
+          <li class="f2-row"><span class="f2-no">W-013</span><span class="f2-cat">作品</span><span class="f2-name">冬の貯水槽</span><span class="st-chip st-nosource">出典なし</span></li>
+          <li class="f2-row"><span class="f2-no">P-017</span><span class="f2-cat">人物</span><span class="f2-name">冨永 澄</span><span class="st-chip st-unchecked">未検証</span></li>
+          <li class="f2-row"><span class="f2-no">R-034</span><span class="f2-cat">記録</span><span class="f2-name">西棟の清掃</span><span class="st-chip st-unchecked">未検証</span></li>
+          <li class="f2-row"><span class="f2-no">W-024</span><span class="f2-cat">作品</span><span class="f2-name">青の時計台</span><span class="st-chip st-unchecked">未検証</span></li>
+          <li class="f2-row"><span class="f2-no">R-040</span><span class="f2-cat">記録</span><span class="f2-name">正門周辺の巡視</span><span class="st-chip st-unchecked">未検証</span></li>
+        </ul>
+
+        <aside class="f2-wrong">
+          <h3>配色の混線 — 誤例と正例</h3>
+          <div class="f2-pair">
+            <div class="f2-pair-row">
+              <span class="f2-pair-head"><span class="pair-mark pair-mark--ng">誤</span>案内の青（リンク・案内の色）で揃えた例</span>
+              <div class="f2-chiprow">
+                <span class="st-chip is-info">確認済</span>
+                <span class="st-chip is-info">未検証</span>
+                <span class="st-chip is-info">出典なし</span>
+              </div>
+            </div>
+            <div class="f2-pair-row">
+              <span class="f2-pair-head"><span class="pair-mark pair-mark--ok">正</span>記録の色で分ける＋文字併記</span>
+              <div class="f2-chiprow">
+                <span class="st-chip st-checked">確認済</span>
+                <span class="st-chip st-unchecked">未検証</span>
+                <span class="st-chip st-nosource">出典なし</span>
+              </div>
+            </div>
+          </div>
+          <p class="f2-pair-note">青は案内（リンク・注記）に使う色。記録の状態に使うと、押せるものと押せないものの区別が消える。</p>
+        </aside>
+      </div>
+      <p class="inline-note">確認済（6件）を目立たせると、未検証（52件）が少なく見える。実分布は逆（§F-2 注意）。ここでは確認済も他と同じ強さの印にしている。</p>
+    </section>
+
+    <!-- ===================== パネル3: F-3 一覧と詳細のつながり ===================== -->
+    <section class="panel" id="panel-f3">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">03</span>
+          <div>
+            <h2>F-3 一覧と詳細のつながり — 目印は常に1つ</h2>
+            <p class="chips">
+              <code class="chip">画面切替（@view-transition）の拡張イメージ</code>
+              <code class="chip">§B-3 の仕組みは全ページで既に稼働</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 240ms（不透明度のみ）</span>
+              <span class="spec spec--wide">受け入れ条件: 同じ目印が同時に2つ存在しないこと（2つあると本番の遷移そのものが中止される・§B-3）</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">カードを押すと右の詳細プレビューが240msで淡く切替ります。押された1枚にだけ目印を付け、別のカードを押すと目印は移動します（2つにはならない）。</p>
+      </header>
+
+      <div class="f3-wrap">
+        <ul class="f3-cards" id="f3-cards"></ul>
+        <aside class="f3-detail" id="f3-detail" aria-live="polite">
+          <p class="f3-meta"></p>
+          <h3 class="f3-title"></h3>
+          <p class="f3-desc"></p>
+          <p class="f3-statusline"><span class="st-chip st-unchecked"></span></p>
+        </aside>
+      </div>
+      <p class="f3-marker-line" id="f3-marker-line">目印の数: —</p>
+      <p class="inline-note">カードの枠色と「目印」の表記は画面確認用。本番の目印は押された1枚にだけ付く data 属性で、見た目には現れない。</p>
+    </section>
+
+    <!-- ===================== パネル4: F-4 読み込み中表示 ===================== -->
+    <section class="panel" id="panel-f4">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">04</span>
+          <div>
+            <h2>F-4 読み込み中表示 — 遅れて出して、ちらつかせない</h2>
+            <p class="chips">
+              <code class="chip">遅延表示 300ms</code>
+              <code class="chip">印の点滅は2回で止む（無限ではない）</code>
+              <code class="chip">失敗・0件と色で区別</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 240ms（300ms遅れて表示）</span>
+              <span class="spec">呼吸層 — 720ms（結果の出現）</span>
+              <span class="spec spec--wide">受け入れ条件: 読み込みが速いときちらつかないこと／失敗の表示と見分けが付くこと／回り続ける印を使わないこと（無限ループ扱いの回避・§F-4）</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">応答が300msより速ければ読み込み中は出ません（0件・速い のケース）。遅い応答では「読み込み中…」を遅れて出し、結果は呼吸層で現れます。</p>
+      </header>
+
+      <div class="f4-bar">
+        <button type="button" class="btn" data-f4="slow-ok">読み込み（成功・1.5秒）</button>
+        <button type="button" class="btn" data-f4="fail">読み込み（失敗・1.5秒）</button>
+        <button type="button" class="btn" data-f4="fast-empty">0件（速い・0.22秒）</button>
+        <button type="button" class="btn" data-f4="idle">初期状態に戻す</button>
+      </div>
+      <div class="f4-stage" id="f4-stage" aria-live="polite">
+        <p class="f4-idle">ボタンで状態を再現します。</p>
+      </div>
+      <p class="inline-note">「失敗」と「0件」は 2026-10-21 に分け済み。ここで足すのは「読み込み中」との区別（§F-4 関連）。点滅する点は2回で止み、以後は静止した印のまま残る。</p>
+    </section>
+
+    <!-- ===================== パネル5: F-6 0件時に近い候補へ導く ===================== -->
+    <section class="panel" id="panel-f6">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">05</span>
+          <div>
+            <h2>F-6 0件時に近い候補へ導く — 呼吸層で静かに現れる</h2>
+            <p class="chips">
+              <code class="chip">候補を出す機能は既に在る（§F-6）</code>
+              <code class="chip">論点2（0件の見せ方）の判断が先</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">呼吸層 — 720ms（10px上へ・不透明度のみ）</span>
+              <span class="spec spec--wide">受け入れ条件: 0件で行き止まりにしないこと／動きを減らす設定では遅れなしで即時に表示すること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">一致しない語を入れると0件の表示と近い候補が現れます。候補を押すと入力に反映されます。試すには「0件の例を入れる」ボタンが便利です。</p>
+      </header>
+
+      <div class="f6-bar">
+        <label class="field">
+          <span>用語を検索</span>
+          <input id="f6-input" type="search" placeholder="例: 巡視／灯り">
+        </label>
+        <button type="button" class="btn" id="f6-sample">0件の例を入れる</button>
+      </div>
+      <div class="f6-stage" id="f6-stage" aria-live="polite">
+        <p class="f6-idle">用語を入力してください。0件のときに候補が現れます。</p>
+      </div>
+      <p class="inline-note">0件の見せ方そのものは 設計論点2 の範囲。このパネルは「候補が現れる動き」の確認用で、文言・候補の選び方は本番で詰める。</p>
+    </section>
+
+    <!-- ===================== パネル6: 見送り案 ===================== -->
+    <section class="panel" id="panel-hold">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">06</span>
+          <div>
+            <h2>見送り案 — 動かない、理由つきのカード</h2>
+            <p class="chips">
+              <code class="chip">「変更しない」も結論として扱う（§G-7）</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">動かない</span>
+              <span class="spec spec--wide">理由ごと残す。提案に含めると、理由ごと説明し直すことになる（§A-3）</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">実装しない案も、理由を付けてここに並べます。カード自体は動きません（枠色の変化のみ）。</p>
+      </header>
+
+      <div class="hold-grid">
+        <article class="hold-card">
+          <span class="hold-status hold-status--hold">見送り推奨</span>
+          <h3>F-5 件数の数字ロール</h3>
+          <p>件数は記録であって演出ではない。数が転がっている途中の値は、一瞬とはいえ事実でない数字を画面に出すことになる。掲載方針（裏付けのない記述を断定形で書かない）と相性が悪い。</p>
+          <span class="hold-ref">§F-5</span>
+        </article>
+        <article class="hold-card">
+          <span class="hold-status hold-status--rejected">却下済み</span>
+          <h3>一覧の横スクロール</h3>
+          <p>横スクロールの区画は既に却下（§A-3）。データ的にも成立しない — 作品数が1件の人物が13件中10件で、横に並べても埋まらない。</p>
+          <span class="hold-ref">§A-3 ／ §F-7</span>
+        </article>
+        <article class="hold-card">
+          <span class="hold-status hold-status--rejected">却下</span>
+          <h3>外部から取るアニメーション</h3>
+          <p>配信時に接続先を同一オリジンに限定する宣言が付いた（2026-10-21）。外部配信のライブラリ・動画・JSONアニメは制限と元の決まりの両方に反する。</p>
+          <span class="hold-ref">§D ／ §F-7</span>
+        </article>
+        <article class="hold-card">
+          <span class="hold-status hold-status--rejected">入口のみ解除</span>
+          <h3>入口以外での視差・立体傾斜</h3>
+          <p>記録のページは静けさを保つ（§A-2）。ここが緩むと、演出が可読性と出典表示を押しのけ始める。例外は入口の主役部分だけ。</p>
+          <span class="hold-ref">§A-2 ／ §F-7</span>
+        </article>
+        <article class="hold-card">
+          <span class="hold-status hold-status--rejected">却下</span>
+          <h3>回り続ける読み込み表示</h3>
+          <p>回り続ける印は無限ループの扱いになり、層の決まり（無限ループは気配のみ）と衝突する。読み込み中は短い淡い表示に留める。</p>
+          <span class="hold-ref">§F-4 ／ §A-1</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== フッター ===================== -->
+    <footer class="page-foot">
+      <p>UIモックアップ（方向性確認用）／記録No.・人名・日時はダミーで、実在の記録と無関係 ／ 資料: 00_site-devlops/00_参照サイト改善/00_成果物_本番実装状況_2026-10-21/03_モーションの現状と追加余地.md ／ Swiper 11・Google Fonts はCDN（本番は同梱方針・§D）</p>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var html = document.documentElement;
+    var state = { reduce: false, theme: 'dark' };
+    var gallery = window.__gallery = { hero: null, state: state };
+
+    /* ---- CSS変数から時間を読む（直値をJSに持ち込まない） ---- */
+    function cssMs(name, fallback) {
+      var v = getComputedStyle(html).getPropertyValue(name).trim();
+      var n = parseFloat(v);
+      return isNaN(n) ? fallback : n;
+    }
+    var STAGGER_STEP = cssMs('--stagger-step', 60);
+    var STAGGER_MAX = cssMs('--stagger-max', 480);
+    var DUR_HERO = cssMs('--dur-hero', 650);
+    var DUR_SWITCH = cssMs('--dur-switch', 240);
+    var DELAY_LOAD = cssMs('--delay-load', 300);
+
+    /* JSが書き込む遅延の台帳。動きを減らす設定では0へ戻す（§B-5 の要点） */
+    var delayRegistry = [];
+    function setRowDelay(el, ms) {
+      var value = state.reduce ? 0 : Math.min(ms, STAGGER_MAX);
+      el.style.animationDelay = value + 'ms';
+      if (value > 0) delayRegistry.push(el);
+    }
+    function zeroAllDelays() {
+      delayRegistry.forEach(function (el) { el.style.animationDelay = '0ms'; });
+      delayRegistry = [];
+    }
+
+    /* ===================== 動きを減らす設定（§A-4・§B-5） ===================== */
+    var reduceInput = document.getElementById('reduce-motion');
+    function setReduce(on) {
+      state.reduce = on;
+      html.classList.toggle('reduce-motion', on);
+      if (gallery.hero) {
+        if (on) { gallery.hero.autoplay.stop(); gallery.hero.params.speed = 0; }
+        else { gallery.hero.params.speed = DUR_HERO; gallery.hero.autoplay.start(); }
+      }
+      if (on) zeroAllDelays();
+    }
+    reduceInput.addEventListener('change', function () { setReduce(reduceInput.checked); });
+
+    /* ===================== テーマ切替（一括変化 400ms・§B-4） ===================== */
+    var themeDark = document.getElementById('theme-dark');
+    var themeLight = document.getElementById('theme-light');
+    var themeTimer = null;
+    function setTheme(t) {
+      if (state.theme === t) return;
+      state.theme = t;
+      if (!state.reduce) {
+        html.classList.add('theme-switching');
+        clearTimeout(themeTimer);
+        themeTimer = setTimeout(function () { html.classList.remove('theme-switching'); }, 440);
+      }
+      html.dataset.theme = t;
+      themeDark.classList.toggle('is-active', t === 'dark');
+      themeDark.setAttribute('aria-pressed', String(t === 'dark'));
+      themeLight.classList.toggle('is-active', t === 'light');
+      themeLight.setAttribute('aria-pressed', String(t === 'light'));
+    }
+    themeDark.addEventListener('click', function () { setTheme('dark'); });
+    themeLight.addEventListener('click', function () { setTheme('light'); });
+
+    /* ===================== ダミーデータ（横断目録風・61件） ===================== */
+    var PEOPLE = ['三隅 亮介', '白石 千鶴', '早瀬 守', '荻野 環', '水城 航平', '冨永 澄', '門脇 紘一', '桐生 澄江', '五十嵐 綴', '宇野 麗', '桂木 真', '峰岸 律子'];
+    var W_MOD = ['青の', '雨あがりの', '灯りの', '朝の', '夕暮れの', '冬支度の', '静かな', '古い', '遠い', '雪の', '灰の', '薄暮の'];
+    var W_NOUN = ['階段', '渡り廊下', '機械室', '待合室', '煙突', '看板', '時計台', '貯水槽', '自転車置場', '昇降機', '保存庫', '正門'];
+    var W_PAIRS = [[0, 3], [1, 10], [2, 5], [3, 0], [4, 7], [5, 2], [6, 9], [7, 4], [8, 11], [9, 6], [10, 1], [11, 8], [0, 10], [2, 3], [5, 11], [7, 1], [9, 4], [3, 6], [1, 7], [6, 0]];
+    var R_BLDG = ['東棟', '西棟', '管理棟', '組立棟', '動力棟', '倉庫', '正門周辺', '敷地'];
+    var R_ACT = ['点検', '清掃', '保全', '立入り', '修繕', '巡視', '記録写真'];
+
+    function buildCatalog() {
+      var people = PEOPLE.map(function (n, i) {
+        return { cat: '人物', title: n, year: String(1901 + i * 3) };
+      });
+      var works = W_PAIRS.map(function (p, i) {
+        return { cat: '作品', title: W_MOD[p[0]] + W_NOUN[p[1]], year: String(1962 + i * 3) };
+      });
+      var records = [];
+      var seen = {};
+      for (var i = 0; records.length < 29; i++) {
+        var t = R_BLDG[i % 8] + 'の' + R_ACT[(i * 3) % 7];
+        if (!seen[t]) { seen[t] = 1; records.push({ cat: '記録', title: t, year: String(1988 + records.length) }); }
+      }
+      /* 人物12・作品20・記録29 = 61件。番号の並びは種別が混ざる固定パターン */
+      var out = [], pi = 0, wi = 0, ri = 0;
+      for (var k = 0; k < 61; k++) {
+        var m = k % 5, item;
+        if (m === 0 && pi < people.length) item = people[pi++];
+        else if ((m === 1 || m === 3) && wi < works.length) item = works[wi++];
+        else if (ri < records.length) item = records[ri++];
+        else if (wi < works.length) item = works[wi++];
+        else if (pi < people.length) item = people[pi++];
+        else item = records[ri++];
+        out.push(item);
+      }
+      out.forEach(function (item, idx) { item.no = ('00' + (idx + 1)).slice(-3); });
+      return out;
+    }
+    var CATALOG = buildCatalog();
+    gallery.catalogLength = CATALOG.length;
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function matches(q) {
+      q = (q || '').trim();
+      if (!q) return CATALOG.slice();
+      return CATALOG.filter(function (it) {
+        return (it.cat + it.title + (it.year || '')).indexOf(q) >= 0;
+      });
+    }
+
+    /* ===================== パネル1: F-1 絞り込み ===================== */
+    var f1List = document.getElementById('f1-list');
+    var f1Wrap = document.getElementById('f1-listwrap');
+    var f1Input = document.getElementById('f1-input');
+    var f1Count = document.getElementById('f1-count');
+    var f1Note = document.getElementById('f1-note');
+    var f1Mode = 'refined';
+    var f1Timer = null;
+
+    function rowEl(item) {
+      var li = document.createElement('li');
+      li.className = 'f1-row';
+      li.dataset.no = item.no;
+      li.innerHTML =
+        '<span class="f1-no">' + item.no + '</span>' +
+        '<span class="f1-cat">' + item.cat + '</span>' +
+        '<span class="f1-title">' + escapeHtml(item.title) + '</span>' +
+        '<span class="f1-year">' + (item.year || '—') + '</span>';
+      return li;
+    }
+
+    /* 改修後: 61行を一度だけ作り、以後は同じ節点を表示切替する（作り直さない） */
+    var f1Rows = CATALOG.map(rowEl);
+    f1Rows.forEach(function (li) { li.dataset.persist = '1'; });
+    f1Rows.forEach(function (li) { f1List.appendChild(li); });
+    gallery.f1PersistCount = function () {
+      return f1List.querySelectorAll('.f1-row[data-persist]').length;
+    };
+
+    function f1ApplyLegacy(q) {
+      f1Wrap.classList.remove('is-switching');
+      f1List.innerHTML = '';
+      var list = matches(q);
+      list.forEach(function (item, i) {
+        var li = rowEl(item);
+        li.classList.add('is-entering');
+        setRowDelay(li, i * STAGGER_STEP); /* 最大480ms（§E-1 実測と同じ構造） */
+        f1List.appendChild(li);
+      });
+      var maxDelay = state.reduce ? 0 : Math.min(Math.max(list.length - 1, 0) * STAGGER_STEP, STAGGER_MAX);
+      f1Count.textContent = list.length + '件' + (q ? ' ／ 全61件中' : '');
+      f1Note.textContent = '従来方式: ' + list.length + '行を作り直して出現（720ms）から再生。最後の行の遅延 ' + maxDelay +
+        'ms。全体が落ち着くまで約1.2秒かかる（§E-1 の実測と同じ構造）。動きを減らす設定では遅延も0になる（§B-5）。';
+    }
+
+    function f1ApplyRefined(q) {
+      /* 台帳の元の節点を付け直す（従来方式で置き換えられていた場合） */
+      if (f1List.firstElementChild !== f1Rows[0]) {
+        f1List.innerHTML = '';
+        f1Rows.forEach(function (li) { f1List.appendChild(li); });
+      }
+      var list = matches(q);
+      var show = {};
+      list.forEach(function (it) { show[it.no] = 1; });
+      var paint = function () {
+        f1Rows.forEach(function (li) { li.hidden = !show[li.dataset.no]; });
+        f1Wrap.classList.remove('is-switching');
+      };
+      if (state.reduce) {
+        paint();
+      } else {
+        f1Wrap.classList.add('is-switching');
+        clearTimeout(f1Timer);
+        f1Timer = setTimeout(paint, DUR_SWITCH / 2);
+      }
+      f1Count.textContent = list.length + '件' + (q ? ' ／ 全61件中' : '');
+      f1Note.textContent = '同じ行の要素を使い回すため、出現の再生は起きません。容器だけが240msで淡く切替ります（用語集の前例・§E-2）。';
+    }
+
+    function f1Apply() {
+      var q = f1Input.value;
+      if (f1Mode === 'refined') f1ApplyRefined(q); else f1ApplyLegacy(q);
+    }
+
+    document.querySelectorAll('[data-f1mode]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        f1Mode = this.dataset.f1mode;
+        document.querySelectorAll('[data-f1mode]').forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        f1Apply();
+      });
+    });
+    f1Input.addEventListener('input', f1Apply);
+
+    /* ===================== パネル3: F-3 一覧と詳細 ===================== */
+    var F3 = [
+      { no: 'P-012', cat: '人物', title: '白石 千鶴', year: '1913', status: 'unchecked', desc: '戦前から戦後にかけて構内の記録写真を残した。出身と経歴の一次資料が未確認。' },
+      { no: 'W-007', cat: '作品', title: '灯りの渡り廊下', year: '1968', status: 'checked', desc: '印画紙の裏に撮影年と署名がある。原板の現物を確認済み。' },
+      { no: 'W-013', cat: '作品', title: '冬の貯水槽', year: '1971', status: 'nosource', desc: '出典の記載がなく、来歴が追えていない。複製と考えられる印痕がある。' },
+      { no: 'R-021', cat: '記録', title: '組立棟の巡視', year: '1988', status: 'supplement', desc: '日付の記載に補足が必要。担当者の印は判読できている。' },
+      { no: 'P-003', cat: '人物', title: '早瀬 守', year: '1901', status: 'checked', desc: '人事記録と署名原簿が一致。生年は二つの資料で確認済み。' },
+      { no: 'W-019', cat: '作品', title: '静かな昇降機', year: '1975', status: 'unchecked', desc: '題名は台帳から。撮影者は推定のまま確定していない。' }
+    ];
+    var STATUS_LABEL = { unchecked: '未検証', checked: '確認済', nosource: '出典なし', supplement: '要補足' };
+
+    var f3Cards = document.getElementById('f3-cards');
+    var f3Detail = document.getElementById('f3-detail');
+    var f3Line = document.getElementById('f3-marker-line');
+    var f3Timer = null;
+
+    F3.forEach(function (d, i) {
+      var li = document.createElement('li');
+      li.className = 'f3-card';
+      li.dataset.idx = String(i);
+      li.setAttribute('role', 'button');
+      li.setAttribute('tabindex', '0');
+      li.innerHTML =
+        '<div class="f3-card-top"><span class="f3-card-title">' + escapeHtml(d.title) + '</span>' +
+        '<span class="marker-tag" aria-hidden="true">目印</span></div>' +
+        '<p class="f3-card-meta">' + d.cat + '｜' + d.no + '｜' + d.year + '</p>';
+      f3Cards.appendChild(li);
+    });
+
+    function selectF3(idx, li) {
+      /* 目印は常に1つ（§B-3）: 先にすべて外してから付ける */
+      f3Cards.querySelectorAll('.is-marker').forEach(function (el) { el.classList.remove('is-marker'); });
+      li.classList.add('is-marker');
+      var count = f3Cards.querySelectorAll('.is-marker').length;
+      gallery.markerCount = count;
+      f3Line.textContent = '目印の数: ' + count + (count === 1
+        ? ' ／ 2つ以上になると本番の遷移そのものが中止される（§B-3）'
+        : ' ／ 2以上 — 本番では遷移が中止される状態');
+
+      var d = F3[idx];
+      var chip = f3Detail.querySelector('.st-chip');
+      var paint = function () {
+        f3Detail.querySelector('.f3-meta').textContent = d.cat + '｜記録番号 ' + d.no + '｜' + d.year;
+        f3Detail.querySelector('.f3-title').textContent = d.title;
+        f3Detail.querySelector('.f3-desc').textContent = d.desc;
+        chip.className = 'st-chip st-' + d.status;
+        chip.textContent = STATUS_LABEL[d.status];
+        f3Detail.classList.remove('is-switching');
+      };
+      if (state.reduce) {
+        clearTimeout(f3Timer);
+        paint();
+      } else {
+        f3Detail.classList.add('is-switching');
+        clearTimeout(f3Timer);
+        f3Timer = setTimeout(paint, DUR_SWITCH / 2);
+      }
+    }
+
+    f3Cards.addEventListener('click', function (e) {
+      var li = e.target.closest('.f3-card');
+      if (li) selectF3(+li.dataset.idx, li);
+    });
+    f3Cards.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var li = e.target.closest('.f3-card');
+      if (li) { e.preventDefault(); selectF3(+li.dataset.idx, li); }
+    });
+    selectF3(0, f3Cards.children[0]);
+
+    /* ===================== パネル4: F-4 読み込み中 ===================== */
+    var f4Stage = document.getElementById('f4-stage');
+    var f4Timers = [];
+    var F4_RESULT = [
+      { no: 'R-021', t: '組立棟の巡視', y: '1988' },
+      { no: 'R-022', t: '東棟の点検', y: '1989' },
+      { no: 'R-023', t: '倉庫の修繕', y: '1990' }
+    ];
+
+    function f4Clear() {
+      f4Timers.forEach(clearTimeout);
+      f4Timers = [];
+    }
+    function f4Idle() {
+      f4Clear();
+      f4Stage.innerHTML = '<p class="f4-idle">ボタンで状態を再現します。</p>';
+    }
+    function f4ShowLoading() {
+      f4Stage.innerHTML = '<div class="f4-loading"><span class="f4-pulse" aria-hidden="true"></span>読み込み中…</div>';
+    }
+    function f4ShowOk() {
+      var ul = document.createElement('ul');
+      ul.className = 'f4-result';
+      F4_RESULT.forEach(function (r, i) {
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="f4-rno">' + r.no + '</span><span>' + escapeHtml(r.t) + '</span><span class="f4-ryear">' + r.y + '</span>';
+        setRowDelay(li, i * STAGGER_STEP);
+        ul.appendChild(li);
+      });
+      f4Stage.innerHTML = '';
+      f4Stage.appendChild(ul);
+    }
+    function f4ShowFail() {
+      f4Stage.innerHTML =
+        '<div class="f4-fail"><strong>読み込みに失敗しました</strong>' +
+        '<span>回線やデータの問題です。0件とは区別されます。</span>' +
+        '<button type="button" class="btn" id="f4-retry">再試行</button></div>';
+      document.getElementById('f4-retry').addEventListener('click', function () { f4Run('slow-ok'); });
+    }
+    function f4ShowEmpty() {
+      f4Stage.innerHTML =
+        '<div class="f4-empty"><strong>該当する記録がありません</strong>' +
+        '<span>応答が速いため、読み込み中は表示されません（ちらつき防止）。行き止まりにしない案は F-6。</span></div>';
+    }
+    function f4Run(kind) {
+      f4Clear();
+      if (kind === 'idle') { f4Idle(); return; }
+      if (kind === 'fast-empty') {
+        /* 応答0.22秒 < 遅延300ms → 読み込み中は出ない（§F-4 ちらつき防止） */
+        f4Timers.push(setTimeout(f4ShowEmpty, 220));
+      } else {
+        f4Timers.push(setTimeout(f4ShowLoading, DELAY_LOAD));
+        f4Timers.push(setTimeout(kind === 'fail' ? f4ShowFail : f4ShowOk, DELAY_LOAD + 1500));
+      }
+    }
+    document.querySelectorAll('[data-f4]').forEach(function (btn) {
+      btn.addEventListener('click', function () { f4Run(this.dataset.f4); });
+    });
+
+    /* ===================== パネル5: F-6 0件と候補 ===================== */
+    var f6Input = document.getElementById('f6-input');
+    var f6Stage = document.getElementById('f6-stage');
+
+    function topSuggestions(q, n) {
+      var chars = Array.from(new Set(q.split('')));
+      var scored = CATALOG.map(function (it) {
+        var hay = it.cat + it.title;
+        var score = chars.filter(function (c) { return hay.indexOf(c) >= 0; }).length;
+        return { item: it, score: score };
+      }).sort(function (a, b) { return b.score - a.score; });
+      var best = scored[0] ? scored[0].score : 0;
+      var label = best > 0 ? '近い候補' : 'よく使われる語';
+      var picks = (best > 0 ? scored : scored.reverse()).slice(0, n).map(function (s) { return s.item; });
+      return { label: label, items: picks };
+    }
+
+    function f6Search() {
+      var q = f6Input.value.trim();
+      if (!q) {
+        f6Stage.innerHTML = '<p class="f6-idle">用語を入力してください。0件のときに候補が現れます。</p>';
+        return;
+      }
+      var list = matches(q);
+      if (list.length) {
+        var ul = document.createElement('ul');
+        ul.className = 'f6-hits';
+        list.slice(0, 12).forEach(function (item) {
+          var li = document.createElement('li');
+          li.innerHTML =
+            '<span class="f1-no">' + item.no + '</span>' +
+            '<span class="f1-cat">' + item.cat + '</span>' +
+            '<span class="f1-title">' + escapeHtml(item.title) + '</span>' +
+            '<span class="f1-year">' + (item.year || '—') + '</span>';
+          ul.appendChild(li);
+        });
+        f6Stage.innerHTML = '';
+        f6Stage.appendChild(ul);
+        return;
+      }
+      var sug = topSuggestions(q, 4);
+      f6Stage.innerHTML =
+        '<div class="f6-zero"><strong>0件です</strong>' +
+        '<span>「' + escapeHtml(q) + '」に一致する記録はありません。</span></div>' +
+        '<div class="f6-suggest"><p class="f6-suggest-label">' + sug.label + '</p>' +
+        '<ul class="f6-chips">' +
+        sug.items.map(function (it) {
+          return '<li><button type="button" class="f6-chip" data-title="' + escapeHtml(it.title) + '">' + escapeHtml(it.title) + '</button></li>';
+        }).join('') +
+        '</ul></div>';
+      /* 呼吸層（720ms・10px上へ）。遅れは JS から書く（§D の使える技法） */
+      var blocks = f6Stage.querySelectorAll('.f6-zero, .f6-suggest');
+      blocks.forEach(function (el, i) {
+        el.style.animationDelay = (state.reduce ? 0 : i * STAGGER_STEP) + 'ms';
+      });
+    }
+
+    f6Input.addEventListener('input', f6Search);
+    document.getElementById('f6-sample').addEventListener('click', function () {
+      f6Input.value = 'きゅうりょう';
+      f6Search();
+    });
+    f6Stage.addEventListener('click', function (e) {
+      var chip = e.target.closest('.f6-chip');
+      if (!chip) return;
+      f6Input.value = chip.dataset.title;
+      f6Search();
+    });
+
+    /* ===================== パネル0: ヒーロー（Swiper） ===================== */
+    if (typeof Swiper !== 'undefined') {
+      gallery.hero = new Swiper('.swiper--hero', {
+        slidesPerView: 1,
+        loop: true,
+        speed: DUR_HERO,
+        grabCursor: true,
+        keyboard: { enabled: true, onlyInViewport: true },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        },
+        scrollbar: { el: '.swiper--hero .swiper-scrollbar', draggable: true },
+        navigation: { nextEl: '.swiper--hero .swiper-button-next', prevEl: '.swiper--hero .swiper-button-prev' },
+        pagination: { el: '.swiper--hero .swiper-pagination', clickable: true },
+        a11y: {
+          prevSlideMessage: '前のスライドへ',
+          nextSlideMessage: '次のスライドへ',
+          paginationBulletMessage: '{{index}}番目のスライドへ'
+        }
+      });
+    } else {
+      var heroPanel = document.getElementById('panel-hero');
+      var note = heroPanel.querySelector('.inline-note');
+      note.textContent = 'Swiper が読み込めなかった環境のため、スライドは縦に並んで表示されています（確認用ページのみ。本番は同梱ファイルで動く）。';
+    }
+
+    /* ===================== F-2 分布バーの幅（JSから書く・§D の使える技法） ===================== */
+    var F2_DIST = [
+      { sel: '.b-unchecked', n: 52 },
+      { sel: '.b-checked', n: 6 },
+      { sel: '.b-nosource', n: 2 },
+      { sel: '.b-supplement', n: 1 }
+    ];
+    var f2Bar = document.getElementById('f2-bar');
+    F2_DIST.forEach(function (d) {
+      var seg = f2Bar.querySelector(d.sel);
+      seg.style.flexGrow = String(d.n);
+      seg.style.flexBasis = '0';
+    });
+
+    /* ===================== 初期状態の適用 ===================== */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reduceInput.checked = true;
+    }
+    setReduce(reduceInput.checked);
+
+    gallery.setReduce = setReduce;
+    gallery.setTheme = setTheme;
+    gallery.f1Apply = f1Apply;
+    gallery.f4Run = f4Run;
+    gallery.f6Search = f6Search;
+  })();
+  </script>
+</body>
+</html>

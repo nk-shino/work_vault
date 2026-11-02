@@ -1,0 +1,75 @@
+モーションギャラリー 撮影レポート
+撮影日時: 2026/11/2 20:20:23
+
+--- DOM checks (initial) ---
+{
+  "swiper": "loaded",
+  "heroInitialized": true,
+  "catalogRows": 61,
+  "persistRows": 61,
+  "markerCount": 1,
+  "theme": "dark"
+}
+check: catalog rows = 61 -> OK :: 61
+check: F-1 rows persist-attached = 61 -> OK :: 61
+check: F-3 initial marker = 1 -> OK :: 1
+shot: full-page.png (fullPage, 暗テーマ・自動再生停止の静止状態)
+shot: hero-t1-autoplay.png (realIndex=0)
+shot: hero-t2-autoplay.png (realIndex=1)
+shot: hero-t3-autoplay.png (realIndex=2)
+hover pause check: hover中 realIndex 2 -> 2 (一時停止 OK) / 離脱後 2 -> 3 (自動再開 OK)
+check: hero hover pause -> OK :: 2 -> 2
+check: hero autoplay resumes -> OK :: 2 -> 3
+shot: f1-refined-filtered.png
+check: F-1 refined: nodes not rebuilt -> OK :: persist=61 visible=2/2
+shot: f1-conventional-settling.png
+check: F-1 legacy: rows rebuilt (no persist) -> OK :: rows=44 persist=0
+check: F-1 legacy: stagger reaches 480ms cap -> OK :: 0.48s
+check: F-1 legacy: settling in progress at 250ms -> OK :: first=1 last=0.877848
+shot: f1-conventional-settled.png
+shot: f2-status.png
+F-2 hover transform: matrix(1, 0, 0, 1, 0, -2)
+check: F-2 hover lift = -2px -> OK :: matrix(1, 0, 0, 1, 0, -2)
+shot: f3-detail.png
+check: F-3 marker = 1 after 1st click -> OK :: 1
+check: F-3 marker = 1 after 2nd click (moved) -> OK :: count=1 dom=1
+shot: f4-loading.png
+check: F-4 loading indicator shown -> OK :: 読み込み中…
+shot: f4-success.png
+check: F-4 success rows = 3 -> OK :: 3
+shot: f4-failure.png
+check: F-4 failure state distinct -> OK :: 読み込みに失敗しました回線やデータの問題
+shot: f4-empty-fast.png
+check: F-4 fast empty: no loading shown -> OK :: 該当する記録がありません応答が速いため、
+shot: f6-zero-suggestions.png
+check: F-6 zero card + suggestions -> OK :: chips=4
+check: F-6 rise uses breath layer (720ms/10px) -> OK :: dur=0.72s delay=0s
+shot: hold-cards.png
+--- 動きを減らす設定 適用時 ---
+{
+  "cls": true,
+  "panelDur": "1e-06s",
+  "autoplayRunning": false,
+  "heroSpeed": 0
+}
+check: reduce-motion class applied -> OK
+check: reduce-motion: animation durations ~0 -> OK :: 1e-06s
+check: reduce-motion: hero autoplay stopped -> OK :: false
+check: reduce-motion: hero speed = 0 -> OK :: 0
+shot: rm-hero.png
+shot: rm-f1-conventional.png
+check: reduce-motion: JS-written delays = 0 -> OK :: 0s
+check: reduce-motion: rows appear instantly -> OK :: opacity=1
+shot: rm-full-page.png (fullPage, 動きを減らす設定適用時)
+light theme body bg: rgb(243, 239, 229)
+check: light theme applied -> OK :: rgb(243, 239, 229)
+shot: light-hero.png
+shot: light-f2.png
+shot: light-full-page.png (fullPage, 明テーマ)
+console: 0 line(s), errors: 0
+checks: ALL OK
+
+--- console messages (0) ---
+(なし)
+
+CONSOLE ERRORS: none
