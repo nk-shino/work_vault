@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swiper 切り替え効果 確認モックアップ</title>
+
+  <!-- Swiper 11（確認用のためCDN。本番採用時はファイル同梱の方針） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+  <!-- フォント（モックアップ用・Google Fonts） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- ===================== ページ見出し ===================== -->
+    <header class="page-head">
+      <p class="overline">UI MOCKUP — SWIPER v11</p>
+      <h1>Swiper 切り替え効果 確認モックアップ</h1>
+      <p class="lead">Swiper v11 の3つの切り替え効果（横スライド／フェード／カバー フロー）を、この1ページで操作しながら比較できます。</p>
+      <p class="note">本番サイトは外部CDN不使用の方針のため、採用時は swiper-bundle.min.css / swiper-bundle.min.js を同梱する</p>
+    </header>
+
+    <!-- ===================== パネル1: 基本（横スライド＋自動再生） ===================== -->
+    <section class="panel" id="panel-base">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">01</span>
+          <div>
+            <h2>基本 — 横スライド＋自動再生</h2>
+            <p class="chips">
+              <code class="chip">slidesPerView: 1</code>
+              <code class="chip">loop: true</code>
+              <code class="chip">autoplay: 3000ms</code>
+              <code class="chip">pauseOnMouseEnter</code>
+              <code class="chip">scrollbar</code>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">約3秒ごとに自動で切り替わります。スライド上にカーソルを重ねると一時停止します。矢印・下のドット（クリック可）・スクロールバー、←→キーでも操作できます。</p>
+      </header>
+
+      <div class="swiper swiper--base">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <article class="slide-card g1">
+              <span class="slide-no" aria-hidden="true">01</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.001 ／ 撮影 6:42</p>
+                <h3 class="slide-title">廊下の朝</h3>
+                <p class="slide-text">東棟の渡り廊下。清掃を終えた床に朝の光が伸びる。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g2">
+              <span class="slide-no" aria-hidden="true">02</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.002 ／ 撮影 18:57</p>
+                <h3 class="slide-title">青の時間</h3>
+                <p class="slide-text">日没後の管理棟。窓の明かりがそろって灯り始める。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g3">
+              <span class="slide-no" aria-hidden="true">03</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.003 ／ 撮影 14:20</p>
+                <h3 class="slide-title">工場の午後</h3>
+                <p class="slide-text">組立棟の休憩時間。待機灯が静かに点滅している。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g4">
+              <span class="slide-no" aria-hidden="true">04</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.004 ／ 撮影 9:05</p>
+                <h3 class="slide-title">雨上がり</h3>
+                <p class="slide-text">敷地内の歩道。水たまりに映った空が乾いていく。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g5">
+              <span class="slide-no" aria-hidden="true">05</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.005 ／ 撮影 10:31</p>
+                <h3 class="slide-title">看板の手入れ</h3>
+                <p class="slide-text">正面玄関・年2回の清掃。足場を組んで洗浄する。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g6">
+              <span class="slide-no" aria-hidden="true">06</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.006 ／ 撮影 5:12</p>
+                <h3 class="slide-title">夜勤明け</h3>
+                <p class="slide-text">駐車場の出口。雲の切れ間に月が残っている。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- ===================== パネル2: フェード ===================== -->
+    <section class="panel" id="panel-fade">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">02</span>
+          <div>
+            <h2>フェード — 同じ位置で交差して切替</h2>
+            <p class="chips">
+              <code class="chip">effect: 'fade'</code>
+              <code class="chip">crossFade: true</code>
+              <code class="chip">speed: 900ms</code>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">矢印で切り替えると、横移動ではなく同じ位置で絵が交差しながら変わります（クロスフェード・900ms）。パネル1との違いの確認用です。</p>
+      </header>
+
+      <div class="swiper swiper--fade">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <article class="slide-card g1">
+              <span class="slide-no" aria-hidden="true">01</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.001 ／ 撮影 6:42</p>
+                <h3 class="slide-title">廊下の朝</h3>
+                <p class="slide-text">東棟の渡り廊下。清掃を終えた床に朝の光が伸びる。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g2">
+              <span class="slide-no" aria-hidden="true">02</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.002 ／ 撮影 18:57</p>
+                <h3 class="slide-title">青の時間</h3>
+                <p class="slide-text">日没後の管理棟。窓の明かりがそろって灯り始める。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g3">
+              <span class="slide-no" aria-hidden="true">03</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.003 ／ 撮影 14:20</p>
+                <h3 class="slide-title">工場の午後</h3>
+                <p class="slide-text">組立棟の休憩時間。待機灯が静かに点滅している。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g4">
+              <span class="slide-no" aria-hidden="true">04</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.004 ／ 撮影 9:05</p>
+                <h3 class="slide-title">雨上がり</h3>
+                <p class="slide-text">敷地内の歩道。水たまりに映った空が乾いていく。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g5">
+              <span class="slide-no" aria-hidden="true">05</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.005 ／ 撮影 10:31</p>
+                <h3 class="slide-title">看板の手入れ</h3>
+                <p class="slide-text">正面玄関・年2回の清掃。足場を組んで洗浄する。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g6">
+              <span class="slide-no" aria-hidden="true">06</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.006 ／ 撮影 5:12</p>
+                <h3 class="slide-title">夜勤明け</h3>
+                <p class="slide-text">駐車場の出口。雲の切れ間に月が残っている。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- ===================== パネル3: カバー フロー ===================== -->
+    <section class="panel" id="panel-cover">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">03</span>
+          <div>
+            <h2>カバー フロー — 立体的な回転で切替</h2>
+            <p class="chips">
+              <code class="chip">effect: 'coverflow'</code>
+              <code class="chip">slidesPerView: 3</code>
+              <code class="chip">centeredSlides</code>
+              <code class="chip">depth: 110</code>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">中央のスライドを基準に、左右が回転しながら奥へ沈みます。矢印のほか、スライドをドラッグしても操作できます。</p>
+      </header>
+
+      <div class="swiper swiper--cover">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <article class="slide-card g1">
+              <span class="slide-no" aria-hidden="true">01</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.001 ／ 撮影 6:42</p>
+                <h3 class="slide-title">廊下の朝</h3>
+                <p class="slide-text">東棟の渡り廊下。清掃を終えた床に朝の光が伸びる。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g2">
+              <span class="slide-no" aria-hidden="true">02</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.002 ／ 撮影 18:57</p>
+                <h3 class="slide-title">青の時間</h3>
+                <p class="slide-text">日没後の管理棟。窓の明かりがそろって灯り始める。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g3">
+              <span class="slide-no" aria-hidden="true">03</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.003 ／ 撮影 14:20</p>
+                <h3 class="slide-title">工場の午後</h3>
+                <p class="slide-text">組立棟の休憩時間。待機灯が静かに点滅している。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g4">
+              <span class="slide-no" aria-hidden="true">04</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.004 ／ 撮影 9:05</p>
+                <h3 class="slide-title">雨上がり</h3>
+                <p class="slide-text">敷地内の歩道。水たまりに映った空が乾いていく。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g5">
+              <span class="slide-no" aria-hidden="true">05</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.005 ／ 撮影 10:31</p>
+                <h3 class="slide-title">看板の手入れ</h3>
+                <p class="slide-text">正面玄関・年2回の清掃。足場を組んで洗浄する。</p>
+              </div>
+            </article>
+          </div>
+          <div class="swiper-slide">
+            <article class="slide-card g6">
+              <span class="slide-no" aria-hidden="true">06</span>
+              <div class="slide-info">
+                <p class="slide-meta">記録No.006 ／ 撮影 5:12</p>
+                <h3 class="slide-title">夜勤明け</h3>
+                <p class="slide-text">駐車場の出口。雲の切れ間に月が残っている。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- ===================== フッター ===================== -->
+    <footer class="page-foot">
+      <p>UIモックアップ（方向性確認用）／記録No.・日時・説明文はダミーデータで、実在の記録と無関係 ／ Swiper 11・Google Fonts はCDNから読み込み</p>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // 初期化は DOMContentLoaded 後。パネルごとに別の設定オブジェクトで明示する。
+    document.addEventListener('DOMContentLoaded', function () {
+      var a11yJa = {
+        prevSlideMessage: '前のスライドへ',
+        nextSlideMessage: '次のスライドへ',
+        paginationBulletMessage: '{{index}}番目のスライドへ'
+      };
+
+      // ---- パネル1: 基本（横スライド＋自動再生） ----
+      var baseConfig = {
+        slidesPerView: 1,
+        loop: true,
+        speed: 650,
+        grabCursor: true,
+        keyboard: { enabled: true, onlyInViewport: true },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        },
+        scrollbar: { el: '.swiper--base .swiper-scrollbar', draggable: true },
+        navigation: { nextEl: '.swiper--base .swiper-button-next', prevEl: '.swiper--base .swiper-button-prev' },
+        pagination: { el: '.swiper--base .swiper-pagination', clickable: true },
+        a11y: a11yJa
+      };
+
+      // ---- パネル2: フェード ----
+      var fadeConfig = {
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        loop: true,
+        speed: 900,
+        navigation: { nextEl: '.swiper--fade .swiper-button-next', prevEl: '.swiper--fade .swiper-button-prev' },
+        pagination: { el: '.swiper--fade .swiper-pagination', clickable: true },
+        a11y: a11yJa
+      };
+
+      // ---- パネル3: カバー フロー ----
+      var coverConfig = {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        loop: true,
+        speed: 700,
+        coverflowEffect: {
+          rotate: 22,
+          stretch: 0,
+          depth: 110,
+          modifier: 1.5,
+          slideShadows: false
+        },
+        breakpoints: {
+          0:   { slidesPerView: 1.6, spaceBetween: 12 },
+          760: { slidesPerView: 3,   spaceBetween: 18 }
+        },
+        navigation: { nextEl: '.swiper--cover .swiper-button-next', prevEl: '.swiper--cover .swiper-button-prev' },
+        pagination: { el: '.swiper--cover .swiper-pagination', clickable: true },
+        a11y: a11yJa
+      };
+
+      var base  = new Swiper('.swiper--base',  baseConfig);
+      var fade  = new Swiper('.swiper--fade',  fadeConfig);
+      var cover = new Swiper('.swiper--cover', coverConfig);
+
+      // 撮影・検証スクリプトからの参照用
+      window.__swiperDemo = { base: base, fade: fade, cover: cover };
+    });
+  </script>
+</body>
+</html>

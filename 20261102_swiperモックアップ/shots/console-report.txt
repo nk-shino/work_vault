@@ -1,0 +1,44 @@
+Swiper モックアップ 撮影レポート
+撮影日時: 2026/11/2 14:28:45
+
+--- DOM checks ---
+{
+  "swiperGlobal": "loaded",
+  "containerCount": 3,
+  "panels": {
+    "base": {
+      "initialized": true,
+      "slides": 6,
+      "realIndex": 0,
+      "effect": "slide",
+      "loop": true
+    },
+    "fade": {
+      "initialized": true,
+      "slides": 6,
+      "realIndex": 0,
+      "effect": "fade",
+      "loop": true
+    },
+    "cover": {
+      "initialized": true,
+      "slides": 6,
+      "realIndex": 0,
+      "effect": "coverflow",
+      "loop": true
+    }
+  }
+}
+shot: full-page.png (fullPage, 自動再生停止中の静止状態)
+shot: base-t1-autoplay.png (realIndex=0)
+shot: base-t2-autoplay.png (realIndex=1)
+shot: base-t3-autoplay.png (realIndex=2)
+hover pause check: hover中 realIndex 2 -> 2 (一時停止 OK) / 離脱後 2 -> 3 (自動再開 OK)
+shot: fade-after-next.png
+shot: cover-after-next.png
+console: 0 line(s), errors: 0
+
+--- console messages (0) ---
+(なし)
+
+CONSOLE ERRORS: none

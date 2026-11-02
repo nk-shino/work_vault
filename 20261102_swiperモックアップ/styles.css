@@ -1,0 +1,382 @@
+/* ============================================================
+   Swiper 動作確認モックアップ — 共通スタイル
+   ダーク基調 × アンバーのアクセント。写真は使わず、
+   スライドごとに色相の違うグラデーションで判別できるようにする。
+   ============================================================ */
+
+:root {
+  --bg: #0b0d12;
+  --panel: #11141c;
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #ece9e2;
+  --text-dim: #a3a0aa;
+  --text-faint: #7b7883;
+  --accent: #e9a94f;
+  --accent-soft: rgba(233, 169, 79, 0.13);
+
+  --font-display: "Zen Old Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  --font-body: "Zen Kaku Gothic New", "Yu Gothic UI", "Meiryo", sans-serif;
+  --font-num: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* Swiper 既定部品（ページネーション等）の基調色 */
+  --swiper-theme-color: #e9a94f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(233, 169, 79, 0.32); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #2a2e3a;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+}
+
+/* --- 背景の空気感: 放射グラデーション + 微細なノイズ --- */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(52% 42% at 10% -4%, rgba(233, 169, 79, 0.075), transparent 62%),
+    radial-gradient(46% 40% at 92% 6%, rgba(86, 112, 192, 0.09), transparent 62%),
+    radial-gradient(64% 52% at 50% 114%, rgba(233, 169, 79, 0.05), transparent 60%);
+}
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+/* ============ ページ見出し ============ */
+
+.overline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+}
+.overline::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.8;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 42px);
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+}
+
+.lead {
+  margin: 14px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  max-width: 64ch;
+}
+
+.note {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 26px 0 0;
+  padding: 10px 16px 10px 14px;
+  border: 1px solid rgba(233, 169, 79, 0.32);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* ============ パネル共通 ============ */
+
+.panel {
+  margin-top: 56px;
+  padding: 24px 26px 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0)),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.panel-title {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.panel-index {
+  font-family: var(--font-num);
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 0.95;
+  color: var(--accent);
+  opacity: 0.92;
+}
+
+.panel-title h2 {
+  margin: 2px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.panel-how {
+  margin: 0;
+  max-width: 430px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+/* ============ スライドカード（ダミー写真の代わり） ============ */
+
+.slide-card {
+  position: relative;
+  height: var(--card-h, 320px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
+}
+.slide-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 86% -12%, rgba(255, 255, 255, 0.13), transparent 55%);
+}
+
+.slide-no {
+  position: absolute;
+  top: 4px;
+  right: 26px;
+  font-family: var(--font-num);
+  font-weight: 300;
+  font-size: clamp(64px, 9vw, 104px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.16);
+  user-select: none;
+}
+
+.slide-info {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 24px 30px 26px;
+  max-width: min(72%, 520px);
+}
+
+.slide-meta {
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+}
+
+.slide-title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 26px);
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+
+.slide-text {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* スライドごとのグラデーション（番号と対になる判別用カラー） */
+.g1 { background: linear-gradient(128deg, #6b4a20 0%, #3a2a13 44%, #16110a 100%); } /* 朝 — 琥珀 */
+.g2 { background: linear-gradient(128deg, #2b3f6e 0%, #1a2440 46%, #0c1120 100%); } /* 夕 — 紺 */
+.g3 { background: linear-gradient(128deg, #46582c 0%, #2a3620 46%, #121810 100%); } /* 午後 — 橄欖 */
+.g4 { background: linear-gradient(128deg, #2e5866 0%, #1b3844 46%, #0d1a20 100%); } /* 雨 — 青鉄 */
+.g5 { background: linear-gradient(128deg, #7a4430 0%, #472a1e 46%, #1a100c 100%); } /* 手入れ — 錆 */
+.g6 { background: linear-gradient(128deg, #473a75 0%, #2c2450 46%, #130f22 100%); } /* 夜 — 藍 */
+
+/* ============ Swiper の配置と部品の調整 ============ */
+
+/* 矢印・ページネーション・スクロールバーを収めるための余白 */
+.swiper--base  { --card-h: clamp(220px, 30vw, 320px); padding: 6px 54px 46px; }
+.swiper--fade  { --card-h: clamp(220px, 30vw, 320px); padding: 6px 54px 44px; }
+.swiper--cover { padding: 6px 54px 44px; }
+.swiper--cover .slide-card { height: clamp(200px, 26vw, 280px); }
+/* カードが狭いため、題名が1行で収まる幅に調整 */
+.swiper--cover .slide-info { max-width: 88%; padding: 20px 24px 24px; }
+.swiper--cover .slide-title { font-size: 21px; }
+.swiper--cover .slide-meta { letter-spacing: 0.1em; }
+
+/* ナビゲーション矢印（ガラス風の円形ボタン） */
+.swiper .swiper-button-prev,
+.swiper .swiper-button-next {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(10, 12, 17, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--text);
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+.swiper .swiper-button-prev::after,
+.swiper .swiper-button-next::after {
+  font-size: 15px;
+  font-weight: 700;
+}
+.swiper .swiper-button-prev:hover,
+.swiper .swiper-button-next:hover {
+  border-color: rgba(233, 169, 79, 0.65);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+/* カード領域の中心に矢印を合わせる（下に部品分の余白がある分だけ上げる） */
+.swiper--base .swiper-button-prev,
+.swiper--base .swiper-button-next,
+.swiper--fade .swiper-button-prev,
+.swiper--fade .swiper-button-next { top: calc(50% - 20px); }
+.swiper--cover .swiper-button-prev,
+.swiper--cover .swiper-button-next { top: calc(50% - 16px); }
+
+/* ページネーション（現在地がアンバーの pill に伸びる） */
+.swiper .swiper-pagination { bottom: 18px; }
+.swiper .swiper-pagination-bullet {
+  width: 7px;
+  height: 7px;
+  margin: 0 5px !important;
+  background: rgba(255, 255, 255, 0.30);
+  opacity: 1;
+  transition: width 0.35s ease, background-color 0.35s ease;
+}
+.swiper .swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* スクロールバー（パネル1のみ・ドラッグ可） */
+.swiper--base .swiper-scrollbar {
+  left: 54px;
+  width: calc(100% - 108px);
+  bottom: 8px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+.swiper--base .swiper-scrollbar-drag {
+  background: var(--accent);
+  opacity: 0.9;
+  border-radius: 999px;
+}
+
+/* ============ フッター ============ */
+
+.page-foot {
+  margin-top: 64px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  color: var(--text-faint);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+}
+.page-foot p { margin: 0; }
+
+/* ============ 出現アニメーション（読み込み時に順に立ち上がる） ============ */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-head { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) both; }
+.panel:nth-of-type(1) { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) 0.10s both; }
+.panel:nth-of-type(2) { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) 0.18s both; }
+.panel:nth-of-type(3) { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) 0.26s both; }
+.page-foot { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) 0.34s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ============ 狭い画面 ============ */
+
+@media (max-width: 720px) {
+  .page { padding: 48px 14px 72px; }
+  .panel { padding: 18px 14px 10px; }
+  .swiper--base, .swiper--fade, .swiper--cover { padding: 4px 12px 46px; }
+  .panel-how { text-align: left; }
+  .panel-index { font-size: 34px; }
+  .slide-info { max-width: 86%; padding: 18px 20px 20px; }
+}
