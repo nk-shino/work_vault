@@ -1,0 +1,33 @@
+{
+ "comment": "icon_map.md §3 種別対応表 → 相関図ノード19への割当(両冊共通)。標準配置=ノード左端内側8pt·垂直中央·14pt·テキストはアイコン右6pt(MarginLeft=28)。n05_note(注記ボックス)は機器ではないため対象外。帯見出し(band_*_head)は#404040塗り·白文字のため同色(#404040単色規定)アイコンが視認不可→適用を見送り(Stage 6の凡例再計画で白抜き版を再検討)。状態バッジ(n15_settings·任意)はメンテナンスモード等の適用中ノードが現状ないため未使用。",
+ "icons_dir": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\icons",
+ "size": 14,
+ "inset": 8,
+ "indent_left": 28,
+ "nodes": {
+  "n01_esxi":    {"png": "n01_dns.png", "mode": "head", "type": "サーバ物理·ハイパーバイザ(ESXi) — 容器のため見出し行左に配置(mode=head)"},
+  "n02_app":     {"png": "n02_dataset.png", "mode": "std", "type": "サーバVM(PanaCIMアプリ·CIMC-SV)"},
+  "n03_ctrl":    {"png": "n02_dataset.png", "mode": "std", "type": "サーバVM(コントローラー)"},
+  "n04_maint":   {"png": "n03_host.png", "mode": "std", "type": "メンテナンスサーバー(推定スタイル)"},
+  "n06_dgs":     {"png": "n04_device_hub.png", "mode": "std", "type": "上位システム(NPM-DGS)"},
+  "n07_lnb":     {"png": "n09_computer.png", "mode": "std", "type": "LNB(FAパソコン)"},
+  "n08_line":    {"png": "n13_precision_manufacturing.png", "mode": "std", "type": "実装機·NPMライン"},
+  "n09_andon":   {"png": "n08_connected_tv.png", "mode": "std", "type": "アンドン"},
+  "n10_monitor": {"png": "n07_monitoring.png", "mode": "std", "type": "稼働モニタ(Power BI)"},
+  "n11_lws":     {"png": "n09_computer.png", "mode": "std", "type": "LWS(ブラウザ端末)"},
+  "n12_pda":     {"png": "n11_barcode_scanner.png", "mode": "std", "type": "無線スキャナー(PDA)"},
+  "n13_ap":      {"png": "n10_wifi.png", "mode": "std", "type": "アクセスポイント(推定スタイル)"},
+  "n14_tablet":  {"png": "n12_tablet.png", "mode": "std", "type": "Androidタブレット(推定スタイル)"},
+  "n15_cima_pc": {"png": "n09_computer.png", "mode": "std", "type": "CIM-A PC"},
+  "n16_cimc_pc": {"png": "n09_computer.png", "mode": "std", "type": "CIM-C PC"},
+  "n17_backup":  {"png": "n06_database.png", "mode": "std", "type": "保存領域·DB完全バックアップ"},
+  "n18_extif":   {"png": "n05_output.png", "mode": "std", "type": "外部I/F出力"},
+  "n19_cima_sv": {"png": "n01_dns.png", "mode": "std", "type": "サーバ物理(CIMA-SV) — No.1 ラック筐体記号"}
+ },
+ "skipped": {
+  "band_a_head": "見出し箱が#404040塗りのため同色アイコンは視認不可(スタイル規定: 全種#404040単色)。Stage 6で白抜き版を検討",
+  "band_b_head": "同上",
+  "n05_note": "注記ボックス(機器種別に該当なし)",
+  "badge_settings": "状態バッジ(No.15·12pt·任意)は適用中のノードなし(メンテナンスモード等は運用時の状態表現)"
+ }
+}

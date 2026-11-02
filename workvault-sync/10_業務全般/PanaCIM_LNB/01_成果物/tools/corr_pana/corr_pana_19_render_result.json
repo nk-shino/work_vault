@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "pid": 17064,
+ "render": {
+  "sheet_pdf": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_pana_orig_icons.pdf",
+  "book_pdf": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.pdf",
+  "book_pdf_size": 2425579,
+  "sheet_png": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_pana_orig_icons_p1.png",
+  "sheet_pdf_pages": 1,
+  "book_pdf_pages": 177
+ },
+ "assert_fails": [],
+ "errors": [],
+ "cleanup": "killed residual 17064"
+}

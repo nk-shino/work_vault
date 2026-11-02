@@ -1,0 +1,162 @@
+{
+ "ok": true,
+ "target": "dry",
+ "book": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_dryrun_lnb.xlsx",
+ "pid": 10232,
+ "checks": {
+  "sheets": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "日次点検",
+   "定期管理",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(日次)",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "要確認事項一覧",
+   "申し送り(認証情報)",
+   "引用と部品照合"
+  ],
+  "anchor_B11": [
+   15.0,
+   179.4
+  ],
+  "shape_count": 75,
+  "node_geom": "23/23 ok",
+  "label_geom": "17/17 ok",
+  "text_spot": {
+   "n02_app": true,
+   "n06_dgs": true,
+   "n01_esxi": true,
+   "band_a_head": true,
+   "band_b_head": true,
+   "label_E04": true,
+   "label_E09": true,
+   "label_E18": true
+  },
+  "edges": "17/17 ok",
+  "edge_nodes_readback": {
+   "E01": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E02": {
+    "nodes": 4,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E03": {
+    "nodes": 5,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E04": {
+    "nodes": 5,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E05": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E06": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E07": {
+    "nodes": 4,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E08": {
+    "nodes": 3,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E09": {
+    "nodes": 6,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E10": {
+    "nodes": 5,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E12": {
+    "nodes": 4,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E13": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E14": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E15": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E16": {
+    "nodes": 2,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E17": {
+    "nodes": 4,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   },
+   "E18": {
+    "nodes": 7,
+    "endpoints_ok": true,
+    "ok_cnt": true
+   }
+  },
+  "pagesetup": {
+   "orientation": 2,
+   "fit_wide": 1,
+   "fit_tall": 1,
+   "zoom": false,
+   "print_area": "$A$1:$AY$60",
+   "margins": [
+    28.4,
+    28.4,
+    28.4,
+    28.4
+   ]
+  },
+  "old_shapes": {
+   "count": 34,
+   "all_rel": true
+  },
+  "icons": "ok 18/18",
+  "icon_bad": [],
+  "wording_C7_C10": "ok",
+  "用語_usedrange": {
+   "rows": 17,
+   "cols": 52
+  },
+  "orig_sha256_unchanged": true
+ },
+ "assert_fails": [],
+ "errors": [],
+ "notes": [],
+ "cleanup": "killed residual 10232"
+}

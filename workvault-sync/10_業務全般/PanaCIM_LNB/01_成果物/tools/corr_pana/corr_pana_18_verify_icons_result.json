@@ -1,0 +1,49 @@
+{
+ "ok": true,
+ "pid": 20880,
+ "sha256": "7b41e825c5f73b46e041704b2e741e2c69fadd79a1508e6fc5e983b0277b1e52",
+ "checks": {
+  "sheets": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "月次再起動",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "付録 引用元と確認範囲",
+   "要確認事項一覧",
+   "7-5仮_サービス起動停止"
+  ],
+  "anchor_B11": [
+   15.0,
+   180.0
+  ],
+  "shape_count": 75,
+  "icons": "ok 18/18",
+  "old_shapes": {
+   "count": 34,
+   "all_rel": true
+  },
+  "pagesetup": {
+   "orientation": 2,
+   "fit_wide": 1,
+   "fit_tall": 1,
+   "print_area": "$A$1:$AY$60"
+  },
+  "用語_usedrange": {
+   "rows": 31,
+   "cols": 52
+  }
+ },
+ "assert_fails": [],
+ "errors": [],
+ "notes": [],
+ "cleanup": "killed residual 20880"
+}

@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "note": "適用は完了し corr_lnb_15 --target orig で全項目合格(75図形·アイコン18·B11±1.0·横$AY$60·C7/C10一致·相関図_old34図形)。ただし保存経路に逸脱があったため記録を残す",
+ "incident": {
+  "summary": "run1の適用操作は完了したが、検証中にCOM一時拒否(RPC_E_CALL_REJECTED)で例外終了。明示的な wb.Save() の前に OneDrive AutoSave が適用状態を原本へ書き出していた(保存はなされていた)。run2は「相関図_old 既存」のassertで検知し停止",
+  "side_effects": [
+   "tempバックアップ(before_apply)がrun2のcopy2で適用後状態で上書きされ、適用前の原本バックアップは失失",
+   "舊原本のハッシュ 0f72ad7a61b221483d48f88947d2d3683a95a452087059abfd2f3e1377610381 (corr_lnb_19が記録)",
+   "ロールバック経路は現存: 相関図_oldシート(34図形)を相関図へ再複製+printer_ref_lnbのbin再適用"
+  ],
+  "countermeasure": "OneDrive配下のブックをCOMで編集するスクリプトは冒頭で wb.AutoSaveOn=False を明示し、検証はCOM呼び出しをcom_retryでラップする(本スクリプトはretry追加済み·AutoSaveOn対応は今後のスクリプトへ)"
+ },
+ "runs": {
+  "run1": {"pid": 2352, "result": "操作完了·検証中に例外·AutoSaveにより原本へ書き出し済み·ハッシュ dd6be457へ変化"},
+  "run2": {"pid": 2312, "result": "相関図_old既存のassertで停止·原本未変更"},
+  "verify_after": "corr_lnb_15_verify_result_orig.json (ok=true)·corr_lnb_14 PASS(HARD 0)"
+ },
+ "orig_sha256_after_wording_and_restore": "corr_lnb_22·corr_lnb_18 実行後のハッシュは実行ログ参照",
+ "file_backup": "LNB管理手順書案_未承認_AutoSave適用済み状態_20261102.xlsx (temp·適用後状態の複製)",
+ "printer_bins": "printer_ref_lnb に適用前の6binを確保済み(corr_lnb_18 --extract)"
+}

@@ -1,0 +1,1014 @@
+{
+ "ok": true,
+ "target": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_dryrun_lnb.xlsx",
+ "pid": 20564,
+ "anchor": [
+  15.0,
+  179.4
+ ],
+ "nodes": {
+  "n01_esxi": {
+   "tier": 1,
+   "mode": "head",
+   "png": "n01_dns.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 24.26,
+   "icon_rel": [
+    8.0,
+    35.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 24.26
+    }
+   ]
+  },
+  "n02_app": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n02_dataset.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 47.79,
+   "icon_rel": [
+    16.0,
+    70.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    }
+   ]
+  },
+  "n03_ctrl": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n02_dataset.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 47.79,
+   "icon_rel": [
+    210.0,
+    70.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    }
+   ]
+  },
+  "n04_maint": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n03_host.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 37.88,
+   "icon_rel": [
+    16.0,
+    121.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 37.88
+    }
+   ]
+  },
+  "n06_dgs": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n04_device_hub.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 52.66,
+   "icon_rel": [
+    172.0,
+    131.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 77.52
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 62.64
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 52.66
+    }
+   ]
+  },
+  "n07_lnb": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n09_computer.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.6,
+   "bound": 27.97,
+   "icon_rel": [
+    8.0,
+    305.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 34.17
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    }
+   ]
+  },
+  "n08_line": {
+   "tier": 2,
+   "mode": "std",
+   "png": "n13_precision_manufacturing.png",
+   "margin": 22.0,
+   "icon_size": [
+    12.0,
+    12.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 19.48,
+   "icon_rel": [
+    8.0,
+    347.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 34.17
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 26.91
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.92
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.42
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 19.48
+    }
+   ]
+  },
+  "n09_andon": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n08_connected_tv.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.6,
+   "bound": 20.05,
+   "icon_rel": [
+    438.0,
+    346.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 24.26
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 20.05
+    }
+   ]
+  },
+  "n10_monitor": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n07_monitoring.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 47.79,
+   "icon_rel": [
+    8.0,
+    210.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    }
+   ]
+  },
+  "n11_lws": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n09_computer.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 9.5,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 25.42,
+   "icon_rel": [
+    176.0,
+    261.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 38.87
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 37.8
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 35.82
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.42
+    }
+   ]
+  },
+  "n12_pda": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n11_barcode_scanner.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.6,
+   "bound": 27.97,
+   "icon_rel": [
+    8.0,
+    261.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 34.17
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    }
+   ]
+  },
+  "n13_ap": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n10_wifi.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 37.8,
+   "icon_rel": [
+    442.0,
+    205.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 38.87
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 37.8
+    }
+   ]
+  },
+  "n14_tablet": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n12_tablet.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 9.5,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 34.83,
+   "icon_rel": [
+    560.0,
+    205.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 61.41
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 49.76
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 48.7
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 45.73
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 34.83
+    }
+   ]
+  },
+  "n15_cima_pc": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n09_computer.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 9.5,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 36.81,
+   "icon_rel": [
+    146.0,
+    205.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 51.5
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 41.84
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 41.27
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 38.3
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 36.81
+    }
+   ]
+  },
+  "n16_cimc_pc": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n09_computer.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 10.0,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 35.82,
+   "icon_rel": [
+    294.0,
+    205.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 61.41
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 49.76
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 48.7
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 35.82
+    }
+   ]
+  },
+  "n17_backup": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n06_database.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 9.5,
+   "note_pt": 7.5,
+   "space": 0.6,
+   "bound": 46.22,
+   "icon_rel": [
+    633.0,
+    53.5
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 72.57
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 58.68
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 58.11
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 58.11
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 46.22
+    }
+   ]
+  },
+  "n18_extif": {
+   "tier": 1,
+   "mode": "std",
+   "png": "n05_output.png",
+   "margin": 28.0,
+   "icon_size": [
+    14.0,
+    14.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 8.0,
+   "space": 0.75,
+   "bound": 47.79,
+   "icon_rel": [
+    633.0,
+    111.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 47.79
+    }
+   ]
+  },
+  "n19_cima_sv": {
+   "tier": 2,
+   "mode": "std",
+   "png": "n01_dns.png",
+   "margin": 22.0,
+   "icon_size": [
+    12.0,
+    12.0
+   ],
+   "label_pt": 11.0,
+   "note_pt": 7.0,
+   "space": 0.6,
+   "bound": 18.91,
+   "icon_rel": [
+    403.0,
+    131.0
+   ],
+   "tried": [
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.75,
+     "bound": 34.17
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 26.91
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.92
+    },
+    {
+     "tier": 1,
+     "margin": 28.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.42
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 11.0,
+     "note_pt": 8.0,
+     "space": 0.6,
+     "bound": 27.97
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 11.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 26.91
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 10.0,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.92
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 9.5,
+     "note_pt": 7.5,
+     "space": 0.6,
+     "bound": 25.42
+    },
+    {
+     "tier": 2,
+     "margin": 22.0,
+     "label_pt": 11.0,
+     "note_pt": 7.0,
+     "space": 0.6,
+     "bound": 18.91
+    }
+   ]
+  }
+ },
+ "skipped_fit": [],
+ "pre": {
+  "n01_esxi": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 24.26,
+   "pre_fit_ok": true
+  },
+  "n02_app": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 47.79,
+   "pre_fit_ok": true
+  },
+  "n03_ctrl": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 47.79,
+   "pre_fit_ok": true
+  },
+  "n04_maint": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n06_dgs": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 53.99,
+   "pre_fit_ok": true
+  },
+  "n07_lnb": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 27.97,
+   "pre_fit_ok": true
+  },
+  "n08_line": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 20.05,
+   "pre_fit_ok": true
+  },
+  "n09_andon": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 20.05,
+   "pre_fit_ok": true
+  },
+  "n10_monitor": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 47.79,
+   "pre_fit_ok": true
+  },
+  "n11_lws": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 24.26,
+   "pre_fit_ok": true
+  },
+  "n12_pda": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 27.97,
+   "pre_fit_ok": true
+  },
+  "n13_ap": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n14_tablet": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n15_cima_pc": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n16_cimc_pc": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n17_backup": {
+   "margin": 2.0,
+   "sizes": [
+    10.0,
+    8.0
+   ],
+   "bound": 48.77,
+   "pre_fit_ok": true
+  },
+  "n18_extif": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 37.88,
+   "pre_fit_ok": true
+  },
+  "n19_cima_sv": {
+   "margin": 2.0,
+   "sizes": [
+    11.0,
+    8.0
+   ],
+   "bound": 20.05,
+   "pre_fit_ok": true
+  }
+ },
+ "assert_fails": [],
+ "errors": [],
+ "base_shape_count": 57,
+ "icons_added": 18,
+ "icons_expected": 18,
+ "cleanup": "killed residual 20564"
+}

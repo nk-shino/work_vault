@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "pid": 10652,
+ "render": {
+  "sheet_pdf": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_orig_stage5.pdf",
+  "book_pdf": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.pdf",
+  "book_pdf_size": 1693718,
+  "sheet_png": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_orig_stage5_p1.png",
+  "sheet_pdf_pages": 1,
+  "book_pdf_pages": 116
+ },
+ "assert_fails": [],
+ "errors": [],
+ "cleanup": "killed residual 10652"
+}

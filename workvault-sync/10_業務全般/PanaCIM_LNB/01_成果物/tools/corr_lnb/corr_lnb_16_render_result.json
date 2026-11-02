@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "pid": 24724,
+ "render": {
+  "new_pdf": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_stage5.pdf",
+  "old_pdf": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_old_簡略図.pdf",
+  "new_shape_count": 75,
+  "old_shape_count": 34,
+  "new_png": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_stage5_p1.png",
+  "new_pdf_pages": 1,
+  "old_png": "C:\\Users\\ss80751\\AppData\\Local\\Temp\\kohden-code\\corr_lnb_work\\corr_lnb_old_簡略図_p1.png",
+  "old_pdf_pages": 1,
+  "new_pdf_size": 493206,
+  "new_png_size": 401606,
+  "old_pdf_size": 385996,
+  "old_png_size": 266958
+ },
+ "assert_fails": [],
+ "errors": [],
+ "cleanup": "killed residual 24724"
+}

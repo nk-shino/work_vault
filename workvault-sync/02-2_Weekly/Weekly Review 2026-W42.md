@@ -129,5 +129,5 @@ status: done
 
 - 前週: [[Weekly Review 2026-W41]]（10/07 まで記入・WIP のまま）
 - 日次: [[Daily Report 2026-10-13]] / [[Daily Report 2026-10-14]] / [[Daily Report 2026-10-15]] / [[Daily Report 2026-10-16]]
-- 翌週: [[Weekly Review 2026-W43]]（未作成）
+- 翌週: [[Weekly Review 2026-W43]]
 
