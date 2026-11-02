@@ -644,3 +644,95 @@ main dt 件数 = 削除前の値              ← ディスクの HTML は削除
 ### Resolution
 - **Resolved**: 2026-10-26。URL クエリで回避し、h1: balance・lead: pretty を computed style で再実測して確認。T-05 基準値も新値で一致
 - **Notes**: Pattern-Key: `verify.browser-cache-stale`
+
+## [ERR-20261102-001] 配備ゲートのMD5不一致を「利用者の追加保存」と誤解釈し、行間均一版v2を回帰させた
+
+**Logged**: 2026-11-02T18:30:00+09:00
+**Priority**: high
+**Status**: resolved(当日中にv5で修復・両配備先で整合回復)
+**Area**: deploy / 配備ゲート運用
+
+### Summary
+手順書スライドへの画像差し替え改修(v4)を個人配布先へ配備したところ、同日午後に両配備先へ配備済みの行間均一版v2(47d49ef0)が個人配布先で失われた。配備ゲートが検出した現行md5(47d49ef0)を「当日配備後のmd5(5612ca03)からの利用者追加保存(内容同一)」と誤解釈し、diff分析(テキスト差分=ページ番号フィールドキャッシュのみ)を根拠に上書き承認を取ったことが直接原因。
+
+### Error
+```
+配備ゲート: 現行md5 47d49ef0 ≠ 記憶上の期待 5612ca03
+→ テキスト比較では差分ゼロ(行間指定の変更はテキスト抽出に現れない)
+→ 「内容同一の追加保存」と誤判定 → v4(朝の系譜ベース)を上書き配備
+→ 個人配布先の行間均一化が失われた(成果物側は47d49ef0のまま無傷)
+```
+
+### Context
+- 差し替え改修が朝の系譜(5612ca03)をベースに進行しており、当日後発の書式系改修(行間均一化)を取り込んでいなかった
+- テキストdiff・pic幾何diff・media参照diffはすべて「同一」を示し、行間(lnSpc/spcBef等の間隔要素)だけが差分——XML属性レベルの書式差は通常の比較では見えない
+- 判定材料として当日の配備記録(Daily Report§2・両配備先47d49ef0)を突合していなかった
+
+### Suggested Fix
+- 配備ゲートの期待md5は「記憶・要約」ではなく**両配備先の実測値から毎回設定**する
+- 不一致時は上書き判断の前に**当日の配備記録・変更記録と突合**する(後発の配備が自分のベースを置き換えていないか)
+- 書式系変更(行間・間隔・フォント)はテキスト比較で検出不能であることを前提に、系譜の確定をmd5記録で行う
+
+### Resolution
+- **Resolved**: 2026-11-02(当日)。Daily Report§2の記録と成果物側実測から47d49ef0=行間均一版v2の正本と確定し、47d49ef0ベースへ画像3枚+srcRect除去+注記トリムを再適用した統合版v5(9ba5e046)を両配備先へ再配備・readback一致。回帰版v4はunc_backup_preimage3.pptxへ退避済み
+- **Notes**: Pattern-Key: `deploy.gate-md5-lineage-misread`
+
+## [ERR-20261102-002] pptxのslide rels相対パス解決漏れで媒体差し替えがサイレントスキップした
+
+**Logged**: 2026-11-02T18:30:00+09:00
+**Priority**: medium
+**Status**: resolved
+**Area**: pptx / python-pptx パッチ
+
+### Summary
+画像差し替えパッチで、slide relsのTarget「../media/imageN.png」をそのまま結合した「ppt/../media/imageN.png」を置換キーに使ったため、媒体バイトの差し替えが1件も適用されずに保存が成功した。幾何(srcRect除去・位置再計算)だけが旧画像へ適用され、レンダリング目視で初めて発見した。
+
+### Error
+```
+slide rels: Target="../media/image18.png"
+解決結果: "ppt/../media/image18.png"  ← ppt/media/image18.png に一致せず
+→ 置換対象ゼロでも patch は例外を出さず「成功」
+→ レンダで旧画面のまま(初回レンダQAで発見)
+```
+
+### Context
+- 同ビルドで注記トリムもローカル変数への適用にとどまり出力へ反映されなかった(無音no-opの2件目)
+- メディア部品が表示順に再採番される系譜では、パーツ名ハードコードでも事故る——sldIdLst順+slide relsからの動的解決が必須
+
+### Suggested Fix
+- rels相対パスは posixpath.normpath(join("ppt/slides", target)) で解決する
+- パッチ系スクリプトは「適用件数のアサート」(置換0件なら失敗)を入れ、無音no-opを許さない
+- 媒体差し替え後は**媒体パートのmd5と確定素材のmd5突合**を検証ブロックへ恒久追加する
+
+### Resolution
+- **Resolved**: 2026-11-02(当日)。normpath解決+適用件数担保+媒体md5検証をrework_v5.pyへ実装し、3媒体すべてmd5一致を確認。トリムはpatchクロージャ内で実施する方式へ修正
+- **Notes**: Pattern-Key: `patch.relpath-silent-skip`
+
+## [ERR-20261102-003] python-pptxの保存が全パートを再シリアライズし、zipレベルの差分最小化検証が失格した
+
+**Logged**: 2026-11-02T15:05:00+09:00
+**Priority**: medium
+**Status**: resolved
+**Area**: pptx / python-pptx パッチ
+
+### Summary
+画像Fit改修(v6)の構築で、python-pptxの`Presentation.save()`が未編集パートを含む全パートを再シリアライズした。v5がzipレベルの外科パッチで構築されていたため、「差分パート=編集対象のみ」と数える独立検証(verify_v6_data.py)が全パート差分で失格した。編集内容自体は正しくても、差分最小化という構造要件を満たさない。
+
+### Error
+```
+apply_imgfit.py(python-pptx)保存成功・再読込検証PASS
+verify_v6_data.py: v5との差分 = 全パート(期待: 編集済みスライドXMLのみ)
+→ 未編集パート(媒体・fonts・OLE・他スライド)も属性順等の表層が変わりバイト不一致
+```
+
+### Context
+- python-pptxのsave()はlxml再シリアライズのため、意味的に同一でも属性順・自己閉タグ等の表層が変わりバイト一致しない
+- 前工程(v5)がzip骨格+パート置換で構築しており、検証要件が「差分パート集合の一致」になっていた
+
+### Suggested Fix
+- zipレベルの差分最小化が要件の改修では「旧版zipを骨格に、編集済みパートのみ移植」のハイブリッド構築にする(build_v6_minimal.py)
+- python-pptxで保存した出力の検証は差分「集合」でなく差分「内容」(編集対象パートの意味検証)に切り替える
+
+### Resolution
+- **Resolved**: 2026-11-02(当日)。build_v6_minimal.pyでv5骨格+編集済み9スライドXML移植のv6を構築し、差分=スライドXML9枚のみ・媒体/フォント/OLE31パートバイト一致・行間(0,1,0)維持・br+11で検証OK。このv6(b9286b9c)を両配備先へ配備
+- **Notes**: Pattern-Key: `pptx.full-reserialize-breaks-minimal-diff`

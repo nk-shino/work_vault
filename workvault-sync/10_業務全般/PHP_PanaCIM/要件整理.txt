@@ -1,0 +1,21 @@
+新規タスク：
+PnaCIMでPHPを使用している。
+これに基づき、PanaCImに外部からアクセスできる経路は存在するかどうか？また、それにつながるシステムとつながっているか？
+を調査する。
+判明済資料。
+2022年のもの。
+C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\09_佐藤さん引継ぎ\佐藤(勇)\Pana-CIM 説明書\P-WEB最新版 2022_03_28
+
+ワードプレス
+\\nksv1359.ad.nkc.co.jp\WWW\wordpress
+
+佐藤資料
+"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\09_佐藤さん引継ぎ\佐藤(勇)\引き継ぎ資料.xlsx"
+
+
+外部からアクセスできる経路：
+PCD15575(事務NW×PanaCIM系NWの両方に接続するPC)← 最大の境界の穴
+ファイル授受(IFID・PanaCIMレポート→RPA→PowerBI・BOSS計画の指図取得)
+無線AP(PDA・wpa2Wireless5=制限セグメントの意味不明点)
+USB迂回(nksv560廃止時にJob作成をUSBで行う運用が既に記載済み)
+**WordPress(nksv1359)**はPanaCIM外の別のWeb(混同注意)
