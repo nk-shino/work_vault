@@ -10,6 +10,8 @@ scripts/logs/
 .playwright-mcp/
 *.png
 !workvault-sync/**/*.png
+# 管理文書相関図の機器アイコン資産(PNG素材が成果物)
+!20261102_管理文書用語と相関図/icons/*.png
 
 # Windows temp files accidentally placed in workspace
 AppData/
