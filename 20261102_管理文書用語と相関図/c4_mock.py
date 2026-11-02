@@ -244,7 +244,7 @@ def form_header(cv, A4W, sec_title, audience, scope, page_label=None):
 
 def legend(cv, A4W, y):
     t1 = "実線=確定した接続 / グレー破線=推定(未確認)の接続 / 矢頭=データの向きが確定(一方向で表記) / 枠の破線=推定機器(当Site未確認) / 灰色破線枠=別図参照"
-    t3 = "略語: VM=仮想マシン / LWS=LNB操作画面(ブラウザ) / PDA=無線スキャナー端末 / FA=生産設備用パソコン / N番号·E番号=相関図リストの項目番号"
+    t3 = "略語: VM=仮想マシン / LWS=LNB操作画面(ブラウザ) / PDA=無線スキャナー端末 / FA=生産設備用パソコン / LNB=Line Network Box / NPM·AM=実装機の機種名"
     cv.text(40, y, "凡例: ", 9, anchor="lm")
     cv.text(66, y, t1, 9, fill=(64, 64, 64), anchor="lm")
     cv.text(40, y + 16, "分類: ", 9, anchor="lm")
@@ -268,8 +268,12 @@ def page_context():
     PAGE = "ctx"
     cv = CV(A4W, A4H)
     form_header(cv, A4W, "a", "対象読者: 全員(技術詳細は図②·図③とリスト)", "この図に含めないもの: サーバー·装置の内部構成·IP·VM実名(図②③·リスト参照)", "2-3")
-    cv.text(40, 142, "相関図① 全体の関わり(案)", 12, anchor="lm", font=jf(12 * S, True))
-    cv.text(250, 143, "本手順書の管理対象(図②③)と外部システム·作業者の関わりのみを示す。C4モデルのシステムコンテキスト図に相当。", 9, fill=(64, 64, 64), anchor="lm")
+    cv.text(40, 146, "相関図① 全体の関わり(案)", 12, anchor="lm", font=jf(12 * S, True))
+    reg(PAGE, "ntext", "title", *text_rect(cv, 40, 146, "相関図① 全体の関わり(案)", 12, bold=True, anchor="lm"))
+    cv.text(250, 162, "本手順書の管理対象(図②③)と外部システム·作業者の関わりのみを示す。C4モデルのシステムコンテキスト図に相当。", 9, fill=(64, 64, 64), anchor="lm")
+    cv.text(250, 176, "S1·S2=システム単位の呼び名(収録機器はリスト(1/2)冒頭の対応表)。E-a·E-b=別図参照の機器(N06·N18)。", 9, fill=(64, 64, 64), anchor="lm")
+    reg(PAGE, "ntext", "subtitle:1", *text_rect(cv, 250, 162, "本手順書の管理対象(図②③)と外部システム·作業者の関わりのみを示す。C4モデルのシステムコンテキスト図に相当。", 9, anchor="lm"))
+    reg(PAGE, "ntext", "subtitle:2", *text_rect(cv, 250, 176, "S1·S2=システム単位の呼び名(収録機器はリスト(1/2)冒頭の対応表)。E-a·E-b=別図参照の機器(N06·N18)。", 9, anchor="lm"))
     OX, OY = 40, 182
     draw_node(cv, 20, 20, 160, 60, "person", None, None, "【人】管理者", "保守·再起動作業を実施")
     draw_node(cv, 20, 250, 160, 60, "person", None, None, "【人】作業者", "LNB操作·部品照合を実施")
@@ -295,8 +299,10 @@ def page_mgmt():
     PAGE = "mgmt"
     cv = CV(A4W, A4H)
     form_header(cv, A4W, "b", "対象読者: 保守·管理者", "この図に含めないもの: 装置側の内部(図③)·VMの運用詳細(リスト)", "2-3")
-    cv.text(40, 142, "相関図② PanaCIM管理側の内部(案)", 12, anchor="lm", font=jf(12 * S, True))
-    cv.text(320, 143, "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。", 9, fill=(64, 64, 64), anchor="lm")
+    cv.text(40, 146, "相関図② PanaCIM管理側の内部(案)", 12, anchor="lm", font=jf(12 * S, True))
+    cv.text(320, 163, "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。", 9, fill=(64, 64, 64), anchor="lm")
+    reg(PAGE, "ntext", "title", *text_rect(cv, 40, 146, "相関図② PanaCIM管理側の内部(案)", 12, bold=True, anchor="lm"))
+    reg(PAGE, "ntext", "subtitle:1", *text_rect(cv, 320, 163, "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。", 9, anchor="lm"))
     OX, OY = 40, 182
     # band a
     bx, by = OX, OY
@@ -341,8 +347,10 @@ def page_line():
     PAGE = "line"
     cv = CV(A4W, A4H)
     form_header(cv, A4W, "c", "対象読者: 作業者·保守", "この図に含めないもの: サーバー側の内部(図②)·無線の詳細(リスト)", "2-3")
-    cv.text(40, 142, "相関図③ ライン設備側の内部(案)", 12, anchor="lm", font=jf(12 * S, True))
-    cv.text(300, 143, "ライン設備の装置·端末と、LNBを中心としたデータの流れを示す。C4モデルのコンテナ図に相当。推定の接続は破線。", 9, fill=(64, 64, 64), anchor="lm")
+    cv.text(40, 146, "相関図③ ライン設備側の内部(案)", 12, anchor="lm", font=jf(12 * S, True))
+    cv.text(300, 163, "ライン設備の装置·端末と、LNBを中心としたデータの流れを示す。C4モデルのコンテナ図に相当。推定の接続は破線。", 9, fill=(64, 64, 64), anchor="lm")
+    reg(PAGE, "ntext", "title", *text_rect(cv, 40, 146, "相関図③ ライン設備側の内部(案)", 12, bold=True, anchor="lm"))
+    reg(PAGE, "ntext", "subtitle:1", *text_rect(cv, 300, 163, "ライン設備の装置·端末と、LNBを中心としたデータの流れを示す。C4モデルのコンテナ図に相当。推定の接続は破線。", 9, anchor="lm"))
     OX, OY = 40, 182
     # band b
     bx, by = OX, OY
@@ -542,10 +550,11 @@ def page_list1():
     PH = 842  # 縦置きA4の高さ(グローバルA4H=595は横置き図面用のため使わない)
     cv.text(28, 30, "相関図リスト(1/2)— 機器(案)", 12, anchor="lm", font=jf(12 * S, True))
     cv.text(28, 48, "図①〜③の N番号·E番号と対応する。凡例と略語は各図頁を参照。", 8.5, fill=(64, 64, 64), anchor="lm")
-    cv.text(28, 62, "図①の記号とN番号の対応: S1=N01〜N04·N15〜N17·N19 / S2=N07〜N09·N11〜N14 / E-a=N06 / E-b=N18 / 稼働モニタはN10(図①にも単独表示)", 8.5, fill=(64, 64, 64), anchor="lm")
+    cv.text(28, 58, "図①の記号とN番号の対応: S1=N01〜N04·N15〜N17·N19 / S2=N07〜N09·N11〜N14", 8.5, fill=(64, 64, 64), anchor="lm")
+    cv.text(28, 70, "E-a=N06 / E-b=N18 / 稼働モニタはN10(図①にも単独表示)", 8.5, fill=(64, 64, 64), anchor="lm")
     cols = [(28, 30), (60, 150), (212, 268), (482, 85)]
     heads = ["番号", "名称(図の表記)", "詳細(位置づけ·運用·出典)", "要確認"]
-    y = 76
+    y = 88
     for (cx, cw), hname in zip(cols, heads):
         cv.rect(cx, y, cw, 14, fill=(242, 242, 242), outline=(150, 150, 150), width_pt=0.6)
         cv.text(cx + 4, y + 7, hname, 9, anchor="lm")
@@ -630,6 +639,8 @@ def page_list2():
         "T1b: ネットワークイメージ.pptx(2026-10-27) / T3: 現行相関図(Stage5)の記載。",
         "X02-○○: 確認事項台帳の項目番号。台帳の本文収録と対応表の位置は実装時に規定する。",
         "N05: 番号を欠番とし、内容は(1/2)の運用注記に移動した。",
+        "iLNB: メーカー公開資料上の統合ライン管理システム。LNB(=Line Network Box)との同一性は未確認(X02-⑧)。",
+        "A-2·P-1·T1: リストの備考で使う出典ラベル。対応する出典元の一覧は実装時に対応表へ統合する(要確認)。",
     ]:
         for ln in wrap(cv, s, fs, 595 - 56):
             cv.text(28, y + 5, ln, fs, anchor="lm")
