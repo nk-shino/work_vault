@@ -112,6 +112,8 @@ def icon(key, size_pt):
 
 OX, OY = 0.0, 0.0
 CHECKS = []  # (page, kind, owner, x0, y0, x1, y1)  kind: node/cbord/label/ntext/chip/icon/seg/arr
+LABELQ = []  # (cv, x, y, text, size)  エッジラベル待ち行列(ノード描画後に最前面で描画)
+ARRQ = []    # (eid, tip, x0, y0, x1, y1)  矢頭待ち行列(ノード登録後に所有ノードを確定)
 EXEMPT_EIDS = {frozenset(("N07", "band_b"))}  # LNBの帯境界跨りは設計意図
 
 def reg(page, kind, owner, x0, y0, x1, y1):
@@ -208,13 +210,23 @@ def edge(cv, pts, solid=True, arrow=False, lab=None, labpos=None, tag=None, tagp
         ux, uy = (x2 - x1) / n, (y2 - y1) / n
         tip = (x2 + ux * 5.0, y2 + uy * 5.0)
         tri = [tip, (x2 - uy * 3.0, y2 + ux * 3.0), (x2 + uy * 3.0, y2 - ux * 3.0)]
-        reg(PAGE, "arr", (eid, find_node_owner(PAGE, tip[0], tip[1])),
+        # 矢頭の所有ノードはノード描画後に確定するため待ち行列へ(基準②の描画順対応)
+        ARRQ.append((eid, tip,
             min(q[0] for q in tri) - 0.4, min(q[1] for q in tri) - 0.4,
-            max(q[0] for q in tri) + 0.4, max(q[1] for q in tri) + 0.4)
+            max(q[0] for q in tri) + 0.4, max(q[1] for q in tri) + 0.4))
     if lab:
-        elabel(cv, labpos[0], labpos[1], lab)
+        LABELQ.append((cv, labpos[0], labpos[1], lab, 9.5))
     if tag:
-        elabel(cv, tagpos[0], tagpos[1], tag, size=8.5)
+        LABELQ.append((cv, tagpos[0], tagpos[1], tag, 8.5))
+
+def flush_labels():
+    # ノード描画後に呼ぶ: 矢頭の所有ノードを確定して登録し、エッジラベルを最前面に描画する
+    while ARRQ:
+        eid, tip, x0, y0, x1, y1 = ARRQ.pop(0)
+        reg(PAGE, "arr", (eid, find_node_owner(PAGE, tip[0], tip[1])), x0, y0, x1, y1)
+    while LABELQ:
+        cv, x, y, s, size = LABELQ.pop(0)
+        elabel(cv, x, y, s, size=size)
 
 def form_header(cv, A4W, sec_title, audience, scope, page_label=None):
     cv.rect(20, 16, A4W - 40, 120, outline=(0, 0, 0), width_pt=1.2)
@@ -275,6 +287,14 @@ def page_context():
     reg(PAGE, "ntext", "subtitle:1", *text_rect(cv, 250, 162, "本手順書の管理対象(図②③)と外部システム·作業者の関わりのみを示す。C4モデルのシステムコンテキスト図に相当。", 9, anchor="lm"))
     reg(PAGE, "ntext", "subtitle:2", *text_rect(cv, 250, 176, "S1·S2=システム単位の呼び名(収録機器はリスト(1/2)冒頭の対応表)。E-a·E-b=別図参照の機器(N06·N18)。", 9, anchor="lm"))
     OX, OY = 40, 182
+    # 描画順: エッジ → ノード → エッジラベル(基準②: ラベル隠れの防止)
+    edge(cv, [(177, 50), (275, 50)], True, True, "保守·再起動を実施", (230, 40))
+    edge(cv, [(177, 280), (275, 280)], True, True, "操作·照合を実施", (230, 270))
+    edge(cv, [(395, 253), (395, 95)], True, True, "E04 参照·照合/稼働データ", (480, 170))
+    edge(cv, [(623, 50), (495, 50)], True, True, "E02 実装データの収集·送信", (555, 40))
+    edge(cv, [(487, 65), (600, 65), (600, 157), (615, 157)], True, True, "E18 外部I/F出力", (630, 108))
+    edge(cv, [(487, 80), (585, 80), (585, 280), (615, 280)], True, True, "E08 稼働モニタ表示", (591, 200))
+    edge(cv, [(767, 50), (786, 50), (786, 330), (395, 330), (395, 325)], True, False, "E03 ラインデータ", (600, 322))
     draw_node(cv, 20, 20, 160, 60, "person", None, None, "【人】管理者", "保守·再起動作業を実施")
     draw_node(cv, 20, 250, 160, 60, "person", None, None, "【人】作業者", "LNB操作·部品照合を実施")
     draw_node(cv, 280, 20, 210, 70, "sys", "S1", None, "【システム】PanaCIM環境", "実績管理·各種出力(内部は図②)")
@@ -282,13 +302,7 @@ def page_context():
     draw_node(cv, 620, 20, 150, 60, "ext", "E-a", None, "【上位システム】NPM-DGS", "IP 172.25.253.10(リストN06)", fs=10, dfs=8)
     draw_node(cv, 620, 130, 150, 55, "ext", "E-b", None, "【外部】外部I/F出力", "XML/DB/ソケット")
     draw_node(cv, 620, 250, 158, 60, "term", "N10", None, "【端末】稼働モニタ(Power BI)", "稼働を表示(図②参照)", fs=9.5, dfs=8)
-    edge(cv, [(180, 50), (280, 50)], True, True, "保守·再起動を実施", (230, 40))
-    edge(cv, [(180, 280), (280, 280)], True, True, "操作·照合を実施", (230, 270))
-    edge(cv, [(395, 250), (395, 90)], True, True, "E04 参照·照合/稼働データ", (480, 170))
-    edge(cv, [(620, 50), (490, 50)], True, True, "E02 実装データの収集·送信", (555, 40))
-    edge(cv, [(490, 60), (600, 60), (600, 157), (620, 157)], True, True, "E18 外部I/F出力", (625, 108))
-    edge(cv, [(490, 85), (585, 85), (585, 280), (620, 280)], True, True, "E08 稼働モニタ表示", (591, 200))
-    edge(cv, [(770, 50), (786, 50), (786, 330), (395, 330), (395, 320)], True, False, "E03 ラインデータ", (600, 322))
+    flush_labels()
     legend(cv, A4W, 523)
     out = os.path.join(OUTDIR, "c4_mock_1_context.png")
     cv.im.save(out)
@@ -318,6 +332,15 @@ def page_mgmt():
     reg(PAGE, "ntext", "N01:title", *text_rect(cv, OX + 22, OY + 58, "【サーバ(物理)】ESXiホスト(N01)", 9, anchor="lm"))
     reg(PAGE, "node", "N01", OX + 12, OY + 50, OX + 312, OY + 280)
     reg_cbord(PAGE, "N01", OX + 12, OY + 50, OX + 312, OY + 280)
+    # 描画順: 帯·コンテナ → エッジ → ノード → エッジラベル(基準②)
+    edge(cv, [(159, 119), (159, 143)], True, False, "E01 サーバー間連携", (172, 131))
+    edge(cv, [(563, 256), (528, 256), (528, 92), (301, 92)], True, True, "E02 実装データ収集·送信", (400, 92))
+    edge(cv, [(219, 308), (332, 308), (332, 104), (301, 104)], True, True, "E04 参照·照合/稼働データ", (285, 308))
+    edge(cv, [(245, 77), (245, 18), (600, 18), (600, 45)], True, True, "E08 稼働モニタ表示", (620, 30))
+    edge(cv, [(269, 77), (269, 42), (540, 42), (540, 206), (555, 206)], True, True, "E18 外部I/F", (490, 110))
+    edge(cv, [(257, 49), (257, 30), (552, 30), (552, 140), (555, 140)], True, True, "E17 DB完全バックアップ", (360, 30))
+    edge(cv, [(440, 199), (440, 181)], True, True, "E15 VMware管理画面", (440, 186))
+    edge(cv, [(440, 283), (440, 249)], True, True, "E16 Route Editer", (440, 272))
     draw_node(cv, 26, 74, 270, 48, "srv", "N02", "n02_dataset", "【サーバ(VM)】PanaCIMアプリケーションサーバー", "実装データの受け口·各種出力の起点", fs=9.5, dfs=8)
     draw_node(cv, 26, 140, 270, 46, "srv", "N03", "n02_dataset", "【サーバ(VM)】PanaCIMコントローラーサーバー", "N02と同一VM(CIMC-SV)で運用", fs=9.5, dfs=8)
     draw_node(cv, 26, 196, 270, 44, "est", "N04", "n03_host", "【サーバ】メンテナンスサーバー", "当Site導入有無は未確認", fs=9.5, dfs=8)
@@ -329,14 +352,7 @@ def page_mgmt():
     draw_node(cv, 560, 182, 180, 48, "ext", "N18", "n05_output", "【外部】外部I/F出力", "XML/DB/ソケット", fs=10, dfs=8)
     draw_node(cv, 560, 248, 180, 44, "xref", None, None, "NPM-DGS(上位システム)", "図①·リストN06参照", fs=10, dfs=8)
     draw_node(cv, 12, 292, 210, 32, "xref", None, None, "ライン設備(LNB·NPM)", "図③参照", fs=10, dfs=8)
-    edge(cv, [(159, 122), (159, 136)], True, False, "E01 サーバー間連携", (172, 131))
-    edge(cv, [(560, 256), (340, 256), (340, 86), (296, 86)], True, True, "E02 実装データ収集·送信", (500, 256))
-    edge(cv, [(222, 308), (325, 308), (325, 104), (296, 104)], True, True, "E04 参照·照合/稼働データ", (285, 308))
-    edge(cv, [(296, 80), (540, 80), (540, 74), (560, 74)], True, True, "E08 稼働モニタ表示", (450, 70))
-    edge(cv, [(200, 74), (200, 46), (548, 46), (548, 206), (560, 206)], True, True, "E18 外部I/F", (520, 110))
-    edge(cv, [(150, 50), (150, 30), (556, 30), (556, 140), (560, 140)], True, True, "E17 DB完全バックアップ", (280, 24))
-    edge(cv, [(440, 196), (440, 176)], True, True, "E15 VMware管理画面", (440, 186))
-    edge(cv, [(440, 280), (440, 244)], True, True, "E16 Route Editer", (440, 272))
+    flush_labels()
     legend(cv, A4W, 523)
     out = os.path.join(OUTDIR, "c4_mock_2_mgmt.png")
     cv.im.save(out)
@@ -362,6 +378,16 @@ def page_line():
     cv.rect(bx + 762 - 12 - btw, by + 77, btw, 18, fill=PAL["head_fill"])
     cv.text(bx + 762 - 12, by + 86, btitle, 11, fill="white", anchor="rm", font=jf(11 * S, True))
     reg(PAGE, "ntext", "band_b:title", *text_rect(cv, bx + 762 - 12, by + 86, btitle, 11, bold=True, anchor="rm"))
+    # 描画順: 帯 → エッジ → ノード → エッジラベル(基準②)
+    edge(cv, [(100, 55), (100, 39)], True, True, "E04 参照·照合/稼働データ", (210, 43))
+    edge(cv, [(660, 31), (660, 44), (776, 44), (776, 134), (324, 134), (324, 164), (305, 164)], True, False, "E03 ラインデータ", (650, 130))
+    edge(cv, [(15, 17), (8, 17), (8, 254), (55, 254)], False, True, "E09 表示内容の由来?", (86, 209))
+    edge(cv, [(257, 88), (312, 88), (312, 254), (237, 254)], False, False, "E10 接続形態未確認", (290, 254))
+    edge(cv, [(120, 97), (120, 143)], True, False, "E05 装置網接続", (120, 130))
+    edge(cv, [(200, 143), (200, 105)], True, True, "E06 ノズル/リーダー", (200, 112))
+    edge(cv, [(380, 89), (380, 76), (265, 76)], True, False, "E14 LNB操作画面", (330, 63))
+    edge(cv, [(517, 252), (563, 252)], False, False, None, None, "E12", (540, 244))
+    edge(cv, [(635, 233), (635, 193)], False, False, None, None, "E13", (641, 207))
     draw_node(cv, 12, 0, 220, 34, "xref", None, None, "PanaCIM環境", "図②参照", fs=10, dfs=8)
     draw_node(cv, 560, 0, 200, 34, "xref", None, None, "NPM-DGS(上位システム)", "図①②参照", fs=10, dfs=8)
     draw_node(cv, 60, 52, 200, 48, "eqp", "N07", "n09_computer", "【設備】LNB(FAパソコン)", "ライン制御·帯境界跨り(太枠)", fs=10, dfs=8)
@@ -371,15 +397,7 @@ def page_line():
     draw_node(cv, 340, 230, 180, 44, "term", "N12", "n11_barcode_scanner", "【端末】無線スキャナー(PDA)", "部品照合·ライン毎に前側/後側", fs=10, dfs=8)
     draw_node(cv, 560, 146, 150, 44, "est", "N14", "n12_tablet", "【端末】Androidタブレット", "当Site導入状況は未確認", fs=9.5, dfs=8)
     draw_node(cv, 560, 230, 150, 44, "est", "N13", "n10_wifi", "【設備】アクセスポイント", "当Site設置状況は未確認", fs=9.5, dfs=8)
-    edge(cv, [(120, 52), (120, 34)], True, True, "E04 参照·照合/稼働データ", (210, 43))
-    edge(cv, [(660, 34), (660, 44), (776, 44), (776, 134), (324, 134), (324, 164), (300, 164)], True, False, "E03 ラインデータ", (650, 130))
-    edge(cv, [(12, 17), (4, 17), (4, 254), (60, 254)], False, True, "E09 表示内容の由来?", (86, 209))
-    edge(cv, [(240, 100), (306, 100), (306, 254), (240, 254)], False, False, "E10 接続形態未確認", (290, 254))
-    edge(cv, [(120, 100), (120, 140)], True, False, "E05 装置網接続", (120, 130))
-    edge(cv, [(200, 140), (200, 100)], True, True, "E06 ノズル/リーダー", (200, 112))
-    edge(cv, [(380, 86), (380, 76), (260, 76)], True, False, "E14 LNB操作画面", (305, 84))
-    edge(cv, [(520, 252), (560, 252)], False, False, None, None, "E12", (540, 244))
-    edge(cv, [(625, 230), (625, 190)], False, False, None, None, "E13", (641, 207))
+    flush_labels()
     legend(cv, A4W, 523)
     out = os.path.join(OUTDIR, "c4_mock_3_line.png")
     cv.im.save(out)
