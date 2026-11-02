@@ -17,5 +17,8 @@ AppData/
 # Kohden Code のローカル状態(セッション等)。追跡対象外
 .kohden-code/
 
-# Cloudflare Pages デプロイ用ビルド成果物
-20261016_site-design-improvement/dist/
+# Cloudflare Pages デプロイ用ビルド成果物(2026-10-30 に _archive へ退避)
+_archive/202610/20261016_site-design-improvement/dist/
+
+# OneDrive の一時アップロードフォルダ(継続的に再作成されるため追跡対象外)
+.tmp.driveupload/
