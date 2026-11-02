@@ -26,3 +26,7 @@ _archive/202610/20261016_site-design-improvement/dist/
 
 # OneDrive の一時アップロードフォルダ(継続的に再作成されるため追跡対象外)
 .tmp.driveupload/
+
+# 管理手順書改修のレンダ·頁単位PDF(再生成可能な検証中間物·正本はxlsxと冊PDF)
+20261102_管理文書用語と相関図/scripts/tmp_pages*/
+20261102_管理文書用語と相関図/verify_pana*/
