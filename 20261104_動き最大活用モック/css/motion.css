@@ -1,0 +1,139 @@
+/* ============================================================
+   動きの層（motion.css）— 最大活用モック
+   メニュー: 読み込み幕 / 遷移幕（筆ワイプ風・自作）/ View Transitions /
+   CSS scroll-driven / カスタムカーソル / シマー・スポットライトの運転
+
+   縮退の規則（最大構成でも固定）:
+   - 隠し状態は .js-armed 配下。JS がなければ何も隠れない
+   - prefers-reduced-motion: 幕もカーソルも遷移も止め、全要素を即時表示
+   - scroll-driven は @supports で括り、未対応では静的なまま
+   ============================================================ */
+
+/* ---------- 読み込み幕・遷移幕（筆ワイプ風・自作） ---------- */
+.curtain {
+  position: fixed; inset: 0; z-index: 90;
+  pointer-events: none; visibility: hidden;
+}
+.curtain.is-live { visibility: visible; }
+.curtain-layer {
+  position: absolute; left: 0; right: 0; height: 100%;
+  transform: translateY(-101%); /* 待機は画面の上に格納 */
+}
+.curtain-crimson { background: var(--crimson); z-index: 1; }
+.curtain-ink { background: var(--ink); z-index: 2; }
+/* 金線: 全面レイヤーの下端 3px に帯を描き、払いの縁として墨の層に追従させる */
+.curtain-gold {
+  z-index: 3;
+  background: linear-gradient(to bottom, transparent calc(100% - 3px), var(--gold-bright) calc(100% - 3px));
+}
+/* 表紙の初回（is-hold）と遷移の到着（is-cover）は、幕が閉じた状態から始める */
+.curtain.is-hold .curtain-layer,
+.curtain.is-cover .curtain-layer { transform: translateY(0); }
+.curtain-mark {
+  position: absolute; inset: 0; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(20px, 3.4vw, 32px); letter-spacing: 0.5em; text-indent: 0.5em;
+  color: var(--paper); z-index: 4; opacity: 0;
+}
+.curtain.is-hold .curtain-mark { opacity: 1; }
+
+/* ---------- カスタムカーソル（pointer: fine のみ） ---------- */
+.cursor { display: none; }
+@media (pointer: fine) {
+  .cursor-on, .cursor-on * { cursor: none !important; }
+  .cursor-on .cursor { display: block; }
+  .cursor { position: fixed; inset: 0 auto auto 0; z-index: 95; pointer-events: none; }
+  .cursor-dot, .cursor-ring, .cursor-label {
+    position: fixed; left: 0; top: 0; will-change: transform;
+  }
+  .cursor-dot {
+    width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+    border-radius: 50%; background: var(--gold-bright);
+  }
+  .cursor-ring {
+    width: 30px; height: 30px; margin: -15px 0 0 -15px;
+    border: 1px solid rgba(233, 201, 106, 0.75); border-radius: 50%;
+    transition: width 0.35s var(--ease-out-expo), height 0.35s var(--ease-out-expo),
+      margin 0.35s var(--ease-out-expo), border-color 0.35s, background-color 0.35s;
+  }
+  .cursor.is-link .cursor-ring { width: 46px; height: 46px; margin: -23px 0 0 -23px; border-color: var(--gold-bright); }
+  .cursor.is-view .cursor-ring { width: 66px; height: 66px; margin: -33px 0 0 -33px; background: rgba(233, 201, 106, 0.08); }
+  .cursor-label {
+    transform: translate(18px, 16px);
+    font-size: 11px; letter-spacing: 0.3em; color: var(--gold-bright);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .cursor.is-view .cursor-label { opacity: 1; }
+}
+@media (pointer: coarse) { .cursor { display: none !important; } }
+
+/* ---------- マグネティックhoverの押し戻し（JS が transform を書く・離すと戻る） ---------- */
+[data-magnet] { transition: transform 0.55s var(--ease-out-expo); }
+
+/* ---------- 光るテキストの運転（静止時はグラデのまま点滅なし） ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer { animation: shimmer-sweep 7s linear infinite; }
+  @keyframes shimmer-sweep {
+    from { background-position: 220% 0; }
+    to { background-position: -120% 0; }
+  }
+}
+
+/* ---------- CSS scroll-driven（参照メモ4・@supports ガード） ---------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* 進捗バー: 画面のスクロール量で満ちる */
+    .progress {
+      animation: progress-grow linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* 縦書きの語と装飾のパララックス: 通過に応じて漂う */
+    .drift-a {
+      animation: drift-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    .drift-b {
+      animation: drift-down linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 80%;
+    }
+    @keyframes drift-up   { from { transform: translateY(14vh); } to { transform: translateY(-10vh); } }
+    @keyframes drift-down { from { transform: translateY(-8vh); } to { transform: translateY(12vh); } }
+
+    /* 年表の縦線: 区画が画面を通過する分量で満ちる */
+    .timeline-fill {
+      animation: timeline-fill-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 72%;
+    }
+    @keyframes timeline-fill-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+    /* 詳細ヒーローの題箋: わずかに浮き上がる */
+    .hero-plate .plate {
+      animation: plate-float linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+    @keyframes plate-float { from { transform: translateY(26px); } to { transform: translateY(0); } }
+  }
+}
+
+/* ---------- View Transitions（参照メモ3） ----------
+   @view-transition 規則は両ページのopt-inが必要なため、css/vt.css に分離。
+   index.html は読み込まない（index 発の遷移は筆ワイプ幕が担う） */
+
+/* ---------- 出現まちの隠し状態（JS が動くときだけ） ---------- */
+/* ヒーロー文字は scenes.js が SplitText で mask 化するため、ここでは待たない。
+   GSAP が無い環境では split も隠しも起きない（＝最初から見える） */
+
+@media (prefers-reduced-motion: reduce) {
+  /* 最大構成の全演出を停止（style.css 側の停止と二重） */
+  .curtain { display: none !important; }
+  .cursor { display: none !important; }
+  .shimmer, .drift-word, .plate { animation: none !important; }
+  .timeline-fill { transform: none !important; }
+  .progress { transform: scaleX(1) !important; }
+}

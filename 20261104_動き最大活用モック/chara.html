@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人物（動き最大活用モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+<link rel="stylesheet" href="css/vt.css">
+</head>
+<body data-page="chara">
+
+<div class="curtain" data-curtain aria-hidden="true">
+  <div class="curtain-layer curtain-crimson"></div>
+  <div class="curtain-layer curtain-ink"></div>
+  <div class="curtain-layer curtain-gold"></div>
+  <p class="curtain-mark">回廊の記録</p>
+</div>
+
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor" data-cursor-el aria-hidden="true">
+  <span class="cursor-ring"></span>
+  <span class="cursor-dot"></span>
+  <span class="cursor-label"></span>
+</div>
+
+<header class="masthead wrap">
+  <p class="site">回廊の記録<small>動き最大活用モック・破棄前提</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html" data-wipe data-magnet="0.2">HOME</a>
+    <a href="chara.html" aria-current="page" data-magnet="0.2">人物</a>
+    <a href="detail.html" data-magnet="0.2">セラフの記録</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="page-head" aria-label="人物一覧">
+    <h1 data-hero-title>人物</h1>
+    <p class="lead">13人。肖像は準備中のあいだ、題箋で代用する（絵が入った日は同じ枠へ入る）。縦横比は 3:4 に固定。題箋の並びは端から広がり、燭守 セラフの題箋は記録見本の面へそのまま引き継がれる。</p>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="所属で絞り込み">
+        <button class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+        <button class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+        <button class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+        <button class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+        <button class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+        <button class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+        <button class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+        <button class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+      </div>
+      <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    </div>
+
+    <!-- 13人分は data/characters.json の実データを静的に埋め込み（noscript でも一覧が見える） -->
+    <ul class="grid" id="grid">
+      <li class="cell">
+        <a class="card" id="card-c001" href="detail.html" data-aff="回廊聖堂" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">燭守 セラフ</span><span class="plate-seal">c001</span></span>
+          <span class="card-meta"><span class="name">燭守 セラフ</span><span class="role">封印の継ぎ手</span><span class="aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="独立" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">写本屋 ヴェル</span><span class="plate-seal">c002</span></span>
+          <span class="card-meta"><span class="name">写本屋 ヴェル</span><span class="role">記録の写し手</span><span class="aff">独立</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="回廊聖堂" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">灯番 リュミエ</span><span class="plate-seal">c003</span></span>
+          <span class="card-meta"><span class="name">灯番 リュミエ</span><span class="role">燭台の管理人</span><span class="aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="教団" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">異端吏 オクタヴィア</span><span class="plate-seal">c004</span></span>
+          <span class="card-meta"><span class="name">異端吏 オクタヴィア</span><span class="role">禁書の検閲官</span><span class="aff">教団</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="回廊聖堂" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">調律師 カノン</span><span class="plate-seal">c005</span></span>
+          <span class="card-meta"><span class="name">調律師 カノン</span><span class="role">音の封印師</span><span class="aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="鐘楼" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">号手 タル</span><span class="plate-seal">c006</span></span>
+          <span class="card-meta"><span class="name">号手 タル</span><span class="role">鐘楼の番人</span><span class="aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="地下病院" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">薬師 ミョルニ</span><span class="plate-seal">c007</span></span>
+          <span class="card-meta"><span class="name">薬師 ミョルニ</span><span class="role">血の代わりの錬成</span><span class="aff">地下病院</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="不明" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">囁き ノクス</span><span class="plate-seal">c008</span></span>
+          <span class="card-meta"><span class="name">囁き ノクス</span><span class="role">名を盗む者</span><span class="aff">不明</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="祝祭庁" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">祝祭主 アレルイ</span><span class="plate-seal">c009</span></span>
+          <span class="card-meta"><span class="name">祝祭主 アレルイ</span><span class="role">断章を集める祭官</span><span class="aff">祝祭庁</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="鐘楼" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">鐘鋳師 フォルデ</span><span class="plate-seal">c010</span></span>
+          <span class="card-meta"><span class="name">鐘鋳師 フォルデ</span><span class="role">鐘を鋳る者</span><span class="aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="不明" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">塵纏い ルゥ</span><span class="plate-seal">c011</span></span>
+          <span class="card-meta"><span class="name">塵纏い ルゥ</span><span class="role">掃き溜めの附喪女</span><span class="aff">不明</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="教団" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">算官 セウト</span><span class="plate-seal">c012</span></span>
+          <span class="card-meta"><span class="name">算官 セウト</span><span class="role">贖罪の勘定係</span><span class="aff">教団</span></span>
+        </a>
+      </li>
+      <li class="cell">
+        <a class="card" href="detail.html" data-aff="回廊聖堂" data-cursor="ひらく">
+          <span class="plate" aria-hidden="true"><span class="plate-name">看取り ヴィゴル</span><span class="plate-seal">c013</span></span>
+          <span class="card-meta"><span class="name">看取り ヴィゴル</span><span class="role">最期の記録係</span><span class="aff">回廊聖堂</span></span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="page-foot">
+  <div class="wrap">モック（模擬データ・破棄前提）。人物13人の記載は data/characters.json、出演対応は data/works.json のみを原典にする。記録見本（detail.html）は燭守 セラフ（c001）の1人分。</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/scenes.js"></script>
+</body>
+</html>

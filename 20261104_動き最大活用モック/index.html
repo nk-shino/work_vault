@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOME（動き最大活用モック）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="home" data-curtain-hold="1">
+
+<!-- 読み込み幕（motion.dev Curtains 系の配置・筆ワイプの自作再現） -->
+<div class="curtain" data-curtain aria-hidden="true">
+  <div class="curtain-layer curtain-crimson"></div>
+  <div class="curtain-layer curtain-ink"></div>
+  <div class="curtain-layer curtain-gold"></div>
+  <p class="curtain-mark">回廊の記録</p>
+</div>
+
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor" data-cursor-el aria-hidden="true">
+  <span class="cursor-ring"></span>
+  <span class="cursor-dot"></span>
+  <span class="cursor-label"></span>
+</div>
+
+<header class="masthead wrap">
+  <p class="site">回廊の記録<small>動き最大活用モック・破棄前提</small></p>
+  <nav aria-label="主ナビゲーション">
+    <a href="index.html" aria-current="page" data-magnet="0.2">HOME</a>
+    <a href="chara.html" data-wipe data-magnet="0.2">人物</a>
+    <a href="detail.html" data-wipe data-magnet="0.2">セラフの記録</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-label="表紙">
+    <p class="drift-word drift-a" aria-hidden="true">記録</p>
+    <p class="drift-word drift-b" aria-hidden="true">回廊</p>
+
+    <svg class="hero-arch" viewBox="0 0 600 720" data-draw aria-hidden="true">
+      <path d="M120 640 V300 A180 180 0 0 1 480 300 V640"/>
+      <path class="arch-thin" d="M180 640 V320 A120 120 0 0 1 420 320 V640"/>
+      <path class="arch-thin" d="M240 640 V340 A60 60 0 0 1 360 340 V640"/>
+      <path d="M60 640 H540"/>
+      <path class="arch-thin" d="M300 640 V470"/>
+    </svg>
+
+    <p class="hero-eyebrow" data-hero-fade>非公式資料サイト・モック</p>
+    <h1 class="shimmer" data-hero-title>回廊の記録</h1>
+    <p class="hero-lead" data-hero-fade>内容は data フォルダの実データのみ。この面は、動きの表現上限を確認するための見本（破棄前提）。</p>
+    <p class="scroll-cue" data-hero-fade>SCROLL</p>
+  </section>
+
+  <section class="story" data-story aria-label="序">
+    <div class="wrap">
+      <p class="story-label">序 — この記録のこと</p>
+      <p class="story-text" data-story-text>ある音楽プロジェクトの非公式資料。出典と検証状態をたどれることを最優先にする。肖像は準備中のあいだ、題箋で代用する。</p>
+    </div>
+  </section>
+
+  <section class="nums-band" aria-label="記録の数">
+    <div class="wrap">
+      <div class="nums">
+        <div class="num">
+          <span class="num-val" data-count="13">13</span>
+          <span class="num-label">作品</span>
+          <p class="num-note">出典 data/works.json</p>
+        </div>
+        <div class="num">
+          <span class="num-val" data-count="13">13</span>
+          <span class="num-label">人物</span>
+          <p class="num-note">出典 data/characters.json</p>
+        </div>
+        <div class="num">
+          <span class="num-val" data-count="50">50</span>
+          <span class="num-label">目録</span>
+          <p class="num-note">出典 data/catalog.json</p>
+        </div>
+        <div class="num">
+          <span class="num-val" data-count="9">9</span>
+          <span class="num-label">出来事</span>
+          <p class="num-note">出典 data/history.json</p>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn" href="chara.html" data-wipe data-magnet="0.24" data-cursor="すすむ">人物一覧へ</a>
+        <a class="btn is-quiet" href="detail.html" data-wipe data-magnet="0.24" data-cursor="すすむ">燭守 セラフの記録へ</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="page-foot">
+  <div class="wrap">モック（模擬データ・破棄前提）。動きの最大構成の検討用。本番適用は別判断。出演・年表・件数はすべて同梱 json の実データ。</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/scenes.js"></script>
+</body>
+</html>

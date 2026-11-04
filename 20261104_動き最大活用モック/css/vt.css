@@ -1,0 +1,28 @@
+/* ============================================================
+   View Transitions（参照メモ3）— chara.html と detail.html のみで読む
+   MPA の cross-document transition。共有要素は c001 の題箋のみ
+   （詳細が1人分のため。他の12枚はルートのクロスフェードに任せる）。
+   index.html はこのファイルを読まない → index 発の遷移は筆ワイプ幕が担う。
+   ============================================================ */
+
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+#card-c001 .plate,
+.record-hero .plate { view-transition-name: vt-c001; }
+
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 360ms; }
+
+::view-transition-old(vt-c001),
+::view-transition-new(vt-c001) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease-out-expo);
+}
+::view-transition-old(vt-c001) { animation-name: vt-plate-out; }
+::view-transition-new(vt-c001) { animation-name: vt-plate-in; }
+@keyframes vt-plate-in  { from { opacity: 0; transform: scale(0.985); } }
+@keyframes vt-plate-out { to   { opacity: 0; transform: scale(0.985); } }
