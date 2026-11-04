@@ -46,6 +46,7 @@ status: done
 - PanaCIMフォルダ(★個人フォルダ\PanaCIM)の構成は Historical/Log/Production/Utils の存在まで確認済み(実行サーバー本体の所在は未確認)。
 - qcd_DB(WWW共有)とMonitorAndon2とPanaCIM/LNBの関係は未確認。qcd_DB\Files\イメージ図.dio は中身未確認(構成図素材候補)。
 - 棚卸し本番の実施状況(管理表Y20更新・スライド2キャプチャ)。
+- 手順書スライド(v6・b9286b9c): 投影・印刷での見え方は現場使用時に確認。tmp_sql.txtの`--`戻しは利用者任意。報告のみ事項(S27図6右端「成」欠落の再キャプチャ・S7/S8図16の極小ビットマップ)の対応判断は利用者判断。
 
 ## 課題
 
