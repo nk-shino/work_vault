@@ -1,5 +1,5 @@
 モーションギャラリー 撮影レポート
-撮影日時: 2026/11/2 20:20:23
+撮影日時: 2026/11/4 9:03:54
 
 --- DOM checks (initial) ---
 {
@@ -25,7 +25,7 @@ check: F-1 refined: nodes not rebuilt -> OK :: persist=61 visible=2/2
 shot: f1-conventional-settling.png
 check: F-1 legacy: rows rebuilt (no persist) -> OK :: rows=44 persist=0
 check: F-1 legacy: stagger reaches 480ms cap -> OK :: 0.48s
-check: F-1 legacy: settling in progress at 250ms -> OK :: first=1 last=0.877848
+check: F-1 legacy: settling in progress at 250ms -> OK :: first=1 last=0.904757
 shot: f1-conventional-settled.png
 shot: f2-status.png
 F-2 hover transform: matrix(1, 0, 0, 1, 0, -2)
