@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>キーボード自己点検（検証用）</title>
+<style>
+  body { font-family: sans-serif; margin: 1rem; }
+  iframe { width: 100%; height: 300px; border: 1px solid #999; }
+  table { border-collapse: collapse; }
+  td, th { border: 1px solid #999; padding: 2px 10px; font-size: 14px; }
+  .pass { color: #14685b; font-weight: bold; }
+  .fail { color: #b23a24; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>キーボード自己点検（検証用ページ・成果物ではない）</h1>
+<p>合成キーボードイベントで操作性を機械確認する。実機のキー入力（isTrusted）での最終確認は別途行う。</p>
+
+<h2>iframe 1: queue.html</h2>
+<iframe id="f1" src="queue.html"></iframe>
+<h2>iframe 2: review.html</h2>
+<iframe id="f2" src="review.html"></iframe>
+
+<h2>結果</h2>
+<table id="result"><thead><tr><th>確認</th><th>結果</th></tr></thead><tbody></tbody></table>
+
+<script>
+const rows = [];
+function rec(name, ok) { rows.push([name, ok]); }
+
+document.getElementById('f1').addEventListener('load', function () {
+  /* 採用/却下は startViewTransition 経由で次の描画機会に反映されるため、
+   * 固定待ちではなく状態の成立を待ってから判定する */
+  function waitUntil(cond, cb) {
+    let tries = 0;
+    (function poll() {
+      if (cond() || tries >= 40) return cb();
+      tries++;
+      setTimeout(poll, 100);
+    })();
+  }
+  setTimeout(() => {
+    const w = this.contentWindow, d = this.contentDocument;
+    const key = (opts) => d.body.dispatchEvent(new w.KeyboardEvent('keydown', Object.assign({ bubbles: true }, opts)));
+    rec('JS 有効化 (html.js)', d.documentElement.classList.contains('js'));
+    rec('キューの初期表示 (未処理カード)', d.querySelectorAll('.proposal.is-pending').length === 4);
+
+    /* 1件目は保護対象（出典1種類）→ a では採用されない（FR-006） */
+    key({ key: 'j' });
+    rec('j: 先頭カードにカーソル', d.querySelectorAll('.proposal.kcursor').length === 1);
+    rec('j: 応答の読み上げ口', !!d.getElementById('knav-status') && d.getElementById('knav-status').textContent.length > 0);
+
+    key({ key: 'a' });
+    rec('a(保護対象): 処理されず未処理のまま', d.querySelectorAll('.proposal.is-done').length === 1);
+    rec('a(保護対象): 注意の帯が現れる', d.getElementById('queue-band') && !d.getElementById('queue-band').hidden);
+
+    /* 2件目を採用 → 反映を待って判定 */
+    key({ key: 'j' });
+    key({ key: 'a' });
+    waitUntil(() => d.querySelectorAll('.proposal.is-done').length === 2, () => {
+      rec('a(2件目): カードが処理済みになる', d.querySelectorAll('.proposal.is-done').length === 2);
+      rec('a(2件目): 成功帯に採用の文面', (d.getElementById('queue-band').textContent || '').includes('採用'));
+
+      /* 3件目（保護対象）を却下 → 却下は可能 */
+      key({ key: 'j' });
+      key({ key: 'x' });
+      waitUntil(() => d.querySelectorAll('.proposal.is-done').length === 3, () => {
+        rec('x: カードが処理済みになる', d.querySelectorAll('.proposal.is-done').length === 3);
+        rec('x: 保護対象も却下で処理できる', [...d.querySelectorAll('.proposal[data-protected]')].every((c) => c.classList.contains('is-done')));
+
+        key({ key: 'k', ctrlKey: true });
+        rec('Ctrl+K: パレットが開く', !!d.querySelector('dialog.palette[open]'));
+        const palInput = d.getElementById('palette-input');
+        if (palInput) {
+          palInput.value = 'りゅう';
+          palInput.dispatchEvent(new w.Event('input', { bubbles: true }));
+          const lis = d.querySelectorAll('#palette-list li');
+          const firstHw = d.querySelector('#palette-list .p-hw');
+          rec('パレット: 「りゅう」で候補が出る', lis.length >= 1 && !!firstHw);
+          rec('パレット: 先頭候補は竜舎', !!firstHw && firstHw.textContent === '竜舎');
+        }
+        d.getElementById('palette').close();
+
+        key({ key: '?' });
+        rec('?: キーボードヘルプが開く', !!d.querySelector('dialog.keys-help[open]'));
+        d.querySelector('dialog.keys-help').close();
+
+        rec('一括バー: 初期は隠れている', d.getElementById('bulk-bar').hidden === true);
+        const cb = d.querySelector('.proposal.is-pending .prop-check input');
+        if (cb) { cb.checked = true; cb.dispatchEvent(new w.Event('change', { bubbles: true })); }
+        rec('一括バー: 選択で現れる', d.getElementById('bulk-bar').hidden === false);
+      });
+    });
+  }, 1200);
+});
+
+document.getElementById('f2').addEventListener('load', function () {
+  setTimeout(() => {
+    const w = this.contentWindow, d = this.contentDocument;
+    const btn = d.querySelector('.inline-eval .stamp');
+    btn.click();
+    rec('行内評価: 押すと朱印が付く', btn.classList.contains('is-stamped') && btn.getAttribute('aria-pressed') === 'true');
+    const others = [...d.querySelectorAll('.inline-eval .stamp')].filter((b) => b !== btn);
+    rec('行内評価: 同じ行の他の印は外れる', others.every((b) => !b.classList.contains('is-stamped')));
+    /* 単数選択: 別の印を押すと前の印が外れる */
+    others[0].click();
+    rec('行内評価: 印の付け替え', others[0].classList.contains('is-stamped') && !btn.classList.contains('is-stamped'));
+  }, 1200);
+});
+
+setTimeout(() => {
+  const tb = document.querySelector('#result tbody');
+  let pass = 0;
+  for (const [name, ok] of rows) {
+    const tr = document.createElement('tr');
+    const t1 = document.createElement('td'); t1.textContent = name;
+    const t2 = document.createElement('td'); t2.textContent = ok ? 'PASS' : 'FAIL'; t2.className = ok ? 'pass' : 'fail';
+    if (ok) pass++;
+    tr.append(t1, t2); tb.append(tr);
+  }
+  document.title = `PASS ${pass}/${rows.length}`;
+}, 8000);
+</script>
+</body>
+</html>

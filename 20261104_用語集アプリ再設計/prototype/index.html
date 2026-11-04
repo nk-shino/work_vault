@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用語一覧 — 社内用語集</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js" defer></script>
+</head>
+<body data-page="index">
+<a class="skip" href="#main">本文へ</a>
+
+<header>
+  <a class="brand" href="index.html">社内用語集</a>
+  <nav aria-label="メイン">
+    <a href="index.html" aria-current="page">用語一覧</a>
+    <a href="queue.html">提案キュー<span class="nav-badge num" aria-label="未処理の提案 7 件">7</span></a>
+    <a href="review.html">見直し<span class="nav-badge num" aria-label="評価待ちの語義 11 件">11</span></a>
+    <a href="history.html">履歴</a>
+  </nav>
+  <a href="#" id="open-palette" class="tool-link" hidden role="button">語を探す<kbd>Ctrl+K</kbd></a>
+  <span class="notice num">確認済み 2026-11-04 08:40</span>
+</header>
+
+<main id="main">
+  <h1>用語一覧</h1>
+  <p class="hint">郵便回りの用語を、部署を越えて同じ意味で使うための辞書です。評価は語義ごとに、人の手で記録します。</p>
+
+  <!-- FR-020: 健全性ストリップ。未処理は人の対応待ち → 数値を朱で示す -->
+  <section class="health" aria-label="現在の状態">
+    <span class="h-item"><span class="n num" data-countup="13">13</span><span class="k">登録語</span></span>
+    <a class="h-item" href="queue.html"><span class="n n-is-human num" data-countup="7">7</span><span class="k">未処理の提案</span></a>
+    <a class="h-item" href="review.html"><span class="n n-is-human num" data-countup="2">2</span><span class="k">要修正の語義</span></a>
+    <a class="h-item" href="review.html"><span class="n n-is-human num" data-countup="2">2</span><span class="k">意見が割れた語義</span></a>
+    <a class="h-item" href="review.html"><span class="n num" data-countup="3">3</span><span class="k">自動採用のまま未評価</span></a>
+  </section>
+
+  <form id="search-form" class="filters" action="index.html" method="get">
+    <label>見出し語・読み・略語で探す
+      <input type="search" id="q" name="q" placeholder="例: 竜舎／りゅうしゃ／FLT" autocomplete="off">
+    </label>
+    <button type="submit">検索<kbd>/</kbd></button>
+    <button type="button" id="compact-toggle" aria-pressed="false" hidden>コンパクト表示</button>
+  </form>
+
+  <div class="table-tools">
+    <p class="hint"><span id="count">13 件中 13 件を表示</span>・見出し語・読み・更新日で並べ替えできます。</p>
+  </div>
+
+  <!-- FR-003: 一覧の列は見出し／読み／略語／語義数／評価状況／更新。
+       FR-004: 評価状況は点+文字で示す（色だけに頼らない）。 -->
+  <table class="rows" id="terms">
+    <thead>
+      <tr>
+        <th class="sorted" aria-sort="ascending"><a class="sort" href="index.html?sort=headword">見出し語</a><span class="dir" aria-hidden="true">▲</span></th>
+        <th><a class="sort" href="index.html?sort=reading">読み</a></th>
+        <th>略語</th>
+        <th>語義</th>
+        <th>評価状況</th>
+        <th><a class="sort" href="index.html?sort=updated">更新</a></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="--i:0" data-headword="竜舎" data-reading="りゅうしゃ">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t1">竜舎</a></td>
+        <td data-label="読み">りゅうしゃ</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">2</td>
+        <td data-label="評価状況"><span class="evd ev-fix" title="語義 2 に「修正が必要」の評価が最新です"><i aria-hidden="true"></i>要修正</span></td>
+        <td class="num" data-label="更新">2026-10-30</td>
+      </tr>
+      <tr style="--i:1" data-headword="竜車" data-reading="りんしゃ">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t2">竜車</a></td>
+        <td data-label="読み">りんしゃ</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-none" title="まだ評価はありません"><i aria-hidden="true"></i>未評価</span></td>
+        <td class="num" data-label="更新">2026-10-28</td>
+      </tr>
+      <tr style="--i:2" data-headword="卵温計" data-reading="らんおんけい">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t3">卵温計</a></td>
+        <td data-label="読み">らんおんけい</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-none" title="自動採用のまま、まだ評価はありません"><i aria-hidden="true"></i>未評価<span class="tag">自動</span></span></td>
+        <td class="num" data-label="更新">2026-10-30</td>
+      </tr>
+      <tr style="--i:3" data-headword="FLT点検" data-reading="えふえるてぃーてんけん" data-abbr="FLT">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t4">FLT点検</a></td>
+        <td data-label="読み">えふえるてぃーてんけん</td>
+        <td data-label="略語">FLT</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-fix" title="「修正が必要」の評価が最新です"><i aria-hidden="true"></i>要修正</span></td>
+        <td class="num" data-label="更新">2026-10-27</td>
+      </tr>
+      <tr style="--i:4" data-headword="浮遊石" data-reading="ふゆうせき">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t5">浮遊石</a></td>
+        <td data-label="読み">ふゆうせき</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-ok" title="最新の評価は「正しい」です"><i aria-hidden="true"></i>問題なし</span></td>
+        <td class="num" data-label="更新">2026-10-25</td>
+      </tr>
+      <tr style="--i:5" data-headword="星読み台帳" data-reading="ほしよみだいちょう">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t6">星読み台帳</a></td>
+        <td data-label="読み">ほしよみだいちょう</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">2</td>
+        <td data-label="評価状況"><span class="evd ev-ok" title="語義 1 は「正しい」。語義 2 は未評価です"><i aria-hidden="true"></i>問題なし・未評価あり</span></td>
+        <td class="num" data-label="更新">2026-10-24</td>
+      </tr>
+      <tr style="--i:6" data-headword="ほうき便" data-reading="ほうきびん">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t7">ほうき便</a></td>
+        <td data-label="読み">ほうきびん</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-warn" title="最新の評価は「役に立たない」です"><i aria-hidden="true"></i>役に立たない</span></td>
+        <td class="num" data-label="更新">2026-10-22</td>
+      </tr>
+      <tr style="--i:7" data-headword="スカイポスト" data-reading="すかいぽすと">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t8">スカイポスト</a></td>
+        <td data-label="読み">すかいぽすと</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-ok" title="最新の評価は「正しい」です"><i aria-hidden="true"></i>問題なし</span></td>
+        <td class="num" data-label="更新">2026-10-21</td>
+      </tr>
+      <tr style="--i:8" data-headword="雲切り" data-reading="くもきり">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t9">雲切り</a></td>
+        <td data-label="読み">くもきり</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-none" title="自動採用のまま、まだ評価はありません"><i aria-hidden="true"></i>未評価<span class="tag">自動</span></span></td>
+        <td class="num" data-label="更新">2026-10-20</td>
+      </tr>
+      <tr style="--i:9" data-headword="霧抜き作業" data-reading="きりぬきさぎょう">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t10">霧抜き作業</a></td>
+        <td data-label="読み">きりぬきさぎょう</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-warn" title="「正しい」と「修正が必要」で意見が割れています"><i aria-hidden="true"></i>意見割れ</span></td>
+        <td class="num" data-label="更新">2026-10-18</td>
+      </tr>
+      <tr style="--i:10" data-headword="ドラゴンミルク" data-reading="どらごんみるく">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t11">ドラゴンミルク</a></td>
+        <td data-label="読み">どらごんみるく</td>
+        <td data-label="略語">—</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-warn" title="「正しい」と「修正が必要」で意見が割れています"><i aria-hidden="true"></i>意見割れ</span></td>
+        <td class="num" data-label="更新">2026-10-15</td>
+      </tr>
+      <tr style="--i:11" data-headword="MGK" data-reading="えむじーけー" data-abbr="MGK">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t12">MGK</a></td>
+        <td data-label="読み">えむじーけー</td>
+        <td data-label="略語">MGK</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-none" title="自動採用のまま、まだ評価はありません"><i aria-hidden="true"></i>未評価<span class="tag">自動</span></span></td>
+        <td class="num" data-label="更新">2026-10-12</td>
+      </tr>
+      <tr style="--i:12" data-headword="FLT" data-reading="えふえるてぃー" data-abbr="FLT">
+        <td data-label="見出し語"><a class="hw" href="detail.html" style="view-transition-name: hw-t13">FLT</a></td>
+        <td data-label="読み">えふえるてぃー</td>
+        <td data-label="略語">FLT</td>
+        <td class="num" data-label="語義">1</td>
+        <td data-label="評価状況"><span class="evd ev-none" title="まだ評価はありません"><i aria-hidden="true"></i>未評価</span></td>
+        <td class="num" data-label="更新">2026-10-10</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FR-004: ゼロ件は終わりではなく入口。検索語を引き継いで登録へ -->
+  <div id="zero" class="empty" hidden>
+    <p class="empty-h">「<span id="zero-term"></span>」に一致する語はありません</p>
+    <p class="empty-d">読みや略語を変えて探し直すか、この表記を新しい見出し語として登録してください。検索で見つからなかった語は、あとで見直しの一覧に積もります。</p>
+    <p class="empty-actions"><a id="zero-new" href="new.html">この表記を見出し語にして登録する</a></p>
+  </div>
+
+  <p class="hint knav-hint" hidden>入力欄以外で <kbd>/</kbd> で検索、<kbd>c</kbd> で表示切り替え。<kbd>?</kbd> でヘルプ。</p>
+</main>
+</body>
+</html>

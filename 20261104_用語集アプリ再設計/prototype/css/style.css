@@ -1,0 +1,684 @@
+/* 社内用語集 再設計プロトタイプ — 基調と部品
+ * 概念: 「朱は、人の手が入ったところにだけ刷る」
+ *  - 紙と墨: 辞書の地（本文・定義・表）
+ *  - 緑青: 構造と導線（リンク・フォーカス・進行）
+ *  - 朱: 人の手（評価・採用・訂正・混同注意）
+ * 外部依存なし・システムフォントのみ。明暗は OS 設定の自動追従。 */
+
+:root {
+  /* 紙と墨 */
+  --paper: #f8f7f2;
+  --paper-top: #fbfaf6;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --ink: #26282e;
+  --muted: #5c6270;
+  --line: #d8d5ca;
+  --line-soft: #e7e4da;
+  /* 緑青（構造と導線） */
+  --roku: #14685b;
+  --roku-strong: #0f544a;
+  --roku-soft: #e7f1ee;
+  --focus-ring: rgba(20, 104, 91, .25);
+  /* 朱（人の手） */
+  --shu: #b23a24;
+  --shu-strong: #8f2a1c;
+  --shu-soft: #f9ebe7;
+  /* 状態（黄=保留/注意・緑=確定/成功） */
+  --kuchi-fg: #7a5a00;
+  --kuchi-bg: #fbf1d8;
+  --kuchi-border: #e3cd93;
+  --matsu-fg: #1f6e46;
+  --matsu-bg: #e8f3ea;
+  --matsu-border: #bcdcc7;
+  --danger-fg: #8f2a1c;
+  --danger-bg: #f9ebe7;
+  --danger-border: #e5b8ad;
+  /* 影・角丸・余白 */
+  --sh-1: 0 1px 2px rgba(32, 32, 40, .05), 0 1px 6px rgba(32, 32, 40, .06);
+  --sh-2: 0 6px 16px rgba(32, 32, 40, .14);
+  --r-1: 6px;
+  --r-2: 10px;
+  --r-pill: 999px;
+  --header-bg: rgba(248, 247, 242, .88);
+  /* 書体 */
+  --font-ui: "Yu Gothic UI", "Meiryo UI", "Segoe UI", sans-serif;
+  --font-mincho: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  --font-num: "Segoe UI Variable Text", "Yu Gothic UI", "Meiryo UI", sans-serif;
+  --font-mono: Consolas, "Courier New", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #191b1f;
+    --paper-top: #1c1e23;
+    --surface: #1f2126;
+    --surface-2: #26282e;
+    --ink: #e8e6df;
+    --muted: #9aa0ab;
+    --line: #3a3d44;
+    --line-soft: #2c2f35;
+    --roku: #7cc8b4;
+    --roku-strong: #a5dccb;
+    --roku-soft: #1d2b28;
+    --focus-ring: rgba(124, 200, 180, .28);
+    --shu: #f08a72;
+    --shu-strong: #f6b09c;
+    --shu-soft: #33211c;
+    --kuchi-fg: #e0b45c;
+    --kuchi-bg: #332a17;
+    --kuchi-border: #5c4c22;
+    --matsu-fg: #7cc89b;
+    --matsu-bg: #1d3326;
+    --matsu-border: #2f5a3d;
+    --danger-fg: #f08a72;
+    --danger-bg: #331e19;
+    --danger-border: #5c3a30;
+    --sh-1: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 6px rgba(0, 0, 0, .25);
+    --sh-2: 0 6px 16px rgba(0, 0, 0, .45);
+    --header-bg: rgba(25, 27, 31, .88);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-feature-settings: "palt";
+  color: var(--ink);
+  background:
+    radial-gradient(60rem 18rem at 85% -6rem, var(--roku-soft), transparent 55%),
+    linear-gradient(180deg, var(--paper-top), var(--paper) 26rem) fixed,
+    var(--paper);
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+a { color: var(--roku); text-decoration-color: color-mix(in srgb, var(--roku) 40%, transparent); }
+a:hover { color: var(--roku-strong); }
+
+:focus-visible { outline: 2px solid var(--roku); outline-offset: 2px; border-radius: 2px; }
+
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 1rem; top: .5rem; background: var(--surface); color: var(--ink); padding: .3rem .6rem; z-index: 20; box-shadow: var(--sh-2); border-radius: var(--r-1); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
+
+kbd {
+  display: inline-block; min-width: 1.3em; text-align: center;
+  font: inherit; font-size: .76rem; line-height: 1.4;
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px;
+  background: var(--surface); color: var(--muted); padding: 0 .3em; margin-left: .35em;
+}
+
+/* ---- ヘッダー ---- */
+
+header {
+  display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
+  padding: .55rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--header-bg);
+  backdrop-filter: blur(6px);
+  position: sticky; top: 0; z-index: 10;
+}
+header::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--roku), var(--shu) 82%, transparent);
+  opacity: .85;
+}
+.brand { display: flex; align-items: center; gap: .5rem; }
+.brand::before {
+  content: "語";
+  display: inline-grid; place-items: center;
+  width: 1.7rem; height: 1.7rem; border-radius: .45rem;
+  background: var(--roku); color: var(--paper);
+  font-family: var(--font-mincho); font-size: 1.05rem; font-weight: bold;
+}
+header nav { display: flex; gap: .25rem; flex-wrap: wrap; }
+header nav a {
+  padding: .3rem .75rem; border-radius: var(--r-pill);
+  text-decoration: none; color: var(--ink); font-size: .95rem;
+  transition: background-color .15s ease, color .15s ease;
+}
+header nav a:hover { background: var(--roku-soft); color: var(--roku-strong); }
+header nav a[aria-current="page"] { background: var(--roku-soft); color: var(--roku-strong); font-weight: bold; }
+.nav-badge {
+  display: inline-block; min-width: 1.5em; text-align: center;
+  margin-left: .35em; padding: 0 .4em; border-radius: var(--r-pill);
+  background: var(--shu); color: #fff;
+  font-size: .78rem; font-weight: bold; line-height: 1.6;
+  font-variant-numeric: tabular-nums; vertical-align: .08em;
+}
+.notice {
+  margin-left: auto; color: var(--muted); font-size: .8rem;
+  border: 1px solid var(--line-soft); border-radius: var(--r-pill); padding: .1rem .7rem;
+  background: var(--surface); white-space: nowrap;
+}
+
+main { max-width: 62rem; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+
+h1 { font-size: 1.4rem; letter-spacing: .02em; margin: .2rem 0 1rem; }
+h2 { font-size: 1.12rem; margin-top: 1.6rem; }
+h3 { font-size: 1rem; margin: .2rem 0 .5rem; }
+.hint { color: var(--muted); font-size: .85rem; }
+.crumbs { font-size: .85rem; color: var(--muted); margin: .1rem 0 .6rem; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--roku); }
+
+h1, h2, h3 { text-wrap: balance; }
+main p { text-wrap: pretty; }
+
+/* ---- 健全性ストリップ ---- */
+
+.health {
+  display: flex; flex-wrap: wrap; gap: 0 0;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  border-radius: var(--r-2); box-shadow: var(--sh-1);
+  margin: .2rem 0 1.1rem; overflow: hidden;
+}
+.health .h-item {
+  flex: 1 1 9rem; padding: .55rem .9rem .5rem;
+  border-right: 1px solid var(--line-soft);
+  display: block; color: inherit; text-decoration: none; min-width: 8.5rem;
+}
+.health .h-item:last-child { border-right: none; }
+a.h-item:hover { background: var(--roku-soft); }
+.health .n {
+  display: block; font-family: var(--font-num);
+  font-size: 1.35rem; font-weight: bold; line-height: 1.3;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em;
+}
+.health .k { display: block; color: var(--muted); font-size: .78rem; }
+/* 未処理は人の対応待ち → 数値を朱で示す（人の手が要るところ） */
+.health .n-is-human { color: var(--shu); }
+
+/* ---- 検索とフィルタ ---- */
+
+.filters { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: end; margin-bottom: .8rem; }
+.filters label { display: block; margin: 0; font-size: .85rem; color: var(--muted); }
+
+input, select, textarea {
+  font: inherit; padding: .4rem .6rem;
+  border: 1px solid var(--line); border-radius: var(--r-1); background: var(--surface);
+  color: var(--ink);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+input:hover, select:hover, textarea:hover { border-color: var(--muted); }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--roku);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+input[type="search"]#q { min-width: 16rem; font-size: 1.02rem; }
+
+button {
+  font: inherit; padding: .42rem 1.1rem; margin-top: .6rem;
+  border: 1px solid var(--line); border-radius: var(--r-1);
+  background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: var(--sh-1);
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+button:hover { border-color: var(--roku); color: var(--roku-strong); background: var(--roku-soft); }
+button.primary {
+  background: var(--roku); border-color: var(--roku); color: var(--paper); font-weight: bold;
+}
+button.primary:hover { background: var(--roku-strong); border-color: var(--roku-strong); color: var(--paper); }
+button.danger { color: var(--danger-fg); border-color: var(--danger-border); background: var(--surface); }
+button.danger:hover { background: var(--danger-bg); border-color: var(--danger-fg); color: var(--danger-fg); }
+.filters > button { margin-top: 0; }
+
+/* ---- 表 ---- */
+
+.table-tools { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: .4rem 0; }
+.table-tools p { margin: 0; }
+.table-tools button, .table-tools .tool-link { margin-top: 0; font-size: .88rem; }
+.tool-link { color: var(--roku); text-decoration: none; border: 1px solid var(--line); border-radius: var(--r-1); padding: .3rem .8rem; background: var(--surface); box-shadow: var(--sh-1); }
+.tool-link:hover { border-color: var(--roku); background: var(--roku-soft); }
+
+table {
+  border-collapse: separate; border-spacing: 0; width: 100%;
+  background: var(--surface); border-radius: var(--r-2);
+  box-shadow: var(--sh-1); border: 1px solid var(--line-soft); overflow: hidden;
+}
+th, td { border-bottom: 1px solid var(--line-soft); padding: .5rem .7rem; text-align: left; vertical-align: baseline; }
+thead th {
+  background: var(--surface-2); font-size: .8rem; font-weight: bold; color: var(--muted);
+  border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+thead th:first-child { border-top-left-radius: var(--r-2); }
+thead th:last-child { border-top-right-radius: var(--r-2); }
+tbody tr:last-child td { border-bottom: none; }
+td a { font-weight: inherit; text-decoration: none; }
+td a:hover { text-decoration: underline; }
+th a.sort { color: inherit; text-decoration: none; }
+th a.sort:hover { color: var(--roku); }
+th .dir { font-size: .72rem; margin-left: .25rem; color: var(--roku); }
+th:not(.sorted) a.sort::after { content: "⇅"; opacity: 0; font-size: .7rem; margin-left: .25rem; transition: opacity .12s ease; }
+th:not(.sorted):hover a.sort::after { opacity: .55; }
+table.compact th, table.compact td { padding: .16rem .55rem; }
+
+/* 見出し語: 辞書の【】を罫で示す（読み上げ・copy は語の文字列のみ） */
+.hw { font-family: var(--font-mincho); font-weight: bold; letter-spacing: .04em; }
+td .hw { font-size: 1.08rem; color: var(--ink); text-decoration: none; }
+td .hw::before, td .hw::after { color: var(--muted); font-weight: normal; }
+td .hw::before { content: "【"; }
+td .hw::after { content: "】"; }
+td .hw:hover { color: var(--roku-strong); }
+td .hw:hover::before, td .hw:hover::after { color: var(--roku-strong); }
+
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+/* 評価状況の点。色に頼らず title と sr-only の文字を伴う */
+.evd { display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; white-space: nowrap; }
+.evd i {
+  width: .55rem; height: .55rem; border-radius: 50%; display: inline-block;
+  background: var(--muted); flex: none;
+}
+.evd.ev-fix i { background: var(--shu); }
+.evd.ev-warn i { background: var(--kuchi-fg); }
+.evd.ev-ok i { background: var(--matsu-fg); }
+.evd.ev-none i { background: transparent; border: 1.5px solid var(--muted); width: .45rem; height: .45rem; }
+
+/* ---- 状態の badge（色＋文字併記） ---- */
+
+.badge {
+  display: inline-block; font-size: .74rem; font-weight: normal;
+  padding: .05rem .6rem; border-radius: var(--r-pill);
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  white-space: nowrap;
+}
+.badge::before {
+  content: ""; display: inline-block; width: .42em; height: .42em;
+  border-radius: 50%; background: var(--muted); margin-right: .4em; vertical-align: .08em;
+}
+.badge.st-pending { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-border); }
+.badge.st-pending::before { background: var(--kuchi-fg); }
+.badge.st-confirmed, .badge.st-active, .badge.st-accepted { background: var(--matsu-bg); color: var(--matsu-fg); border-color: var(--matsu-border); }
+.badge.st-confirmed::before, .badge.st-active::before, .badge.st-accepted::before { background: var(--matsu-fg); }
+.badge.st-disputed { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-fg); }
+.badge.st-disputed::before { background: var(--kuchi-fg); }
+.badge.st-archived, .badge.st-rejected { color: var(--muted); }
+.badge.st-needs-review { background: var(--roku-soft); color: var(--roku-strong); border-color: var(--roku); }
+.badge.st-needs-review::before { background: var(--roku); }
+
+.tag, .src { font-size: .8rem; font-weight: normal; color: var(--muted); margin-left: .5rem; }
+.tag { border-bottom: 1px dotted var(--line); }
+.ai-chip {
+  display: inline-block; font-size: .68rem; font-weight: bold; padding: 0 .45em;
+  border-radius: 4px; border: 1px solid var(--roku); color: var(--roku-strong);
+  vertical-align: .1em; margin-right: .35em; letter-spacing: .04em;
+}
+
+/* ---- 辞書項目ヒーロー（詳細） ---- */
+
+.hero {
+  position: relative; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  border-radius: var(--r-2); box-shadow: var(--sh-1);
+  padding: 1.2rem 1.6rem 1.05rem; margin: .2rem 0 1.2rem;
+}
+.hero .hw-big {
+  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+  color: var(--ink); text-decoration: none;
+}
+.hero .hw-big::before, .hero .hw-big::after { color: var(--line); font-weight: normal; }
+.hero .hw-big::before { content: "【"; }
+.hero .hw-big::after { content: "】"; }
+.hero .reading { color: var(--muted); font-size: 1rem; margin-left: .6rem; letter-spacing: .3em; }
+.hero .meta { display: flex; flex-wrap: wrap; gap: .15rem 1.4rem; margin: .5rem 0 .2rem; padding: 0; }
+.hero .meta div { font-size: .88rem; }
+.hero .meta dt { display: inline; color: var(--muted); margin-right: .3rem; }
+.hero .meta dt::after { content: ":"; }
+.hero .meta dd { display: inline; margin: 0; }
+.hero-links { margin: .5rem 0 0; font-size: .92rem; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+/* ---- 混同注意（人の手で付けられた注意 → 朱） ---- */
+
+.confused {
+  border: 2px solid var(--shu-strong); border-left-width: 6px;
+  background: var(--shu-soft);
+  color: var(--shu-strong); padding: .55rem 1rem; border-radius: var(--r-2);
+  margin: .9rem 0;
+}
+.confused h2 { margin: 0 0 .15rem; font-size: 1rem; display: flex; align-items: center; gap: .4rem; }
+.confused h2 .ic { flex: none; }
+.confused p { margin: .1rem 0; font-size: .95rem; }
+.confused a { color: var(--shu-strong); font-weight: bold; }
+
+/* ---- 語義カード（本体＋評価の右列） ---- */
+
+.sense-grid { display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: 1.1rem; align-items: start; margin: 1rem 0 1.6rem; }
+@media (max-width: 1000px) { .sense-grid { grid-template-columns: 1fr; } }
+
+.sense {
+  border: 1px solid var(--line); background: var(--surface);
+  border-radius: var(--r-2); padding: .9rem 1.2rem 1rem;
+  box-shadow: var(--sh-1);
+}
+.sense.is-disputed { border: 2px solid var(--kuchi-fg); }
+.sense-head { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; margin-bottom: .3rem; }
+.sense-no {
+  font-family: var(--font-mincho); font-weight: bold; color: var(--shu);
+  font-size: 1.05rem; letter-spacing: .02em;
+}
+.sense-no::before { content: "語義 "; color: var(--muted); font-weight: normal; font-size: .85rem; font-family: var(--font-ui); }
+.sense .warn { background: var(--kuchi-bg); color: var(--kuchi-fg); padding: .3rem .7rem; border-radius: var(--r-1); font-size: .9rem; }
+
+.definition {
+  font-family: var(--font-mincho);
+  font-size: 1.08rem; line-height: 1.9; letter-spacing: .02em;
+  border-left: 3px solid var(--shu); padding-left: .85rem;
+  margin: .5rem 0;
+  white-space: pre-wrap;
+}
+.scope { color: var(--muted); font-size: .9rem; margin: .2rem 0; }
+.scope::before { content: "適用範囲："; }
+
+.evidences { padding-left: 1.15rem; margin: .5rem 0; }
+.evidences li { margin: .3rem 0; }
+.evidences q, .proposal q {
+  background: var(--surface-2); padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」";
+}
+.evidences small, .meta-line { color: var(--muted); }
+.mask-chip {
+  display: inline-block; font-size: .68rem; border: 1px solid var(--line);
+  border-radius: 4px; padding: 0 .35em; color: var(--muted); margin-left: .3em; vertical-align: .05em;
+}
+.sense-links { font-size: .9rem; margin: .5rem 0 0; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ---- 評価（右列。人の手 → 朱印） ---- */
+
+.evaluate {
+  border: 1px solid var(--line); border-top: 3px solid var(--shu);
+  background: var(--surface); border-radius: var(--r-2);
+  box-shadow: var(--sh-1); padding: .8rem 1rem .95rem;
+}
+.evaluate h4 { margin: 0 0 .3rem; font-size: .95rem; }
+.evaluate .hint { display: block; margin-bottom: .5rem; }
+.ev-group { margin: .3rem 0 .2rem; }
+.ev-group > span { display: block; font-size: .78rem; color: var(--muted); margin-bottom: .25rem; }
+.ev-buttons { display: flex; gap: .35rem; flex-wrap: wrap; }
+
+/* 朱印ボタン。押すと人の印が刷られる */
+.stamp {
+  position: relative;
+  border: 1px solid var(--line); border-radius: var(--r-pill);
+  background: var(--surface); color: var(--ink);
+  padding: .22rem .8rem; font-size: .86rem; cursor: pointer;
+  min-height: 1.9rem; margin-top: 0; box-shadow: none;
+  transition: border-color .12s ease, color .12s ease, background-color .12s ease;
+}
+.stamp:hover { border-color: var(--roku); color: var(--roku-strong); background: var(--roku-soft); }
+.stamp.is-stamped {
+  border-color: var(--shu); background: var(--shu); color: #fff;
+}
+.stamp.is-stamped:hover { border-color: var(--shu-strong); background: var(--shu-strong); color: #fff; }
+.stamp .ring {
+  position: absolute; inset: -3px; border: 2px solid var(--shu);
+  border-radius: inherit; opacity: 0; pointer-events: none;
+}
+
+.ev-comment { margin-top: .4rem; }
+.ev-comment input { width: 100%; }
+
+/* ---- 関連語 ---- */
+
+.rel-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+@media (max-width: 900px) { .rel-grid { grid-template-columns: 1fr; } }
+.rel-panel {
+  border: 1px solid var(--line-soft); background: var(--surface);
+  border-radius: var(--r-2); box-shadow: var(--sh-1); padding: .9rem 1.1rem;
+}
+.rel-panel h3 { margin-top: 0; }
+.rel-list { list-style: none; padding: 0; margin: .3rem 0; }
+.rel-list li { margin: .35rem 0; }
+.rel-list .method { color: var(--muted); font-size: .8rem; }
+
+.graph { display: block; width: 100%; height: auto; }
+.graph .g-edge { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.graph .g-edge.confused { stroke: var(--shu); stroke-dasharray: none; stroke-width: 2; }
+.graph .g-edge.related { stroke: var(--roku); stroke-dasharray: 5 4; }
+.graph .g-node rect { fill: var(--surface); stroke: var(--line); }
+.graph .g-node text { fill: var(--ink); font-size: 12px; font-family: var(--font-ui); }
+.graph .g-node a { cursor: pointer; }
+.graph .g-node:hover rect { stroke: var(--roku); }
+.graph .g-node.is-confused rect { stroke: var(--shu); stroke-width: 2; }
+.graph .g-center rect { stroke: var(--roku); stroke-width: 2; fill: var(--roku-soft); }
+
+/* ---- 関連語プレビュー（popover） ---- */
+
+.rp {
+  position: fixed; inset: auto;
+  margin: 0; border: 1px solid var(--line); border-radius: var(--r-1);
+  background: var(--surface); color: var(--ink);
+  box-shadow: var(--sh-2); padding: .55rem .75rem;
+  max-width: 20rem; font-size: .85rem; line-height: 1.55;
+  z-index: 30;
+}
+.rp::backdrop { background: transparent; }
+.rp .rp-h { font-weight: bold; font-family: var(--font-mincho); }
+.rp .rp-r { color: var(--muted); font-size: .78rem; margin-left: .4em; }
+.rp .rp-d { margin: .25rem 0 0; color: var(--ink); }
+.rp .rp-c { color: var(--muted); font-size: .78rem; margin-top: .25rem; display: block; }
+
+/* ---- 提案キュー ---- */
+
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--r-pill); overflow: hidden; background: var(--surface); }
+.seg a { padding: .22rem .8rem; font-size: .88rem; text-decoration: none; color: var(--muted); border-right: 1px solid var(--line-soft); }
+.seg a:last-child { border-right: none; }
+.seg a[aria-pressed="true"] { background: var(--roku-soft); color: var(--roku-strong); font-weight: bold; }
+
+.proposal {
+  border: 1px solid var(--line); background: var(--surface);
+  border-radius: var(--r-2); padding: .8rem 1.2rem; margin: .9rem 0;
+  box-shadow: var(--sh-1);
+  position: relative;
+}
+.proposal.is-pending { padding-left: 2.7rem; }
+.proposal.is-done { opacity: .68; }
+.proposal .prop-check { position: absolute; left: 1.05rem; top: 1.2rem; }
+.proposal .prop-check input { width: 1.05rem; height: 1.05rem; margin: 0; cursor: pointer; accent-color: var(--roku); }
+.proposal h2 { margin: 0 0 .2rem; font-size: 1.02rem; }
+.proposal h2 .hw-inline { font-family: var(--font-mincho); font-weight: bold; font-size: 1.1rem; }
+.proposal .decision {
+  background: var(--roku-soft); color: var(--roku-strong);
+  padding: .22rem .7rem; font-size: .88rem; border-radius: var(--r-1); display: inline-block;
+}
+.proposal .meta-line { font-size: .82rem; margin: .2rem 0; }
+.proposal.kcursor { border-color: var(--roku); box-shadow: var(--sh-2); }
+.proposal .definition { border-left-color: var(--line); }
+
+.meter-wrap { display: flex; align-items: center; gap: .6rem; margin: .2rem 0; flex-wrap: wrap; }
+.meter-k { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.meter {
+  flex: 1 1 8rem; min-width: 6rem; max-width: 16rem; height: .5rem; display: block;
+  background: var(--surface-2); border: 1px solid var(--line-soft);
+  border-radius: var(--r-pill); overflow: hidden;
+}
+.meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--roku), var(--shu)); }
+.evidences li, .proposal .definition { overflow-wrap: anywhere; }
+.ev-more summary { color: var(--muted); font-size: .82rem; cursor: pointer; }
+.actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: .4rem; }
+.actions form { margin: 0; }
+.actions button { margin-top: 0; }
+.protected-note { background: var(--kuchi-bg); color: var(--kuchi-fg); border-radius: var(--r-1); padding: .25rem .7rem; font-size: .85rem; }
+
+.bulk-bar {
+  position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%);
+  z-index: 15; margin: 0;
+  display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
+  width: min(56rem, calc(100vw - 2rem));
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-2);
+  box-shadow: var(--sh-2); padding: .55rem 1.1rem;
+}
+.bulk-bar[hidden] { display: none; }
+.bulk-count { margin: 0; font-weight: bold; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bulk-warn { margin: 0; flex: 1 1 100%; color: var(--kuchi-fg); font-size: .85rem; }
+.bulk-bar button { margin-top: 0; }
+
+.pager { margin: 1.2rem 0; }
+.pager a {
+  display: inline-block; margin-right: .6rem; padding: .3rem 1rem;
+  border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface);
+  text-decoration: none; box-shadow: var(--sh-1);
+}
+
+/* ---- 帯（成功/注意/エラー） ---- */
+
+.band {
+  border-radius: var(--r-1); padding: .5rem .9rem; margin: .8rem 0;
+  border: 1px solid var(--line); background: var(--surface);
+}
+.band.success { background: var(--matsu-bg); color: var(--matsu-fg); border-color: var(--matsu-border); }
+.band.success a { color: var(--matsu-fg); font-weight: bold; }
+.band.warn { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-border); }
+.band.error { background: var(--danger-bg); color: var(--danger-fg); border-color: var(--danger-border); }
+.band[hidden] { display: none; }
+
+/* ---- 空状態（見出し＋説明＋次の一手） ---- */
+
+.empty {
+  color: var(--muted);
+  border: 1.5px dashed var(--line); border-radius: var(--r-2);
+  padding: 1.2rem 1.4rem; margin: 1rem 0;
+}
+.empty-h { font-weight: bold; color: var(--ink); margin: .1rem 0 .2rem; }
+.empty-d { margin: 0 0 .5rem; }
+.empty-actions { margin: 0; font-size: .95rem; }
+.empty-actions .hw-inline { font-family: var(--font-mincho); font-weight: bold; }
+
+/* ---- 見直し ---- */
+
+.review-kinds { display: flex; gap: .4rem; flex-wrap: wrap; margin: .8rem 0 1.2rem; }
+.review-kinds a {
+  padding: .25rem .85rem; border: 1px solid var(--line);
+  border-radius: var(--r-pill); background: var(--surface); text-decoration: none; font-size: .92rem;
+  color: var(--ink); box-shadow: var(--sh-1);
+}
+.review-kinds a:hover { border-color: var(--roku); background: var(--roku-soft); }
+.review-kinds a[aria-current="page"] { font-weight: bold; background: var(--roku-soft); border-color: var(--roku); color: var(--roku-strong); }
+.review-kinds .cnt { font-family: var(--font-num); font-variant-numeric: tabular-nums; margin-left: .25em; }
+.review-kinds .cnt.is-human { color: var(--shu); }
+
+.eval-badges { display: flex; gap: .35rem; flex-wrap: wrap; }
+.badge.ev-b-correct { background: var(--matsu-bg); color: var(--matsu-fg); border-color: var(--matsu-border); }
+.badge.ev-b-needs_fix { background: var(--shu-soft); color: var(--shu-strong); border-color: var(--shu); }
+.badge.ev-b-unsure, .badge.ev-b-neutral { color: var(--muted); }
+.badge.ev-b-useful { background: var(--matsu-bg); color: var(--matsu-fg); border-color: var(--matsu-border); }
+.badge.ev-b-not_useful { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-border); }
+
+.inline-eval { display: flex; gap: .3rem; flex-wrap: wrap; }
+.inline-eval .stamp { padding: .12rem .6rem; font-size: .8rem; }
+
+/* ---- 登録・編集フォーム ---- */
+
+.edit {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-2);
+  box-shadow: var(--sh-1); padding: 1rem 1.25rem 1.25rem; margin-top: .8rem;
+}
+.edit textarea, .edit input { width: 100%; }
+.edit label { display: block; font-weight: bold; margin-top: .7rem; }
+.edit .label-note { font-weight: normal; color: var(--muted); font-size: .85rem; }
+.reading-warn {
+  border: 1px solid var(--kuchi-border); background: var(--kuchi-bg); color: var(--kuchi-fg);
+  border-radius: var(--r-1); padding: .5rem .8rem; margin-top: .4rem; font-size: .9rem;
+}
+.reading-warn a { color: var(--kuchi-fg); font-weight: bold; }
+
+/* ---- 履歴タイムライン ---- */
+
+.tl { list-style: none; margin: 1rem 0; padding: 0 0 0 1.4rem; position: relative; }
+.tl::before {
+  content: ""; position: absolute; left: .45rem; top: 0; bottom: 0;
+  width: 3px; border-radius: 2px; background: var(--line-soft);
+}
+.tl .tl-line {
+  position: absolute; left: .45rem; top: 0; bottom: 0; width: 3px;
+  border-radius: 2px; background: var(--shu); transform-origin: top;
+}
+.tl li { position: relative; padding: 0 0 1.6rem 1rem; }
+.tl li::before {
+  content: ""; position: absolute; left: -1.24rem; top: .35rem;
+  width: .62rem; height: .62rem; border-radius: 50%;
+  background: var(--surface); border: 3px solid var(--roku);
+}
+.tl li.is-current::before { border-color: var(--shu); }
+.tl h2 { margin: 0; font-size: 1rem; display: flex; gap: .5rem; align-items: baseline; flex-wrap: wrap; }
+.tl .rev-meta { color: var(--muted); font-size: .85rem; margin: .1rem 0 .3rem; }
+.tl .rev-eval { font-size: .85rem; margin: .3rem 0 0; }
+.tl .rev-eval .old-note { color: var(--muted); }
+
+.diff {
+  background: var(--surface-2); padding: .6rem .8rem; overflow-x: auto;
+  border-radius: var(--r-1); border: 1px solid var(--line-soft);
+  font-family: var(--font-mono); font-size: .86rem; margin: .3rem 0 0; white-space: pre-wrap;
+}
+.diff .add { color: var(--matsu-fg); }
+.diff .del { color: var(--shu-strong); }
+
+/* ---- busy 表示（現行維持） ---- */
+
+.busy {
+  position: fixed; right: 1rem; bottom: 1rem;
+  background: var(--ink); color: var(--paper); padding: .5rem 1.1rem;
+  border-radius: var(--r-pill); box-shadow: var(--sh-2);
+}
+.busy[hidden] { display: none; }
+
+/* ---- コマンドパレット（dialog） ---- */
+
+.palette {
+  border: 1px solid var(--line); border-radius: var(--r-2);
+  background: var(--surface); color: var(--ink);
+  box-shadow: var(--sh-2);
+  padding: 0; width: min(34rem, calc(100vw - 2rem));
+  margin: 12vh auto auto; height: fit-content;
+}
+.palette::backdrop { background: rgba(38, 40, 46, .35); backdrop-filter: blur(2px); }
+.palette input {
+  width: 100%; border: none; border-bottom: 1px solid var(--line-soft);
+  border-radius: var(--r-2) var(--r-2) 0 0; padding: .8rem 1rem; font-size: 1.05rem;
+  background: var(--surface); color: var(--ink);
+}
+.palette input:focus { box-shadow: none; border-bottom-color: var(--roku); }
+.palette ul { list-style: none; margin: 0; padding: .35rem; max-height: 18rem; overflow: auto; }
+.palette li[aria-selected="true"] { background: var(--roku-soft); }
+.palette li { padding: .45rem .7rem; border-radius: var(--r-1); cursor: pointer; display: flex; gap: .6rem; align-items: baseline; }
+.palette .p-hw { font-family: var(--font-mincho); font-weight: bold; }
+.palette .p-meta { color: var(--muted); font-size: .8rem; margin-left: auto; }
+.palette .p-empty { padding: .7rem; color: var(--muted); }
+
+/* ---- キーボードヘルプ ---- */
+
+.keys-help {
+  border: 1px solid var(--line); border-radius: var(--r-2);
+  background: var(--surface); color: var(--ink); box-shadow: var(--sh-2);
+  width: min(30rem, calc(100vw - 2rem)); margin: 12vh auto auto; padding: 1rem 1.3rem 1.2rem;
+  height: fit-content;
+}
+.keys-help h2 { margin: 0 0 .6rem; font-size: 1.05rem; }
+.keys-help table { box-shadow: none; border: none; }
+.keys-help td { padding: .25rem .5rem; border-bottom: 1px dashed var(--line-soft); }
+.keys-help .close { margin-top: .8rem; }
+
+/* ---- 狭い画面 ---- */
+
+@media (max-width: 700px) {
+  main { padding: 1.1rem 1rem 3rem; }
+  header { padding: .5rem .9rem; }
+  .notice { display: none; }
+  /* 表を縦積みのカードへ */
+  table.rows thead { display: none; }
+  table.rows tr { display: block; border-bottom: 1px solid var(--line-soft); padding: .5rem 0; }
+  table.rows td { display: block; border-bottom: none; padding: .12rem .7rem; }
+  table.rows td::before {
+    content: attr(data-label) "：";
+    color: var(--muted); font-size: .78rem; margin-right: .3em;
+  }
+  table.rows td:first-child::before { content: ""; margin: 0; }
+  .sense-grid, .rel-grid { grid-template-columns: 1fr; }
+}

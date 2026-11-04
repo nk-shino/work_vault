@@ -1,0 +1,152 @@
+/* 社内用語集 再設計プロトタイプ — 動きの層
+ * トークン（03_デザイン設計書 §7.1）:
+ *   --dur-1 100ms 押下・即応 / --dur-2 180ms hover・popover
+ *   --dur-3 260ms 遷移・帯・パレット / --dur-4 420ms タイムライン
+ * すべての動きは prefers-reduced-motion: reduce で停止し、
+ * 内容の確認に必要な情報は動きなしでも同じように読める。 */
+
+:root {
+  --dur-1: 100ms;
+  --dur-2: 180ms;
+  --dur-3: 260ms;
+  --dur-4: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-stamp: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- M-01 文書間の共有要素遷移（一覧 ⇔ 詳細で見出し語を引き継ぐ）
+ * 対応: `@view-transition` の両ページ opt-in。未対応ブラウザは通常遷移。
+ * 共有要素には各ページで view-transition-name: hw-<term_id> を与えている。 */
+
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: vt-out var(--dur-3) var(--ease-out) both; }
+::view-transition-new(root) { animation: vt-in var(--dur-3) var(--ease-out) both; }
+
+@keyframes vt-out { to { opacity: 0; translate: 0 -6px; } }
+@keyframes vt-in { from { opacity: 0; translate: 0 8px; } }
+
+/* ---- M-02 一覧の stagger（結果を 30ms 刻み・最大 6 項目で整列させる）
+ * JS が .rows-in を付与したときだけ再生。JS が無い場合・付与しない画面では
+ * 行は最初から表示される（事前隠しは行わない）。 */
+
+html.js .rows.rows-in tbody tr {
+  opacity: 1;
+  animation: row-in var(--dur-3) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 30ms);
+}
+@keyframes row-in { from { opacity: 0; translate: 0 6px; } }
+
+/* ---- M-03 関連語プレビュー（popover の出入り）
+ * Popover API + @starting-style。配置は CSS アンカー対応なら anchor()、
+ * 未対応では JS が座標を置く（.rp の規定は style.css）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .rp[popover] {
+    transition:
+      opacity var(--dur-2) var(--ease-out),
+      translate var(--dur-2) var(--ease-out),
+      display var(--dur-2) allow-discrete,
+      overlay var(--dur-2) allow-discrete;
+  }
+  @starting-style {
+    .rp[popover]:popover-open { opacity: 0; translate: 0 4px; }
+  }
+}
+
+@supports (anchor-name: --rp-a) {
+  .rp[popover] {
+    position-anchor: var(--rp-anchor, --rp-a);
+    top: calc(anchor(bottom) + 8px);
+    left: anchor(left);
+    margin: 0;
+  }
+}
+
+/* ---- M-04 コマンドパレット（dialog の開閉） */
+
+@media (prefers-reduced-motion: no-preference) {
+  .palette[open] { animation: dlg-in var(--dur-3) var(--ease-out) both; }
+  .palette[open]::backdrop { animation: backdrop-in var(--dur-3) var(--ease-out) both; }
+  .keys-help[open] { animation: dlg-in var(--dur-3) var(--ease-out) both; }
+  .keys-help[open]::backdrop { animation: backdrop-in var(--dur-3) var(--ease-out) both; }
+}
+@keyframes dlg-in {
+  from { opacity: 0; translate: 0 -10px; scale: 0.98; }
+}
+@keyframes backdrop-in { from { opacity: 0; } }
+
+/* ---- M-05 朱印（評価ボタンを押したとき、印が刷られる）
+ * 押下から 100ms 以内に反応が始まる（--dur-1 は hover/active 側で消費）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp.is-stamped { animation: stamp-press var(--dur-3) var(--ease-stamp); }
+  .stamp.is-stamped .ring { animation: ring-out var(--dur-3) var(--ease-stamp) both; }
+}
+@keyframes stamp-press {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+@keyframes ring-out {
+  0% { opacity: 0.9; inset: -3px; }
+  100% { opacity: 0; inset: -12px; }
+}
+
+/* ---- M-06 キューの裁定（採用/却下で項目が静かに抜ける）
+ * JS が document.startViewTransition で包む（対応時のみ）。非対応はこの遷移のみ。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .proposal { transition: opacity var(--dur-3) var(--ease-out); }
+  .proposal.is-done { opacity: 0.68; }
+}
+
+/* ---- M-07 履歴タイムライン（朱線が読むにつれて伸びる）
+ * スクロール駆動。未対応ブラウザでは最初から全長の線。 */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tl .tl-line {
+      animation: tl-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes tl-grow { from { transform: scaleY(0); } }
+
+/* ---- M-08 hover と focus の微動（style.css の transition が担う）
+ * hover/focus は --dur-1〜2 相当（0.12〜0.15s）で背景と線だけが変わる。 */
+
+/* ---- M-09 成功帯（保存の結果を押し出すように示す） */
+
+@media (prefers-reduced-motion: no-preference) {
+  .band.band-in { animation: band-in var(--dur-3) var(--ease-out) both; }
+}
+@keyframes band-in { from { opacity: 0; translate: 0 -8px; } }
+
+/* ---- M-10 ページ入場（本体は M-01/M-02 に統合。ファイル直開き用の最低限） */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js main { animation: main-in var(--dur-3) var(--ease-out) both; }
+}
+@keyframes main-in { from { opacity: 0; translate: 0 6px; } }
+
+/* ---- M-11 見送った動き
+ * 読み込み幕・パララックス・カスタムカーソル・1文字リビール・
+ * GSAP/Anime.js 等のライブラリ同梱。理由は 03_デザイン設計書 §7.4 と
+ * 04_出典対応表 §2 に記載。 */
+
+/* ---- prefers-reduced-motion: reduce のとき ----
+ * 動きをすべて止め、内容は同じ情報・同じ順序で残す。 */
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
