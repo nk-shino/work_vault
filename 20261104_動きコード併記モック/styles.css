@@ -1,0 +1,640 @@
+/* ============================================================
+   動きとコードの併記モック — 共通スタイル
+   静かな資料館トーン・紙白・文字主体。装飾は控えめ、余白は広め。
+
+   20261102_モーションギャラリー の明テーマの空気（変数構造・
+   チップや出現の作法）を参考に、こちらは file:// 前提の
+   依存なし構成として新規に設計している（フォントもシステム書体）。
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* 紙と線 */
+  --bg: #f7f3ea;
+  --bg-deep: #eee8d9;      /* 幕・コード面の深い紙 */
+  --panel: #fcfaf3;
+  --field: #faf7ee;
+  --line: rgba(56, 47, 31, 0.16);
+  --line-strong: rgba(56, 47, 31, 0.32);
+
+  /* 文字 */
+  --text: #2b251a;
+  --text-dim: #5f5744;
+  --text-faint: #968d78;
+
+  /* アクセント（焼けた琥珀）— 合図と出典の印にだけ使う */
+  --accent: #96601d;
+  --accent-soft: rgba(150, 96, 29, 0.10);
+  --accent-line: rgba(150, 96, 29, 0.45);
+
+  /* コードの3色（控えめ） */
+  --code-key: #8a5a1e;
+  --code-string: #5b7a52;
+  --code-comment: #a29883;
+
+  /* 時間と道筋 */
+  --dur-fast: 240ms;
+  --ease-rise: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* 書体（システムのみ・file:// で確実に出る） */
+  --font-display: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --font-body: "Yu Gothic UI", "Yu Gothic", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+}
+
+/* ---------- 基礎 ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent-soft); }
+
+a { color: inherit; }
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* 再演のときだけ transition を止める（JSが付ける合図） */
+.no-anim,
+.no-anim *,
+.no-anim *::before,
+.no-anim *::after { transition: none !important; }
+
+/* 背景の空気 — 淡い暖色のにじみと紙の目（ノイズ） */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(56% 40% at 12% -6%, rgba(150, 96, 29, 0.05), transparent 62%),
+    radial-gradient(48% 42% at 92% 2%, rgba(96, 110, 140, 0.05), transparent 62%),
+    radial-gradient(72% 56% at 50% 114%, rgba(150, 96, 29, 0.04), transparent 62%);
+}
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 読み込み幕（デモ1・全体版と小型版で共用） ---------- */
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  background: var(--bg-deep);
+  /* 幕は「開く」方向の transition だけ。閉じる側の演出は作らない */
+  transition: transform 800ms var(--ease-rise), opacity 480ms ease 260ms;
+}
+.curtain.is-open {
+  transform: translateY(-101%);
+  opacity: 0;
+  pointer-events: none;
+}
+.curtain--page {
+  position: fixed;
+  z-index: 80;
+  box-shadow: 0 1px 0 var(--line-strong);
+}
+.curtain-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;  /* 字間のぶんだけ左へ出るのを戻す */
+  color: var(--text);
+}
+.curtain-title--sm { font-size: 17px; }
+.curtain-sub {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  color: var(--text-faint);
+}
+
+/* ---------- ページ枠とヘッダー ---------- */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 76px 28px 96px;
+}
+
+.overline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+}
+.overline::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+}
+
+.lead {
+  margin: 16px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  max-width: 60ch;
+}
+
+.head-date {
+  display: inline-block;
+  margin: 22px 0 0;
+  padding: 4px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+/* ---------- デモセクション共通 ---------- */
+.demo {
+  margin-top: 76px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+.demo:first-of-type { margin-top: 64px; }
+
+.demo-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+.demo-no {
+  flex: none;
+  min-width: 46px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.1;
+  color: var(--accent);
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+}
+.demo-title h2 {
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.chip--accent {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.demo-desc {
+  margin: 14px 0 0;
+  color: var(--text-dim);
+  font-size: 13.5px;
+  max-width: 62ch;
+}
+
+/* ---------- デモ領域（額縁） ---------- */
+.stage {
+  position: relative;
+  margin-top: 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--field);
+  overflow: hidden;
+}
+
+.demo-ctl {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.btn {
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) ease,
+    background-color var(--dur-fast) ease,
+    transform var(--dur-fast) ease;
+}
+.btn:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.ctl-note {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.mode-line {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+/* ---------- コード併記 ---------- */
+.code-card {
+  margin: 20px 0 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+.code-card figcaption {
+  padding: 9px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.35);
+}
+.code-card pre {
+  margin: 0;
+  padding: 14px 18px;
+  overflow-x: auto;
+}
+.code-card code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.78;
+  color: var(--text-dim);
+}
+.tk-k { color: var(--code-key); }
+.tk-s { color: var(--code-string); }
+.tk-c { color: var(--code-comment); font-style: italic; }
+
+/* ---------- 出典 ---------- */
+.source {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+.source a {
+  color: var(--text-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.source a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* ---------- デモ1: 読み込み幕 ---------- */
+.stage-curtain { min-height: 200px; }
+.curtain-under { padding: 20px 24px; }
+.curtain-under-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+.curtain-under-text {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 12.5px;
+}
+
+/* ---------- デモ2: 1文字リビール ---------- */
+.stage-char { padding: 42px 34px 44px; }
+.char-target {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 4vw, 34px);
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  color: var(--text);
+}
+.char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition:
+    opacity 600ms ease,
+    transform 600ms var(--ease-rise);
+  transition-delay: calc(var(--index) * 60ms);
+}
+.is-shown .char {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- デモ3: 行マスク（GSAP / フォールバック） ---------- */
+.stage-gsap { padding: 30px 32px 34px; }
+.gsap-text {
+  margin: 0;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--text);
+}
+.gsap-text.is-armed { opacity: 0; }               /* フォールバックの準備状態 */
+.gsap-text.is-fallback { animation: fade-in 700ms ease both; }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- デモ4: セクション出現（観察箱） ---------- */
+.stage-scroll { height: 320px; }
+.scroller {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 22px 26px 30px;
+}
+.scroll-hint {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+.scroll-spacer {
+  height: 250px;
+  margin: 4px 2px 20px;
+  opacity: 0.55;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--line) 0 1px,
+    transparent 1px 34px
+  );
+}
+.trigger-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  z-index: 3;
+  border-top: 1px dashed var(--accent-line);
+  pointer-events: none;
+}
+.trigger-line i {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--bg);
+  border: 1px solid var(--accent-line);
+  border-radius: 4px;
+  padding: 1px 7px;
+}
+
+/* 出現本体 — 不透明度と移動に別のイージング */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms cubic-bezier(0.33, 1, 0.68, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-shown {
+  opacity: 1;
+  transform: none;
+}
+.reveal-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px 16px;
+  box-shadow: 0 6px 16px rgba(60, 48, 24, 0.06);
+}
+.card-meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+.card-name {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+.card-text {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+
+/* ---------- デモ5: 一覧のstagger出現 ---------- */
+.stage-cards { padding: 14px; }
+.card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px 13px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms var(--ease-rise);
+  transition-delay: calc(var(--index, 0) * 70ms);
+}
+.is-shown .card {
+  opacity: 1;
+  transform: none;
+}
+.card-cat {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+.card-title {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+.card-year {
+  margin: 4px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ---------- デモ6: 控えめなhover ---------- */
+.hover-group { padding: 20px 26px 22px; }
+.hover-group + .hover-group { border-top: 1px dashed var(--line); }
+.hover-label {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+.hover-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hover-links a {
+  font-size: 14px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+/* 下線が左から伸びる — 現在色のグラデを幅 0% → 100% で広げる */
+a.u-grow {
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition: background-size 300ms var(--ease-rise);
+}
+a.u-grow:hover,
+a.u-grow.is-hover { background-size: 100% 1px; }
+
+/* 背景がうっすら色づく — 色だけの変化で、字面は動かさない */
+a.u-tint {
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+a.u-tint:hover,
+a.u-tint.is-hover {
+  background-color: var(--accent-soft);
+  color: var(--text);
+}
+
+/* ---------- フッター ---------- */
+.page-foot {
+  margin-top: 88px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 2.05;
+}
+.foot-title {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+}
+.foot-list {
+  margin: 0;
+  padding-left: 20px;
+}
+.foot-list a {
+  color: var(--text-dim);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.foot-list a:hover { color: var(--accent); }
+.foot-license { margin: 14px 0 0; }
+
+/* ---------- 動きを減らす設定 ---------- */
+/* 幕・出現は即時に完了する（動きを止めるのではなく、間を飛ばす） */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* ---------- 狭い画面 ---------- */
+@media (max-width: 680px) {
+  .page { padding: 52px 16px 72px; }
+  .demo { margin-top: 56px; padding-top: 32px; }
+  .demo-no { font-size: 28px; min-width: 34px; }
+  .demo-title h2 { font-size: 19px; }
+  .stage-char { padding: 30px 22px; }
+  .stage-scroll { height: 300px; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 460px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .hover-links { flex-direction: column; gap: 12px; }
+}

@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>動きとコードの併記モック</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <!-- ===================== 読み込み幕（デモ1の全体版・ページ読み込み時に退く） ===================== -->
+  <div class="curtain curtain--page" id="curtain-page" aria-hidden="true">
+    <p class="curtain-title">回廊の記録</p>
+    <p class="curtain-sub">MOTION + CODE — MOCKUP</p>
+  </div>
+  <noscript><style>.curtain--page { display: none; }</style></noscript>
+
+  <div class="page">
+
+    <!-- ===================== ヘッダー ===================== -->
+    <header class="page-head">
+      <p class="overline">MOTION + CODE — MOCKUP</p>
+      <h1>動きとコードの併記モック</h1>
+      <p class="lead">動きの候補を実動作で確かめ、その下に要点コードを併記した、方向性合意用の静的モックです。file:// で直接開いても動作します（外部CDNは GSAP のみ・不通時はフォールバック）。</p>
+      <p class="head-date"><time datetime="2026-11-04">2026-11-04</time> ／ 破棄前提のモック</p>
+    </header>
+
+    <!-- ===================== デモ1: 読み込み幕（curtain） ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">01</span>
+        <div class="demo-title">
+          <h2>読み込み幕（curtain）</h2>
+          <p class="chips">
+            <span class="chip chip--accent">依存なし</span>
+            <span class="chip">遷移はCSS・合図はJS 1行</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">ページを開くと全体を覆う幕が、上へワイプしながら薄れて退きます。この頁の読み込み時に全体版が走り（再読込で確認できます）、下の枠は同じ動きを小さく再演したものです。</p>
+
+      <div class="stage stage-curtain" id="demo-curtain-stage">
+        <div class="curtain-under">
+          <p class="curtain-under-title">幕の下に現れる本文（イメージ）</p>
+          <p class="curtain-under-text">東棟の渡り廊下に残る、点検と灯りの帳簿。開帳の順に従って、記録を読んでいく。</p>
+        </div>
+        <div class="curtain" id="curtain-mini">
+          <p class="curtain-title curtain-title--sm">回廊の記録</p>
+          <p class="curtain-sub">読み込み中…</p>
+        </div>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-curtain">もう一度再生</button>
+        <span class="ctl-note">頁全体の幕は、再読込でも確認できます。</span>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — 幕のCSSと、開ける合図</figcaption>
+        <pre><code>/* 幕は「開く」方向の transition だけを持つ。閉じる側の演出は作らない */
+.curtain {
+  position: absolute; inset: 0;
+  display: grid; place-content: center;
+  background: var(--bg-deep);
+  transition: transform 800ms cubic-bezier(.22, .61, .36, 1),
+              opacity 480ms ease 260ms;  /* ワイプに少し遅れて薄れる */
+}
+.curtain.is-open { transform: translateY(-101%); opacity: 0; }
+
+// 読み込み後に開ける。再演は transition を止めて下ろし、次フレームで開け直す
+requestAnimationFrame(() =&gt; {
+  requestAnimationFrame(() =&gt; curtain.classList.add('is-open'));
+});</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://motion.dev/examples/" target="_blank" rel="noopener">https://motion.dev/examples/</a> — curtains 系の幕の退き方を参考に、依存なしで自前実装。</p>
+    </section>
+
+    <!-- ===================== デモ2: 見出しの1文字リビール（CSSのみ） ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">02</span>
+        <div class="demo-title">
+          <h2>見出しの1文字リビール（CSSのみ）</h2>
+          <p class="chips">
+            <span class="chip chip--accent">依存なし</span>
+            <span class="chip chip--accent">CSSのみ</span>
+            <span class="chip">--index × transition-delay</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">見出しの文字を1字ずつ span に分け、文字番号 × 60ms の遅れで下から立ち上げます。アニメ本体は CSS だけです（span への分割は初回に1回だけ走る補助のJS）。この節が画面に入ると1度だけ再生されます。</p>
+
+      <div class="stage stage-char" id="char-wrap">
+        <p class="char-target" id="char-target">灯りの渡り廊下、一九二三年</p>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-char">もう一度再生</button>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — span化と --index の遅れ当て</figcaption>
+        <pre><code>/* 1文字が --index 番目の遅れで立ち上がる。アニメ本体は CSS だけ */
+.char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition: opacity 600ms ease,
+              transform 600ms cubic-bezier(.22, .61, .36, 1);
+  transition-delay: calc(var(--index) * 60ms);
+}
+.is-shown .char { opacity: 1; transform: none; }
+
+// 文字を span 化して --index を振る（ページ内で1回だけ）
+[...text].forEach((ch, i) =&gt; {
+  const s = document.createElement('span');
+  s.className = 'char';
+  s.style.setProperty('--index', i);
+  s.textContent = ch;
+  target.appendChild(s);
+});</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://ics.media/entry/250131/" target="_blank" rel="noopener">https://ics.media/entry/250131/</a> — ICS MEDIA の --index カスタムプロパティ＋transition-delay の方式を参考に自前実装。</p>
+    </section>
+
+    <!-- ===================== デモ3: 行マスクリビール（GSAP SplitText） ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">03</span>
+        <div class="demo-title">
+          <h2>行マスクリビール（GSAP SplitText）</h2>
+          <p class="chips">
+            <span class="chip chip--accent">GSAP CDN（無料）</span>
+            <span class="chip">ライセンス: GSAP標準（無料）</span>
+            <span class="chip">フォールバック必須</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">段落を行に分割し、行マスクの下から yPercent 100 → 0 で順に出します。SplitText を読めない環境（圏外・file:// でCDN不通）では、単純フェードへ切り替わります。</p>
+
+      <div class="stage stage-gsap">
+        <p class="gsap-text" id="gsap-text">大正十二年、回廊の管理は一冊の日誌から始まった。灯りの減り、渡り廊下の修繕、門前の巡視——積み重ねられた記録は、いまも管理棟の書庫に残っている。表紙の角は擦れ、綴じ糸は二度打ち直されている。</p>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-gsap">もう一度再生</button>
+        <span class="mode-line" id="gsap-status">方式: —</span>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — SplitText の行マスクとフォールバック</figcaption>
+        <pre><code>// SplitText が読めなければ単純フェードへ落とす（file://・圏外の保険）
+if (!window.gsap || !window.SplitText) {
+  text.classList.add('is-armed');   // CSS 側で opacity: 0 にして待つ
+} else {
+  const split = new SplitText(text, { type: 'lines', mask: 'lines' });
+  gsap.set(split.lines, { yPercent: 100 });   // 行をマスクの下へ置く
+
+  // 観測されたら:
+  gsap.fromTo(split.lines,
+    { yPercent: 100 },
+    { yPercent: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 });
+}</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://gsap.com/docs/v3/Plugins/SplitText/" target="_blank" rel="noopener">https://gsap.com/docs/v3/Plugins/SplitText/</a> — mask による行クリップの公式ドキュメント。動作例: <a href="https://codepen.io/GreenSock/pen/a28f78aa1b47e6fa3ad56684564fdf81" target="_blank" rel="noopener">GreenSock の CodePen</a></p>
+    </section>
+
+    <!-- ===================== デモ4: セクション出現（IntersectionObserver） ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">04</span>
+        <div class="demo-title">
+          <h2>セクション出現（IntersectionObserver）</h2>
+          <p class="chips">
+            <span class="chip chip--accent">依存なし</span>
+            <span class="chip">下20%で発火</span>
+            <span class="chip">2つのイージング</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">要素が発火線（画面の下20%）を越えたら出現させます。不透明度と移動に別々のイージングを当て、色は早く、位置はゆったり着きます。このデモは枠が独立した観察箱になっていて、枠の中を下へスクロールして試せます。</p>
+
+      <div class="stage stage-scroll">
+        <div class="scroller" id="reveal-scroller">
+          <p class="scroll-hint">枠の中を下へスクロールしてください。カードが点線を越えると出現します。</p>
+          <div class="scroll-spacer" aria-hidden="true"></div>
+          <article class="reveal reveal-card" id="reveal-card">
+            <p class="card-meta">資料 No.014 ／ 1923年</p>
+            <h3 class="card-name">回廊管理日誌 1923年</h3>
+            <p class="card-text">渡り廊下の灯り 8基の減りを朝夕に記した帳簿。修繕の記録はこの年の冬から別冊へ移る。</p>
+          </article>
+        </div>
+        <span class="trigger-line" aria-hidden="true"><i>発火線 — 下20%</i></span>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-reveal">もう一度観察</button>
+        <span class="ctl-note">カードを枠の上部へ戻し、観察をやり直します。</span>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — 発火線の指定と、2つのイージング</figcaption>
+        <pre><code>// 下20%を発火線にする。負の下マージンが判定線を内側へ上げる
+// （このデモは root を枠に指定。本番では root 指定なし＝ビューポート）
+const io = new IntersectionObserver((entries) =&gt; {
+  entries.forEach((entry) =&gt; {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('is-shown');
+    io.unobserve(entry.target);   // 一度出たら観察をやめる
+  });
+}, { rootMargin: '0px 0px -20% 0px' });
+io.observe(target);
+
+/* 不透明度と移動に別のイージング
+   ease-out-cubic(.33,1,.68,1) ／ ease-out-quint(.22,1,.36,1) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms cubic-bezier(.33, 1, .68, 1),
+              transform 900ms cubic-bezier(.22, 1, .36, 1);
+}
+.reveal.is-shown { opacity: 1; transform: none; }</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://ics.media/entry/250221/" target="_blank" rel="noopener">https://ics.media/entry/250221/</a> — ICS MEDIA の IntersectionObserver で出現させ、不透明度と移動に別イージングを当てる手法を参考。</p>
+    </section>
+
+    <!-- ===================== デモ5: 一覧のstagger出現 ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">05</span>
+        <div class="demo-title">
+          <h2>一覧のstagger出現</h2>
+          <p class="chips">
+            <span class="chip chip--accent">依存なし</span>
+            <span class="chip">通し番号 × 70ms</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">資料カード6枚を、通し番号 × 70ms の遅れで順に出します。ダミーの資料名・年代は「回廊の記録」の文脈に合わせています。この節が画面に入ると1度だけ再生されます。</p>
+
+      <div class="stage stage-cards">
+        <ul class="card-grid" id="stagger-list"></ul>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-stagger">もう一度再生</button>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — 通し番号の遅れ当て</figcaption>
+        <pre><code>// 通し番号を振り、親に1回だけ合図。遅れの計算は CSS 側
+cards.forEach((card, i) =&gt; {
+  card.style.setProperty('--index', i);
+});
+requestAnimationFrame(() =&gt; list.classList.add('is-shown'));
+
+/* index × 70ms の遅れで、1枚ずつ順に立ち上がる */
+.card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease,
+              transform 600ms cubic-bezier(.22, .61, .36, 1);
+  transition-delay: calc(var(--index) * 70ms);
+}
+.is-shown .card { opacity: 1; transform: none; }</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://developer.mozilla.org/ja/docs/Web/CSS/transition-delay" target="_blank" rel="noopener">https://developer.mozilla.org/ja/docs/Web/CSS/transition-delay</a> — MDN の transition-delay。index × 一定ms の遅れ当ての基礎。刻みの値は「20261102_モーションギャラリー」§B-5（55ms前後）を参考。</p>
+    </section>
+
+    <!-- ===================== デモ6: 控えめなhover ===================== -->
+    <section class="demo">
+      <header class="demo-head">
+        <span class="demo-no" aria-hidden="true">06</span>
+        <div class="demo-title">
+          <h2>控えめなhover</h2>
+          <p class="chips">
+            <span class="chip chip--accent">依存なし</span>
+            <span class="chip">Hover.css 不使用・自前実装</span>
+          </p>
+        </div>
+      </header>
+      <p class="demo-desc">リンクへの反応を2種用意しました。下線が左から伸びるものと、背景がうっすら色づくもの。どちらも自前実装です（Hover.css は商用ライセンスのため、コードは使わず方向の参考のみ）。</p>
+
+      <div class="stage stage-hover">
+        <div class="hover-group">
+          <p class="hover-label">下線が左から伸びる</p>
+          <ul class="hover-links">
+            <li><a href="#" class="u-grow">星読みの章を開く</a></li>
+            <li><a href="#" class="u-grow">回廊管理日誌 1923年</a></li>
+            <li><a href="#" class="u-grow">修繕記録の一覧</a></li>
+          </ul>
+        </div>
+        <div class="hover-group">
+          <p class="hover-label">背景がうっすら色づく</p>
+          <ul class="hover-links">
+            <li><a href="#" class="u-tint">灯りの減り台帳</a></li>
+            <li><a href="#" class="u-tint">正門 巡視記録 1929年</a></li>
+            <li><a href="#" class="u-tint">書庫の配置図</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="demo-ctl">
+        <button type="button" class="btn" id="replay-hover">もう一度再生</button>
+        <span class="ctl-note">hover 状態を模して順に点けます。実際の hover でも試せます。</span>
+      </div>
+
+      <figure class="code-card">
+        <figcaption>要点コード — 下線と背景の2種</figcaption>
+        <pre><code>/* 下線が左から伸びる — 現在色のグラデを幅 0% → 100% で広げる */
+.u-grow {
+  background: linear-gradient(currentColor, currentColor) no-repeat
+              left bottom / 0% 1px;
+  transition: background-size 300ms cubic-bezier(.22, .61, .36, 1);
+}
+.u-grow:hover, .u-grow.is-hover { background-size: 100% 1px; }
+
+/* 背景がうっすら色づく — 色だけの変化で、字面は動かさない */
+.u-tint { transition: background-color 240ms ease; }
+.u-tint:hover, .u-tint.is-hover { background-color: var(--accent-soft); }</code></pre>
+      </figure>
+      <p class="source">出典: <a href="https://ianlunn.github.io/Hover/" target="_blank" rel="noopener">https://ianlunn.github.io/Hover/</a> — Hover.css の効果一覧。商用ライセンスのためコードは使わず、見た目の方向の参考として記載。</p>
+    </section>
+
+    <!-- ===================== フッター ===================== -->
+    <footer class="page-foot">
+      <p class="foot-title">出典一覧</p>
+      <ul class="foot-list">
+        <li>Motion Examples — <a href="https://motion.dev/examples/" target="_blank" rel="noopener">https://motion.dev/examples/</a>（幕の退き方の参考・自前実装）</li>
+        <li>ICS MEDIA — <a href="https://ics.media/entry/250131/" target="_blank" rel="noopener">https://ics.media/entry/250131/</a>（--index 方式の参考）</li>
+        <li>GSAP SplitText ドキュメント — <a href="https://gsap.com/docs/v3/Plugins/SplitText/" target="_blank" rel="noopener">https://gsap.com/docs/v3/Plugins/SplitText/</a> ／ 動作例 <a href="https://codepen.io/GreenSock/pen/a28f78aa1b47e6fa3ad56684564fdf81" target="_blank" rel="noopener">CodePen（GreenSock）</a></li>
+        <li>ICS MEDIA — <a href="https://ics.media/entry/250221/" target="_blank" rel="noopener">https://ics.media/entry/250221/</a>（IntersectionObserver 出現の参考）</li>
+        <li>MDN transition-delay — <a href="https://developer.mozilla.org/ja/docs/Web/CSS/transition-delay" target="_blank" rel="noopener">https://developer.mozilla.org/ja/docs/Web/CSS/transition-delay</a></li>
+        <li>Hover.css — <a href="https://ianlunn.github.io/Hover/" target="_blank" rel="noopener">https://ianlunn.github.io/Hover/</a>（参考のみ・不使用）</li>
+      </ul>
+      <p class="foot-license">ライセンス注記: GSAP は jsDelivr CDN 経由で読み込む（GSAP 3・無料の標準ライセンス）。圏外・CDN不通時はデモ3が単純フェードに切り替わる。Hover.css は商用ライセンスのためコードを流用せず自前実装。</p>
+      <p class="foot-license">本頁は方向性合意用のモックアップです。人物名・資料名・年代はすべてダミーで、実在の記録と無関係。破棄前提のため、コードは確認用の簡略さを優先している。</p>
+    </footer>
+
+  </div>
+
+  <!-- GSAP（デモ3のみ・jsDelivr CDN）。読めない場合は demo.js のガードがフォールバックする -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
