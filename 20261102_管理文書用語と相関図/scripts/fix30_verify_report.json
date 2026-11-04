@@ -1,0 +1,172 @@
+{
+ "pana": {
+  "sheets_pre": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "月次再起動",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "付録 引用元と確認範囲",
+   "要確認事項一覧",
+   "7-5仮_サービス起動停止"
+  ],
+  "sheets_post": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "月次再起動",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "付録 引用元と確認範囲",
+   "要確認事項一覧",
+   "7-5仮_サービス起動停止"
+  ],
+  "formulas_pre": 0,
+  "formulas_post": 0,
+  "sheet_diffs": {
+   "要確認事項一覧": "15 diffs, unallowed 0",
+   "目次": "no change",
+   "付録 引用元と確認範囲": "no change",
+   "会議課題一覧(一時)": "no change",
+   "チェックシート(月次・異常時)": "7 diffs, unallowed 0",
+   "管理体制": "5 diffs, unallowed 0",
+   "バックアップ": "9 diffs, unallowed 0",
+   "異常時の対応": "22 diffs, unallowed 0",
+   "用語": "18 diffs, unallowed 0",
+   "相関図_old": "no change",
+   "表紙": "no change",
+   "相関図": "1 diffs, unallowed 0",
+   "月次再起動": "12 diffs, unallowed 0",
+   "7-5仮_サービス起動停止": "1 diffs, unallowed 0",
+   "復旧": "5 diffs, unallowed 0",
+   "構成と管理情報": "5 diffs, unallowed 0"
+  },
+  "unallowed": [],
+  "quote_immutable_ok": true,
+  "no_touch_ok": true,
+  "forbid_kept": [
+   {
+    "s": "windwos",
+    "count": 4
+   },
+   {
+    "s": "Route Editer",
+    "count": 6
+   }
+  ],
+  "forbid_ok": true
+ },
+ "lnb": {
+  "sheets_pre": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "日次点検",
+   "定期管理",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(日次)",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "要確認事項一覧",
+   "申し送り(認証情報)",
+   "引用と部品照合"
+  ],
+  "sheets_post": [
+   "表紙",
+   "目次",
+   "用語",
+   "構成と管理情報",
+   "相関図",
+   "相関図_old",
+   "管理体制",
+   "日次点検",
+   "定期管理",
+   "バックアップ",
+   "復旧",
+   "異常時の対応",
+   "チェックシート(日次)",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)",
+   "要確認事項一覧",
+   "申し送り(認証情報)",
+   "認証情報一覧",
+   "引用と部品照合"
+  ],
+  "formulas_pre": 0,
+  "formulas_post": 0,
+  "sheet_diffs": {
+   "要確認事項一覧": "15 diffs, unallowed 0",
+   "目次": "toc-shift: 3 diffs, unallowed 0, +3 diffs unallowed 0, +2 diffs unallowed 0",
+   "申し送り(認証情報)": "no change",
+   "引用と部品照合": "4 diffs, unallowed 0",
+   "会議課題一覧(一時)": "no change",
+   "チェックシート(月次・異常時)": "6 diffs, unallowed 0",
+   "管理体制": "6 diffs, unallowed 0",
+   "バックアップ": "12 diffs, unallowed 0",
+   "異常時の対応": "14 diffs, unallowed 0",
+   "定期管理": "3 diffs, unallowed 0",
+   "用語": "22 diffs, unallowed 0",
+   "相関図_old": "no change",
+   "認証情報一覧": "NEW SHEET (16 cells)",
+   "日次点検": "4 diffs, unallowed 0",
+   "表紙": "no change",
+   "相関図": "no change",
+   "チェックシート(日次)": "shift-compare: 3 diffs, unallowed 0, rows1-8 diffs 1 unallowed 0",
+   "復旧": "5 diffs, unallowed 0",
+   "構成と管理情報": "16 diffs, unallowed 0"
+  },
+  "unallowed": [],
+  "new_sheet_spot": {
+   "A1": "手 順 書",
+   "A3": "型   名",
+   "A6": "14. 認証情報一覧",
+   "G4": "　認証情報一覧",
+   "C7": "＊値は本書に記入しない。認証情報は別紙で管理し、記入は利用者が行う。",
+   "A8": "No",
+   "C8": "設備",
+   "E8": "項目",
+   "G8": "アカウント",
+   "I8": "備考",
+   "K8": "更新日"
+  },
+  "new_sheet_spot_ok": true,
+  "quote_immutable_ok": true,
+  "no_touch_ok": true,
+  "forbid_kept": [
+   {
+    "s": "LNB再起動",
+    "count": 1
+   },
+   {
+    "s": "LNB-PCリブート",
+    "count": 2
+   },
+   {
+    "s": "LNB-PC電源OFF",
+    "count": 3
+   }
+  ],
+  "forbid_ok": true
+ }
+}
