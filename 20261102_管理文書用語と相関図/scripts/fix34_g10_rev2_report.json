@@ -1,0 +1,22 @@
+{
+ "book": "pana",
+ "kind": "rev2_c35_dedup",
+ "phase": {
+  "pre": {
+   "quote_cells": 34,
+   "c35_single_count": 2,
+   "pages": 49
+  },
+  "edit": {
+   "c35_single_count_after": 1,
+   "media_restored": 1
+  }
+ },
+ "sha_before": "c1f3c14f3974f315e7ea20f6877fae96d774c1fe86cb225ed6bb7b29b1bb7981",
+ "pages": 49,
+ "sheet_pages": 2,
+ "media_count": 25,
+ "media_ok": true,
+ "quote_ok": true,
+ "sha_after": "27b08400aa57e48e0e8c1a8bdcfd512c1a8385dafd0056bd668b0c62b0d4be64"
+}
