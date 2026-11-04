@@ -1,0 +1,78 @@
+{
+ "kind": "g10_names",
+ "books": {
+  "pana": {
+   "sha_before": "0533e58bcf09bc05fc1ab15d12385f1904af7278bbc57f3f4c7923926343b2c1",
+   "sheets": 17,
+   "quote_cells": 34,
+   "pre_name_cells": [
+    "7-5仮_サービス起動停止$C$9",
+    "会議課題一覧(一時)$C$10",
+    "会議課題一覧(一時)$C$15",
+    "会議課題一覧(一時)$C$16",
+    "会議課題一覧(一時)$C$17",
+    "会議課題一覧(一時)$C$39",
+    "会議課題一覧(一時)$C$40",
+    "月次再起動$C$23",
+    "管理体制$C$10",
+    "管理体制$C$15",
+    "管理体制$C$17",
+    "管理体制$C$19",
+    "管理体制$C$7",
+    "管理体制$C$9",
+    "要確認事項一覧$C$11",
+    "要確認事項一覧$C$20",
+    "要確認事項一覧$C$35"
+   ],
+   "pre_name_shapes": {
+    "相関図_old": 1
+   },
+   "edits": 16,
+   "total_pages": 49,
+   "post_name_cells": [
+    "7-5仮_サービス起動停止$C$9"
+   ],
+   "post_name_shapes": {
+    "相関図_old": 1
+   },
+   "quote_ok": true,
+   "media_restored": 1,
+   "sha_after": "c1f3c14f3974f315e7ea20f6877fae96d774c1fe86cb225ed6bb7b29b1bb7981"
+  },
+  "lnb": {
+   "sha_before": "375ebbb6924c03e1016fd3637ac9137c16289fd2f242b307220c2a6be79eb92f",
+   "sheets": 21,
+   "quote_cells": 3,
+   "pre_name_cells": [
+    "バックアップ$C$16",
+    "会議課題一覧(一時)$C$10",
+    "会議課題一覧(一時)$C$15",
+    "会議課題一覧(一時)$C$16",
+    "会議課題一覧(一時)$C$17",
+    "会議課題一覧(一時)$C$39",
+    "会議課題一覧(一時)$C$40",
+    "用語$C$8",
+    "管理体制$C$14",
+    "管理体制$C$16",
+    "管理体制$C$8",
+    "管理体制$C$9",
+    "要確認事項一覧$C$40",
+    "要確認事項一覧$C$47"
+   ],
+   "pre_name_shapes": {
+    "相関図_old": 1
+   },
+   "edits": 13,
+   "total_pages": 32,
+   "post_name_cells": [
+    "用語$C$8"
+   ],
+   "post_name_shapes": {
+    "相関図_old": 1
+   },
+   "quote_ok": true,
+   "media_restored": 0,
+   "sha_after": "89599282386ca21f6c0807681640f02533cb3d3a6eb7cd6ee5bef44382c2f523"
+  }
+ }
+}

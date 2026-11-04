@@ -1,9 +1,9 @@
 {
   "book": "Pana-CIM管理手順書案_未承認",
   "source_file": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.xlsx",
-  "source_size_bytes": 2748043,
-  "source_sha256": "22abe66bbaef01b972d24b35a20a6d895c8d840e619844d642035514e1bbaf03",
-  "generated_at": "2026-11-04T15:40:47",
+  "source_size_bytes": 2755857,
+  "source_sha256": "c1f3c14f3974f315e7ea20f6877fae96d774c1fe86cb225ed6bb7b29b1bb7981",
+  "generated_at": "2026-11-04T16:34:57",
   "tool": "extract_xlsx_inventory.py (zipfile+XML解析 / openpyxl read_only による検証, 保存なし)",
   "sheet_count": 17,
   "visible_sheet_count": 17,
