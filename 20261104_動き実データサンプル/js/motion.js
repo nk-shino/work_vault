@@ -91,6 +91,7 @@
         if (!played) {
           played = true;
           cards.forEach((li, i) => li.style.setProperty('--index', i));
+          grid.classList.add('m-stagger');   // CSS側のセレクタ .m-stagger[data-motion-state="first"] が参照する合図
           grid.dataset.motionState = 'first';
           // 再生が終わったら属性を剥がし、以降は何も起きない状態にする
           const lastDelay = (cards.length - 1) * 70 + 600;
