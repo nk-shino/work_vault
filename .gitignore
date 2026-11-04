@@ -34,3 +34,6 @@ _archive/202610/20261016_site-design-improvement/dist/
 
 # Python のバイトコードキャッシュ
 __pycache__/
+20261102_管理文書用語と相関図/scripts/quarantine_g8/
+20261102_管理文書用語と相関図/scripts/tmp_g8_pages/
+20261102_管理文書用語と相関図/scripts/tmp_g8_render/

@@ -1,0 +1,160 @@
+{
+ "pana": {
+  "相関図①": {
+   "shapes": 26,
+   "violations": [],
+   "nodes": {
+    "g1_p1": 2,
+    "g1_s1": 3,
+    "g1_ea": 3,
+    "g1_eb": 3,
+    "g1_p2": 2,
+    "g1_s2": 3,
+    "g1_n10": 3
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    535.0
+   ],
+   "print_area": "$A$1:$AZ$61"
+  },
+  "相関図②": {
+   "shapes": 36,
+   "violations": [],
+   "nodes": {
+    "g2_n01": 2,
+    "g2_n02": 7,
+    "g2_n03": 7,
+    "g2_n04": 7,
+    "g2_n19": 7,
+    "g2_n05": 2,
+    "g2_n10": 5,
+    "g2_n17": 4,
+    "g2_n18": 4,
+    "g2_n15": 4,
+    "g2_n16": 4,
+    "g2_n06r": 2,
+    "g2_liner": 2
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    591.3
+   ],
+   "print_area": "$A$1:$AZ$65"
+  },
+  "相関図③": {
+   "shapes": 36,
+   "violations": [],
+   "nodes": {
+    "g3_n07": 5,
+    "g3_n11": 5,
+    "g3_n08": 4,
+    "g3_n09": 6,
+    "g3_n12": 5,
+    "g3_n13": 4,
+    "g3_n14": 5,
+    "g3_pcr": 2,
+    "g3_dgsr": 2
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    552.4
+   ],
+   "print_area": "$A$1:$AZ$62"
+  }
+ },
+ "lnb": {
+  "相関図①": {
+   "shapes": 26,
+   "violations": [],
+   "nodes": {
+    "g1_p1": 2,
+    "g1_s1": 3,
+    "g1_ea": 3,
+    "g1_eb": 3,
+    "g1_p2": 2,
+    "g1_s2": 3,
+    "g1_n10": 3
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    535.0
+   ],
+   "print_area": "$A$1:$AZ$61"
+  },
+  "相関図②": {
+   "shapes": 36,
+   "violations": [],
+   "nodes": {
+    "g2_n01": 2,
+    "g2_n02": 7,
+    "g2_n03": 7,
+    "g2_n04": 7,
+    "g2_n19": 7,
+    "g2_n05": 2,
+    "g2_n10": 5,
+    "g2_n17": 4,
+    "g2_n18": 4,
+    "g2_n15": 4,
+    "g2_n16": 4,
+    "g2_n06r": 2,
+    "g2_liner": 2
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    591.3
+   ],
+   "print_area": "$A$1:$AZ$66"
+  },
+  "相関図③": {
+   "shapes": 36,
+   "violations": [],
+   "nodes": {
+    "g3_n07": 5,
+    "g3_n11": 5,
+    "g3_n08": 4,
+    "g3_n09": 6,
+    "g3_n12": 5,
+    "g3_n13": 4,
+    "g3_n14": 5,
+    "g3_pcr": 2,
+    "g3_dgsr": 2
+   },
+   "pagesetup": {
+    "fitW": 1,
+    "fitT": 1,
+    "paper": 9.0
+   },
+   "extent": [
+    765.0,
+    552.4
+   ],
+   "print_area": "$A$1:$AZ$63"
+  }
+ }
+}
