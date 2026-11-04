@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>表示形式切替テスト — 人物一覧（J-01 試作）</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <!-- ===================== 操作バー: 動きを減らす設定 ===================== -->
+  <div class="controls" role="region" aria-label="表示設定">
+    <span class="controls-brand">J-01 FORM TEST</span>
+    <label class="switch">
+      <input type="checkbox" id="reduce-motion">
+      <span class="switch-track" aria-hidden="true"></span>
+      <span class="switch-label">動きを減らす設定（シミュレーション）</span>
+    </label>
+    <span class="controls-hint">止めると速くなるのではなく、何も起きなくなる（§B-5）／形式・絞り込みの切替は容器の0.15秒の淡い切替</span>
+  </div>
+
+  <div class="page">
+
+    <!-- ===================== ページ見出し ===================== -->
+    <header class="page-head">
+      <p class="overline">J-01 TEST — 人物一覧（13人・テストデータ）</p>
+      <h1>表示形式切替テスト — カードと行</h1>
+      <p class="lead">検討メモ J-01（2026-11-04）の受け入れ条件を、13人のテストデータで確かめる頁。現行流と整列タイル流の両形を作り、スマホと PC の実画面で比較してから判断する（A-3 解除の要否もこの結果で決める）。</p>
+      <p class="note">受け入れ条件（決定原文）: 「スマホと PC で閲覧したときに最適なほうを選択できること、それぞれ最低限の情報を獲得できること。オブジェクト同士が整列していて、規則的かつ均一なバランスの配置であること。」</p>
+      <ul class="accept-list">
+        <li><span class="accept-no">①</span>既定の形式は画面幅で選ぶ（768px 以上はカード・未満は行）。切替自体は両デバイスで可能。</li>
+        <li><span class="accept-no">②</span>最低限の情報: カード＝名前・役割・肖像枠（3:4 の題箋）／行＝名前・役割・所属・外見の特徴。</li>
+        <li><span class="accept-no">③</span>整列タイル流は列数を固定し、枠の比率・行間・列間を揃える（規則的・均一な配置）。</li>
+      </ul>
+    </header>
+
+    <!-- ===================== 一覧パネル: 形式 × 並べ方 × 絞り込み ===================== -->
+    <section class="panel" id="panel-list">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">01</span>
+          <div>
+            <h2>人物一覧 — 形式 × 並べ方 × 絞り込み</h2>
+            <p class="chips">
+              <code class="chip">切替 = 0.15秒の淡い切替</code>
+              <code class="chip">切替で行を作り直さない（13個を使い回す）</code>
+              <code class="chip">出現は初回のみ・呼吸層720ms</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 切替 150ms（不透明度のみ）</span>
+              <span class="spec">呼吸層 — 初回出現 720ms（10px上へ）</span>
+              <span class="spec spec--wide">守る線（§A）: scale拡大・20px超移動なし／バウンス全面禁止／無限ループは気配のみ（本頁に無限は無い）／動きを減らす設定で切替は即時・遅延も0</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">チップ群は同じ流れに置き、右上固定はしない（本番 D-4 の重なり問題に積まない）。形式・並べ方・絞り込みの 3 行で 2 軸と検索を整理する。</p>
+      </header>
+
+      <!-- 2軸 1: 表示形式（J-01 の本体） -->
+      <div class="chips-row" role="group" aria-label="表示形式">
+        <span class="chips-label">形式</span>
+        <button type="button" class="chip" aria-pressed="true" data-form="card">カード（肖像が主役）</button>
+        <button type="button" class="chip" aria-pressed="false" data-form="row">行（記録が主役）</button>
+        <span class="chips-note" id="form-note">既定は画面幅で選択（768px 以上はカード・未満は行）。切替は両デバイスで可能。</span>
+      </div>
+
+      <!-- 2軸 2: 並べ方（A-3 判断の材料） -->
+      <div class="chips-row" role="group" aria-label="並べ方（現行流と整列タイル流の比較）">
+        <span class="chips-label">並べ方</span>
+        <button type="button" class="chip" aria-pressed="true" data-layout="flow">現行流 — 可変幅の札並び</button>
+        <button type="button" class="chip" aria-pressed="false" data-layout="tile">整列タイル流 — 固定列・同一比率</button>
+        <span class="chips-note" id="layout-note">カードの並べ方。現行流は可変幅（最終行の端数で幅が揃わない）、整列タイル流は固定列・同一比率。</span>
+      </div>
+
+      <!-- 絞り込み（chara.html と同じチップモデル） -->
+      <div class="chips-row" role="group" aria-label="所属で絞り込み">
+        <span class="chips-label">絞り込み</span>
+        <button type="button" class="chip" aria-pressed="true" data-aff="all">すべて（13）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="教団">教団（2）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="独立">独立（1）</button>
+        <button type="button" class="chip" aria-pressed="false" data-aff="不明">不明（2）</button>
+      </div>
+      <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+
+      <div class="listwrap" id="listwrap">
+        <!-- カード形式（13個を一度だけ作り、切替は hidden とクラスで行う） -->
+        <ul class="grid grid--flow" id="grid-card"></ul>
+        <!-- 行形式（chara-b の列設計: 名前／役割／所属／外見） -->
+        <table class="rowtable" id="grid-row" hidden>
+          <caption class="visually-hidden">人物の記録一覧。名前・役割・所属・外見の特徴の4列。</caption>
+          <thead>
+            <tr><th scope="col">名前</th><th scope="col">役割</th><th scope="col">所属</th><th scope="col">外見の特徴</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <p class="inline-note" id="layout-readout">並べ方の現状: 現行流（可変幅）／列数 —。整列タイル流は列数を固定し枠の比率・行間・列間を揃える。13人のデータではどちらの並べ方でも最終行に端数が出るため、その見え方の比較が A-3 判断の材料になる。</p>
+    </section>
+
+    <!-- ===================== 判断材料の注記 ===================== -->
+    <section class="panel" id="panel-notes">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">02</span>
+          <div>
+            <h2>比較の軸 — mock/ の記録から（読み取りのみ）</h2>
+            <p class="chips">
+              <code class="chip">chara.html = カード流の現行</code>
+              <code class="chip">chara-b.html = 行流の列設計</code>
+              <code class="chip">A-3 = 整列タイルはあえて採用しない（却下済み）</code>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">本頁は J-01 の決定（両形をテストデータで作り、実画面で比較してから判断する）に基づく試作。正本・mock は編集していない。</p>
+      </header>
+
+      <div class="notes-grid">
+        <article class="note-card">
+          <h3>カード形式 — 肖像が主役</h3>
+          <p>chara.html の構成（.grid は auto-fill minmax(210px, 1fr)）。題箋の比率は 3:4 固定。最低限の情報は名前・役割・肖像割・肖像枠。絵が入った日は同じ枠へ入る。</p>
+          <span class="note-ref">mock/ chara.html ／ js/chara.js</span>
+        </article>
+        <article class="note-card">
+          <h3>行形式 — 記録が主役</h3>
+          <p>chara-b.html の列設計（名前・役割・所属・外見）。題箋を外したぶん情報密度が上がる。記録には「カード格子（肖像が主役）→ 行形式（記録が主役）」「雰囲気は薄れる」とある。</p>
+          <span class="note-ref">mock/ chara-b.html L70-74 ／ js/chara-b.js</span>
+        </article>
+        <article class="note-card">
+          <h3>整列タイル流 — A-3 の扱い</h3>
+          <p>正本 §A-3 は整列タイルを「あえて採用しない」に置いている。J-01 の決定により、現行流と並べて実画面で比較し、解除の要否を結果で判断する。本頁は比較の材料を並べるまで。</p>
+          <span class="note-ref">正本 03_モーションの現状と追加余地.md §A-3</span>
+        </article>
+      </div>
+      <p class="inline-note">テストデータは mock/data/characters.json の13人（模擬データ）。肖像画像は無い前提で題箋代用の枠を置く。ページ内に埋め込み・外部リクエストなし・CDN不使用。</p>
+    </section>
+
+    <!-- ===================== フッター ===================== -->
+    <footer class="page-foot">
+      <p>J-01 試作（テスト検証フェーズ）／テストデータは mock/data/characters.json の模擬データ・実在の人物と無関係 ／ 正本: 00_site-devlops/00_参照サイト改善/00_成果物_本番実装状況_2026-10-21/03_モーションの現状と追加余地.md（読み取りのみ）／ CDN不使用・外部リクエストなし</p>
+    </footer>
+
+  </div>
+
+  <script src="test.js"></script>
+</body>
+</html>

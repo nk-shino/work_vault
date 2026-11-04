@@ -1,0 +1,46 @@
+J-01 表示形式切替テスト — capture 結果
+実行日時: 2026-11-04T01:19:57.814Z
+対象: index.html（file:// 直読み・headless Chromium・deviceScaleFactor=2）
+
+--- 点検結果 ---
+01 OK A01 初期(1280px): 既定形式はカード（画面幅で選択） — {"card":true,"row":false}
+02 OK A02 初期: カード13件を表示（総数13を保持・両容器とも13個を作りっぱなし） — {"cards":13,"rows":13,"cardAll":13,"rowAll":13,"total":13}
+03 OK A03 現行流: auto-fill の可変グリッド（1280px で3列以上） — 3列 / 280px 280px 280px
+04 OK A04 初期: 出現遅延は通し番号方式（1件目0ms・13件目480ms=上限） — cards: 0ms..480ms / rows: 0ms..480ms
+05 OK A05 初期: 形式チップの aria-pressed（カード=true・行=false） — [["card","true"],["row","false"]]
+06 OK A06 切替中: 容器の淡い切替が効いている（transitionstart 発火・最小 opacity 0.45台） — min=0.453876 events=[transitionrun,transitionstart,transitioncancel,transitionrun,transitionstart,transitionend]
+07 OK A07 切替: 容器フェードは 0.15秒の半分（75ms・不透明度のみ） — 75ms
+08 OK A08 行形式: aria-pressed 遷移（行=true・カード=false） — [["card","false"],["row","true"]]
+09 OK A09 行形式: 行13件を保持し、行コンテナが表示される（切替後も件数13） — {"cards":13,"rows":13,"cardAll":13,"rowAll":13,"total":13}
+10 OK A10 行形式: 並べ方チップは非活性（行は常に1列で並ぶため） — [["flow","true","true"],["tile","false","true"]]
+11 OK A11 カード復帰: aria-pressed が戻り・13件保持 — cards=13
+12 OK A12 整列タイル流: 固定3列（PC） — 280px 280px 280px
+13 OK A13 整列タイル流: 件数13を保持 — cards=13
+14 OK A14 整列タイル→行→カード: 件数13を保持（両レイアウト×両形式） — {"cards":13,"rows":13,"cardAll":13,"rowAll":13,"total":13}
+15 OK A15 絞り込み: 回廊聖堂 → 4人表示（テストデータ上の実数） — 4人 / 「4人を表示中。」
+16 OK A16 絞り込み×行形式: 行の表示は4件（同じ13人から4人） — rows=4
+17 OK A17 絞り込み解除: 13人に戻る（両容器とも） — 13/13 「13人を表示中。」
+18 OK A18 reduce ON: html.reduce-motion が付く（§A-4） — reduce=true
+19 OK A19 reduce ON: 出現遅延がすべて 0（§B-5 遅延も0） — cards=0ms..0ms / rows=0ms..0ms
+20 OK A19b reduce ON: 容器の transition がほぼ 0 — 0.001ms
+21 OK A20 reduce ON: 切替は即時（60ms後に行形式へ移り opacity===1） — row=true opacity=1
+22 OK A21 reduce OFF: フェードが復活し・切替後は opacity===1 で止まる — min=0.453874 events=[transitionrun,transitionstart,transitioncancel,transitionrun,transitionstart,transitionend] endOpacity=1
+23 OK A22 1920px: 既定はカード・13件（広い PC 幅でも同じ既定） — {"card":true,"row":false}
+24 OK A23 375px: 既定は行（画面幅で適した形式・受け入れ条件①） — {"card":false,"row":true}
+25 OK A24 375px: 行13件（最低限の情報=名前・役割・所属・外見が行内にある） — {"cards":13,"rows":13,"cardAll":13,"rowAll":13,"total":13}
+26 OK A25 375px: 整列タイル流は2列固定（規則的・均一を保つ） — 136.5px 136.5px
+
+--- コンソール ---
+エラー件数: 0
+
+--- スクリーンショット ---
+  full-1280-tile.png（1280px・カード×整列タイル流）
+  full-1280-row.png（1280px・行形式）
+  full-1280-reduce.png（1280px・行形式・動きを減らす設定ON）
+  full-1920-card.png（1920px・カード×現行流の既定）
+  full-375-row.png（375px・行形式の既定）
+  full-375-card.png（375px・カード×現行流へ切替）
+  full-375-tile.png（375px・カード×整列タイル流=2列固定）
+
+合計: 26件 / OK 26 / NG 0 / consoleエラー 0
+判定: ALL OK

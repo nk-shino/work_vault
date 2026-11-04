@@ -1,0 +1,537 @@
+/* ============================================================
+   J-01 表示形式切替テスト — 共通スタイル
+   前作モーションギャラリー（暗色 × 琥珀の記録帖）の変数構造を踏襲。
+   CDN 不使用のためフォントはシステムスタック（mock/ css/style.css と同じ系統）。
+
+   §G-5: 色の16進数・速度の直値は変数定義に集約する。
+   ============================================================ */
+
+:root {
+  /* 面 */
+  --bg: #0b0d12;
+  --panel: #11141c;
+  --panel-2: #151925;
+  --field: #0e1119;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --sheen: rgba(255, 255, 255, 0.028);
+  --chip-bg: rgba(255, 255, 255, 0.045);
+  --grain: rgba(255, 255, 255, 0.035);
+
+  /* 文字 */
+  --text: #ece9e2;
+  --text-dim: #a3a0aa;
+  --text-faint: #7b7883;
+
+  /* アクセント（アンバー） */
+  --accent: #e9a94f;
+  --accent-soft: rgba(233, 169, 79, 0.13);
+  --accent-line: rgba(233, 169, 79, 0.32);
+
+  /* 空気 */
+  --atmo-1: rgba(233, 169, 79, 0.075);
+  --atmo-2: rgba(86, 112, 192, 0.09);
+  --atmo-3: rgba(233, 169, 79, 0.05);
+
+  /* ---- 速さ: 3層（§A-1）---- */
+  --dur-breath: 720ms;        /* 呼吸 = 10px上へ + 不透明度のみ */
+  --dur-response: 240ms;      /* 応答（浮き2pxまで） */
+  --dur-switch: 150ms;        /* 形式・絞り込みの切替 = 0.15秒の淡い切替（J-01） */
+  --stagger-card: 55ms;       /* 初回出現の1件あたりの遅れ（§B-5） */
+  --stagger-max: 480ms;
+
+  /* 距離 */
+  --rise-dist: 10px;          /* 呼吸層の移動量の上限 */
+  --lift: 2px;                /* 応答層の浮きの上限 */
+
+  /* 並べ方 */
+  --plate-ratio: 3 / 4;       /* 題箋の比率（chara.html と同じ） */
+  --tile-cols: 3;             /* 整列タイル流の固定列数（PC） */
+  --tile-cols-narrow: 2;      /* 同（768px 未満） */
+  --grid-gap: 14px;           /* 行間・列間（均一） */
+
+  --font-display: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "MS PMincho", serif;
+  --font-body: "Yu Gothic UI", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-num: Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent-soft); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+}
+
+/* 背景の空気感（前作と同じ構成・静止） */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(52% 42% at 10% -4%, var(--atmo-1), transparent 62%),
+    radial-gradient(46% 40% at 92% 6%, var(--atmo-2), transparent 62%),
+    radial-gradient(64% 52% at 50% 114%, var(--atmo-3), transparent 60%);
+}
+
+/* ---------- 操作バー ---------- */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.controls-brand {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+}
+.controls-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+.switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch-track {
+  flex: none;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--line-strong);
+  position: relative;
+  transition: background-color var(--dur-response) ease;
+}
+.switch-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform var(--dur-response) ease;
+}
+.switch input:checked + .switch-track { background: var(--accent); }
+.switch input:checked + .switch-track::after { transform: translateX(16px); }
+.switch input:focus-visible + .switch-track { outline: 2px solid var(--accent-line); outline-offset: 2px; }
+.switch-label { font-size: 12.5px; color: var(--text-dim); }
+
+/* ---------- ページ ---------- */
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 52px 24px 88px;
+}
+
+.overline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+}
+.overline::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.8;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+}
+
+.lead { margin: 14px 0 0; color: var(--text-dim); font-size: 14px; max-width: 66ch; }
+
+.note {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 22px 0 0;
+  padding: 10px 16px 10px 14px;
+  border: 1px solid var(--accent-line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+/* 受け入れ条件の対応注記（①②③） */
+.accept-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-faint);
+  line-height: 1.7;
+}
+.accept-list li { display: flex; gap: 8px; align-items: flex-start; }
+.accept-no {
+  flex: none;
+  color: var(--accent);
+  font-family: var(--font-num);
+  font-size: 12px;
+}
+
+/* ---------- パネル ---------- */
+.panel {
+  margin-top: 48px;
+  padding: 24px 26px 18px;
+  background:
+    linear-gradient(180deg, var(--sheen), transparent),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.panel-title { display: flex; gap: 16px; align-items: flex-start; }
+.panel-index {
+  font-family: var(--font-num);
+  font-weight: 300;
+  font-size: 42px;
+  line-height: 0.95;
+  color: var(--accent);
+  opacity: 0.92;
+}
+.panel-title h2 {
+  margin: 2px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; }
+.chip-code,
+.chip {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--chip-bg);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.spec-line { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; }
+.spec {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--chip-bg);
+  color: var(--text-dim);
+}
+.spec--accent { border-color: var(--accent-line); color: var(--accent); background: var(--accent-soft); }
+.spec--wide { white-space: normal; max-width: 100%; }
+
+.panel-how {
+  margin: 0;
+  max-width: 430px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.inline-note {
+  margin: 14px 0 0;
+  padding: 2px 0 2px 10px;
+  border-left: 2px solid var(--accent-line);
+  color: var(--text-faint);
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+
+/* ---------- チップ群（2軸 + 絞り込み・同じ流れに置く） ---------- */
+.chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.chips-row:first-of-type { border-top: 1px dashed var(--line); }
+.chips-label {
+  flex: none;
+  width: 62px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+}
+.chips-note {
+  flex: 1 1 200px;
+  min-width: 0;
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+
+/* チップ（chara.html の .chip ＋ aria-pressed 単一選択モデルを再利用） */
+button.chip {
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text-dim);
+  background: none;
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color var(--dur-response) ease, border-color var(--dur-response) ease, background-color var(--dur-response) ease;
+}
+button.chip:hover { color: var(--text); border-color: var(--line-strong); }
+button.chip[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+button.chip:focus-visible { outline: 2px solid var(--accent-line); outline-offset: 2px; }
+button.chip:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.result-line {
+  margin: 10px 0 0;
+  font-family: var(--font-num);
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+/* ---------- 一覧容器（切替は 0.15秒の淡い切替） ---------- */
+.listwrap {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+  transition: opacity calc(var(--dur-switch) / 2) ease;
+}
+.listwrap.is-switching { opacity: 0.45; }
+
+/* ---------- カード形式 ---------- */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--grid-gap); /* 行間・列間を均一に */
+}
+.grid[hidden] { display: none; }
+
+/* 現行流: chara.html と同じ auto-fill minmax(210px, 1fr)。
+   画面幅で列数が変わり、最終行の端数で札の幅が揃わない */
+.grid--flow { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+
+/* 整列タイル流: 列数を固定し、枠の比率・行間・列間を揃える（§A-3 比較用） */
+.grid--tile { grid-template-columns: repeat(var(--tile-cols), 1fr); }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel-2);
+  padding: 12px;
+  /* 初回出現のみ（切替では再生しない） */
+  animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both;
+}
+.card[hidden] { display: none; }
+
+.plate {
+  aspect-ratio: var(--plate-ratio); /* 題箋の比率は常に 3:4（同一比率） */
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(45deg, var(--grain) 0 2px, transparent 2px 6px),
+    var(--field);
+  color: var(--text-faint);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-align: center;
+  padding: 6px;
+}
+.card .name { margin: 0; font-size: 14px; color: var(--text); font-weight: 700; }
+.card .role { margin: 0; font-size: 12px; color: var(--text-dim); }
+
+/* ---------- 行形式（chara-b の列設計） ---------- */
+.rowtable { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.rowtable[hidden] { display: none; }
+.rowtable th,
+.rowtable td {
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 8px 10px;
+  vertical-align: top;
+}
+.rowtable thead th {
+  color: var(--text-faint);
+  font-weight: normal;
+  border-bottom-color: var(--line-strong);
+}
+.rowtable tbody th { font-weight: 700; color: var(--text); white-space: nowrap; }
+.rowtable tbody tr { animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both; }
+.rowtable tbody tr[hidden] { display: none; }
+.rowtable td { color: var(--text-dim); }
+
+/* ---------- 注記パネル ---------- */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.note-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--panel-2);
+}
+.note-card h3 { margin: 2px 0 0; font-size: 13.5px; }
+.note-card p { margin: 0; font-size: 11.5px; color: var(--text-dim); line-height: 1.7; flex: 1; }
+.note-ref { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-faint); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- フッター ---------- */
+.page-foot {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--text-faint);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  line-height: 1.9;
+}
+.page-foot p { margin: 0; }
+
+/* ---------- 出現（呼吸層: 720ms・10px上へ・不透明度のみ） ---------- */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(var(--rise-dist)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-head { animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both; }
+.panel { animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both; }
+.panel:nth-of-type(2) { animation-delay: calc(var(--stagger-card) * 2); }
+.page-foot { animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both; animation-delay: calc(var(--stagger-card) * 3); }
+
+/* ---------- 動きを減らす設定（§A-4 全ページ必須・§B-5 遅延も0） ---------- */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- 狭い画面 ---------- */
+@media (max-width: 768px) {
+  .page { padding: 40px 14px 64px; }
+  .panel { padding: 18px 14px 14px; }
+  .controls { padding: 10px 14px; gap: 12px; }
+  .controls-hint { display: none; }
+  .panel-how { text-align: left; }
+  .panel-index { font-size: 32px; }
+  .chips-label { width: 100%; }
+  /* 整列タイル流は 2 列固定（規則性を保つ） */
+  .grid--tile { grid-template-columns: repeat(var(--tile-cols-narrow), 1fr); }
+  /* 行形式は 4 列を 1 件ずつの縦積みに折り返す（最低限の情報は保持・data-label で列名を出す） */
+  .rowtable thead { display: none; }
+  .rowtable, .rowtable tbody { display: block; }
+  .rowtable tbody tr {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 0 0 8px;
+  }
+  .rowtable tbody th,
+  .rowtable tbody td {
+    display: block;
+    border-bottom: 0;
+    padding: 2px 0;
+    white-space: normal;
+  }
+  .rowtable tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+  }
+}
