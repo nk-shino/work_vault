@@ -1,0 +1,71 @@
+{
+ "pages": 31,
+ "no20_page": 25,
+ "no20_complete_text": true,
+ "p12_has_kanriseitai": true,
+ "p12_has_old_heading": false,
+ "old_heading_pages": [],
+ "old_name_pages": [],
+ "printed_numbers": {
+  "12": {
+   "found": [
+    "12"
+   ],
+   "ok": true
+  },
+  "13": {
+   "found": [
+    "13"
+   ],
+   "ok": true
+  },
+  "19": {
+   "found": [
+    "19"
+   ],
+   "ok": true
+  },
+  "25": {
+   "found": [
+    "25"
+   ],
+   "ok": true
+  },
+  "26": {
+   "found": [
+    "26"
+   ],
+   "ok": true
+  },
+  "27": {
+   "found": [
+    "27"
+   ],
+   "ok": true
+  },
+  "30": {
+   "found": [
+    "30"
+   ],
+   "ok": true
+  },
+  "31": {
+   "found": [
+    "31"
+   ],
+   "ok": true
+  },
+  "28": {
+   "found": [
+    "28"
+   ],
+   "ok": true
+  },
+  "29": {
+   "found": [
+    "29"
+   ],
+   "ok": true
+  }
+ }
+}
