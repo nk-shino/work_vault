@@ -72,6 +72,43 @@
     },
   };
 
+  /* ---------- VT の円形リビール原点（未検討ギャップ #8） ---------- */
+  // cross-document View Transitions では遷移元の CSS 変数が遷移先へ伝わらない。
+  // そのためカードクリックの座標を sessionStorage で受け渡し、到着側の :root に
+  // --vt-x / --vt-y として設定する（未記録なら css/vt.css 側で中央にフォールバック）。
+  const VT_ORIGIN = 'corridor-vt-origin';
+
+  function restoreVtOrigin() {
+    try {
+      const raw = sessionStorage.getItem(VT_ORIGIN);
+      if (!raw) return;
+      sessionStorage.removeItem(VT_ORIGIN);
+      const o = JSON.parse(raw);
+      if (o && Number.isFinite(o.x) && Number.isFinite(o.y) && Date.now() - (o.t || 0) < 4000) {
+        document.documentElement.style.setProperty('--vt-x', `${Math.round(o.x)}px`);
+        document.documentElement.style.setProperty('--vt-y', `${Math.round(o.y)}px`);
+      }
+    } catch (e) { /* ない環境・壊れた値は中央フォールバック */ }
+  }
+
+  // VT 対応環境（CSSViewTransitionRule がある）のカードクリックだけが記録する。
+  // 非対応環境の筆ワイプ経路には影響しない
+  function setupVtOrigin() {
+    if (!window.CSSViewTransitionRule) return;
+    const grid = document.getElementById('grid');
+    if (!grid) return;
+    grid.querySelectorAll('a[href="detail.html"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        document.documentElement.style.setProperty('--vt-x', `${e.clientX}px`);
+        document.documentElement.style.setProperty('--vt-y', `${e.clientY}px`);
+        try {
+          sessionStorage.setItem(VT_ORIGIN, JSON.stringify({ x: e.clientX, y: e.clientY, t: Date.now() }));
+        } catch (err) { /* ない環境は中央フォールバック */ }
+      });
+    });
+  }
+
   /* ---------- カスタムカーソル（Cursor Gallery 系の自作・参照メモ7） ---------- */
   function setupCursor() {
     if (REDUCED || !FINE) return;
@@ -82,20 +119,35 @@
     const dot = root.querySelector('.cursor-dot');
     const ring = root.querySelector('.cursor-ring');
     const label = root.querySelector('.cursor-label');
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, seen = false;
+    let mx = innerWidth / 2, my = innerHeight / 2;
+    let rx = mx, ry = my, rvx = 0, rvy = 0, seen = false;
 
     addEventListener('mousemove', (e) => {
       mx = e.clientX; my = e.clientY;
-      if (!seen) { seen = true; rx = mx; ry = my; root.classList.add('is-on'); }
+      if (!seen) { seen = true; rx = mx; ry = my; rvx = 0; rvy = 0; root.classList.add('is-on'); }
       dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
     }, { passive: true });
 
-    (function loop() {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
+    // ring は rAF の spring 積分で追従する（React Spring の物理イージング概念の
+    // vanilla 再現・コード非転載・依存追加なし）。臨界減衰 2*sqrt(K)≈26.1 に対し
+    // 僅かにアンダーダンプ（DAMP=22・ζ≈0.84）で小さな行き過ぎを作り、生きた手応えにする。
+    // dot は即時のまま。dt はタブ復帰時の跳ね防止のため上限で切る。
+    const K = 170;    // ばね定数
+    const DAMP = 22;  // 減衰係数
+    let last = performance.now();
+    function loop(now) {
+      const dt = Math.min((now - last) / 1000, 1 / 30);
+      last = now;
+      const ax = -K * (rx - mx) - DAMP * rvx;
+      const ay = -K * (ry - my) - DAMP * rvy;
+      rvx += ax * dt;
+      rvy += ay * dt;
+      rx += rvx * dt;
+      ry += rvy * dt;
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
       requestAnimationFrame(loop);
-    })();
+    }
+    requestAnimationFrame(loop);
 
     addEventListener('mouseover', (e) => {
       const view = e.target.closest('[data-cursor]');
@@ -160,6 +212,8 @@
   }
 
   /* ---------- 起動 ---------- */
+  restoreVtOrigin();
+  setupVtOrigin();
   setupCursor();
   setupMagnetic();
   setupSpotlight();

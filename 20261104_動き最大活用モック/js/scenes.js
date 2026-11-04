@@ -50,6 +50,10 @@
   function wipeNavigate(href) {
     if (!HAS_GSAP || !curtain) { location.href = href; return; }
     if (C.setWipeFlag) C.setWipeFlag();
+    // 出発側でも幕を可視化する（is-hold/is-cover は付けない。
+    // layers は CSS の translateY(-101%) に待機しており、直後の gsap.set と
+    // 同フレーム内で確定するためちらつきはない）
+    curtain.classList.add('is-live');
     gsap.timeline({ onComplete() { location.href = href; } })
       .set(layers, { yPercent: -101 })
       .to('.curtain-ink', { yPercent: 0, duration: 0.5, ease: 'power4.inOut' }, 0)
@@ -131,6 +135,7 @@
   let homeFades = [];
 
   function prepHome() {
+    if (!HAS_GSAP) return; // CDN 不達時は隠し処理自体を行わない（全要素可視・幕は curtainReveal が払う）
     const h1 = document.querySelector('[data-hero-title]');
     homeChars = splitChars(h1);
     if (homeChars) gsap.set(homeChars, { yPercent: 118 });
@@ -161,6 +166,7 @@
 
   /* ---------- 人物一覧（chara）: 端から広がる stagger（参照メモ6） ---------- */
   function prepChara() {
+    if (!HAS_GSAP) return; // CDN 不達時は隠し処理自体を行わない（全要素可視・幕は curtainReveal が払う）
     const h1 = document.querySelector('[data-hero-title]');
     const chars = splitChars(h1);
     if (chars) gsap.set(chars, { yPercent: 118 });
@@ -172,6 +178,7 @@
   }
 
   function playChara(prep) {
+    if (!prep) return; // prepChara がガードで早期 return した場合
     if (prep.chars) gsap.to(prep.chars, { yPercent: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 });
     const tools = document.querySelector('.toolbar');
     if (tools) gsap.to(tools, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'expo.out', delay: 0.2 });
@@ -185,6 +192,7 @@
 
   /* ---------- 記録見本（detail）: ヒーローと追従出現 ---------- */
   function prepRecord() {
+    if (!HAS_GSAP) return; // CDN 不達時は隠し処理自体を行わない（全要素可視・幕は curtainReveal が払う）
     const h1 = document.querySelector('[data-hero-title]');
     const chars = splitChars(h1);
     if (chars) gsap.set(chars, { yPercent: 118 });
@@ -194,6 +202,7 @@
   }
 
   function playRecord(prep) {
+    if (!prep) return; // prepRecord がガードで早期 return した場合
     if (prep.chars) gsap.to(prep.chars, { yPercent: 0, duration: 1.0, ease: 'expo.out', stagger: 0.045 });
     if (prep.fades.length) gsap.to(prep.fades, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.12, delay: 0.3 });
     drawStrokes();

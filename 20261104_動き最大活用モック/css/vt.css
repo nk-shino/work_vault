@@ -17,6 +17,21 @@
 ::view-transition-old(root),
 ::view-transition-new(root) { animation-duration: 360ms; }
 
+/* ---------- 円形リビール（未検討ギャップ #8）----------
+   新しい面をクリック地点中心の clip-path circle で広げる。
+   中心は :root の --vt-x / --vt-y（motion.js がカードクリック座標を
+   sessionStorage 経由で到着側へ引き継ぐ）。未設定時は中央にフォールバック。
+   旧面は既定のフェードで下に残るため、円の外は旧面が透けて見える。
+   c001 の共有要素遷移（vt-c001）はこの下で従来どおり動く。
+   reduced-motion は上の navigation: none が効くため追加対応は不要。 */
+@keyframes vt-circle-in {
+  from { clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to   { clip-path: circle(150% at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
+::view-transition-new(root) {
+  animation: vt-circle-in 560ms var(--ease-out-expo) both;
+}
+
 ::view-transition-old(vt-c001),
 ::view-transition-new(vt-c001) {
   animation-duration: 520ms;
