@@ -40,3 +40,7 @@ __pycache__/
 20261102_管理文書用語と相関図/scripts/tmp_g9_pana/
 20261102_管理文書用語と相関図/scripts/tmp_g10_names/
 20261102_管理文書用語と相関図/src_g9_pptx/
+
+# ブラウザの netlog・内部ログ(企業管理通信や認証関連の項目を含み得るため追跡しない)
+netlog*.json
+**/shots/console-*.log
