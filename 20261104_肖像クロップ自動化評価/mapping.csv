@@ -1,0 +1,9 @@
+﻿source_file,person_name,detector,faces_found,chosen_face_box,crop_box,output_file,status
+灯篭リュエ.png,灯篭リュエ,haar,4,"449,250,287,287","277,37,631,842",samples/灯篭リュエ_3x4.jpg,ok
+竜宮セツ.png,竜宮セツ,none,0,,,,need_manual
+笠本縫ル.png,笠本縫ル,animeface,1,"211,64,534,534","0,0,1175,1024",samples/笠本縫ル_3x4.jpg,ok
+詠壽ラカン.png,詠壽ラカン,none,0,,,,need_manual
+課擁チカコ.png,課擁チカコ,haar,2,"360,215,217,217","230,54,477,637",samples/課擁チカコ_3x4.jpg,ok
+身織ルネ.png,身織ルネ,haar,1,"431,110,270,270","269,0,594,792",samples/身織ルネ_3x4.jpg,ok
+鴉守セツ.png,鴉守セツ,haar,2,"224,317,529,529","0,0,1024,1536",samples/鴉守セツ_3x4.jpg,ok
+黄瀬まナグヮァ.png,黄瀬まナグヮァ,haar,1,"265,217,485,485","0,0,1024,1024",samples/黄瀬まナグヮァ_3x4.jpg,ok
