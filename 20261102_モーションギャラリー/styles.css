@@ -93,6 +93,23 @@
   --rise-dist: 10px;          /* 呼吸層の移動量の上限（§A-1） */
   --lift: 2px;                /* 応答層の浮きの上限（§A-1） */
 
+  /* ---- 追加ラウンド（2026-11-04）: 本番 §B・§E の実測値 ---- */
+  --dur-crest: 900ms;         /* 紋章の線が描かれる・1回（§B-1） */
+  --dur-title: 700ms;         /* 題字が現れる・1回（§B-1） */
+  --delay-title: 950ms;       /* 題字の遅延（§B-1） */
+  --dur-veil: 600ms;          /* 幕の持ち上がり（呼吸層の1回のみ） */
+  --dur-flicker: 4.5s;        /* 年表の灯りのゆらぎ・無限（§B-1・気配のみの例外） */
+  --drift-d1: 46s;            /* 図形の漂いの周期・図形1（§B-1: 46〜72秒） */
+  --drift-d2: 52s;            /* 図形2 */
+  --drift-d3: 58s;            /* 図形3 */
+  --drift-d4: 64s;            /* 図形4 */
+  --drift-d5: 68s;            /* 図形5 */
+  --drift-d6: 72s;            /* 図形6 */
+  --drift-amp: 12px;          /* 漂いの振幅（§A-1 の上限20px以内） */
+  --drift-rot: 3deg;          /* 漂いの回転（§A-1 の上限4度以内） */
+  --stagger-card: 55ms;       /* 札の1件あたりの遅れ（§B-5: 50〜60ms） */
+  --stagger-card-max: 480ms;  /* 札の遅れの上限 */
+
   --font-display: "Zen Old Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
   --font-body: "Zen Kaku Gothic New", "Yu Gothic UI", "Meiryo", sans-serif;
   --font-num: "Fraunces", Georgia, "Times New Roman", serif;
@@ -937,6 +954,300 @@ body {
 .hold-card p { margin: 0; font-size: 12px; color: var(--text-dim); line-height: 1.7; flex: 1; }
 .hold-ref { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-faint); }
 
+/* ---------- 追加ラウンド（2026-11-04）: パネル7 読み込み幕 ---------- */
+.veil-stage {
+  position: relative;
+  min-height: 190px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+  overflow: hidden;
+}
+.veil-under { padding: 18px; color: var(--text-faint); font-size: 12.5px; }
+.veil-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  background: var(--panel-2);
+  transition: transform var(--dur-veil) ease;
+}
+.veil-curtain.is-lifted { transform: translateY(-101%); }
+.veil-crest { width: 52px; height: 66px; }
+.veil-crest-path,
+.veil-crest-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: crest-draw var(--dur-crest) ease forwards;
+}
+@keyframes crest-draw { to { stroke-dashoffset: 0; } }
+.veil-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.2em;
+  color: var(--text);
+  animation: rise-in var(--dur-title) cubic-bezier(0.2, 0.7, 0.25, 1) var(--delay-title) both;
+}
+
+/* ---------- パネル8 年表 ---------- */
+.tl-scroller {
+  position: relative;
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+  padding: 14px 0 14px 34px;
+}
+.tl-rail {
+  position: absolute;
+  left: 20px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--line);
+}
+.tl-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  background: var(--accent);
+  opacity: 0.75;
+}
+.tl-list { list-style: none; margin: 0; padding: 0 14px 0 0; }
+.tl-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 2px;
+}
+.tl-dot {
+  position: absolute;
+  left: -19px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  border: 1px solid var(--line-strong);
+  /* 気配層: 灯りのゆらぎ・4.5秒無限（§B-1）。無限が許されるのはここだけ */
+  animation: flicker var(--dur-flicker) ease-in-out infinite;
+}
+.tl-item.is-seen .tl-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  transition: background-color var(--dur-response) ease, border-color var(--dur-response) ease;
+}
+.tl-item.is-seen .tl-text { color: var(--text); }
+@keyframes flicker {
+  0%, 100% { opacity: 0.55; }
+  30% { opacity: 1; }
+  55% { opacity: 0.7; }
+  78% { opacity: 0.92; }
+}
+.tl-year { font-family: var(--font-num); color: var(--text-faint); flex: none; width: 64px; }
+.tl-body { color: var(--text-dim); font-size: 12.5px; transition: color var(--dur-response) ease; }
+.tl-body strong { color: var(--text); font-weight: 700; }
+
+/* ---------- パネル9 図形の漂い ---------- */
+.drift-field {
+  position: relative;
+  height: 230px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background:
+    radial-gradient(60% 60% at 50% 50%, var(--atmo-1), transparent 70%),
+    var(--field);
+  overflow: hidden;
+}
+.drift-shape {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  opacity: 0.5;
+}
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(var(--drift-amp), calc(var(--drift-amp) * -0.6)) rotate(var(--drift-rot)); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(calc(var(--drift-amp) * -0.8), var(--drift-amp)) rotate(calc(var(--drift-rot) * -1)); }
+}
+.drift-s1 { top: 14%; left: 8%;  animation: drift-a var(--drift-d1) ease-in-out -3s infinite; }
+.drift-s2 { top: 58%; left: 18%; animation: drift-b var(--drift-d2) ease-in-out -9s infinite; }
+.drift-s3 { top: 26%; left: 38%; animation: drift-a var(--drift-d3) ease-in-out -15s infinite; }
+.drift-s4 { top: 66%; left: 52%; animation: drift-b var(--drift-d4) ease-in-out -21s infinite; }
+.drift-s5 { top: 18%; left: 68%; animation: drift-a var(--drift-d5) ease-in-out -27s infinite; }
+.drift-s6 { top: 52%; left: 84%; animation: drift-b var(--drift-d6) ease-in-out -33s infinite; }
+
+/* ---------- パネル10 出現の時間差 ---------- */
+.sg-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.sg-status { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-dim); }
+.sg-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.sg-col h3 { margin: 0 0 8px; font-size: 12px; color: var(--text-dim); font-weight: 700; letter-spacing: 0.04em; }
+.sg-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sg-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--field);
+  padding: 8px 10px;
+  font-size: 12px;
+  visibility: hidden;
+  animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both;
+}
+.sg-card.is-shown { visibility: visible; }
+.sg-card .sg-no { font-family: var(--font-num); color: var(--text-faint); margin-right: 6px; }
+.sg-card .sg-title { color: var(--text); }
+.sg-card .sg-delay {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+
+/* ---------- パネル11 額の接続 ---------- */
+.fl-wrap {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  align-items: start;
+}
+.fl-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.fl-card {
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line);
+  outline-offset: 3px;
+  border-radius: 2px;
+  padding: 12px 14px;
+  background: var(--field);
+  cursor: pointer;
+  transition: border-color var(--dur-response) ease, background-color var(--dur-response) ease, transform var(--dur-response) ease;
+}
+.fl-card:hover { background: var(--chip-bg); transform: translateY(calc(-1 * var(--lift))); }
+.fl-card:focus-visible { outline: 2px solid var(--accent-line); outline-offset: 3px; }
+.fl-card.is-marker { border-color: var(--accent); outline-color: var(--accent-line); }
+.fl-card-top { display: flex; align-items: center; gap: 8px; }
+.fl-card-title { font-weight: 700; font-size: 13px; }
+.fl-card-meta { margin: 3px 0 0; font-size: 11px; color: var(--text-faint); }
+
+.fl-detail {
+  position: relative;
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line);
+  outline-offset: 3px;
+  border-radius: 2px;
+  background: var(--panel-2);
+  padding: 18px;
+  transition: opacity calc(var(--dur-switch) / 2) ease;
+}
+.fl-detail.is-switching { opacity: 0; }
+.fl-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  opacity: 0.8;
+}
+.fl-corner svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.fl-corner.c-tl { top: 6px; left: 6px; }
+.fl-corner.c-tr { top: 6px; right: 6px; transform: rotate(90deg); }
+.fl-corner.c-br { bottom: 6px; right: 6px; transform: rotate(180deg); }
+.fl-corner.c-bl { bottom: 6px; left: 6px; transform: rotate(270deg); }
+.fl-meta { margin: 0 0 4px; font-size: 11px; letter-spacing: 0.1em; color: var(--text-faint); }
+.fl-detail h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.05em; }
+.fl-desc { margin: 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.8; }
+.fl-status {
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+/* 標準API（§D 使える技法）の接続: 額が押した位置から詳細の額へ移る */
+::view-transition-old(fl-link),
+::view-transition-new(fl-link) {
+  animation-duration: var(--dur-switch);
+  animation-timing-function: ease;
+}
+
+/* ---------- パネル12 装飾の部品 ---------- */
+.orn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.orn-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--panel-2);
+}
+.orn-card h3 { margin: 2px 0 0; font-size: 13.5px; }
+.orn-card p { margin: 0; font-size: 11.5px; color: var(--text-dim); line-height: 1.7; }
+.orn-orn { display: inline-flex; width: 22px; height: 22px; color: var(--accent); opacity: 0.75; }
+.orn-orn svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.4; }
+
+.orn-demo {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 16px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+.orn-stage { display: grid; place-items: center; padding: 10px 0; }
+.orn-frame {
+  position: relative;
+  width: min(340px, 100%);
+  min-height: 130px;
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  background: var(--field);
+}
+.orn-corner { position: absolute; width: 18px; height: 18px; color: var(--accent); }
+.orn-corner svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.orn-corner.c-tl { top: -1px; left: -1px; transform: rotate(0deg); }
+.orn-corner.c-tr { top: -1px; right: -1px; transform: rotate(90deg); }
+.orn-corner.c-br { bottom: -1px; right: -1px; transform: rotate(180deg); }
+.orn-corner.c-bl { bottom: -1px; left: -1px; transform: rotate(270deg); }
+.orn-corner { animation: rise-in var(--dur-breath) cubic-bezier(0.2, 0.7, 0.25, 1) both; }
+.orn-corner.is-hidden { visibility: hidden; }
+.orn-caption { margin: 0; color: var(--text-faint); font-size: 11.5px; letter-spacing: 0.1em; }
+.orn-ctl p { margin: 8px 0 0; font-size: 11.5px; color: var(--text-faint); line-height: 1.7; }
+
 /* ---------- フッター ---------- */
 .page-foot {
   margin-top: 64px;
@@ -994,8 +1305,9 @@ html.theme-switching *::after {
 
 /* ---------- 狭い画面 ---------- */
 @media (max-width: 860px) {
-  .f2-cols, .f3-wrap { grid-template-columns: 1fr; }
-  .f3-cards { grid-template-columns: 1fr 1fr; }
+  .f2-cols, .f3-wrap, .fl-wrap, .orn-demo, .sg-cols { grid-template-columns: 1fr; }
+  .f3-cards, .fl-cards { grid-template-columns: 1fr 1fr; }
+  .sg-list { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   .page { padding: 44px 14px 72px; }

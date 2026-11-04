@@ -1,5 +1,5 @@
 モーションギャラリー 撮影レポート
-撮影日時: 2026/11/4 9:03:54
+撮影日時: 2026/11/4 9:32:05
 
 --- DOM checks (initial) ---
 {
@@ -25,7 +25,7 @@ check: F-1 refined: nodes not rebuilt -> OK :: persist=61 visible=2/2
 shot: f1-conventional-settling.png
 check: F-1 legacy: rows rebuilt (no persist) -> OK :: rows=44 persist=0
 check: F-1 legacy: stagger reaches 480ms cap -> OK :: 0.48s
-check: F-1 legacy: settling in progress at 250ms -> OK :: first=1 last=0.904757
+check: F-1 legacy: settling in progress at 250ms -> OK :: first=1 last=0.981832
 shot: f1-conventional-settled.png
 shot: f2-status.png
 F-2 hover transform: matrix(1, 0, 0, 1, 0, -2)
@@ -45,6 +45,31 @@ shot: f6-zero-suggestions.png
 check: F-6 zero card + suggestions -> OK :: chips=4
 check: F-6 rise uses breath layer (720ms/10px) -> OK :: dur=0.72s delay=0s
 shot: hold-cards.png
+check: veil: curtain lifts after title animationend -> OK :: initial run
+shot: veil-opening.png (再演・紋章描画中)
+shot: veil-closed.png (題字の終了を待って幕が開いた後)
+check: timeline: marks appear as items enter -> OK :: 7 -> 8
+check: timeline: rail line grows with scroll -> OK :: 303.5px -> 348.5px
+check: timeline: marks never reset (once seen) -> OK :: 8 -> 8
+check: timeline: flicker = 4.5s (breath-free ambient layer) -> OK :: 4.5s
+shot: tl-scrolled.png
+check: drift: 6 shapes all have different periods -> OK :: 46s,52s,58s,64s,68s,72s
+check: drift: periods within 46-72s (§B-1) -> OK :: 46s,52s,58s,64s,68s,72s
+shot: drift-shapes.png
+check: E-4 slow: legacy delays all 0 (no stagger) -> OK :: 0s,0s,0s,0s,0s,0s,0s,0s,0s,0s,0s,0s
+check: E-4 slow: indexed delays > 0 (stagger works) -> OK :: 0s,0.055s,0.11s,0.165s,0.22s,0.275s,0.33s,0.385s,0.44s,0.48s,0.48s,0.48s
+shot: sg-slow.png
+check: E-4 burst: both columns get stagger -> OK :: last=0.48s / 0.48s
+shot: sg-burst.png
+frame-link: document.startViewTransition = true
+shot: fl-connecting.png (額の接続の途中)
+check: frame-link: connection method reported -> OK :: view-transition API（§D 使える技法・240ms）
+check: frame-link: method matches capability (§D) -> OK :: true / view-transition API（§D 使える技法・240ms）
+check: frame-link: marker = 1 (§B-3) -> OK :: 1
+shot: fl-after.png (詳細の額への接続後)
+shot: orn-rising.png (四隅の飾りの出現・呼吸層の途中)
+check: ornament: rise uses breath layer (720ms) -> OK :: 0.72s
+check: ornament: corners visible after replay -> OK :: true
 --- 動きを減らす設定 適用時 ---
 {
   "cls": true,
@@ -60,6 +85,12 @@ shot: rm-hero.png
 shot: rm-f1-conventional.png
 check: reduce-motion: JS-written delays = 0 -> OK :: 0s
 check: reduce-motion: rows appear instantly -> OK :: opacity=1
+check: reduce-motion: veil lifts immediately -> OK :: true
+check: reduce-motion: stagger delays = 0 -> OK :: 0s,0s,0s,0s,0s,0s,0s,0s,0s,0s,0s,0s
+check: reduce-motion: frame-link switches instantly -> OK :: 即時（動きを減らす設定）
+check: reduce-motion: timeline line starts full length (§B-5) -> OK :: 356px vs list 356px
+check: reduce-motion: drift + flicker stopped -> OK :: {"drift":"1e-06s","flicker":"1e-06s"}
+check: reduce-motion: slow mode also instant (delay 0) -> OK :: 24 cards
 shot: rm-full-page.png (fullPage, 動きを減らす設定適用時)
 light theme body bg: rgb(243, 239, 229)
 check: light theme applied -> OK :: rgb(243, 239, 229)

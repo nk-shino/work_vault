@@ -30,7 +30,7 @@
       <span class="switch-track" aria-hidden="true"></span>
       <span class="switch-label">動きを減らす設定（シミュレーション）</span>
     </label>
-    <span class="controls-hint">止めると速くなるのではなく、何も起きなくなる（§B-5）</span>
+    <span class="controls-hint">止めると速くなるのではなく、何も起きなくなる（§B-5）／テーマ切替は一括変化 400ms（§B-4・本番と同じ）</span>
   </div>
 
   <div class="page">
@@ -405,9 +405,228 @@
       </div>
     </section>
 
+    <!-- ===================== パネル7: 読み込み幕の再現 ===================== -->
+    <section class="panel" id="panel-veil">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">07</span>
+          <div>
+            <h2>読み込み幕 — 紋章 → 題字 → 幕が閉じる（本番の再現）</h2>
+            <p class="chips">
+              <code class="chip">紋章 900ms・1回</code>
+              <code class="chip">題字 700ms・950ms遅延</code>
+              <code class="chip">幕は題字の終了を待つ</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">呼吸層 — 900ms／700ms（950ms遅延）</span>
+              <span class="spec spec--wide">参照: 台帳「紋章の線が描かれる」「題字が現れる」「読み込み幕が閉じる条件」（本番にのみ在る動き・§B-1／§E-6）。受け入れ条件: 幕が閉じる合図が題字のアニメ終了であること／動きを減らす設定で幕がすぐ開くこと</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">「幕を再演」で入口の読み込み幕を再現します。紋章の線が描かれ、題字が遅れて現れ、その終了を待って幕が持ち上がります。</p>
+      </header>
+
+      <div class="veil-stage" id="veil-stage" aria-live="polite">
+        <div class="veil-under">入口の本文がここに現れます（イメージ）。</div>
+        <div class="veil-curtain" id="veil-curtain">
+          <svg class="veil-crest" viewBox="0 0 64 80" aria-hidden="true">
+            <path class="veil-crest-path" d="M32 6 L58 26 L58 54 L32 74 L6 54 L6 26 Z"></path>
+            <line class="veil-crest-line" x1="32" y1="6" x2="32" y2="74"></line>
+          </svg>
+          <p class="veil-title" id="veil-title">回廊の記録</p>
+        </div>
+      </div>
+      <div class="f4-bar">
+        <button type="button" class="btn" id="veil-replay">幕を再演</button>
+      </div>
+      <p class="inline-note">§E-6: 幕が閉じる合図は「題字の出現アニメが終わったこと」。JS がそれを待つため、題字の秒数を変えると幕が閉じる条件そのものが動く。触る前に JS 側を読むこと。</p>
+    </section>
+
+    <!-- ===================== パネル8: 年表（気配の灯りとスクロール連動） ===================== -->
+    <section class="panel" id="panel-timeline">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">08</span>
+          <div>
+            <h2>年表 — 灯りのゆらぎ（気配）とスクロール連動（本番の再現）</h2>
+            <p class="chips">
+              <code class="chip">灯りのゆらぎ 4.5秒・無限（気配）</code>
+              <code class="chip">縦線はスクロールで伸びる</code>
+              <code class="chip">印は一度出たら戻さない</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">気配層 — 4.5秒無限（例外扱い・§B-1）</span>
+              <span class="spec">JS連動 — スクロール追従（§B-4）</span>
+              <span class="spec spec--wide">参照: 台帳「年表の灯りのゆらぎ」「年表の縦線」（本番にのみ在る動き）。受け入れ条件: 無限ループが気配層だけであること／縦線がスクロール位置に追従すること／印が一度付いたら戻らないこと／動きを減らす設定で縦線は最初から全長（§B-5）</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">枠内をスクロールすると、見えた項目の灯りが点き（一度点いたら消えない）、縦線がその位置まで伸びます。灯りは4.5秒ごとに揺れ続けます。</p>
+      </header>
+
+      <div class="tl-scroller" id="tl-scroller">
+        <div class="tl-rail" aria-hidden="true"><span class="tl-line" id="tl-line"></span></div>
+        <ul class="tl-list" id="tl-list"></ul>
+      </div>
+      <p class="inline-note">灯りの無限ループは「燭台の灯りそのものなので例外扱い」と本番のコードに理由が書かれている（§B-1）。数が合わないからといって消さないこと。</p>
+    </section>
+
+    <!-- ===================== パネル9: 図形の漂い（意図的な不揃い） ===================== -->
+    <section class="panel" id="panel-drift">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">09</span>
+          <div>
+            <h2>図形の漂い — 意図的な不揃いの周期（本番の再現）</h2>
+            <p class="chips">
+              <code class="chip">46〜72秒・無限（気配）</code>
+              <code class="chip">図形ごとに周期が違う</code>
+              <code class="chip">振幅20px以内・回転4度以内</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">気配層 — 46〜72秒無限</span>
+              <span class="spec spec--wide">参照: 台帳「図形の漂い」（本番にのみ在る動き・§B-1／§A-1）。受け入れ条件: 周期が1つずつ違うこと（46〜72秒の範囲内）／振幅・回転が上限以内であること／動きを減らす設定で停止すること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">6つの図形がそれぞれ別の周期で漂います。動きは目で追える速さではなく、見ているあいだに「気配」として残る量です。</p>
+      </header>
+
+      <div class="drift-field" id="drift-field" aria-hidden="true">
+        <svg class="drift-shape drift-s1" viewBox="0 0 24 24"><path d="M12 2 L22 12 L12 22 L2 12 Z"></path></svg>
+        <svg class="drift-shape drift-s2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle></svg>
+        <svg class="drift-shape drift-s3" viewBox="0 0 24 24"><path d="M12 2 L21 20 L3 20 Z"></path></svg>
+        <svg class="drift-shape drift-s4" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"></rect></svg>
+        <svg class="drift-shape drift-s5" viewBox="0 0 24 24"><path d="M12 2 L19 6 L19 18 L12 22 L5 18 L5 6 Z"></path></svg>
+        <svg class="drift-shape drift-s6" viewBox="0 0 24 24"><path d="M12 2 L12 22 M2 12 L22 12"></path></svg>
+      </div>
+      <p class="inline-note">§B-1: 周期を揃えると群れが同時に動いて機械に見えるため、1つずつ違う周期にしてある。これは意図的な不揃いであって、整理されていない状態ではない。</p>
+    </section>
+
+    <!-- ===================== パネル10: 出現の時間差（通し番号方式） ===================== -->
+    <section class="panel" id="panel-stagger">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">10</span>
+          <div>
+            <h2>出現の時間差 — 「その回の順番」から「通し番号」へ（E-4 改善デモ）</h2>
+            <p class="chips">
+              <code class="chip">1件あたり 55ms（§B-5: 50〜60ms）</code>
+              <code class="chip">上限 480ms</code>
+              <code class="chip">§E-4 の狙いと逆になっている現状</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">呼吸層 — 720ms＋遅れ 55ms×番号</span>
+              <span class="spec spec--wide">参照: 台帳「一覧の札の出現」（本番にのみ在る動き・§E-4／§B-5）。受け入れ条件: 1枚ずつ出すとき、従来は時間差が付かず通し番号では付くこと／動きを減らす設定で遅延も0になること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">同じ12枚を2列で比較します。左が従来（交差してきた分の中の順番）、右が改修後（一覧全体の通し番号）。札の下の数値は実際に書き込まれた遅延です。</p>
+      </header>
+
+      <div class="sg-bar">
+        <button type="button" class="btn" id="sg-slow">1枚ずつ出す（ゆっくり読む人）</button>
+        <button type="button" class="btn" id="sg-burst">まとめて出す（速くスクロールする人）</button>
+        <span class="sg-status" id="sg-status">—</span>
+      </div>
+      <div class="sg-cols">
+        <div class="sg-col">
+          <h3>従来 — その回に渡ってきた分の中での順番</h3>
+          <ul class="sg-list" id="sg-list-legacy"></ul>
+        </div>
+        <div class="sg-col">
+          <h3>改修後 — 一覧全体の通し番号</h3>
+          <ul class="sg-list" id="sg-list-indexed"></ul>
+        </div>
+      </div>
+      <p class="inline-note">§E-4: 遅れの番号が「その一度に渡ってきた分の中での順番」だと、ゆっくり読む人（1枚ずつ入る）は番号が常に0で時間差が付かない。急いでいる人にだけ演出が出るという狙いと逆の結果になる。通し番号なら直る。</p>
+    </section>
+
+    <!-- ===================== パネル11: 額の接続（@view-transition の見せ味） ===================== -->
+    <section class="panel" id="panel-framelink">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">11</span>
+          <div>
+            <h2>額の接続 — 押した額から詳細の額へ（@view-transition の見せ味）</h2>
+            <p class="chips">
+              <code class="chip">本番は @view-transition が全ページ（§B-3）</code>
+              <code class="chip">この頁は標準API（§D 使える技法）で再現</code>
+              <code class="chip">対応しない環境は240msの淡い切替</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">応答層 — 240ms（不透明度・位置の接続）</span>
+              <span class="spec spec--wide">参照: 台帳「画面の切り替え」（本番にのみ在る動き・§B-3）。受け入れ条件: 同じ目印が同時に2つ存在しないこと（2つあると本番の遷移そのものが中止される）／動きを減らす設定で即時に切替ること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">額を押すと、押した額の位置から詳細の額へ視線が繋がります。対応ブラウザでは標準APIによる接続、未対応では240msの淡い切替に落ちます。</p>
+      </header>
+
+      <div class="fl-wrap">
+        <ul class="fl-cards" id="fl-cards"></ul>
+        <aside class="fl-detail" id="fl-detail" aria-live="polite">
+          <span class="fl-corner c-tl" aria-hidden="true"></span>
+          <span class="fl-corner c-tr" aria-hidden="true"></span>
+          <span class="fl-corner c-bl" aria-hidden="true"></span>
+          <span class="fl-corner c-br" aria-hidden="true"></span>
+          <p class="fl-meta"></p>
+          <h3 class="fl-title"></h3>
+          <p class="fl-desc"></p>
+        </aside>
+      </div>
+      <p class="fl-status" id="fl-status">方式: — ／ 目印の数: —</p>
+      <p class="inline-note">本番の仕組み（§B-3）では一覧ページと詳細ページが @view-transition で繋がり、JS が押された1枚にだけ目印を付ける。同じ目印が同時に2つあると遷移ごと中止されるため、ここでは目印を常に1つに保つ方式で再現している。</p>
+    </section>
+
+    <!-- ===================== パネル12: 装飾の部品を動かす候補 ===================== -->
+    <section class="panel" id="panel-ornament">
+      <header class="panel-head">
+        <div class="panel-title">
+          <span class="panel-index" aria-hidden="true">12</span>
+          <div>
+            <h2>装飾の部品を動かす候補 — いまは静止している（§C-2）</h2>
+            <p class="chips">
+              <code class="chip">静止カード（動かさない）</code>
+              <code class="chip">出現1種だけ呼吸層の再現</code>
+              <code class="chip">新しく作るより先にここを見る（§C-2）</code>
+            </p>
+            <p class="spec-line">
+              <span class="spec spec--accent">呼吸層 — 720ms・10px（出現のみ）</span>
+              <span class="spec spec--wide">参照: 台帳「装飾の部品」（本番にのみ在る部品・§C-2）。受け入れ条件: 出現は呼吸層の線（10px上へ・不透明度のみ）であること／無限ループにしないこと／動きを減らす設定で即時に現れること</span>
+            </p>
+          </div>
+        </div>
+        <p class="panel-how">本番に既にある装飾の部品を並べます。どれも現状は静止しています。下の見本だけ、部品の出現を呼吸層で付けた場合の見せ味です。</p>
+      </header>
+
+      <div class="orn-grid">
+        <article class="orn-card"><span class="orn-orn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 18 L2 6 L14 6"></path></svg></span><h3>四隅の飾り</h3><p>額の内側の角に置く L 字の線。動かすなら額の開閉と一緒に現れる。</p></article>
+        <article class="orn-card"><span class="orn-orn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 16 L17 16 M5 12 L15 12"></path></svg></span><h3>章扉の黒帯</h3><p>章の冒頭に敷く帯。動かすなら章の切替に合わせて1回だけ伸びる。</p></article>
+        <article class="orn-card"><span class="orn-orn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10 L17 10 M3 14 L17 14" stroke-dasharray="3 2"></path></svg></span><h3>箔のかすれた罫</h3><p>擦れた金の罫。動かすなら読了の区切りで淡く点く。</p></article>
+        <article class="orn-card"><span class="orn-orn"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3 L12 9 L18 10 L12 11 L10 17 L8 11 L2 10 L8 9 Z"></path></svg></span><h3>散る小花</h3><p>区切りに置く花の印。動かすなら気配層の微小な漂いが上限。</p></article>
+      </div>
+
+      <div class="orn-demo">
+        <div class="orn-stage" id="orn-stage">
+          <div class="orn-frame" id="orn-frame">
+            <span class="orn-corner c-tl" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M2 18 L2 6 L14 6"></path></svg></span>
+            <span class="orn-corner c-tr" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M2 6 L14 6 L18 18" transform="translate(0,0)"></path></svg></span>
+            <span class="orn-corner c-bl" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M2 2 L2 14 L14 14"></path></svg></span>
+            <span class="orn-corner c-br" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M2 2 L14 2 L14 14" ></path></svg></span>
+            <p class="orn-caption">額の内側</p>
+          </div>
+        </div>
+        <div class="orn-ctl">
+          <button type="button" class="btn" id="orn-replay">四隅の飾りの出現を見る</button>
+          <p>出現は呼吸層（720ms・10px上へ・不透明度のみ）。無限ループにはしない。</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== フッター ===================== -->
     <footer class="page-foot">
-      <p>UIモックアップ（方向性確認用）／記録No.・人名・日時はダミーで、実在の記録と無関係 ／ 資料: 00_site-devlops/00_参照サイト改善/00_成果物_本番実装状況_2026-10-21/03_モーションの現状と追加余地.md ／ Swiper 11・Google Fonts はCDN（本番は同梱方針・§D）</p>
+      <p>UIモックアップ（方向性確認用）／記録No.・人名・日時はダミーで、実在の記録と無関係 ／ 資料: 00_site-devlops/00_参照サイト改善/00_成果物_本番実装状況_2026-10-21/03_モーションの現状と追加余地.md ／ 分析台帳: 分析_実サイトの動き_20261104.md ／ Swiper 11・Google Fonts はCDN（本番は同梱方針・§D）</p>
     </footer>
 
   </div>
@@ -455,6 +674,8 @@
         else { gallery.hero.params.speed = DUR_HERO; gallery.hero.autoplay.start(); }
       }
       if (on) zeroAllDelays();
+      /* 年表の縦線は、止まっている人には最初から全長で置く（§B-5: 年表の縦線は最初から全長） */
+      if (typeof tlUpdateLine === 'function') tlUpdateLine();
     }
     reduceInput.addEventListener('change', function () { setReduce(reduceInput.checked); });
 
@@ -858,6 +1079,298 @@
       seg.style.flexGrow = String(d.n);
       seg.style.flexBasis = '0';
     });
+
+    /* ===================== 追加ラウンド（2026-11-04）: パネル7〜12 =====================
+       実サイト例（mock/ には動きの実装が無い・分析台帳参照）の動きを、
+       正本 §B・§E の実測値に基づいて新しく組み直したもの。 */
+
+    /* ---- パネル7: 読み込み幕（§B-1・§E-6）。幕の合図は題字の animationend ---- */
+    var veilCurtain = document.getElementById('veil-curtain');
+    var veilTitle = document.getElementById('veil-title');
+    var veilState = { lifted: false };
+    gallery.veilState = veilState;
+
+    veilTitle.addEventListener('animationend', function () {
+      /* 題字の出現アニメが終わったこと = 幕が閉じる合図（§E-6 の条件そのもの） */
+      veilState.lifted = true;
+      veilCurtain.classList.add('is-lifted');
+    });
+
+    function veilReplay() {
+      veilState.lifted = false;
+      veilCurtain.classList.remove('is-lifted');
+      /* 紋章・題字のアニメを最初から再生し直す（animationend の再発火のため一度外す） */
+      [veilTitle].concat(Array.prototype.slice.call(veilCurtain.querySelectorAll('.veil-crest-path, .veil-crest-line')))
+        .forEach(function (el) {
+          el.style.animation = 'none';
+          void el.offsetWidth; /* reflow */
+          el.style.animation = '';
+        });
+    }
+    document.getElementById('veil-replay').addEventListener('click', veilReplay);
+    gallery.veilReplay = veilReplay;
+
+    /* ---- パネル8: 年表（§B-1 灯りのゆらぎ・§B-4 スクロール連動） ---- */
+    var TL_DATA = [
+      { year: '1899', text: '回廊の建設 — 聖堂の回廊が架け替えられる。竣工票は現存しない。' },
+      { year: '1904', text: '鐘楼の改修 — 鐘を2口へ増設。請負人の印が台帳に残る。' },
+      { year: '1912', text: '祝祭庁の開設 — 回廊沿いに事務棟が置かれる。' },
+      { year: '1926', text: '渡り廊下の延長 — 地下病院まで接続される。' },
+      { year: '1938', text: '灯りの改修 — 燭台から油灯へ。取付図は欠落。' },
+      { year: '1955', text: '戦後の復旧 — 焼損した梁の交換記録が残る。' },
+      { year: '1971', text: '保存の決議 — 現状のまま保存する旨を議決。' },
+      { year: '2003', text: '記録の整理 — 台帳と写真の照合が始まる。' }
+    ];
+    var tlScroller = document.getElementById('tl-scroller');
+    var tlLine = document.getElementById('tl-line');
+    var tlList = document.getElementById('tl-list');
+    TL_DATA.forEach(function (d) {
+      var li = document.createElement('li');
+      li.className = 'tl-item';
+      li.innerHTML =
+        '<span class="tl-dot" aria-hidden="true"></span>' +
+        '<span class="tl-year">' + d.year + '</span>' +
+        '<span class="tl-body">' + escapeHtml(d.text) + '</span>';
+      tlList.appendChild(li);
+    });
+    var tlItems = Array.prototype.slice.call(tlList.children);
+    var tlSeen = new Set();
+
+    /* 縦線は「見えた項目」の位置まで伸ばす（§B-4）。動きを減らす設定では最初から全長（§B-5） */
+    function tlUpdateLine() {
+      var lastSeen = -1;
+      tlItems.forEach(function (el, i) { if (el.classList.contains('is-seen')) lastSeen = i; });
+      var h = tlList.offsetHeight;
+      if (!state.reduce && lastSeen >= 0) {
+        h = tlItems[lastSeen].offsetTop + tlItems[lastSeen].offsetHeight / 2;
+      }
+      tlLine.style.height = h + 'px';
+    }
+    gallery.tlSeenCount = function () { return tlSeen.size; };
+    gallery.tlLineHeight = function () { return tlLine.style.height; };
+
+    if ('IntersectionObserver' in window) {
+      var tlObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !tlSeen.has(e.target)) {
+            /* 一度出たら戻さない（§B-4） */
+            tlSeen.add(e.target);
+            e.target.classList.add('is-seen');
+            tlUpdateLine();
+          }
+        });
+      }, { root: tlScroller, threshold: 0.6 });
+      tlItems.forEach(function (el) { tlObserver.observe(el); });
+    } else {
+      tlItems.forEach(function (el) { el.classList.add('is-seen'); });
+      tlUpdateLine();
+    }
+
+    /* ---- パネル9: 図形の漂い（§B-1・§A-1）はCSSのみ。検査用の読み取りを公開 ---- */
+    gallery.driftDurations = function () {
+      return Array.prototype.map.call(document.querySelectorAll('.drift-shape'), function (el) {
+        return getComputedStyle(el).animationDuration;
+      });
+    };
+
+    /* ---- パネル10: 出現の時間差（§E-4・§B-5） ---- */
+    var SG_DATA = ['青の階段', '雨あがりの渡り廊下', '灯りの機械室', '朝の待合室', '夕暮れの煙突', '冬支度の看板',
+      '静かな時計台', '古い貯水槽', '遠い自転車置場', '雪の昇降機', '灰の保存庫', '薄暮の正門'];
+    var sgLegacyList = document.getElementById('sg-list-legacy');
+    var sgIndexedList = document.getElementById('sg-list-indexed');
+    var sgStatus = document.getElementById('sg-status');
+    var sgTimers = [];
+
+    function sgMakeCard(no, title) {
+      var li = document.createElement('li');
+      li.className = 'sg-card';
+      li.innerHTML =
+        '<span class="sg-no">' + no + '</span><span class="sg-title">' + escapeHtml(title) + '</span>' +
+        '<span class="sg-delay">遅延 —</span>';
+      return li;
+    }
+    var sgLegacyCards = SG_DATA.map(function (t, i) {
+      var li = sgMakeCard(('00' + (i + 1)).slice(-2), t);
+      sgLegacyList.appendChild(li);
+      return li;
+    });
+    var sgIndexCards = SG_DATA.map(function (t, i) {
+      var li = sgMakeCard(('00' + (i + 1)).slice(-2), t);
+      sgIndexedList.appendChild(li);
+      return li;
+    });
+
+    function sgDelayLabel(el, ms, batchNo, globalNo) {
+      el.querySelector('.sg-delay').textContent =
+        '遅延 ' + ms + 'ms（その回 #' + batchNo + '／通し #' + globalNo + '）';
+    }
+    function sgReset() {
+      sgTimers.forEach(clearInterval);
+      sgTimers = [];
+      sgLegacyCards.concat(sgIndexCards).forEach(function (el) {
+        el.classList.remove('is-shown');
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+        el.style.animationDelay = '0ms';
+        el.querySelector('.sg-delay').textContent = '遅延 —';
+      });
+    }
+    function sgRun(mode) {
+      sgReset();
+      var STEP = cssMs('--stagger-card', 55);
+      var MAX = cssMs('--stagger-card-max', 480);
+      if (mode === 'burst') {
+        /* まとめて渡ってくる: 従来・改修とも 0..11番 ×55ms で遅れが付く */
+        sgLegacyCards.forEach(function (el, i) {
+          var ms = state.reduce ? 0 : Math.min(i * STEP, MAX);
+          el.classList.add('is-shown');
+          el.style.animationDelay = ms + 'ms';
+          sgDelayLabel(el, ms, i, i);
+        });
+        sgIndexCards.forEach(function (el, i) {
+          var ms = state.reduce ? 0 : Math.min(i * STEP, MAX);
+          el.classList.add('is-shown');
+          el.style.animationDelay = ms + 'ms';
+          sgDelayLabel(el, ms, i, i);
+        });
+        sgStatus.textContent = 'まとめて出した: どちらの方式でも時間差が付く';
+      } else {
+        /* 1枚ずつ渡ってくる（ゆっくり読む人）: 従来は番号が常に0、改修は通し番号で遅れが付く */
+        sgLegacyCards.forEach(function (el, i) {
+          sgTimers.push(setTimeout(function () {
+            var ms = state.reduce ? 0 : 0; /* その回の順番 = 常に0（§E-4 の不具合の本体） */
+            el.classList.add('is-shown');
+            el.style.animationDelay = ms + 'ms';
+            sgDelayLabel(el, ms, 0, i);
+          }, state.reduce ? 0 : i * 420));
+        });
+        sgIndexCards.forEach(function (el, i) {
+          sgTimers.push(setTimeout(function () {
+            var ms = state.reduce ? 0 : Math.min(i * STEP, MAX);
+            el.classList.add('is-shown');
+            el.style.animationDelay = ms + 'ms';
+            sgDelayLabel(el, ms, 0, i);
+          }, state.reduce ? 0 : i * 420));
+        });
+        sgStatus.textContent = '1枚ずつ出した: 従来は遅れ0（時間差なし）／改修は通し番号で遅れあり';
+      }
+      gallery.sgMode = mode;
+    }
+    document.getElementById('sg-slow').addEventListener('click', function () { sgRun('slow'); });
+    document.getElementById('sg-burst').addEventListener('click', function () { sgRun('burst'); });
+    gallery.sgRun = sgRun;
+    gallery.sgDelays = function (col) {
+      var list = col === 'legacy' ? sgLegacyCards : sgIndexCards;
+      return list.filter(function (el) { return el.classList.contains('is-shown'); })
+        .map(function (el) { return getComputedStyle(el).animationDelay; });
+    };
+
+    /* ---- パネル11: 額の接続（§B-3 を標準APIで再現・§D 使える技法） ---- */
+    var FL_DATA = [
+      { no: 'P-012', cat: '人物', title: '白石 千鶴', year: '1913', desc: '戦前から戦後にかけて構内の記録写真を残した。出身と経歴の一次資料が未確認。' },
+      { no: 'W-007', cat: '作品', title: '灯りの渡り廊下', year: '1968', desc: '印画紙の裏に撮影年と署名がある。原板の現物を確認済み。' },
+      { no: 'W-013', cat: '作品', title: '冬の貯水槽', year: '1971', desc: '出典の記載がなく、来歴が追えていない。複製と考えられる印痕がある。' },
+      { no: 'R-021', cat: '記録', title: '組立棟の巡視', year: '1988', desc: '日付の記載に補足が必要。担当者の印は判読できている。' },
+      { no: 'P-003', cat: '人物', title: '早瀬 守', year: '1901', desc: '人事記録と署名原簿が一致。生年は二つの資料で確認済み。' },
+      { no: 'W-019', cat: '作品', title: '静かな昇降機', year: '1975', desc: '題名は台帳から。撮影者は推定のまま確定していない。' }
+    ];
+    var flCards = document.getElementById('fl-cards');
+    var flDetail = document.getElementById('fl-detail');
+    var flStatus = document.getElementById('fl-status');
+    var flTimer = null;
+
+    FL_DATA.forEach(function (d, i) {
+      var li = document.createElement('li');
+      li.className = 'fl-card';
+      li.dataset.idx = String(i);
+      li.setAttribute('role', 'button');
+      li.setAttribute('tabindex', '0');
+      li.innerHTML =
+        '<div class="fl-card-top"><span class="fl-card-title">' + escapeHtml(d.title) + '</span></div>' +
+        '<p class="fl-card-meta">' + d.cat + '｜' + d.no + '｜' + d.year + '</p>';
+      flCards.appendChild(li);
+    });
+
+    function flUpdateDetail(d) {
+      flDetail.querySelector('.fl-meta').textContent = d.cat + '｜記録番号 ' + d.no + '｜' + d.year;
+      flDetail.querySelector('.fl-title').textContent = d.title;
+      flDetail.querySelector('.fl-desc').textContent = d.desc;
+    }
+    function flStatusLine(method) {
+      flStatus.textContent = '方式: ' + method + ' ／ 目印の数: ' +
+        flCards.querySelectorAll('.is-marker').length;
+    }
+    function flSelect(idx, li) {
+      /* 目印は常に1つ（§B-3）: 先にすべて外してから付ける */
+      flCards.querySelectorAll('.is-marker').forEach(function (el) { el.classList.remove('is-marker'); });
+      li.classList.add('is-marker');
+      gallery.flMarkerCount = flCards.querySelectorAll('.is-marker').length;
+
+      var d = FL_DATA[idx];
+      var useVT = !state.reduce && typeof document.startViewTransition === 'function';
+      if (useVT) {
+        /* 押した額に接続の名前を付け、切替のコールバック内で詳細の額へ移す。
+           同時に2つの名前は存在しない（= §B-3 の「目印は1つ」のAPI上の対応物） */
+        li.style.viewTransitionName = 'fl-link';
+        var vt = document.startViewTransition(function () {
+          li.style.viewTransitionName = '';
+          flDetail.style.viewTransitionName = 'fl-link';
+          flUpdateDetail(d);
+        });
+        vt.finished.then(function () {
+          flDetail.style.viewTransitionName = '';
+          gallery.flMethod = 'view-transition API（§D 使える技法・240ms）';
+          flStatusLine(gallery.flMethod);
+        }).catch(function () {
+          /* 切替がスキップされた場合も、名前の後始末だけは行う */
+          flDetail.style.viewTransitionName = '';
+          li.style.viewTransitionName = '';
+          gallery.flMethod = 'view-transition API（切替はスキップされた）';
+          flStatusLine(gallery.flMethod);
+        });
+      } else {
+        /* フォールバック: 240msの淡い切替（F-3 と同じ方式）。動きを減らす設定では即時 */
+        var method = state.reduce ? '即時（動きを減らす設定）' : '淡い切替 240ms（API未対応の環境向け）';
+        if (state.reduce) {
+          clearTimeout(flTimer);
+          flUpdateDetail(d);
+        } else {
+          flDetail.classList.add('is-switching');
+          clearTimeout(flTimer);
+          flTimer = setTimeout(function () {
+            flUpdateDetail(d);
+            flDetail.classList.remove('is-switching');
+          }, DUR_SWITCH / 2);
+        }
+        gallery.flMethod = method;
+        flStatusLine(method);
+      }
+    }
+    flCards.addEventListener('click', function (e) {
+      var li = e.target.closest('.fl-card');
+      if (li) flSelect(+li.dataset.idx, li);
+    });
+    flCards.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var li = e.target.closest('.fl-card');
+      if (li) { e.preventDefault(); flSelect(+li.dataset.idx, li); }
+    });
+    flSelect(0, flCards.children[0]);
+
+    /* ---- パネル12: 装飾の部品（§C-2）。出現1種だけ呼吸層で再現 ---- */
+    var ornCorners = Array.prototype.slice.call(document.querySelectorAll('#orn-frame .orn-corner'));
+    ornCorners.forEach(function (el) { el.classList.add('is-hidden'); });
+    function ornReplay() {
+      ornCorners.forEach(function (el) {
+        el.classList.remove('is-hidden');
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+      });
+    }
+    document.getElementById('orn-replay').addEventListener('click', ornReplay);
+    gallery.ornReplay = ornReplay;
 
     /* ===================== 初期状態の適用 ===================== */
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
