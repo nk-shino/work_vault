@@ -1,0 +1,97 @@
+/* ============================================================
+   動きの追加層（motion.css）— 既存デザインの上に重ねるのみ
+   前ラウンド（コード併記モック・サイト適用モック）で確立した語彙のうち、
+   本番構成に合う4種を最小限で適用する:
+   1文字リビール / IO出現 / stagger / 控えめhover（読み込み幕は使わない）
+
+   規則:
+   - 隠し状態はすべて .js-armed 配下。JS が動かない環境では何も隠れない
+   - 出現は animation で付ける（既存・将来の transition 設定を壊さない）
+   - 静止状態では既存の色・額縁・題箋・3:4枠の見た目を変えない
+   - prefers-reduced-motion は style.css の全般停止に従う（motion.js も発火させない）
+   ============================================================ */
+
+:root {
+  --m-rise: 16px;        /* stagger の立ち上がり距離 */
+  --m-io-dist: 24px;     /* IO出現の移動距離 */
+  --m-dur: 600ms;        /* 文字・カードの立ち上がり */
+  --m-io-fade: 700ms;    /* IO出現の不透明度（ease-out-cubic 相当） */
+  --m-io-move: 900ms;    /* IO出現の移動（ease-out-quint 相当） */
+  --m-ease-o: cubic-bezier(0.33, 1, 0.68, 1);
+  --m-ease-t: cubic-bezier(0.22, 1, 0.36, 1);
+  --m-stagger: 70ms;     /* カード1枚あたりの遅れ */
+  --m-char-step: 60ms;   /* 1文字あたりの遅れ */
+  --m-tint: rgba(124, 29, 36, 0.045);  /* hover の色づき（ライト=深紅基準） */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --m-tint: rgba(201, 161, 59, 0.05);  /* ダーク=金基準 */
+  }
+}
+
+/* ---------- 1文字リビール（data-motion="chars"） ---------- */
+/* 1文字が --index 番目の遅れで立ち上がる（span 化と合図は motion.js） */
+.js-armed [data-motion~="chars"] .m-char { opacity: 0; }
+.js-armed [data-motion~="chars"].m-chars-on .m-char {
+  opacity: 1;
+  animation:
+    m-fade var(--m-dur) ease backwards,
+    m-char-rise var(--m-dur) var(--ease) backwards;
+  animation-delay:
+    calc(var(--index, 0) * var(--m-char-step)),
+    calc(var(--index, 0) * var(--m-char-step));
+}
+@keyframes m-fade { from { opacity: 0; } }
+@keyframes m-char-rise { from { transform: translateY(0.6em); } }
+
+/* ---------- セクション出現（data-motion="reveal"・下20%で発火・一度だけ） ---------- */
+/* 不透明度と移動に別のイージングを当てる */
+.js-armed [data-motion~="reveal"] { opacity: 0; }
+.js-armed [data-motion~="reveal"].m-on {
+  opacity: 1;
+  animation:
+    m-io-fade var(--m-io-fade) var(--m-ease-o) backwards,
+    m-io-rise var(--m-io-move) var(--m-ease-t) backwards;
+}
+@keyframes m-io-fade { from { opacity: 0; } }
+@keyframes m-io-rise { from { transform: translateY(var(--m-io-dist)); } }
+
+/* ---------- stagger（人物一覧 #grid・初回描画のみ） ---------- */
+/* motion.js が初回描画だけ data-motion-state="first" を付け、
+   再描画（絞り込み）では "done" に切り替えて即時表示にする */
+.m-stagger[data-motion-state="first"] > .card {
+  animation:
+    m-fade var(--m-dur) ease backwards,
+    m-rise var(--m-dur) var(--ease) backwards;
+  animation-delay:
+    calc(var(--index, 0) * var(--m-stagger)),
+    calc(var(--index, 0) * var(--m-stagger));
+}
+@keyframes m-rise { from { transform: translateY(var(--m-rise)); } }
+
+/* ---------- 行マスクのフォールバック（GSAP 未読時・単純フェード） ---------- */
+.js-armed .m-lines-armed { opacity: 0; }
+.m-lines-fallback { animation: m-fade 700ms ease both; }
+
+/* ---------- 控えめhover ---------- */
+/* masthead の nav: 既存の色変えに、下線が左から伸びる応答を足す。
+   現在地（aria-current）は既存の下線があるため対象外 */
+header.masthead nav a {
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat left bottom / 0% 1px;
+  transition: background-size var(--dur-base) var(--ease);
+}
+header.masthead nav a:not([aria-current="page"]):hover {
+  background-size: 100% 1px;
+}
+
+/* カード類: 枠を一段だけ濃くし、背景をうっすら色づける（額縁の構えは変えない） */
+.card {
+  transition:
+    background-color var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease);
+}
+.card:hover {
+  background-color: var(--m-tint);
+  border-color: var(--rule-strong);
+}

@@ -1,0 +1,332 @@
+/* モック共通スタイル。
+   手引き §4 の原則と §3 の制約に沿う:
+   - 色はすべて CSS 変数（16進数の直書きはこのブロック内のみ・実サイトでは :root に集約）
+   - ライト=深紅 / ダーク=金、罫線は額縁
+   - 余白は --space-*、行間 1.85
+   - prefers-reduced-motion 対応 */
+
+:root {
+  --bg: #f6f1ea;
+  --bg-raise: #fdfaf5;
+  --bg-sink: #ece4d8;
+  --text: #2b2320;
+  --text-sub: #6f625a;
+  --accent: #7c1d24;
+  --foil: #9a7b2d;
+  --blue: #27415e;
+  --blood: #7c1d24;
+  --rule: rgba(43, 35, 32, 0.16);
+  --rule-strong: rgba(43, 35, 32, 0.34);
+  --rule-solid: rgba(124, 29, 36, 0.55);
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --dur-base: 240ms;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --grain: rgba(43, 35, 32, 0.03);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #191410;
+    --bg-raise: #221b15;
+    --bg-sink: #120e0b;
+    --text: #e8ddcd;
+    --text-sub: #a8937a;
+    --accent: #c9a13b;
+    --foil: #c9a13b;
+    --blue: #7d99b8;
+    --blood: #a33b41;
+    --rule: rgba(232, 221, 205, 0.14);
+    --rule-strong: rgba(232, 221, 205, 0.3);
+    --rule-solid: rgba(201, 161, 59, 0.5);
+    --grain: rgba(232, 221, 205, 0.03);
+  }
+}
+
+* { box-sizing: border-box; }
+
+a {
+  color: var(--blue);
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+
+a:hover { color: var(--accent); }
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+body {
+  margin: 0;
+  background:
+    repeating-linear-gradient(0deg, var(--grain) 0 1px, transparent 1px 3px),
+    var(--bg);
+  color: var(--text);
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  line-height: 1.85;
+}
+
+header.masthead {
+  border-bottom: 1px solid var(--rule-strong);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+header.masthead .site {
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+
+header.masthead .site small {
+  display: block;
+  color: var(--text-sub);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+header.masthead nav a {
+  color: var(--text-sub);
+  text-decoration: none;
+  margin-right: var(--space-2);
+  font-size: 13px;
+  border-bottom: 1px solid transparent;
+}
+
+header.masthead nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--rule-solid);
+}
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) calc(var(--space-4) * 2);
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--space-1);
+}
+
+h1 + p.lead {
+  color: var(--text-sub);
+  font-size: 13px;
+  margin: 0 0 var(--space-4);
+}
+
+section { margin-bottom: var(--space-4); }
+
+h2 {
+  font-size: 15px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  border-left: 3px solid var(--rule-solid);
+  padding-left: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+/* 額縁: 罫線は区切りではなく絵を飾る枠 */
+.frame {
+  border: 1px solid var(--rule);
+  outline: 1px solid var(--rule);
+  outline-offset: 3px;
+  background: var(--bg-raise);
+  padding: var(--space-3);
+}
+
+.chips {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.chip {
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text-sub);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: var(--rule-solid);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+input[type="search"] {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  padding: 4px 10px;
+  width: min(320px, 100%);
+}
+
+input[type="search"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--space-3);
+}
+
+/* 人物一覧: 額縁の中に題箋（画像欄が空のあいだの差し替え表示） */
+.card {
+  border: 1px solid var(--rule);
+  background: var(--bg-raise);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 9px;
+}
+
+.card .plate {
+  border: 1px solid var(--rule);
+  aspect-ratio: 3 / 4;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(45deg, var(--grain) 0 2px, transparent 2px 6px),
+    var(--bg-sink);
+  color: var(--text-sub);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-bottom: var(--space-1);
+}
+
+.card .name {
+  font-size: 14px;
+}
+
+.card .role {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--rule);
+  color: var(--text-sub);
+  padding: 0 6px;
+  margin-left: var(--space-1);
+}
+
+.badge.ok { color: var(--accent); border-color: var(--rule-solid); }
+.badge.sup { color: var(--foil); border-color: var(--foil); }
+.badge.none { color: var(--text-sub); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+caption {
+  text-align: left;
+  color: var(--text-sub);
+  font-size: 12px;
+  margin-bottom: var(--space-1);
+}
+
+th, td {
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  padding: 6px 10px;
+  vertical-align: top;
+}
+
+th {
+  font-weight: normal;
+  color: var(--text-sub);
+  border-bottom-color: var(--rule-strong);
+}
+
+/* 空状態: 恒常0件と絞り込み0件で文言を分ける（指摘1・2） */
+.empty {
+  border: 1px dashed var(--rule-strong);
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  color: var(--text-sub);
+}
+
+.empty .mark {
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  margin-bottom: var(--space-2);
+}
+
+.empty a { color: var(--accent); }
+
+.result-line {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin: 0 0 var(--space-2);
+}
+
+/* 詳細: 主張と根拠を並べる */
+dl.facts {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  gap: 4px var(--space-2);
+  font-size: 13px;
+  margin: 0;
+}
+
+dl.facts dt { color: var(--text-sub); }
+dl.facts dd { margin: 0; }
+
+ol.srcs { font-size: 12px; color: var(--text-sub); padding-left: 1.4em; margin: var(--space-2) 0 0; }
+ol.srcs li { margin-bottom: 2px; }
+
+/* 案B/C 追加分: 行形式と記録カード */
+tr th[scope="row"] { font-weight: normal; color: var(--text); }
+td.app { color: var(--text-sub); font-size: 12px; }
+select { font-family: inherit; }
+
+.card .appears, .card .src { font-size: 12px; color: var(--text-sub); }
+.card .appears a { color: var(--blue); }
+.card .src a { color: var(--blue); }
+.src-none { color: var(--text-sub); border-bottom: 1px dashed var(--rule); }
+
+footer.page-foot {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-3) var(--space-4);
+  color: var(--text-sub);
+  font-size: 11px;
+}
+
+@media (max-width: 768px) {
+  header.masthead { padding: var(--space-2) var(--space-3); }
+  main { padding: var(--space-3) var(--space-2) var(--space-4); }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  dl.facts { grid-template-columns: 7em 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
