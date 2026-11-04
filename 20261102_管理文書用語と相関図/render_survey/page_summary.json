@@ -1,0 +1,815 @@
+[
+  {
+    "book": "Pana-CIM",
+    "sheet": "7-5仮_サービス起動停止",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\7-5仮_サービス起動停止.pdf",
+    "page_count": 22,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "チェックシート(月次・異常時)",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\チェックシート(月次・異常時).pdf",
+    "page_count": 4,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "バックアップ",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\バックアップ.pdf",
+    "page_count": 24,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPPPPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "付録 引用元と確認範囲",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\付録 引用元と確認範囲.pdf",
+    "page_count": 14,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "会議課題一覧(一時)",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\会議課題一覧(一時).pdf",
+    "page_count": 30,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "復旧",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\復旧.pdf",
+    "page_count": 10,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "月次再起動",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\月次再起動.pdf",
+    "page_count": 8,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "構成と管理情報",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\構成と管理情報.pdf",
+    "page_count": 3,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "用語",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\用語.pdf",
+    "page_count": 3,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "異常時の対応",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\異常時の対応.pdf",
+    "page_count": 44,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "目次",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\目次.pdf",
+    "page_count": 2,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "相関図",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\相関図.pdf",
+    "page_count": 1,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 841.7,
+        "h_pt": 595.2,
+        "orientation": "L"
+      }
+    ],
+    "orientations": "L"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "相関図_old",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\相関図_old.pdf",
+    "page_count": 1,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "P"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "管理体制",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\管理体制.pdf",
+    "page_count": 3,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "表紙",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\表紙.pdf",
+    "page_count": 2,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PP"
+  },
+  {
+    "book": "Pana-CIM",
+    "sheet": "要確認事項一覧",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\要確認事項一覧.pdf",
+    "page_count": 6,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "チェックシート(日次)",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\チェックシート(日次).pdf",
+    "page_count": 4,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "チェックシート(月次・異常時)",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\チェックシート(月次・異常時).pdf",
+    "page_count": 4,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "バックアップ",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\バックアップ.pdf",
+    "page_count": 12,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "会議課題一覧(一時)",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\会議課題一覧(一時).pdf",
+    "page_count": 30,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "定期管理",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\定期管理.pdf",
+    "page_count": 4,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "引用と部品照合",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\引用と部品照合.pdf",
+    "page_count": 10,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "復旧",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\復旧.pdf",
+    "page_count": 10,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "日次点検",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\日次点検.pdf",
+    "page_count": 3,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "構成と管理情報",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\構成と管理情報.pdf",
+    "page_count": 8,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "用語",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\用語.pdf",
+    "page_count": 3,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "異常時の対応",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\異常時の対応.pdf",
+    "page_count": 4,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "目次",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\目次.pdf",
+    "page_count": 2,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "相関図",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\相関図.pdf",
+    "page_count": 1,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 841.7,
+        "h_pt": 595.2,
+        "orientation": "L"
+      }
+    ],
+    "orientations": "L"
+  },
+  {
+    "book": "LNB",
+    "sheet": "相関図_old",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\相関図_old.pdf",
+    "page_count": 1,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "P"
+  },
+  {
+    "book": "LNB",
+    "sheet": "管理体制",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\管理体制.pdf",
+    "page_count": 2,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "表紙",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\表紙.pdf",
+    "page_count": 2,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PP"
+  },
+  {
+    "book": "LNB",
+    "sheet": "要確認事項一覧",
+    "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\要確認事項一覧.pdf",
+    "page_count": 10,
+    "first3": [
+      {
+        "page": 1,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 2,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      },
+      {
+        "page": 3,
+        "w_pt": 595.2,
+        "h_pt": 841.7,
+        "orientation": "P"
+      }
+    ],
+    "orientations": "PPPPPPPPPP"
+  }
+]

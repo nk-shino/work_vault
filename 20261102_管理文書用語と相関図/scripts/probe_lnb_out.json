@@ -1,0 +1,1104 @@
+{
+ "sha": "67b8cc54df23db2b41b8d27fb85246d4b77528f12b62eca489a740e8dba1ce03",
+ "sheets": [
+  {
+   "name": "表紙",
+   "visible": -1,
+   "usedrange": "A1:Y36",
+   "used_rows": 36,
+   "used_cols": 25,
+   "shapes": 20,
+   "hpagebreaks": [
+    {
+     "row": 36,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 14.17,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 14.17
+    },
+    "right_header": "",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"&10  ",
+    "left_footer": "",
+    "right_footer": ""
+   }
+  },
+  {
+   "name": "目次",
+   "visible": -1,
+   "usedrange": "A1:AZ60",
+   "used_rows": 60,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": 2.0,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "用語",
+   "visible": -1,
+   "usedrange": "A1:AZ32",
+   "used_rows": 32,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "構成と管理情報",
+   "visible": -1,
+   "usedrange": "A1:AZ107",
+   "used_rows": 107,
+   "used_cols": 52,
+   "shapes": 3,
+   "hpagebreaks": [
+    {
+     "row": 31,
+     "type": -4135
+    },
+    {
+     "row": 56,
+     "type": -4135
+    },
+    {
+     "row": 81,
+     "type": -4135
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "相関図",
+   "visible": -1,
+   "usedrange": "A1:AZ58",
+   "used_rows": 58,
+   "used_cols": 52,
+   "shapes": 75,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 2,
+    "paper": 9,
+    "zoom": false,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "$A$1:$AY$60",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 28.35,
+     "RightMargin": 28.35,
+     "TopMargin": 28.35,
+     "BottomMargin": 28.35,
+     "HeaderMargin": 14.17,
+     "FooterMargin": 14.17
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "相関図_old",
+   "visible": -1,
+   "usedrange": "A1:AZ10",
+   "used_rows": 10,
+   "used_cols": 52,
+   "shapes": 34,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "$A$1:$AY$58",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "管理体制",
+   "visible": -1,
+   "usedrange": "A1:AZ19",
+   "used_rows": 19,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "日次点検",
+   "visible": -1,
+   "usedrange": "A1:AZ121",
+   "used_rows": 121,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "定期管理",
+   "visible": -1,
+   "usedrange": "A1:AZ133",
+   "used_rows": 133,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4135
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "$A$1:$AZ$100",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "バックアップ",
+   "visible": -1,
+   "usedrange": "A1:AZ59",
+   "used_rows": 59,
+   "used_cols": 52,
+   "shapes": 3,
+   "hpagebreaks": [
+    {
+     "row": 19,
+     "type": -4135
+    },
+    {
+     "row": 27,
+     "type": -4135
+    },
+    {
+     "row": 40,
+     "type": -4135
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "復旧",
+   "visible": -1,
+   "usedrange": "A1:BP335",
+   "used_rows": 335,
+   "used_cols": 68,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "error": "(-2147352567, '例外が発生しました。', (0, None, None, None, 0, -2147352565), None)"
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "異常時の対応",
+   "visible": -1,
+   "usedrange": "A1:AZ144",
+   "used_rows": 144,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "チェックシート(日次)",
+   "visible": -1,
+   "usedrange": "A1:AZ171",
+   "used_rows": 171,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "チェックシート(月次・異常時)",
+   "visible": -1,
+   "usedrange": "A1:AZ78",
+   "used_rows": 78,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "会議課題一覧(一時)",
+   "visible": -1,
+   "usedrange": "A1:BR528",
+   "used_rows": 528,
+   "used_cols": 70,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4105
+    },
+    {
+     "row": 115,
+     "type": -4105
+    },
+    {
+     "row": 171,
+     "type": -4105
+    },
+    {
+     "row": 228,
+     "type": -4105
+    },
+    {
+     "row": 283,
+     "type": -4105
+    },
+    {
+     "row": 340,
+     "type": -4105
+    },
+    {
+     "row": 395,
+     "type": -4105
+    },
+    {
+     "row": 449,
+     "type": -4105
+    },
+    {
+     "row": 492,
+     "type": -4135
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  },
+  {
+   "name": "要確認事項一覧",
+   "visible": -1,
+   "usedrange": "A1:AZ204",
+   "used_rows": 204,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 58,
+     "type": -4105
+    },
+    {
+     "row": 119,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 50.4,
+     "RightMargin": 50.4,
+     "TopMargin": 54.0,
+     "BottomMargin": 54.0,
+     "HeaderMargin": 21.6,
+     "FooterMargin": 21.6
+    },
+    "right_header": "",
+    "center_footer": "",
+    "left_footer": "",
+    "right_footer": ""
+   }
+  },
+  {
+   "name": "申し送り(認証情報)",
+   "visible": -1,
+   "shapes": 0,
+   "pagesetup_only": "credential sheet - no range read",
+   "orientation": 1,
+   "first_page": -4105
+  },
+  {
+   "name": "引用と部品照合",
+   "visible": -1,
+   "usedrange": "A1:AZ313",
+   "used_rows": 313,
+   "used_cols": 52,
+   "shapes": 0,
+   "hpagebreaks": [
+    {
+     "row": 59,
+     "type": -4105
+    },
+    {
+     "row": 116,
+     "type": -4105
+    },
+    {
+     "row": 172,
+     "type": -4105
+    },
+    {
+     "row": 229,
+     "type": -4105
+    }
+   ],
+   "pagesetup": {
+    "orientation": 1,
+    "paper": 9,
+    "zoom": 100,
+    "fit_w": 1,
+    "fit_h": 1,
+    "print_area": "",
+    "title_rows": "$1:$3",
+    "first_page": -4105,
+    "margins_pt": {
+     "LeftMargin": 62.36,
+     "RightMargin": 36.85,
+     "TopMargin": 42.52,
+     "BottomMargin": 56.69,
+     "HeaderMargin": 42.52,
+     "FooterMargin": 28.35
+    },
+    "right_header": "\n&P",
+    "center_footer": "&\"ＭＳ ゴシック,標準\"様式 NR4030-0300-A3",
+    "left_footer": "&\"ＭＳ ゴシック,標準\"　　　NR4030",
+    "right_footer": "&\"ＭＳ ゴシック,標準\"日本光電"
+   }
+  }
+ ],
+ "errors": [],
+ "sheet_order": [
+  "表紙",
+  "目次",
+  "用語",
+  "構成と管理情報",
+  "相関図",
+  "相関図_old",
+  "管理体制",
+  "日次点検",
+  "定期管理",
+  "バックアップ",
+  "復旧",
+  "異常時の対応",
+  "チェックシート(日次)",
+  "チェックシート(月次・異常時)",
+  "会議課題一覧(一時)",
+  "要確認事項一覧",
+  "申し送り(認証情報)",
+  "引用と部品照合"
+ ],
+ "sheet_count": 18,
+ "表紙_shapes": [
+  {
+   "name": "Group 49",
+   "id": 2,
+   "type": 6,
+   "tl": "$A$24",
+   "br": "$A$24",
+   "top": 587.4,
+   "left": 0.6,
+   "w": 11.4,
+   "h": 12.0
+  },
+  {
+   "name": "Group 52",
+   "id": 5,
+   "type": 6,
+   "tl": "$A$23",
+   "br": "$A$23",
+   "top": 568.8,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 55",
+   "id": 8,
+   "type": 6,
+   "tl": "$A$22",
+   "br": "$A$22",
+   "top": 550.8,
+   "left": 0.6,
+   "w": 11.4,
+   "h": 12.0
+  },
+  {
+   "name": "Group 58",
+   "id": 11,
+   "type": 6,
+   "tl": "$A$21",
+   "br": "$A$21",
+   "top": 531.6,
+   "left": 0.6,
+   "w": 11.4,
+   "h": 12.0
+  },
+  {
+   "name": "Group 61",
+   "id": 14,
+   "type": 6,
+   "tl": "$A$20",
+   "br": "$A$20",
+   "top": 513.0,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 64",
+   "id": 17,
+   "type": 6,
+   "tl": "$A$19",
+   "br": "$A$19",
+   "top": 494.4,
+   "left": 0.6,
+   "w": 13.2,
+   "h": 12.0
+  },
+  {
+   "name": "Group 67",
+   "id": 20,
+   "type": 6,
+   "tl": "$A$18",
+   "br": "$A$18",
+   "top": 475.8,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 79",
+   "id": 23,
+   "type": 6,
+   "tl": "$A$30",
+   "br": "$A$30",
+   "top": 699.0,
+   "left": 0.6,
+   "w": 11.4,
+   "h": 12.0
+  },
+  {
+   "name": "Group 82",
+   "id": 26,
+   "type": 6,
+   "tl": "$A$29",
+   "br": "$A$29",
+   "top": 680.4,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 85",
+   "id": 29,
+   "type": 6,
+   "tl": "$A$28",
+   "br": "$A$28",
+   "top": 661.8,
+   "left": 0.6,
+   "w": 13.2,
+   "h": 12.0
+  },
+  {
+   "name": "Group 88",
+   "id": 32,
+   "type": 6,
+   "tl": "$A$27",
+   "br": "$A$27",
+   "top": 643.2,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 91",
+   "id": 35,
+   "type": 6,
+   "tl": "$A$27",
+   "br": "$A$27",
+   "top": 640.2,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 0.0
+  },
+  {
+   "name": "Group 100",
+   "id": 38,
+   "type": 6,
+   "tl": "$A$26",
+   "br": "$A$26",
+   "top": 624.6,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Freeform 104",
+   "id": 41,
+   "type": 5,
+   "tl": "$A$25",
+   "br": "$A$25",
+   "top": 606.0,
+   "left": 0.6,
+   "w": 10.8,
+   "h": 12.0
+  },
+  {
+   "name": "Text Box 105",
+   "id": 42,
+   "type": 17,
+   "tl": "$A$25",
+   "br": "$A$25",
+   "top": 608.2,
+   "left": 5.4,
+   "w": 9.3,
+   "h": 9.0
+  },
+  {
+   "name": "Group 109",
+   "id": 43,
+   "type": 6,
+   "tl": "$A$17",
+   "br": "$A$17",
+   "top": 457.2,
+   "left": 0.6,
+   "w": 11.4,
+   "h": 12.0
+  },
+  {
+   "name": "Group 112",
+   "id": 46,
+   "type": 6,
+   "tl": "$A$16",
+   "br": "$A$16",
+   "top": 438.6,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "Group 115",
+   "id": 49,
+   "type": 6,
+   "tl": "$A$15",
+   "br": "$A$15",
+   "top": 420.0,
+   "left": 0.6,
+   "w": 13.2,
+   "h": 12.0
+  },
+  {
+   "name": "Group 118",
+   "id": 52,
+   "type": 6,
+   "tl": "$A$14",
+   "br": "$A$14",
+   "top": 401.4,
+   "left": 0.6,
+   "w": 12.0,
+   "h": 12.0
+  },
+  {
+   "name": "直線コネクタ 2",
+   "id": 55,
+   "type": 9,
+   "tl": "$T$14",
+   "br": "$Z$34",
+   "top": 398.4,
+   "left": 369.6,
+   "w": 114.0,
+   "h": 372.0
+  }
+ ],
+ "表紙_x1_u12": {
+  "X1": "null",
+  "U12": "null"
+ },
+ "表紙_merges_n": 0,
+ "目次_cols": {
+  "A": 1.11,
+  "B": 1.11,
+  "C": 1.11,
+  "D": 1.11,
+  "J": 1.11,
+  "K": 1.11,
+  "AY": 1.11,
+  "AZ": 2.56
+ },
+ "目次_rowh": {
+  "6": 12.8,
+  "7": 12.8,
+  "8": 12.8,
+  "9": 12.8,
+  "10": 12.8,
+  "11": 12.8,
+  "12": 12.8,
+  "13": 12.8,
+  "14": 12.8,
+  "15": 12.8,
+  "16": 12.8,
+  "17": 12.8,
+  "18": 12.8,
+  "19": 12.8,
+  "20": 12.8,
+  "21": 12.8,
+  "22": 12.8
+ },
+ "目次_merges": {},
+ "目次_vals": {
+  "A8": "2-2",
+  "C8": "2-2",
+  "B8": "相関図",
+  "J10": "点検項目は未確定。聞き取り後に確定",
+  "J15": "列名は仮。§4確定後に確定",
+  "J17": "一時掲載。正本は各管理書(md)",
+  "J19": "値は本書に書かない",
+  "A22": "※",
+  "B22": "削除: 目的と適用範囲 / 記録と文書管理(Pana-CIM と共通の削除決定。会議での再確認を推奨)",
+  "C21": "15．",
+  "C22": "16．"
+ },
+ "構成_pics": [
+  {
+   "name": "img_K31",
+   "id": 3,
+   "type": 13,
+   "tl": "$C$31",
+   "br": "$AB$54",
+   "top": 433.2,
+   "left": 20.4,
+   "w": 259.2,
+   "h": 300.0
+  },
+  {
+   "name": "img_K56",
+   "id": 5,
+   "type": 13,
+   "tl": "$C$56",
+   "br": "$AC$79",
+   "top": 748.2,
+   "left": 20.4,
+   "w": 272.5,
+   "h": 300.0
+  },
+  {
+   "name": "img_K81",
+   "id": 7,
+   "type": 13,
+   "tl": "$C$80",
+   "br": "$AJ$100",
+   "top": 1063.2,
+   "left": 20.4,
+   "w": 340.0,
+   "h": 247.0
+  }
+ ],
+ "構成_band_pt": {
+  "A_AZ": 538.2,
+  "C_AZ": 517.8
+ },
+ "構成_cap_rowh": {
+  "55": 12.8,
+  "80": 12.8,
+  "101": 12.8
+ },
+ "構成_vals": {
+  "C8": "システム名(正式名称)：iLNB(統合ライン管理システム)",
+  "C9": "ソフトウェア：iLNB",
+  "C14": "他システムとの連携：Pana-CIM のデータを参照。製品仕様としては E-Link・GEM通信・PLC通信に対応。実際の接続先とデータの向きは未確認",
+  "C17": "＊保管庫内の資料から確認できた範囲。11_USBミラー_E に残っていたデスクトップのショートカット3件(L1_LNB.url L2_LNB.url L3_LNB.url)から読み取った。",
+  "C55": "図1 LNB構成情報画面(出典：LWS 実機画面 2026-10-14 撮影。要確認34の実物。認証IDは伏字)",
+  "C80": "図2 個別スイッチ画面(出典：LWS 実機画面 2026-10-14 撮影。要確認36：192.168.0.1が赤表示)",
+  "C101": "図3 再起動系メニュー(出典：LWS 実機画面 2026-10-14 撮影。要確認30の実物：3ボタンを確認)",
+  "A103": "2-3. 相関図",
+  "C104": "参照：「相関図」シートを参照。元坯:Pana-CIM管理手順書の相関図(Stage 5·2026-10-28確定)。LNB の箱と Pana-CIM の箱の間のデータの向きは、図では引いてあるが実機で未確認。"
+ },
+ "bk_pics": [
+  {
+   "name": "img_B19",
+   "id": 3,
+   "type": 13,
+   "tl": "$C$19",
+   "br": "$M$25",
+   "top": 280.2,
+   "left": 20.4,
+   "w": 103.5,
+   "h": 84.0
+  },
+  {
+   "name": "img_B27",
+   "id": 5,
+   "type": 13,
+   "tl": "$C$27",
+   "br": "$Q$38",
+   "top": 381.0,
+   "left": 20.4,
+   "w": 144.8,
+   "h": 145.5
+  },
+  {
+   "name": "img_B40",
+   "id": 7,
+   "type": 13,
+   "tl": "$C$40",
+   "br": "$AI$54",
+   "top": 544.8,
+   "left": 20.4,
+   "w": 332.2,
+   "h": 184.5
+  }
+ ],
+ "bk_vals": {
+  "C15": "※ここが埋まっていないことが最大の危険。Pana-CIM と Eg-Pro では、バックアップ障害が2件とも「成否を確認する担当が決まっていなかった」ことで長期化している(Eg-Pro のサブサーバー同期は1年以上、nksv523 は6月から暫定運用のまま)。手順書を作るだけでは同じことが起きる。誰がどこで結果を確認し、失敗時に何をするかまで書くこと。",
+  "C16": "＊LNB の運用: DGS を介した手作業。ジョブを消す前に過去ジョブへエクスポートし、必要時にインポートして戻す。取得目的は特定できていない(慣習として続いている)。検討事項: Pana-CIM で一括取得できないか。保存は Pana-CIM で行う。確認担当: 篠原、大塚、茂木。"
+ },
+ "相関図_count": 75,
+ "相関図_bbox_pt": {
+  "left": 15.0,
+  "top": 179.4,
+  "right": 765.0,
+  "bottom": 545.4
+ },
+ "相関図_band_pt": {
+  "A_AZ": 783.0,
+  "A_CG": 1119.6
+ },
+ "vals_pre": {
+  "定期管理": {
+   "C9": "順序の制約：LNB は Pana-CIM のデータを参照しているため、順序を誤ると参照先が無い状態で立ち上がる。"
+  },
+  "復旧": {
+   "C13": "※戻せることを確認していないバックアップは、バックアップではない。§6 が埋まったら、戻す試験を一度やってから本章を書く。"
+  },
+  "管理体制": {
+   "C16": "＊人名と割り当ては 2026-10-14、篠原のグループによる本人確認で確定。会議記録 §12 の「副管理責任者を倉林さんとし」は本確認と食い違うため、本確認を正とする。"
+  },
+  "異常時の対応": {
+   "C19": "＊会議では、異常時の連絡先と復旧確認の実施条件を確認事項として挙げたまま結論に至っていない。"
+  },
+  "チェックシート(月次・異常時)": {
+   "C12": "＊Pana-CIM と同日に実施する場合は、順序を記録すること。LNB は Pana-CIM のデータを参照しているため、どちらを先に触ったかが後で問題になる。"
+  },
+  "引用と部品照合": {
+   "C11": "＊改変せずに載せる。本文は読みやすさのために整えてあるので、食い違いがあれば本付録を正とする。"
+  },
+  "用語": {
+   "C31": "NPM：生産設備のマシン名に使われる呼称。LNB構成情報画面の L1 設備一覧では L1NPM-1〜7・SP70-1 と現れる。L2/L3 の同画面は未確認(§12 No.34)"
+  }
+ },
+ "要確認_ps": {
+  "used": "A1:AZ204",
+  "title_rows": "",
+  "right_header": "''",
+  "center_footer": "''",
+  "margins_pt": {
+   "LeftMargin": 50.4,
+   "RightMargin": 50.4,
+   "TopMargin": 54.0,
+   "BottomMargin": 54.0
+  },
+  "C9_head": "1：LNB と iLNB の関係／2026-10-05 更新。本書の対象は承認済みの L1〜L3 端末と稼働 LNB ソ",
+  "C47_head": "39：人名・割り当ての確認／2026-10-14 解決。同名は茂木（絵）＝絵美さん（当グループ・スケジュール管理担当）／",
+  "rowh_1_10": {
+   "1": 5.3,
+   "2": 33.0,
+   "3": 33.0,
+   "4": 33.0,
+   "5": 12.8,
+   "6": 12.8,
+   "7": 12.8,
+   "8": 12.8,
+   "9": 12.8,
+   "10": 12.8
+  }
+ }
+}

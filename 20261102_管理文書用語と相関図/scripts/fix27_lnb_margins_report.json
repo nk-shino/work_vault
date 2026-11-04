@@ -1,0 +1,504 @@
+{
+ "actions": [
+  "MARGIN 表紙: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 目次: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 用語: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 構成と管理情報: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 管理体制: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 日次点検: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 定期管理: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN バックアップ: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 復旧: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 異常時の対応: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN チェックシート(日次): {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN チェックシート(月次・異常時): {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 会議課題一覧(一時): {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 要確認事項一覧: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "MARGIN 引用と部品照合: {'Left': 62.36, 'Right': 36.85, 'Top': 42.52, 'Bottom': 56.69, 'Header': 42.52, 'Footer': 28.35} -> {'Left': 62.64, 'Right': 36.72, 'Top': 42.48, 'Bottom': 56.88, 'Header': 42.48, 'Footer': 28.08}",
+  "SAVED (margins)",
+  "PAGES: {'表紙': 1, '目次': 1, '用語': 2, '構成と管理情報': 4, '相関図': 1, '相関図_old': 1, '管理体制': 1, '日次点検': 1, '定期管理': 1, 'バックアップ': 4, '復旧': 1, '異常時の対応': 1, 'チェックシート(日次)': 1, 'チェックシート(月次・異常時)': 1, '会議課題一覧(一時)': 2, '要確認事項一覧': 2, '引用と部品照合': 1}",
+  "BLANKS: {}",
+  "GHOSTS: {}",
+  "SAVED (pass2: numbering 2-16)",
+  "BOOK C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.pdf: 32p cred=6p",
+  "SAVED (pass3: 引用 FirstPageNumber=32)",
+  "PASS2 ok (counts stable, ghosts 0)",
+  "MERGED -> C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.pdf (32p)"
+ ],
+ "margins": {
+  "表紙": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "目次": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "用語": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "構成と管理情報": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "管理体制": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "日次点検": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "定期管理": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "バックアップ": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "復旧": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "異常時の対応": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "チェックシート(日次)": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "チェックシート(月次・異常時)": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "会議課題一覧(一時)": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "要確認事項一覧": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "引用と部品照合": {
+   "before_pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "相関図": {
+   "untouched": true,
+   "pt": {
+    "Left": 28.35,
+    "Right": 28.35,
+    "Top": 28.35,
+    "Bottom": 28.35,
+    "Header": 14.17,
+    "Footer": 14.17
+   }
+  },
+  "相関図_old": {
+   "untouched": true,
+   "pt": {
+    "Left": 62.36,
+    "Right": 36.85,
+    "Top": 42.52,
+    "Bottom": 56.69,
+    "Header": 42.52,
+    "Footer": 28.35
+   }
+  }
+ },
+ "counts": {
+  "表紙": 1,
+  "目次": 1,
+  "用語": 2,
+  "構成と管理情報": 4,
+  "相関図": 1,
+  "相関図_old": 1,
+  "管理体制": 1,
+  "日次点検": 1,
+  "定期管理": 1,
+  "バックアップ": 4,
+  "復旧": 1,
+  "異常時の対応": 1,
+  "チェックシート(日次)": 1,
+  "チェックシート(月次・異常時)": 1,
+  "会議課題一覧(一時)": 2,
+  "要確認事項一覧": 2,
+  "引用と部品照合": 1
+ },
+ "counts_pass2": {
+  "表紙": 1,
+  "目次": 1,
+  "用語": 2,
+  "構成と管理情報": 4,
+  "相関図": 1,
+  "相関図_old": 1,
+  "管理体制": 1,
+  "日次点検": 1,
+  "定期管理": 1,
+  "バックアップ": 4,
+  "復旧": 1,
+  "異常時の対応": 1,
+  "チェックシート(日次)": 1,
+  "チェックシート(月次・異常時)": 1,
+  "会議課題一覧(一時)": 2,
+  "要確認事項一覧": 2,
+  "引用と部品照合": 1
+ },
+ "blanks": {},
+ "ghosts": {},
+ "numbering": {
+  "目次": 2,
+  "用語": 3,
+  "構成と管理情報": 5,
+  "相関図": 9,
+  "相関図_old": 10,
+  "管理体制": 11,
+  "日次点検": 12,
+  "定期管理": 13,
+  "バックアップ": 14,
+  "復旧": 18,
+  "異常時の対応": 19,
+  "チェックシート(日次)": 20,
+  "チェックシート(月次・異常時)": 21,
+  "会議課題一覧(一時)": 22,
+  "要確認事項一覧": 24,
+  "引用と部品照合": 32
+ },
+ "cred_pages": 6,
+ "book_pages": 32,
+ "errors": [],
+ "pdf": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.pdf"
+}

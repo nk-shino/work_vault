@@ -1,0 +1,102 @@
+{
+  "books": [
+    {
+      "book": "Pana-CIM",
+      "path": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.xlsx",
+      "sheets": [
+        {
+          "sheet": "用語",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\用語.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "構成と管理情報",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\構成と管理情報.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "管理体制",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\管理体制.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "チェックシート(月次・異常時)",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\チェックシート(月次・異常時).pdf",
+          "ok": true
+        },
+        {
+          "sheet": "要確認事項一覧",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\要確認事項一覧.pdf",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "book": "LNB",
+      "path": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.xlsx",
+      "sheets": [
+        {
+          "sheet": "表紙",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\表紙.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "目次",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\目次.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "用語",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\用語.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "相関図",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\相関図.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "相関図_old",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\相関図_old.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "管理体制",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\管理体制.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "バックアップ",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\バックアップ.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "復旧",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\復旧.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "異常時の対応",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\異常時の対応.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "チェックシート(月次・異常時)",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\チェックシート(月次・異常時).pdf",
+          "ok": true
+        },
+        {
+          "sheet": "会議課題一覧(一時)",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\会議課題一覧(一時).pdf",
+          "ok": true
+        },
+        {
+          "sheet": "要確認事項一覧",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\要確認事項一覧.pdf",
+          "ok": true
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

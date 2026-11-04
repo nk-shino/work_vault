@@ -1,0 +1,839 @@
+{
+  "book": "LNB管理手順書案_未承認",
+  "source_file": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.xlsx",
+  "source_size_bytes": 691598,
+  "source_sha256": "67b8cc54df23db2b41b8d27fb85246d4b77528f12b62eca489a740e8dba1ce03",
+  "generated_at": "2026-11-02T20:02:12",
+  "tool": "extract_xlsx_inventory.py (zipfile+XML解析 / openpyxl read_only による検証, 保存なし)",
+  "sheet_count": 18,
+  "visible_sheet_count": 18,
+  "hidden_sheet_count": 0,
+  "category_counts": {
+    "表紙": 1,
+    "リスト": 3,
+    "本文様式": 10,
+    "図解": 1,
+    "図解(旧版)": 1,
+    "リスト(暫定)": 1,
+    "除外(認証情報)": 1
+  },
+  "totals": {
+    "value_cells": 558,
+    "empty_string_cells": 0,
+    "formula_cells": 0,
+    "merged_ranges": 319,
+    "shapes_top_level_total": 135,
+    "shapes_by_type_all_levels": {
+      "図形(テキスト/オートシェイプ)": 119,
+      "画像": 24,
+      "グループ": 17,
+      "コネクタ": 9,
+      "チャート/表": 0,
+      "その他パート": 0
+    },
+    "pic_count_all_levels_total": 24,
+    "media_files": 20,
+    "vml_files": 0,
+    "printer_settings_files": 7
+  },
+  "print_settings_distribution": {
+    "orientation": {
+      "縦": 16,
+      "横": 1
+    },
+    "fit_to_pages_sheets": 1,
+    "scale_sheets": 0,
+    "no_fit_no_scale_sheets": 16,
+    "print_area_sheets": 3,
+    "print_titles_sheets": 15,
+    "margins_present_sheets": 17,
+    "note": "認証情報シートは集計対象外。該当なしなら 0。"
+  },
+  "credentials_sheet_policy": "シート名に「認証情報」を含むシートはセル内容を一切出力しない(シート名·表示状態·印刷設定等のメタデータのみ記録)",
+  "sheets": [
+    {
+      "index": 0,
+      "name": "表紙",
+      "visibility": "visible",
+      "category_estimate": "表紙",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet1.xml",
+      "print_area": null,
+      "print_titles": null,
+      "drawing_parts": [
+        "xl/drawings/drawing1.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 2,
+        "グループ": 17,
+        "コネクタ": 1
+      },
+      "shapes_top_level_total": 20,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:Y36",
+      "used_rows_max": 36,
+      "used_cols_max": 25,
+      "value_cells": 43,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 143,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.19685039370078741",
+          "header": "0.59055118110236227",
+          "footer": "0.19685039370078741"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_表紙.md"
+    },
+    {
+      "index": 1,
+      "name": "目次",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet2.xml",
+      "print_area": null,
+      "print_titles": [
+        "目次!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ60",
+      "used_rows_max": 22,
+      "used_cols_max": 52,
+      "value_cells": 61,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_目次.md"
+    },
+    {
+      "index": 2,
+      "name": "用語",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet3.xml",
+      "print_area": null,
+      "print_titles": [
+        "用語!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ32",
+      "used_rows_max": 32,
+      "used_cols_max": 52,
+      "value_cells": 36,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_用語.md"
+    },
+    {
+      "index": 3,
+      "name": "構成と管理情報",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet4.xml",
+      "print_area": null,
+      "print_titles": [
+        "構成と管理情報!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing2.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "画像": 3
+      },
+      "shapes_top_level_total": 3,
+      "pic_count_all_levels": 3,
+      "dimension_attr": "A1:AZ107",
+      "used_rows_max": 107,
+      "used_cols_max": 52,
+      "value_cells": 43,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_構成と管理情報.md"
+    },
+    {
+      "index": 4,
+      "name": "相関図",
+      "visibility": "visible",
+      "category_estimate": "図解",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet5.xml",
+      "print_area": [
+        "相関図!$A$1:$AY$60"
+      ],
+      "print_titles": [
+        "相関図!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing3.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 57,
+        "画像": 18
+      },
+      "shapes_top_level_total": 75,
+      "pic_count_all_levels": 18,
+      "dimension_attr": "A1:AZ58",
+      "used_rows_max": 10,
+      "used_cols_max": 52,
+      "value_cells": 13,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "landscape",
+        "paper_size": "A4",
+        "fit_to_page": true,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": "90",
+        "margins_inch": {
+          "left": "0.39375000000000004",
+          "right": "0.39375000000000004",
+          "top": "0.39375000000000004",
+          "bottom": "0.39375000000000004",
+          "header": "0.19680555555555557",
+          "footer": "0.19680555555555557"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_相関図.md"
+    },
+    {
+      "index": 5,
+      "name": "相関図_old",
+      "visibility": "visible",
+      "category_estimate": "図解(旧版)",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet6.xml",
+      "print_area": [
+        "相関図_old!$A$1:$AY$58"
+      ],
+      "print_titles": [
+        "相関図_old!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing4.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 26,
+        "コネクタ": 8
+      },
+      "shapes_top_level_total": 34,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ10",
+      "used_rows_max": 10,
+      "used_cols_max": 52,
+      "value_cells": 13,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_相関図_old.md"
+    },
+    {
+      "index": 6,
+      "name": "管理体制",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet7.xml",
+      "print_area": null,
+      "print_titles": [
+        "管理体制!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ19",
+      "used_rows_max": 19,
+      "used_cols_max": 52,
+      "value_cells": 23,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_管理体制.md"
+    },
+    {
+      "index": 7,
+      "name": "日次点検",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet8.xml",
+      "print_area": null,
+      "print_titles": [
+        "日次点検!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ121",
+      "used_rows_max": 33,
+      "used_cols_max": 52,
+      "value_cells": 35,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_日次点検.md"
+    },
+    {
+      "index": 8,
+      "name": "定期管理",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet9.xml",
+      "print_area": [
+        "定期管理!$A$1:$AZ$100"
+      ],
+      "print_titles": [
+        "定期管理!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ133",
+      "used_rows_max": 133,
+      "used_cols_max": 52,
+      "value_cells": 17,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_定期管理.md"
+    },
+    {
+      "index": 9,
+      "name": "バックアップ",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet10.xml",
+      "print_area": null,
+      "print_titles": [
+        "バックアップ!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing5.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "画像": 3
+      },
+      "shapes_top_level_total": 3,
+      "pic_count_all_levels": 3,
+      "dimension_attr": "A1:AZ59",
+      "used_rows_max": 55,
+      "used_cols_max": 52,
+      "value_cells": 23,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_バックアップ.md"
+    },
+    {
+      "index": 10,
+      "name": "復旧",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet11.xml",
+      "print_area": null,
+      "print_titles": [
+        "復旧!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:BP335",
+      "used_rows_max": 335,
+      "used_cols_max": 68,
+      "value_cells": 16,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_復旧.md"
+    },
+    {
+      "index": 11,
+      "name": "異常時の対応",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet12.xml",
+      "print_area": null,
+      "print_titles": [
+        "異常時の対応!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ144",
+      "used_rows_max": 144,
+      "used_cols_max": 52,
+      "value_cells": 30,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_異常時の対応.md"
+    },
+    {
+      "index": 12,
+      "name": "チェックシート(日次)",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet13.xml",
+      "print_area": null,
+      "print_titles": [
+        "'チェックシート(日次)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ171",
+      "used_rows_max": 171,
+      "used_cols_max": 52,
+      "value_cells": 28,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_チェックシート(日次).md"
+    },
+    {
+      "index": 13,
+      "name": "チェックシート(月次・異常時)",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet14.xml",
+      "print_area": null,
+      "print_titles": [
+        "'チェックシート(月次・異常時)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ78",
+      "used_rows_max": 74,
+      "used_cols_max": 52,
+      "value_cells": 49,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_チェックシート(月次・異常時).md"
+    },
+    {
+      "index": 14,
+      "name": "会議課題一覧(一時)",
+      "visibility": "visible",
+      "category_estimate": "リスト(暫定)",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet15.xml",
+      "print_area": null,
+      "print_titles": [
+        "'会議課題一覧(一時)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:BR528",
+      "used_rows_max": 528,
+      "used_cols_max": 70,
+      "value_cells": 50,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_会議課題一覧(一時).md"
+    },
+    {
+      "index": 15,
+      "name": "要確認事項一覧",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet16.xml",
+      "print_area": null,
+      "print_titles": null,
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ204",
+      "used_rows_max": 143,
+      "used_cols_max": 52,
+      "value_cells": 53,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.7",
+          "right": "0.7",
+          "top": "0.75",
+          "bottom": "0.75",
+          "header": "0.3",
+          "footer": "0.3"
+        },
+        "header_footer_present": false,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_要確認事項一覧.md"
+    },
+    {
+      "index": 16,
+      "name": "申し送り(認証情報)",
+      "visibility": "visible",
+      "category_estimate": "除外(認証情報)",
+      "excluded_credentials": true,
+      "worksheet_part": "xl/worksheets/sheet17.xml",
+      "print_area": null,
+      "print_titles": [
+        "'申し送り(認証情報)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": null,
+      "used_rows_max": null,
+      "used_cols_max": null,
+      "value_cells": null,
+      "empty_string_cells": null,
+      "formula_cells": null,
+      "merged_ranges": null,
+      "print": null,
+      "text_file": null,
+      "note": "セル内容·セル統計は認証情報シートのため出力·集計対象外"
+    },
+    {
+      "index": 17,
+      "name": "引用と部品照合",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet18.xml",
+      "print_area": null,
+      "print_titles": [
+        "引用と部品照合!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ313",
+      "used_rows_max": 313,
+      "used_cols_max": 52,
+      "value_cells": 25,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_LNB管理手順書案_未承認_引用と部品照合.md"
+    }
+  ]
+}

@@ -1,0 +1,885 @@
+{
+ "目次": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 115,
+   "pre_chars": 46.73,
+   "post_chars": 15.76
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 74,
+   "pre_chars": 33.96,
+   "post_chars": 9.98
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 12,
+   "pre_chars": 3.77,
+   "post_chars": 1.11
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 69,
+   "pre_chars": 30.19,
+   "post_chars": 9.2
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 37,
+   "pre_chars": 8.99,
+   "post_chars": 4.66
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  }
+ ],
+ "用語": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "構成と管理情報": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "管理体制": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 276,
+   "pre_chars": 46.73,
+   "post_chars": 38.76
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 70,
+   "pre_chars": 11.32,
+   "post_chars": 9.33
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 58,
+   "pre_chars": 8.99,
+   "post_chars": 7.66
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 70,
+   "pre_chars": 11.32,
+   "post_chars": 9.33
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 200,
+   "pre_chars": 33.96,
+   "post_chars": 27.98
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 179,
+   "pre_chars": 30.19,
+   "post_chars": 24.88
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 26,
+   "pre_chars": 3.77,
+   "post_chars": 3.11
+  }
+ ],
+ "日次点検": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "定期管理": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "バックアップ": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "復旧": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  }
+ ],
+ "異常時の対応": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ],
+ "チェックシート(日次)": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 115,
+   "pre_chars": 46.73,
+   "post_chars": 15.76
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 37,
+   "pre_chars": 8.99,
+   "post_chars": 4.66
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 74,
+   "pre_chars": 33.96,
+   "post_chars": 9.98
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 12,
+   "pre_chars": 3.77,
+   "post_chars": 1.11
+  }
+ ],
+ "チェックシート(月次・異常時)": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 115,
+   "pre_chars": 46.73,
+   "post_chars": 15.76
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 37,
+   "pre_chars": 8.99,
+   "post_chars": 4.66
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 28,
+   "pre_chars": 11.32,
+   "post_chars": 3.33
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 74,
+   "pre_chars": 33.96,
+   "post_chars": 9.98
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 12,
+   "pre_chars": 3.77,
+   "post_chars": 1.11
+  }
+ ],
+ "会議課題一覧(一時)": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 204,
+   "pre_chars": 46.73,
+   "post_chars": 28.52
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 51,
+   "pre_chars": 11.32,
+   "post_chars": 6.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 49,
+   "pre_chars": 8.99,
+   "post_chars": 6.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 51,
+   "pre_chars": 11.32,
+   "post_chars": 6.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 144,
+   "pre_chars": 33.96,
+   "post_chars": 19.97
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 196,
+   "pre_chars": 30.19,
+   "post_chars": 27.42
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 20,
+   "pre_chars": 3.77,
+   "post_chars": 2.22
+  }
+ ],
+ "要確認事項一覧": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 314,
+   "post_px": 168,
+   "pre_chars": 44.28,
+   "post_chars": 23.39
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 42,
+   "pre_chars": 11.32,
+   "post_chars": 5.32
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 50,
+   "post_px": 44,
+   "pre_chars": 6.55,
+   "post_chars": 5.66
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 42,
+   "pre_chars": 11.32,
+   "post_chars": 5.32
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 116,
+   "pre_chars": 33.96,
+   "post_chars": 15.96
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 173,
+   "pre_chars": 30.19,
+   "post_chars": 24.08
+  },
+  {
+   "range": "AU2:AV2",
+   "cols": "AU..AV",
+   "missing": 0,
+   "pre_px": 31,
+   "post_px": 17,
+   "pre_chars": 3.77,
+   "post_chars": 1.77
+  }
+ ],
+ "引用と部品照合": [
+  {
+   "range": "AC3:AZ3",
+   "cols": "AC..AZ",
+   "missing": 0,
+   "pre_px": 332,
+   "post_px": 312,
+   "pre_chars": 46.73,
+   "post_chars": 43.88
+  },
+  {
+   "range": "A1:V2",
+   "cols": "A..V",
+   "missing": 0,
+   "pre_px": 295,
+   "post_px": 292,
+   "pre_chars": 41.51,
+   "post_chars": 41.1
+  },
+  {
+   "range": "W3:AB3",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AW2:AZ2",
+   "cols": "AW..AZ",
+   "missing": 0,
+   "pre_px": 67,
+   "post_px": 63,
+   "pre_chars": 8.99,
+   "post_chars": 8.33
+  },
+  {
+   "range": "W2:AB2",
+   "cols": "W..AB",
+   "missing": 0,
+   "pre_px": 84,
+   "post_px": 79,
+   "pre_chars": 11.32,
+   "post_chars": 10.66
+  },
+  {
+   "range": "AC2:AT2",
+   "cols": "AC..AT",
+   "missing": 0,
+   "pre_px": 242,
+   "post_px": 228,
+   "pre_chars": 33.96,
+   "post_chars": 31.99
+  },
+  {
+   "range": "G3:V3",
+   "cols": "G..V",
+   "missing": 0,
+   "pre_px": 216,
+   "post_px": 204,
+   "pre_chars": 30.19,
+   "post_chars": 28.44
+  }
+ ]
+}

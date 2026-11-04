@@ -1,0 +1,777 @@
+{
+  "book": "Pana-CIM管理手順書案_未承認",
+  "source_file": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.xlsx",
+  "source_size_bytes": 2678653,
+  "source_sha256": "7b41e825c5f73b46e041704b2e741e2c69fadd79a1508e6fc5e983b0277b1e52",
+  "generated_at": "2026-11-02T20:02:08",
+  "tool": "extract_xlsx_inventory.py (zipfile+XML解析 / openpyxl read_only による検証, 保存なし)",
+  "sheet_count": 16,
+  "visible_sheet_count": 16,
+  "hidden_sheet_count": 0,
+  "category_counts": {
+    "表紙": 1,
+    "リスト": 3,
+    "本文様式": 8,
+    "図解": 1,
+    "図解(旧版)": 1,
+    "リスト(暫定)": 1,
+    "本文様式(暫定)": 1
+  },
+  "totals": {
+    "value_cells": 586,
+    "empty_string_cells": 0,
+    "formula_cells": 0,
+    "merged_ranges": 319,
+    "shapes_top_level_total": 196,
+    "shapes_by_type_all_levels": {
+      "図形(テキスト/オートシェイプ)": 140,
+      "画像": 43,
+      "グループ": 17,
+      "コネクタ": 30,
+      "チャート/表": 0,
+      "その他パート": 0
+    },
+    "pic_count_all_levels_total": 43,
+    "media_files": 39,
+    "vml_files": 0,
+    "printer_settings_files": 9
+  },
+  "print_settings_distribution": {
+    "orientation": {
+      "縦": 15,
+      "横": 1
+    },
+    "fit_to_pages_sheets": 1,
+    "scale_sheets": 0,
+    "no_fit_no_scale_sheets": 15,
+    "print_area_sheets": 3,
+    "print_titles_sheets": 13,
+    "margins_present_sheets": 16,
+    "note": "認証情報シートは集計対象外。該当なしなら 0。"
+  },
+  "credentials_sheet_policy": "シート名に「認証情報」を含むシートはセル内容を一切出力しない(シート名·表示状態·印刷設定等のメタデータのみ記録)",
+  "sheets": [
+    {
+      "index": 0,
+      "name": "表紙",
+      "visibility": "visible",
+      "category_estimate": "表紙",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet1.xml",
+      "print_area": null,
+      "print_titles": null,
+      "drawing_parts": [
+        "xl/drawings/drawing1.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 2,
+        "グループ": 17,
+        "コネクタ": 1
+      },
+      "shapes_top_level_total": 20,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:Y36",
+      "used_rows_max": 36,
+      "used_cols_max": 25,
+      "value_cells": 43,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 143,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.19685039370078741",
+          "header": "0.59055118110236227",
+          "footer": "0.19685039370078741"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_表紙.md"
+    },
+    {
+      "index": 1,
+      "name": "目次",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet2.xml",
+      "print_area": null,
+      "print_titles": [
+        "目次!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ60",
+      "used_rows_max": 21,
+      "used_cols_max": 52,
+      "value_cells": 39,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_目次.md"
+    },
+    {
+      "index": 2,
+      "name": "用語",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet3.xml",
+      "print_area": null,
+      "print_titles": [
+        "用語!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ31",
+      "used_rows_max": 31,
+      "used_cols_max": 52,
+      "value_cells": 35,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_用語.md"
+    },
+    {
+      "index": 3,
+      "name": "構成と管理情報",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet4.xml",
+      "print_area": null,
+      "print_titles": [
+        "構成と管理情報!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ22",
+      "used_rows_max": 22,
+      "used_cols_max": 52,
+      "value_cells": 23,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_構成と管理情報.md"
+    },
+    {
+      "index": 4,
+      "name": "相関図",
+      "visibility": "visible",
+      "category_estimate": "図解",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet5.xml",
+      "print_area": [
+        "相関図!$A$1:$AY$60"
+      ],
+      "print_titles": [
+        "相関図!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing2.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 57,
+        "画像": 18
+      },
+      "shapes_top_level_total": 75,
+      "pic_count_all_levels": 18,
+      "dimension_attr": "A1:AZ58",
+      "used_rows_max": 10,
+      "used_cols_max": 52,
+      "value_cells": 10,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "landscape",
+        "paper_size": "A4",
+        "fit_to_page": true,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": "90",
+        "margins_inch": {
+          "left": "0.39375000000000004",
+          "right": "0.39375000000000004",
+          "top": "0.39375000000000004",
+          "bottom": "0.39375000000000004",
+          "header": "0.19680555555555557",
+          "footer": "0.19680555555555557"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_相関図.md"
+    },
+    {
+      "index": 5,
+      "name": "相関図_old",
+      "visibility": "visible",
+      "category_estimate": "図解(旧版)",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet6.xml",
+      "print_area": [
+        "相関図_old!$A$1:$AY$58"
+      ],
+      "print_titles": [
+        "相関図_old!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing3.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 26,
+        "コネクタ": 8
+      },
+      "shapes_top_level_total": 34,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ10",
+      "used_rows_max": 10,
+      "used_cols_max": 52,
+      "value_cells": 13,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_相関図_old.md"
+    },
+    {
+      "index": 6,
+      "name": "管理体制",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet7.xml",
+      "print_area": null,
+      "print_titles": [
+        "管理体制!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ19",
+      "used_rows_max": 19,
+      "used_cols_max": 52,
+      "value_cells": 23,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_管理体制.md"
+    },
+    {
+      "index": 7,
+      "name": "月次再起動",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet8.xml",
+      "print_area": [
+        "月次再起動!$A$1:$AZ$146"
+      ],
+      "print_titles": [
+        "月次再起動!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing4.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "画像": 2
+      },
+      "shapes_top_level_total": 2,
+      "pic_count_all_levels": 2,
+      "dimension_attr": "A1:AZ179",
+      "used_rows_max": 179,
+      "used_cols_max": 52,
+      "value_cells": 53,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_月次再起動.md"
+    },
+    {
+      "index": 8,
+      "name": "バックアップ",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet9.xml",
+      "print_area": null,
+      "print_titles": [
+        "バックアップ!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing5.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "画像": 7
+      },
+      "shapes_top_level_total": 7,
+      "pic_count_all_levels": 7,
+      "dimension_attr": "A1:AZ222",
+      "used_rows_max": 189,
+      "used_cols_max": 52,
+      "value_cells": 40,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_バックアップ.md"
+    },
+    {
+      "index": 9,
+      "name": "復旧",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet10.xml",
+      "print_area": null,
+      "print_titles": [
+        "復旧!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:BP335",
+      "used_rows_max": 335,
+      "used_cols_max": 68,
+      "value_cells": 15,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_復旧.md"
+    },
+    {
+      "index": 10,
+      "name": "異常時の対応",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet11.xml",
+      "print_area": null,
+      "print_titles": [
+        "異常時の対応!$1:$3"
+      ],
+      "drawing_parts": [
+        "xl/drawings/drawing6.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "図形(テキスト/オートシェイプ)": 21,
+        "画像": 14,
+        "コネクタ": 21
+      },
+      "shapes_top_level_total": 56,
+      "pic_count_all_levels": 14,
+      "dimension_attr": "A1:AZ320",
+      "used_rows_max": 320,
+      "used_cols_max": 52,
+      "value_cells": 82,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 19,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_異常時の対応.md"
+    },
+    {
+      "index": 11,
+      "name": "チェックシート(月次・異常時)",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet12.xml",
+      "print_area": null,
+      "print_titles": [
+        "'チェックシート(月次・異常時)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ78",
+      "used_rows_max": 74,
+      "used_cols_max": 52,
+      "value_cells": 67,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_チェックシート(月次・異常時).md"
+    },
+    {
+      "index": 12,
+      "name": "会議課題一覧(一時)",
+      "visibility": "visible",
+      "category_estimate": "リスト(暫定)",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet13.xml",
+      "print_area": null,
+      "print_titles": [
+        "'会議課題一覧(一時)'!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:BR528",
+      "used_rows_max": 528,
+      "used_cols_max": 70,
+      "value_cells": 50,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_会議課題一覧(一時).md"
+    },
+    {
+      "index": 13,
+      "name": "付録 引用元と確認範囲",
+      "visibility": "visible",
+      "category_estimate": "本文様式",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet14.xml",
+      "print_area": null,
+      "print_titles": null,
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ204",
+      "used_rows_max": 143,
+      "used_cols_max": 52,
+      "value_cells": 26,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 20,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.7",
+          "right": "0.7",
+          "top": "0.75",
+          "bottom": "0.75",
+          "header": "0.3",
+          "footer": "0.3"
+        },
+        "header_footer_present": false,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_付録 引用元と確認範囲.md"
+    },
+    {
+      "index": 14,
+      "name": "要確認事項一覧",
+      "visibility": "visible",
+      "category_estimate": "リスト",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet15.xml",
+      "print_area": null,
+      "print_titles": [
+        "要確認事項一覧!$1:$3"
+      ],
+      "drawing_parts": [],
+      "vml_parts": [],
+      "shapes_top_level": {},
+      "shapes_top_level_total": 0,
+      "pic_count_all_levels": 0,
+      "dimension_attr": "A1:AZ142",
+      "used_rows_max": 112,
+      "used_cols_max": 52,
+      "value_cells": 39,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 11,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.86614173228346458",
+          "right": "0.51181102362204722",
+          "top": "0.59055118110236227",
+          "bottom": "0.78740157480314965",
+          "header": "0.59055118110236227",
+          "footer": "0.39370078740157483"
+        },
+        "header_footer_present": true,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_要確認事項一覧.md"
+    },
+    {
+      "index": 15,
+      "name": "7-5仮_サービス起動停止",
+      "visibility": "visible",
+      "category_estimate": "本文様式(暫定)",
+      "excluded_credentials": false,
+      "worksheet_part": "xl/worksheets/sheet16.xml",
+      "print_area": null,
+      "print_titles": null,
+      "drawing_parts": [
+        "xl/drawings/drawing7.xml"
+      ],
+      "vml_parts": [],
+      "shapes_top_level": {
+        "画像": 2
+      },
+      "shapes_top_level_total": 2,
+      "pic_count_all_levels": 2,
+      "dimension_attr": "A1:AZ55",
+      "used_rows_max": 55,
+      "used_cols_max": 52,
+      "value_cells": 28,
+      "empty_string_cells": 0,
+      "formula_cells": 0,
+      "merged_ranges": 5,
+      "print": {
+        "orientation": "portrait",
+        "paper_size": "A4",
+        "fit_to_page": false,
+        "fit_to_width": null,
+        "fit_to_height": null,
+        "scale": null,
+        "margins_inch": {
+          "left": "0.7",
+          "right": "0.7",
+          "top": "0.75",
+          "bottom": "0.75",
+          "header": "0.3",
+          "footer": "0.3"
+        },
+        "header_footer_present": false,
+        "print_options": null
+      },
+      "text_file": "text_Pana-CIM管理手順書案_未承認_7-5仮_サービス起動停止.md"
+    }
+  ]
+}

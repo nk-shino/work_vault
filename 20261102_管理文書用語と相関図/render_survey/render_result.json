@@ -1,0 +1,137 @@
+{
+  "books": [
+    {
+      "book": "Pana-CIM",
+      "path": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.xlsx",
+      "sheets": [
+        {
+          "sheet": "表紙",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\表紙.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "目次",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\目次.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "相関図",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\相関図.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "相関図_old",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\相関図_old.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "月次再起動",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\月次再起動.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "バックアップ",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\バックアップ.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "復旧",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\復旧.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "異常時の対応",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\異常時の対応.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "会議課題一覧(一時)",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\会議課題一覧(一時).pdf",
+          "ok": true
+        },
+        {
+          "sheet": "付録 引用元と確認範囲",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\付録 引用元と確認範囲.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "7-5仮_サービス起動停止",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\Pana-CIM\\7-5仮_サービス起動停止.pdf",
+          "ok": true
+        }
+      ],
+      "autosaveon": "not_settable_readonly: com_error(-2147352567, '例外が発生しました。', (0, None, None, None, 0, -2146827284), None)",
+      "sheet_names_actual": [
+        "表紙",
+        "目次",
+        "用語",
+        "構成と管理情報",
+        "相関図",
+        "相関図_old",
+        "管理体制",
+        "月次再起動",
+        "バックアップ",
+        "復旧",
+        "異常時の対応",
+        "チェックシート(月次・異常時)",
+        "会議課題一覧(一時)",
+        "付録 引用元と確認範囲",
+        "要確認事項一覧",
+        "7-5仮_サービス起動停止"
+      ]
+    },
+    {
+      "book": "LNB",
+      "path": "C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\LNB管理手順書案_未承認.xlsx",
+      "sheets": [
+        {
+          "sheet": "構成と管理情報",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\構成と管理情報.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "日次点検",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\日次点検.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "定期管理",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\定期管理.pdf",
+          "ok": true
+        },
+        {
+          "sheet": "チェックシート(日次)",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\チェックシート(日次).pdf",
+          "ok": true
+        },
+        {
+          "sheet": "引用と部品照合",
+          "pdf": "C:\\Users\\ss80751\\kohden-code-workspace\\20261102_管理文書用語と相関図\\render_survey\\LNB\\引用と部品照合.pdf",
+          "ok": true
+        }
+      ],
+      "autosaveon": "not_settable_readonly: com_error(-2147352567, '例外が発生しました。', (0, None, None, None, 0, -2146827284), None)",
+      "sheet_names_actual": [
+        "表紙",
+        "目次",
+        "用語",
+        "構成と管理情報",
+        "相関図",
+        "相関図_old",
+        "管理体制",
+        "日次点検",
+        "定期管理",
+        "バックアップ",
+        "復旧",
+        "異常時の対応",
+        "チェックシート(日次)",
+        "チェックシート(月次・異常時)",
+        "会議課題一覧(一時)",
+        "要確認事項一覧",
+        "申し送り(認証情報)",
+        "引用と部品照合"
+      ]
+    }
+  ],
+  "errors": []
+}

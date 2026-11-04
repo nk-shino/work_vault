@@ -1,0 +1,1525 @@
+{
+ "phaseA": {
+  "margins": {
+   "表紙": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "目次": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "用語": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "構成と管理情報": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "相関図": {
+    "Left": 28.35,
+    "Left_in": 0.3938,
+    "Right": 28.35,
+    "Right_in": 0.3938,
+    "Top": 28.35,
+    "Top_in": 0.3938,
+    "Bottom": 28.35,
+    "Bottom_in": 0.3938,
+    "Header": 14.17,
+    "Header_in": 0.1968,
+    "Footer": 14.17,
+    "Footer_in": 0.1968
+   },
+   "相関図_old": {
+    "Left": 62.36,
+    "Left_in": 0.8661,
+    "Right": 36.85,
+    "Right_in": 0.5118,
+    "Top": 42.52,
+    "Top_in": 0.5906,
+    "Bottom": 56.69,
+    "Bottom_in": 0.7874,
+    "Header": 42.52,
+    "Header_in": 0.5906,
+    "Footer": 28.35,
+    "Footer_in": 0.3937
+   },
+   "管理体制": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "月次再起動": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "バックアップ": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "復旧": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "異常時の対応": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "チェックシート(月次・異常時)": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "会議課題一覧(一時)": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "付録 引用元と確認範囲": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "要確認事項一覧": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   },
+   "7-5仮_サービス起動停止": {
+    "Left": 0.87,
+    "Left_in": 0.012,
+    "Right": 0.51,
+    "Right_in": 0.0071,
+    "Top": 0.59,
+    "Top_in": 0.0082,
+    "Bottom": 0.79,
+    "Bottom_in": 0.0109,
+    "Header": 0.59,
+    "Header_in": 0.0082,
+    "Footer": 0.39,
+    "Footer_in": 0.0055
+   }
+  },
+  "cover_shapes": [
+   {
+    "name": "Group 49",
+    "type": 6
+   },
+   {
+    "name": "Group 52",
+    "type": 6
+   },
+   {
+    "name": "Group 55",
+    "type": 6
+   },
+   {
+    "name": "Group 58",
+    "type": 6
+   },
+   {
+    "name": "Group 61",
+    "type": 6
+   },
+   {
+    "name": "Group 64",
+    "type": 6
+   },
+   {
+    "name": "Group 67",
+    "type": 6
+   },
+   {
+    "name": "Group 79",
+    "type": 6
+   },
+   {
+    "name": "Group 82",
+    "type": 6
+   },
+   {
+    "name": "Group 85",
+    "type": 6
+   },
+   {
+    "name": "Group 88",
+    "type": 6
+   },
+   {
+    "name": "Group 91",
+    "type": 6
+   },
+   {
+    "name": "Group 100",
+    "type": 6
+   },
+   {
+    "name": "Freeform 104",
+    "type": 5
+   },
+   {
+    "name": "Text Box 105",
+    "type": 17
+   },
+   {
+    "name": "Group 109",
+    "type": 6
+   },
+   {
+    "name": "Group 112",
+    "type": 6
+   },
+   {
+    "name": "Group 115",
+    "type": 6
+   },
+   {
+    "name": "Group 118",
+    "type": 6
+   },
+   {
+    "name": "直線コネクタ 2",
+    "type": 9
+   }
+  ],
+  "boxes": {
+   "表紙": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 389.4,
+     "width_px": 519,
+     "value": ""
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": false,
+     "width_pt": 19.8,
+     "width_px": 26,
+     "value": ""
+    }
+   },
+   "目次": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 18.0,
+     "width_px": 24,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 6.0,
+     "width_px": 8,
+     "value": "頁"
+    }
+   },
+   "用語": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "構成と管理情報": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "相関図": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 90.0,
+     "width_px": 120,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 30.0,
+     "width_px": 40,
+     "value": "頁"
+    }
+   },
+   "相関図_old": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 61.2,
+     "width_px": 82,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 20.4,
+     "width_px": 27,
+     "value": "頁"
+    }
+   },
+   "管理体制": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 50.4,
+     "width_px": 67,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 16.8,
+     "width_px": 22,
+     "value": "頁"
+    }
+   },
+   "月次再起動": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "バックアップ": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "復旧": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "異常時の対応": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "チェックシート(月次・異常時)": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 18.0,
+     "width_px": 24,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 6.0,
+     "width_px": 8,
+     "value": "頁"
+    }
+   },
+   "会議課題一覧(一時)": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 36.0,
+     "width_px": 48,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 12.0,
+     "width_px": 16,
+     "value": "頁"
+    }
+   },
+   "付録 引用元と確認範囲": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "要確認事項一覧": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 19.2,
+     "width_px": 26,
+     "value": "頁"
+    }
+   },
+   "7-5仮_サービス起動停止": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": false,
+     "width_pt": 9.6,
+     "width_px": 13,
+     "value": ""
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": false,
+     "width_pt": 9.6,
+     "width_px": 13,
+     "value": ""
+    }
+   }
+  },
+  "breaks": {
+   "表紙": [],
+   "目次": [],
+   "用語": [],
+   "構成と管理情報": [],
+   "相関図": [],
+   "相関図_old": [],
+   "管理体制": [],
+   "月次再起動": [
+    30
+   ],
+   "バックアップ": [
+    15,
+    36,
+    58,
+    80,
+    102,
+    128,
+    154
+   ],
+   "復旧": [],
+   "異常時の対応": [
+    71,
+    116,
+    132,
+    148,
+    164,
+    178,
+    192,
+    207,
+    218,
+    241,
+    259,
+    271,
+    281,
+    296,
+    308
+   ],
+   "チェックシート(月次・異常時)": [],
+   "会議課題一覧(一時)": [],
+   "付録 引用元と確認範囲": [],
+   "要確認事項一覧": [],
+   "7-5仮_サービス起動停止": [
+    18
+   ]
+  },
+  "cell_values": {
+   "月次再起動.C12": "対象：CIMC-SV(VMware 上の仮想マシン・ゲストOS RHEL 6)。本章の手順は Windows の再起動操作であり、仮想マシンの OS 操作との対応は未確認。Windows の手順を Linux の手順へ置き換えない",
+   "月次再起動.C82": "注意点：操作画面には ESXiホスト画面(https://172.25.253.45/ui/)とナビゲータが表示される",
+   "用語.C12": "CIMC-SV：VMware 上の仮想マシン。ゲストOSは Red Hat Enterprise Linux 6(64ビット)。ESXiホスト(https://172.25.253.45/ui/)のナビゲータから操作する。ノートPC右隣の白枠モニタに表示される",
+   "用語.C20": "Red Hat Enterprise Linux(RHEL)：CIMC-SV のゲストOS。バージョン6・64ビット(第2章2-1)",
+   "バックアップ.C7": "＊バックアップ結果の確認は毎日とする(2026-09-30 会議の決定)。取得頻度は端末ごとの手作業・一括取得・自動化を含めて検討中。対象は DB データ・ジョブデータ・LNB 設定・実績帳票。各対象を相互に代替するものとは扱わない。DGS で取得したものを Pana-CIM で保存する。日次点検(削除・再設置時に確認)での最終実行日時と成否の確認で最終実行日時と成否を確認する。",
+   "要確認事項一覧.C35": "27：人名と割り当ての確認／2026-10-14 解決。管理責任者＝茂木（由）・倉林、副管理責任者＝石井・茂木（絵）と本人確認に基づき確定(第3章)。裏付け記録の照合は未了",
+   "要確認事項一覧.C36": ""
+  }
+ },
+ "actions": [
+  "COVER SHAPES: 20 -> ['Group 49', 'Group 52', 'Group 55', 'Group 58', 'Group 61', 'Group 64', 'Group 67', 'Group 79', 'Group 82', 'Group 85', 'Group 88', 'Group 91', 'Group 100', 'Freeform 104', 'Text Box 105', 'Group 109', 'Group 112', 'Group 115', 'Group 118', '直線コネクタ 2']",
+  "PHASE A done (checklist render saved)",
+  "F3 cover shapes deleted: 20 -> 0",
+  "F1 margins re-set via InchesToPoints (14 sheets)",
+  "F2 T20 月次再起動.C12 rows=3",
+  "F2 T21 月次再起動.C82 rows=2",
+  "F2 T22 用語.C12 rows=3",
+  "F2 T23 用語.C20 rows=2",
+  "F4 T24 バックアップ.C7 rows=6",
+  "F4 T25 要確認事項一覧.C36 rows=3 print_area -> $A$1:$AZ$37",
+  "F6 目次: W2:AB2 13px -> 77px, AU2:AV2 13px -> 19px",
+  "F6 管理体制: W2:AB2 13px -> 77px, AU2:AV2 13px -> 19px",
+  "F6 チェックシート(月次・異常時): W2:AB2 13px -> 77px, AU2:AV2 13px -> 19px",
+  "F6 会議課題一覧(一時): W2:AB2 13px -> 77px, AU2:AV2 13px -> 19px",
+  "F6 fix targets: ['目次', '管理体制', 'チェックシート(月次・異常時)', '会議課題一覧(一時)']",
+  "OVERWIDTH-WARN 用語: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 構成と管理情報: 516.6pt > 495.9pt",
+  "WIDTHEFIT 管理体制: 509.4pt > 495.9pt -> fit 1x auto",
+  "OVERWIDTH-WARN 月次再起動: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN バックアップ: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 復旧: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 異常時の対応: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 付録 引用元と確認範囲: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 要確認事項一覧: 516.6pt > 495.9pt",
+  "OVERWIDTH-WARN 7-5仮_サービス起動停止: 516.6pt > 495.9pt",
+  "SAVED (pass1: F1-F6)",
+  "GHOSTCHECK round1: {}",
+  "SAVED (pass2: breaks)",
+  "PAGES: {'表紙': 1, '目次': 1, '用語': 2, '構成と管理情報': 1, '相関図': 1, '相関図_old': 1, '管理体制': 1, '月次再起動': 3, 'バックアップ': 8, '復旧': 1, '異常時の対応': 18, 'チェックシート(月次・異常時)': 2, '会議課題一覧(一時)': 2, '付録 引用元と確認範囲': 2, '要確認事項一覧': 2, '7-5仮_サービス起動停止': 2}",
+  "BLANKS: {}",
+  "WARN counts changed: {'表紙': 1, '目次': 1, '用語': 2, '構成と管理情報': 1, '相関図': 1, '相関図_old': 1, '管理体制': 1, '月次再起動': 3, 'バックアップ': 8, '復旧': 1, '異常時の対応': 17, 'チェックシート(月次・異常時)': 2, '会議課題一覧(一時)': 2, '付録 引用元と確認範囲': 2, '要確認事項一覧': 2, '7-5仮_サービス起動停止': 2} -> {'表紙': 1, '目次': 1, '用語': 2, '構成と管理情報': 1, '相関図': 1, '相関図_old': 1, '管理体制': 1, '月次再起動': 3, 'バックアップ': 8, '復旧': 1, '異常時の対応': 18, 'チェックシート(月次・異常時)': 2, '会議課題一覧(一時)': 2, '付録 引用元と確認範囲': 2, '要確認事項一覧': 2, '7-5仮_サービス起動停止': 2}",
+  "SAVED (pass3: numbering) {'目次': 2, '用語': 3, '構成と管理情報': 5, '相関図': 6, '相関図_old': 7, '管理体制': 8, '月次再起動': 9, 'バックアップ': 12, '復旧': 20, '異常時の対応': 21, 'チェックシート(月次・異常時)': 39, '会議課題一覧(一時)': 41, '付録 引用元と確認範囲': 43, '要確認事項一覧': 45, '7-5仮_サービス起動停止': 47}",
+  "PASS2 ok",
+  "BOOK -> C:\\Users\\ss80751\\OneDrive - NK\\ドキュメント\\Work_Vault\\10_業務全般\\PanaCIM_LNB\\01_成果物\\Pana-CIM管理手順書案_未承認.pdf (48p)"
+ ],
+ "texts": [
+  {
+   "tag": "T20",
+   "cell": "月次再起動.C12",
+   "status": "OK",
+   "rows": 3,
+   "len": 145
+  },
+  {
+   "tag": "T21",
+   "cell": "月次再起動.C82",
+   "status": "OK",
+   "rows": 2,
+   "len": 83
+  },
+  {
+   "tag": "T22",
+   "cell": "用語.C12",
+   "status": "OK",
+   "rows": 3,
+   "len": 161
+  },
+  {
+   "tag": "T23",
+   "cell": "用語.C20",
+   "status": "OK",
+   "rows": 2,
+   "len": 81
+  },
+  {
+   "tag": "T24",
+   "cell": "バックアップ.C7",
+   "status": "OK",
+   "rows": 6
+  },
+  {
+   "tag": "T25-fmt",
+   "cell": "要確認事項一覧.A36:AZ36",
+   "status": "OK (formats from r35)"
+  },
+  {
+   "tag": "T25",
+   "cell": "要確認事項一覧.C36",
+   "status": "OK",
+   "rows": 3,
+   "print_area": "$A$1:$AZ$37"
+  }
+ ],
+ "margins": {
+  "表紙": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "目次": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "用語": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "構成と管理情報": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "管理体制": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "月次再起動": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "バックアップ": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "復旧": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "異常時の対応": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "チェックシート(月次・異常時)": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "会議課題一覧(一時)": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "付録 引用元と確認範囲": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "要確認事項一覧": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "7-5仮_サービス起動停止": {
+   "before_pt": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   },
+   "after_pt": {
+    "Left": 62.64,
+    "Right": 36.72,
+    "Top": 42.48,
+    "Bottom": 56.88,
+    "Header": 42.48,
+    "Footer": 28.08
+   },
+   "after_in": {
+    "Left": 0.87,
+    "Right": 0.51,
+    "Top": 0.59,
+    "Bottom": 0.79,
+    "Header": 0.59,
+    "Footer": 0.39
+   }
+  },
+  "相関図": {
+   "untouched": true,
+   "pt": {
+    "Left": 28.35,
+    "Left_in": 0.3938,
+    "Right": 28.35,
+    "Right_in": 0.3938,
+    "Top": 28.35,
+    "Top_in": 0.3938,
+    "Bottom": 28.35,
+    "Bottom_in": 0.3938,
+    "Header": 14.17,
+    "Header_in": 0.1968,
+    "Footer": 14.17,
+    "Footer_in": 0.1968
+   }
+  },
+  "相関図_old": {
+   "untouched": true,
+   "pt": {
+    "Left": 62.36,
+    "Left_in": 0.8661,
+    "Right": 36.85,
+    "Right_in": 0.5118,
+    "Top": 42.52,
+    "Top_in": 0.5906,
+    "Bottom": 56.69,
+    "Bottom_in": 0.7874,
+    "Header": 42.52,
+    "Header_in": 0.5906,
+    "Footer": 28.35,
+    "Footer_in": 0.3937
+   }
+  }
+ },
+ "shapes": {
+  "deleted": [
+   {
+    "name": "Group 49",
+    "type": 6
+   },
+   {
+    "name": "Group 52",
+    "type": 6
+   },
+   {
+    "name": "Group 55",
+    "type": 6
+   },
+   {
+    "name": "Group 58",
+    "type": 6
+   },
+   {
+    "name": "Group 61",
+    "type": 6
+   },
+   {
+    "name": "Group 64",
+    "type": 6
+   },
+   {
+    "name": "Group 67",
+    "type": 6
+   },
+   {
+    "name": "Group 79",
+    "type": 6
+   },
+   {
+    "name": "Group 82",
+    "type": 6
+   },
+   {
+    "name": "Group 85",
+    "type": 6
+   },
+   {
+    "name": "Group 88",
+    "type": 6
+   },
+   {
+    "name": "Group 91",
+    "type": 6
+   },
+   {
+    "name": "Group 100",
+    "type": 6
+   },
+   {
+    "name": "Freeform 104",
+    "type": 5
+   },
+   {
+    "name": "Text Box 105",
+    "type": 17
+   },
+   {
+    "name": "Group 109",
+    "type": 6
+   },
+   {
+    "name": "Group 112",
+    "type": 6
+   },
+   {
+    "name": "Group 115",
+    "type": 6
+   },
+   {
+    "name": "Group 118",
+    "type": 6
+   },
+   {
+    "name": "直線コネクタ 2",
+    "type": 9
+   }
+  ],
+  "count_after": 0
+ },
+ "boxes": {
+  "fix_targets": [
+   "目次",
+   "管理体制",
+   "チェックシート(月次・異常時)",
+   "会議課題一覧(一時)"
+  ],
+  "目次": {
+   "before": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 18.0,
+     "width_px": 24,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 6.0,
+     "width_px": 8,
+     "value": "頁"
+    }
+   },
+   "after": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 14.4,
+     "width_px": 19,
+     "value": "頁"
+    }
+   }
+  },
+  "管理体制": {
+   "before": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 50.4,
+     "width_px": 67,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 16.8,
+     "width_px": 22,
+     "value": "頁"
+    }
+   },
+   "after": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 14.4,
+     "width_px": 19,
+     "value": "頁"
+    }
+   }
+  },
+  "チェックシート(月次・異常時)": {
+   "before": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 18.0,
+     "width_px": 24,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 6.0,
+     "width_px": 8,
+     "value": "頁"
+    }
+   },
+   "after": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 14.4,
+     "width_px": 19,
+     "value": "頁"
+    }
+   }
+  },
+  "会議課題一覧(一時)": {
+   "before": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 36.0,
+     "width_px": 48,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 12.0,
+     "width_px": 16,
+     "value": "頁"
+    }
+   },
+   "after": {
+    "mgmt": {
+     "addr": "W2",
+     "merged": true,
+     "width_pt": 57.6,
+     "width_px": 77,
+     "value": "管理番号"
+    },
+    "page": {
+     "addr": "AU2",
+     "merged": true,
+     "width_pt": 14.4,
+     "width_px": 19,
+     "value": "頁"
+    }
+   }
+  },
+  "width_check": {
+   "表紙": {
+    "print_area": "$A$1:$Y$36",
+    "right_col": "Y",
+    "content_pt": 483.6,
+    "printable_pt": 495.9,
+    "fitted_before": true,
+    "over": false
+   },
+   "目次": {
+    "print_area": "$A$1:$AZ$20",
+    "right_col": "AZ",
+    "content_pt": 424.8,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": false
+   },
+   "用語": {
+    "print_area": "$A$1:$AZ$32",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "構成と管理情報": {
+    "print_area": "$A$1:$AZ$21",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "管理体制": {
+    "print_area": "$A$1:$AZ$20",
+    "right_col": "AZ",
+    "content_pt": 509.4,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "FIT applied (1 page wide, tall auto)"
+   },
+   "月次再起動": {
+    "print_area": "$A$1:$AZ$93",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "バックアップ": {
+    "print_area": "$A$1:$AZ$189",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "復旧": {
+    "print_area": "$A$1:$AZ$14",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "異常時の対応": {
+    "print_area": "$A$1:$AZ$321",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "チェックシート(月次・異常時)": {
+    "print_area": "$A$1:$AZ$45",
+    "right_col": "AZ",
+    "content_pt": 598.2,
+    "printable_pt": 495.9,
+    "fitted_before": true,
+    "over": true
+   },
+   "会議課題一覧(一時)": {
+    "print_area": "$A$1:$AZ$42",
+    "right_col": "AZ",
+    "content_pt": 486.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": false
+   },
+   "付録 引用元と確認範囲": {
+    "print_area": "$A$1:$AZ$28",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "要確認事項一覧": {
+    "print_area": "$A$1:$AZ$37",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   },
+   "7-5仮_サービス起動停止": {
+    "print_area": "$A$1:$AZ$56",
+    "right_col": "AZ",
+    "content_pt": 516.6,
+    "printable_pt": 495.9,
+    "fitted_before": false,
+    "over": true,
+    "action": "OVERWIDTH (not a fix target - REVIEW)"
+   }
+  }
+ },
+ "breaks_kept": {},
+ "ghost_fix": {
+  "rounds": [
+   {}
+  ],
+  "final": {}
+ },
+ "counts": {
+  "表紙": 1,
+  "目次": 1,
+  "用語": 2,
+  "構成と管理情報": 1,
+  "相関図": 1,
+  "相関図_old": 1,
+  "管理体制": 1,
+  "月次再起動": 3,
+  "バックアップ": 8,
+  "復旧": 1,
+  "異常時の対応": 18,
+  "チェックシート(月次・異常時)": 2,
+  "会議課題一覧(一時)": 2,
+  "付録 引用元と確認範囲": 2,
+  "要確認事項一覧": 2,
+  "7-5仮_サービス起動停止": 2
+ },
+ "counts_pass2": {
+  "表紙": 1,
+  "目次": 1,
+  "用語": 2,
+  "構成と管理情報": 1,
+  "相関図": 1,
+  "相関図_old": 1,
+  "管理体制": 1,
+  "月次再起動": 3,
+  "バックアップ": 8,
+  "復旧": 1,
+  "異常時の対応": 18,
+  "チェックシート(月次・異常時)": 2,
+  "会議課題一覧(一時)": 2,
+  "付録 引用元と確認範囲": 2,
+  "要確認事項一覧": 2,
+  "7-5仮_サービス起動停止": 2
+ },
+ "blanks": {},
+ "numbering": {
+  "目次": 2,
+  "用語": 3,
+  "構成と管理情報": 5,
+  "相関図": 6,
+  "相関図_old": 7,
+  "管理体制": 8,
+  "月次再起動": 9,
+  "バックアップ": 12,
+  "復旧": 20,
+  "異常時の対応": 21,
+  "チェックシート(月次・異常時)": 39,
+  "会議課題一覧(一時)": 41,
+  "付録 引用元と確認範囲": 43,
+  "要確認事項一覧": 45,
+  "7-5仮_サービス起動停止": 47
+ },
+ "book_pages": 48,
+ "errors": []
+}
