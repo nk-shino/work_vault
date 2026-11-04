@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>回廊の記録 — 星読みの守（詳細）</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <!-- 幕なし -->
+
+  <header class="site-head">
+    <a class="site-brand" href="index.html">回廊の記録</a>
+    <nav class="site-crumbs" aria-label="現在地">
+      <a href="index.html">表紙</a>
+      <span class="sep" aria-hidden="true">／</span>
+      <a href="list.html">一覧</a>
+      <span class="sep" aria-hidden="true">／</span>
+      <span class="here" aria-current="page">星読みの守</span>
+    </nav>
+  </header>
+
+  <main class="page">
+    <header class="page-head">
+      <p class="overline">PERSON — 守・第一代</p>
+
+      <!-- 見出し: 1文字リビール -->
+      <h1 class="page-title char-wrap"><span class="char-target">星読みの守</span></h1>
+      <p class="page-meta">在任 1901–1934 ／ 渡り廊下・灯りと星の記録 ／ 資料 No.013・No.021 に関わる</p>
+    </header>
+
+    <!-- 人物概要: 行マスク（GSAP SplitText） -->
+    <section class="section">
+      <h2 class="section-title">人物概要</h2>
+      <p class="profile-text line-mask">初代の星読みの守は、渡り廊下の西詰に小さな観測窓を設け、夜ごと星の高さを測った。測った値は朝の帳簿に写し、灯りの減りと並べて記した。在任三十三年のあいだ、帳簿が欠けた日は一度もないと伝わる。</p>
+    </section>
+
+    <!-- 履歴・年表: 各行をセクション出現（IO・同時に入った行は上から90ms刻み） -->
+    <section class="section">
+      <h2 class="section-title reveal">履歴・年表</h2>
+      <ol class="chron">
+        <li class="chron-row reveal-batch"><span class="chron-year">1901年</span><span class="chron-text">渡り廊下の守に任じられる。西詰に観測窓を設ける。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1904年</span><span class="chron-text">灯り八基の点検順を定め、朝夕の帳簿を始める。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1911年</span><span class="chron-text">大雪の冬。渡り廊下の修繕を差配人とともに指し図する。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1917年</span><span class="chron-text">星の観測を「星読みの章」としてまとめ始める。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1923年</span><span class="chron-text">回廊管理日誌の綴じ方を改め、修繕の記録を別冊へ移す。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1929年</span><span class="chron-text">正門の巡視を巡視長と分担する。巡回路の表を改める。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1931年</span><span class="chron-text">星読みの章を書庫へ納める。開架の日は月一度となる。</span></li>
+        <li class="chron-row reveal-batch"><span class="chron-year">1934年</span><span class="chron-text">守を第二代へ譲る。翌年暮れに逝去。帳簿は書庫に残る。</span></li>
+      </ol>
+    </section>
+
+    <!-- 関連リンク: 控えめhover（下線スイープ） -->
+    <section class="section">
+      <h2 class="section-title reveal">関連の記録</h2>
+      <ul class="related-links">
+        <li><a class="u-grow" href="list.html">資料の一覧へ戻る</a></li>
+        <li><a class="u-grow" href="list.html">星読みの章（資料 No.013）</a></li>
+        <li><a class="u-grow" href="list.html">灯りの減り台帳（資料 No.021）</a></li>
+        <li><a class="u-grow" href="index.html">表紙へ戻る</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <nav class="foot-nav" aria-label="ページ移動">
+      <a class="u-grow" href="index.html">表紙</a>
+      <a class="u-grow" href="list.html">一覧</a>
+      <a class="u-grow" href="detail.html" aria-current="page">詳細 — 星読みの守</a>
+    </nav>
+    <p class="foot-note">方向性合意用モック（破棄前提）／人物・資料・年代はダミーで実在の記録と無関係／GSAP は CDN（jsDelivr・無料・未読時はフォールバック）</p>
+  </footer>
+
+  <!-- GSAP（行マスクのみで使用。読めなければ motion.js がフォールバックする） -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+  <script src="motion.js"></script>
+</body>
+</html>

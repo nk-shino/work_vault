@@ -1,0 +1,517 @@
+/* ============================================================
+   回廊の記録 — 動き適用モック 共通スタイル
+   前回モック（20261104_動きコード併記モック）の6語彙を再利用:
+   curtain / 1文字リビール / 行マスク(GSAP) / IO出現 / stagger / 控えめhover
+   紙白＋焼けた琥珀の一点アクセント・明朝見出し・システム書体（file:// 前提）。
+
+   noscript 配慮: 隠し状態はすべて .js-armed 配下に置く。
+   JS が動かないときは js-armed が付かず、全要素が最初から見える。
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* 紙と線 */
+  --bg: #f7f3ea;
+  --bg-deep: #eee8d9;      /* 幕・面の深い紙 */
+  --panel: #fcfaf3;
+  --field: #faf7ee;
+  --line: rgba(56, 47, 31, 0.16);
+  --line-strong: rgba(56, 47, 31, 0.32);
+
+  /* 文字 */
+  --text: #2b251a;
+  --text-dim: #5f5744;
+  --text-faint: #968d78;
+
+  /* アクセント（焼けた琥珀） */
+  --accent: #96601d;
+  --accent-faint: rgba(150, 96, 29, 0.06);
+  --accent-soft: rgba(150, 96, 29, 0.10);
+  --accent-line: rgba(150, 96, 29, 0.45);
+  --accent-line-soft: rgba(150, 96, 29, 0.32);
+
+  /* 時間と道筋 */
+  --dur-fast: 240ms;
+  --ease-rise: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* 書体（システムのみ） */
+  --font-display: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --font-body: "Yu Gothic UI", "Yu Gothic", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+}
+
+/* ---------- 基礎 ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent-soft); }
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* 背景の空気 — 淡い暖色のにじみと紙の目 */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(56% 40% at 12% -6%, rgba(150, 96, 29, 0.05), transparent 62%),
+    radial-gradient(48% 42% at 92% 2%, rgba(96, 110, 140, 0.05), transparent 62%),
+    radial-gradient(72% 56% at 50% 114%, rgba(150, 96, 29, 0.04), transparent 62%);
+}
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 読み込み幕（表紙のみ） ---------- */
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  background: var(--bg-deep);
+  /* 幕は「開く」方向の transition だけ。閉じる側の演出は作らない */
+  transition: transform 800ms var(--ease-rise), opacity 480ms ease 260ms;
+}
+.curtain.is-open {
+  transform: translateY(-101%);
+  opacity: 0;
+  pointer-events: none;
+}
+.curtain--page {
+  position: fixed;
+  z-index: 80;
+  box-shadow: 0 1px 0 var(--line-strong);
+}
+.curtain-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: var(--text);
+}
+.curtain-sub {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  color: var(--text-faint);
+}
+
+/* ---------- 共通ヘッダー ---------- */
+.site-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--line);
+}
+.site-brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+}
+.site-brand:hover { color: var(--accent); }
+.site-crumbs {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+.site-crumbs a {
+  color: var(--text-dim);
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition: background-size 300ms var(--ease-rise), color var(--dur-fast) ease;
+}
+.site-crumbs a:hover {
+  background-size: 100% 1px;
+  color: var(--accent);
+}
+.site-crumbs .here { color: var(--text); }
+
+/* ---------- ページ枠と見出し ---------- */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 28px 40px;
+}
+.page--hero { padding-top: clamp(64px, 10vh, 120px); }
+
+.overline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+}
+.overline::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero-title,
+.page-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  color: var(--text);
+}
+.hero-title { font-size: clamp(32px, 5.4vw, 46px); }
+.page-title { font-size: clamp(26px, 4vw, 36px); }
+
+.page-desc {
+  margin: 14px 0 0;
+  max-width: 56ch;
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+.page-meta {
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+
+/* ---------- 語彙1: 1文字リビール（.char-wrap > .char-target） ---------- */
+.char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition:
+    opacity 600ms ease,
+    transform 600ms var(--ease-rise);
+  transition-delay: calc(var(--index) * 60ms);
+}
+.is-shown .char {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- 語彙2: 行マスク（.line-mask・GSAP／フォールバック） ---------- */
+.line-mask { max-width: 34em; font-size: 15px; line-height: 2.1; }
+.line-mask.is-armed { opacity: 0; }               /* フォールバックの準備状態 */
+.line-mask.is-fallback { animation: fade-in 700ms ease both; }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.lead {
+  margin: 26px 0 0;
+  color: var(--text-dim);
+}
+.profile-text { margin: 0; color: var(--text); }
+
+/* ---------- 語彙6: 控えめhover（共用の型） ---------- */
+/* 下線が左から伸びる */
+.u-grow {
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition: background-size 300ms var(--ease-rise);
+}
+a.u-grow:hover { background-size: 100% 1px; }
+/* 背景がうっすら色づく */
+.u-tint {
+  transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+
+/* ---------- 表紙: 導線2本 ---------- */
+.lead-nav {
+  display: grid;
+  gap: 14px;
+  margin: 44px 0 0;
+  max-width: 540px;
+}
+.lead-nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.lead-nav-item:hover {
+  background-color: var(--accent-faint);
+  border-color: var(--accent-line-soft);
+}
+.lead-nav-top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.lead-nav-no {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+.lead-nav-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  padding-bottom: 3px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition: background-size 300ms var(--ease-rise);
+}
+.lead-nav-item:hover .lead-nav-label { background-size: 100% 1px; }
+.lead-nav-desc {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ---------- 語彙4: 一覧のstagger出現（.stagger 内の .card） ---------- */
+.card-grid {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px 17px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+.card:hover {
+  background-color: var(--accent-faint);
+  border-color: var(--accent-line-soft);
+}
+.card-cat {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+}
+.card-title {
+  margin: 7px 0 0;
+  width: fit-content;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition: background-size 300ms var(--ease-rise);
+}
+.card:hover .card-title { background-size: 100% 1px; }
+.card-meta {
+  margin: 5px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.card-text {
+  margin: 7px 0 0;
+  font-size: 12px;
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+/* 出現の準備と再生（js-armed が付いているときだけ隠す） */
+.js-armed .stagger .card {
+  opacity: 0;
+  transform: translateY(16px);
+  /* 出現に index 遅れ、hover の色づきに遅れなし */
+  transition:
+    opacity 600ms ease,
+    transform 600ms var(--ease-rise),
+    background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+  transition-delay:
+    calc(var(--index, 0) * 70ms),
+    calc(var(--index, 0) * 70ms),
+    0ms,
+    0ms;
+}
+.stagger.is-shown .card {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- 語彙3: セクション出現（.reveal・下20%で発火） ---------- */
+.js-armed .reveal,
+.js-armed .reveal-batch {
+  opacity: 0;
+  transform: translateY(24px);
+  /* 不透明度と移動に別のイージング: ease-out-cubic ／ ease-out-quint */
+  transition:
+    opacity 700ms cubic-bezier(0.33, 1, 0.68, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js-armed .reveal.is-shown,
+.js-armed .reveal-batch.is-shown {
+  opacity: 1;
+  transform: none;
+}
+.js-armed .reveal-batch { transform: translateY(18px); }  /* 行は控えめな距離 */
+
+/* ---------- 一覧: 説明文ブロック ---------- */
+.about {
+  margin: 48px 0 0;
+  padding: 20px 24px 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.about h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+}
+.about p {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  max-width: 60ch;
+}
+
+/* ---------- 詳細: 節と年表 ---------- */
+.section { margin-top: 52px; }
+.section-title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.06em;
+}
+.chron {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.chron-row {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.chron-year {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+.chron-text {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ---------- 詳細: 関連リンク ---------- */
+.related-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.related-links a {
+  width: fit-content;
+  font-size: 14px;
+  color: var(--text-dim);
+  transition: color var(--dur-fast) ease;
+}
+.related-links a:hover { color: var(--accent); }
+
+/* ---------- 共通フッター ---------- */
+.site-foot {
+  max-width: 860px;
+  margin: 64px auto 0;
+  padding: 22px 28px 44px;
+  border-top: 1px solid var(--line);
+}
+.foot-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+.foot-nav a {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  transition: color var(--dur-fast) ease;
+}
+.foot-nav a:hover { color: var(--accent); }
+.foot-nav a[aria-current="page"] { color: var(--text); }
+.foot-note {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.9;
+}
+
+/* ---------- 動きを減らす設定 ---------- */
+/* 幕・出現は即時に完了する（動きを止めるのではなく、間を飛ばす） */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* ---------- 狭い画面 ---------- */
+@media (max-width: 680px) {
+  .site-head { padding: 12px 16px; }
+  .page { padding: 40px 16px 32px; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .chron-row { grid-template-columns: 64px 1fr; gap: 10px; }
+}
+@media (max-width: 460px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
