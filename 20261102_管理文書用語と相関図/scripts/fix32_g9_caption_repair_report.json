@@ -1,0 +1,42 @@
+{
+ "book": "pana",
+ "kind": "caption_repair",
+ "phase": {
+  "pre_ok": true,
+  "quote_cells": 34,
+  "restored_cells": [
+   "C27",
+   "C52"
+  ],
+  "sheet_scan": {
+   "r27c3": [
+    true,
+    false
+   ],
+   "r52c3": [
+    true,
+    false
+   ],
+   "r75c3": [
+    false,
+    true
+   ]
+  },
+  "media_after_save": {
+   "img_2": "15ee5682287583e9",
+   "img_1": "e567ad35c851d251"
+  },
+  "media_zip_replaced": [
+   "img_1"
+  ],
+  "media_final": {
+   "img_2": "15ee5682287583e9",
+   "img_1": "b0da9f9f517f1399"
+  }
+ },
+ "sha_vault_before": "43b6dfc315d8df2b6913b5eb37e42e17f9713477221881989b937e9f97f6c41c",
+ "total_pages": 49,
+ "sheet_pages": 3,
+ "quote_ok": true,
+ "sha_after": "0533e58bcf09bc05fc1ab15d12385f1904af7278bbc57f3f4c7923926343b2c1"
+}

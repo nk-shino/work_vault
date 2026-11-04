@@ -1,0 +1,64 @@
+{
+ "book": "pana",
+ "phase": {
+  "geometry_before": {
+   "img_1": {
+    "left": 30.0,
+    "top": 689.2,
+    "width": 340.0,
+    "height": 263.9
+   },
+   "img_2": {
+    "left": 30.0,
+    "top": 985.0,
+    "width": 294.0,
+    "height": 266.2
+   }
+  },
+  "img_1_replaced": {
+   "left": 30.0,
+   "top": 689.2,
+   "width": 340.0,
+   "height": 263.9,
+   "source_px": [
+    1385,
+    1075
+   ]
+  },
+  "caption_fixed_cells": 1,
+  "media_replace": {
+   "path": "xl/media/image2.png",
+   "before": "e567ad35c851d251",
+   "after": "b0da9f9f517f1399",
+   "shared_refs": 0
+  }
+ },
+ "sha_before": "22abe66bbaef01b972d24b35a20a6d895c8d840e619844d642035514e1bbaf03",
+ "quote_cells": 34,
+ "pages": {
+  "目次": 1,
+  "用語": 2,
+  "構成と管理情報": 1,
+  "相関図①": 1,
+  "相関図②": 1,
+  "相関図③": 1,
+  "相関図_old": 1,
+  "管理体制": 1,
+  "月次再起動": 3,
+  "バックアップ": 8,
+  "復旧": 1,
+  "異常時の対応": 18,
+  "チェックシート(月次・異常時)": 2,
+  "会議課題一覧(一時)": 2,
+  "付録 引用元と確認範囲": 2,
+  "要確認事項一覧": 2,
+  "7-5仮_サービス起動停止": 2
+ },
+ "total": 49,
+ "quote_ok": true,
+ "sha_after": "43b6dfc315d8df2b6913b5eb37e42e17f9713477221881989b937e9f97f6c41c",
+ "media_sha16": {
+  "img_2": "15ee5682287583e9",
+  "img_1": "b0da9f9f517f1399"
+ }
+}
