@@ -19,7 +19,7 @@
   <input id="change_reason" name="change_reason" required>
   <h2>用例（この提案に付いているもの）</h2>
   <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
-  <button type="submit">修正して採用する</button>
+  <button type="submit" class="primary">修正して採用する</button>
   <a href="/proposals">取り消して戻る</a>
 </form>
 {% endblock %}

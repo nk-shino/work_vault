@@ -3,9 +3,8 @@
 {% block main %}
 <nav class="crumbs" aria-label="現在位置"><a href="/terms">用語一覧</a> ／ {{ d.term.headword }}</nav>
 <section class="hero">
-  <h1 class="hw">{{ d.term.headword }} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
+  <h1><span class="hw hw-big">{{ d.term.headword }}</span>{% if d.term.reading %}<span class="reading">{{ d.term.reading }}</span>{% endif %} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
   <dl class="meta">
-    {% if d.term.reading %}<dt>読み</dt><dd>{{ d.term.reading }}</dd>{% endif %}
     {% if d.term.english %}<dt>英語</dt><dd>{{ d.term.english }}</dd>{% endif %}
     {% if d.term.abbreviation %}<dt>略語</dt><dd>{{ d.term.abbreviation }}</dd>{% endif %}
     <dt>版</dt><dd>{{ d.term.revision_number }}（<a href="/history/term/{{ d.term.id }}">用語の履歴</a>）</dd>
@@ -64,14 +63,14 @@
       <input id="ev-comment-{{ s.id }}" name="comment" maxlength="400">
       <div class="ev-buttons" role="group" aria-label="定義の正確性">
         <span>正確性：</span>
-        <button type="submit" name="accuracy" value="correct">正しい</button>
-        <button type="submit" name="accuracy" value="needs_fix">修正が必要</button>
-        <button type="submit" name="accuracy" value="unsure">判断できない</button>
+        <button type="submit" class="stamp" name="accuracy" value="correct">正しい</button>
+        <button type="submit" class="stamp" name="accuracy" value="needs_fix">修正が必要</button>
+        <button type="submit" class="stamp" name="accuracy" value="unsure">判断できない</button>
       </div>
       <div class="ev-buttons" role="group" aria-label="用語集としての有用性">
         <span>有用性：</span>
-        <button type="submit" name="usefulness" value="useful">役に立つ</button>
-        <button type="submit" name="usefulness" value="not_useful">役に立たない</button>
+        <button type="submit" class="stamp" name="usefulness" value="useful">役に立つ</button>
+        <button type="submit" class="stamp" name="usefulness" value="not_useful">役に立たない</button>
       </div>
     </form>
     {% if sm.comments %}

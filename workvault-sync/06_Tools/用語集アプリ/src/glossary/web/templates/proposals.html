@@ -44,7 +44,7 @@
   </div>
   {% endif %}
   <h2 id="p-{{ p.id }}">
-    {% if p.proposal_type in ("sense", "evidence") %}{{ payload.headword }}{% else %}{{ payload.from_headword }} ⇔ {{ payload.to_headword }}{% endif %}
+    {% if p.proposal_type in ("sense", "evidence") %}<span class="hw-inline">{{ payload.headword }}</span>{% else %}<span class="hw-inline">{{ payload.from_headword }}</span> ⇔ <span class="hw-inline">{{ payload.to_headword }}</span>{% endif %}
     <span class="badge">{{ label(p.proposal_type) }}</span>
     <span class="badge st-{{ p.status }}">{{ label(p.status) }}</span>
   </h2>
@@ -80,11 +80,11 @@
     <p class="hint">定義文はモック（仮の文）です。採用するなら「修正して採用」で定義を書いてください。</p>
     {% else %}
     <form method="post" action="/proposals/{{ p.id }}/accept" class="busy-on-submit" data-kaction="accept">
-      <button type="submit">採用</button>
+      <button type="submit" class="primary">採用</button>
     </form>
     {% endif %}
     <form method="post" action="/proposals/{{ p.id }}/reject" class="busy-on-submit" data-kaction="reject">
-      <button type="submit">却下</button>
+      <button type="submit" class="danger">却下</button>
     </form>
     {% if p.proposal_type == "sense" %}<a href="/proposals/{{ p.id }}/edit">修正して採用…</a>{% endif %}
   </div>
@@ -104,8 +104,8 @@
   <input type="hidden" name="page" value="{{ page }}">
   <p class="bulk-count" id="bulk-count" aria-live="polite">選択 0 件</p>
   <button type="button" id="bulk-select-all" class="js-only" hidden>このページをすべて選択</button>
-  <button type="submit" name="action" value="accept">チェックした提案を採用</button>
-  <button type="submit" name="action" value="reject">チェックした提案を却下</button>
+  <button type="submit" class="primary" name="action" value="accept">チェックした提案を採用</button>
+  <button type="submit" class="danger" name="action" value="reject">チェックした提案を却下</button>
   <p class="bulk-warn" id="bulk-warn" aria-live="polite" hidden>モック草案の定義が選択されています。採用は「修正して採用」から行うか、その提案のチェックを外してください。</p>
 </form>
 {% endif %}

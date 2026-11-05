@@ -19,7 +19,7 @@
   <tbody>
   {% for it in items %}
     <tr>
-      <td><a href="/terms/{{ it.term.id }}#sense-{{ it.sense.id }}">{{ it.term.headword }}</a></td>
+      <td><a class="hw" href="/terms/{{ it.term.id }}#sense-{{ it.sense.id }}">{{ it.term.headword }}</a></td>
       <td>{{ it.sense.definition[:60] }}{% if it.sense.definition|length > 60 %}…{% endif %}</td>
       <td>{{ "自動" if it.sense.adopted_by == "auto" else "人" }}</td>
       <td>{% if it.summary.unevaluated %}未評価{% else %}{% for k, n in it.summary.accuracy.items() %}{{ label(k) }} {{ n }} {% endfor %}{% for k, n in it.summary.usefulness.items() %}{{ label(k) }} {{ n }} {% endfor %}{% endif %}</td>

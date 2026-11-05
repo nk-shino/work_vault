@@ -1,0 +1,26 @@
+[
+ {
+  "source_ref": "doc:0834-916361.txt",
+  "error": "マスキング漏れ: person_honorific"
+ },
+ {
+  "source_ref": "doc:CREATE-SIMPLE_v2.5.1.txt",
+  "error": "マスキング漏れ: serial"
+ },
+ {
+  "source_ref": "doc:CREATE-SIMPLE_ver3.2.1_1課 - コピー.txt",
+  "error": "マスキング漏れ: serial"
+ },
+ {
+  "source_ref": "doc:CREATE-SIMPLE_ver3.2.1_1課.txt",
+  "error": "マスキング漏れ: serial"
+ },
+ {
+  "source_ref": "doc:EGPro差異確認まとめ.txt",
+  "error": "マスキング漏れ: phone"
+ },
+ {
+  "source_ref": "doc:EGPro差異確認まとめ　松井.txt",
+  "error": "マスキング漏れ: phone"
+ }
+]
