@@ -68,7 +68,7 @@ function Test-Excluded([string]$relPath) {
     foreach ($p in $nestedPrefixes) { if ($relPath -eq $p -or $relPath.StartsWith($p + "/")) { return $true } }
     if ($relPath -match "workvault-sync/11_USBミラー_E/buckup/15575/BK/自動はんだ不良入力\.zip$") { return $true }
     if ($relPath -match "workvault-sync/09_佐藤さん引継ぎ/佐藤\(勇\)/DGS NPM 説明書/NPM-DGS\.PDF$") { return $true }
-    if ($relPath -match "(/|^)(__pycache__|\.tmp\.drive)(/|$)|\.egg-info(/|$)|\.pyc$|\.bkp$|/\.git") { return $true }
+    if ($relPath -match "(/|^)(__pycache__|\.tmp\.drive|\.venv|\.playwright-mcp|\.mypy_cache|\.pytest_cache|\.ruff_cache)(/|$)|\.egg-info(/|$)|\.pyc$|\.bkp$|/\.git") { return $true }
     if ($relPath -match "workvault-sync/06_Tools/用語集アプリ/data/glossary\.db$") { return $true }
     return $false
 }
