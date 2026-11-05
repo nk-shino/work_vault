@@ -1,0 +1,601 @@
+{
+ "meta": {
+  "script": "fix34_collision.py",
+  "source": "geom_fix34.json",
+  "mode": "post-fix34",
+  "sheets": [
+   "相関図②",
+   "相関図③"
+  ],
+  "generated": "2026-11-05T17:01:09",
+  "note": "element IDs and kind labels only; no shape text"
+ },
+ "shape_count": {
+  "pana": {
+   "相関図②": {
+    "expected": 36,
+    "json": 36,
+    "live": 36,
+    "ok": true
+   },
+   "相関図③": {
+    "expected": 36,
+    "json": 36,
+    "live": 36,
+    "ok": true
+   }
+  },
+  "lnb": {
+   "相関図②": {
+    "expected": 36,
+    "json": 36,
+    "live": 36,
+    "ok": true
+   },
+   "相関図③": {
+    "expected": 36,
+    "json": 36,
+    "live": 36,
+    "ok": true
+   }
+  }
+ },
+ "drift": {
+  "pana": {
+   "相関図②": [],
+   "相関図③": []
+  },
+  "lnb": {
+   "相関図②": [],
+   "相関図③": []
+  }
+ },
+ "complement": {
+  "pana": {
+   "相関図②": {
+    "flip_read": 19,
+    "flip_source": "drawingml-xml",
+    "flip": {
+     "g2_band": [
+      false,
+      false
+     ],
+     "g2_bandhead": [
+      false,
+      false
+     ],
+     "g2_e_e01": [
+      false,
+      false
+     ],
+     "g2_e_e01_l": [
+      false,
+      false
+     ],
+     "g2_e_e02_l": [
+      false,
+      false
+     ],
+     "g2_e_e04_l": [
+      false,
+      false
+     ],
+     "g2_e_e08": [
+      false,
+      false
+     ],
+     "g2_e_e08_l": [
+      false,
+      false
+     ],
+     "g2_e_e15": [
+      false,
+      false
+     ],
+     "g2_e_e15_l": [
+      false,
+      false
+     ],
+     "g2_e_e16": [
+      false,
+      false
+     ],
+     "g2_e_e16_l": [
+      false,
+      false
+     ],
+     "g2_e_e17_l": [
+      false,
+      false
+     ],
+     "g2_e_e18_l": [
+      false,
+      false
+     ],
+     "g2_expl": [
+      false,
+      false
+     ],
+     "g2_leg0": [
+      false,
+      false
+     ],
+     "g2_leg1": [
+      false,
+      false
+     ],
+     "g2_leg2": [
+      false,
+      false
+     ],
+     "g2_leg3": [
+      false,
+      false
+     ]
+    },
+    "connectors": [
+     {
+      "shape": "g2_e_e01",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e08",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e15",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e16",
+      "begin": null,
+      "end": null
+     }
+    ]
+   },
+   "相関図③": {
+    "flip_read": 22,
+    "flip_source": "drawingml-xml",
+    "flip": {
+     "g3_band": [
+      false,
+      false
+     ],
+     "g3_bandhead": [
+      false,
+      false
+     ],
+     "g3_e_e03_l": [
+      false,
+      false
+     ],
+     "g3_e_e04_l": [
+      false,
+      false
+     ],
+     "g3_e_e05": [
+      false,
+      false
+     ],
+     "g3_e_e05_l": [
+      false,
+      false
+     ],
+     "g3_e_e06": [
+      false,
+      false
+     ],
+     "g3_e_e06_l": [
+      false,
+      false
+     ],
+     "g3_e_e07_l": [
+      false,
+      false
+     ],
+     "g3_e_e09_l": [
+      false,
+      false
+     ],
+     "g3_e_e10_l": [
+      false,
+      false
+     ],
+     "g3_e_e12": [
+      false,
+      false
+     ],
+     "g3_e_e12_l": [
+      false,
+      false
+     ],
+     "g3_e_e13": [
+      false,
+      false
+     ],
+     "g3_e_e13_l": [
+      false,
+      false
+     ],
+     "g3_e_e14": [
+      false,
+      false
+     ],
+     "g3_e_e14_l": [
+      false,
+      false
+     ],
+     "g3_expl": [
+      false,
+      false
+     ],
+     "g3_leg0": [
+      false,
+      false
+     ],
+     "g3_leg1": [
+      false,
+      false
+     ],
+     "g3_leg2": [
+      false,
+      false
+     ],
+     "g3_leg3": [
+      false,
+      false
+     ]
+    },
+    "connectors": [
+     {
+      "shape": "g3_e_e05",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e06",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e12",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e13",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e14",
+      "begin": null,
+      "end": null
+     }
+    ]
+   }
+  },
+  "lnb": {
+   "相関図②": {
+    "flip_read": 19,
+    "flip_source": "drawingml-xml",
+    "flip": {
+     "g2_band": [
+      false,
+      false
+     ],
+     "g2_bandhead": [
+      false,
+      false
+     ],
+     "g2_e_e01": [
+      false,
+      false
+     ],
+     "g2_e_e01_l": [
+      false,
+      false
+     ],
+     "g2_e_e02_l": [
+      false,
+      false
+     ],
+     "g2_e_e04_l": [
+      false,
+      false
+     ],
+     "g2_e_e08": [
+      false,
+      false
+     ],
+     "g2_e_e08_l": [
+      false,
+      false
+     ],
+     "g2_e_e15": [
+      false,
+      false
+     ],
+     "g2_e_e15_l": [
+      false,
+      false
+     ],
+     "g2_e_e16": [
+      false,
+      false
+     ],
+     "g2_e_e16_l": [
+      false,
+      false
+     ],
+     "g2_e_e17_l": [
+      false,
+      false
+     ],
+     "g2_e_e18_l": [
+      false,
+      false
+     ],
+     "g2_expl": [
+      false,
+      false
+     ],
+     "g2_leg0": [
+      false,
+      false
+     ],
+     "g2_leg1": [
+      false,
+      false
+     ],
+     "g2_leg2": [
+      false,
+      false
+     ],
+     "g2_leg3": [
+      false,
+      false
+     ]
+    },
+    "connectors": [
+     {
+      "shape": "g2_e_e01",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e08",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e15",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g2_e_e16",
+      "begin": null,
+      "end": null
+     }
+    ]
+   },
+   "相関図③": {
+    "flip_read": 22,
+    "flip_source": "drawingml-xml",
+    "flip": {
+     "g3_band": [
+      false,
+      false
+     ],
+     "g3_bandhead": [
+      false,
+      false
+     ],
+     "g3_e_e03_l": [
+      false,
+      false
+     ],
+     "g3_e_e04_l": [
+      false,
+      false
+     ],
+     "g3_e_e05": [
+      false,
+      false
+     ],
+     "g3_e_e05_l": [
+      false,
+      false
+     ],
+     "g3_e_e06": [
+      false,
+      false
+     ],
+     "g3_e_e06_l": [
+      false,
+      false
+     ],
+     "g3_e_e07_l": [
+      false,
+      false
+     ],
+     "g3_e_e09_l": [
+      false,
+      false
+     ],
+     "g3_e_e10_l": [
+      false,
+      false
+     ],
+     "g3_e_e12": [
+      false,
+      false
+     ],
+     "g3_e_e12_l": [
+      false,
+      false
+     ],
+     "g3_e_e13": [
+      false,
+      false
+     ],
+     "g3_e_e13_l": [
+      false,
+      false
+     ],
+     "g3_e_e14": [
+      false,
+      false
+     ],
+     "g3_e_e14_l": [
+      false,
+      false
+     ],
+     "g3_expl": [
+      false,
+      false
+     ],
+     "g3_leg0": [
+      false,
+      false
+     ],
+     "g3_leg1": [
+      false,
+      false
+     ],
+     "g3_leg2": [
+      false,
+      false
+     ],
+     "g3_leg3": [
+      false,
+      false
+     ]
+    },
+    "connectors": [
+     {
+      "shape": "g3_e_e05",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e06",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e12",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e13",
+      "begin": null,
+      "end": null
+     },
+     {
+      "shape": "g3_e_e14",
+      "begin": null,
+      "end": null
+     }
+    ]
+   }
+  }
+ },
+ "books": {
+  "pana": {
+   "相関図②": {
+    "by_category": {
+     "a": 0,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "e": 0
+    },
+    "total": 0,
+    "b_excluded_containers": [
+     "g2_n01_box"
+    ],
+    "violations": {
+     "a": [],
+     "b": [],
+     "c": [],
+     "d": [],
+     "e": []
+    }
+   },
+   "相関図③": {
+    "by_category": {
+     "a": 0,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "e": 0
+    },
+    "total": 0,
+    "b_excluded_containers": [],
+    "violations": {
+     "a": [],
+     "b": [],
+     "c": [],
+     "d": [],
+     "e": []
+    }
+   }
+  },
+  "lnb": {
+   "相関図②": {
+    "by_category": {
+     "a": 0,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "e": 0
+    },
+    "total": 0,
+    "b_excluded_containers": [
+     "g2_n01_box"
+    ],
+    "violations": {
+     "a": [],
+     "b": [],
+     "c": [],
+     "d": [],
+     "e": []
+    }
+   },
+   "相関図③": {
+    "by_category": {
+     "a": 0,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "e": 0
+    },
+    "total": 0,
+    "b_excluded_containers": [],
+    "violations": {
+     "a": [],
+     "b": [],
+     "c": [],
+     "d": [],
+     "e": []
+    }
+   }
+  }
+ },
+ "totals": {
+  "by_category": {
+   "a": 0,
+   "b": 0,
+   "c": 0,
+   "d": 0,
+   "e": 0
+  },
+  "grand": 0
+ }
+}
