@@ -60,7 +60,8 @@
 
 /* ---------- hover = 押し込み（種類の追加） ----------
    hover で枠が一段内側に現れて育つ（inset の金環）。
-   active で 0.98 に押し込む。曲線は幕系 in-out-expo を借りる */
+   active で 0.98 に押し込む。曲線は幕系 in-out-expo を借りる。
+   押しは 0.12秒・離しは 0.18秒（触感の前後差 — 実測では両側 133ms で同速だった） */
 .card, .btn, .chip {
   transition:
     box-shadow 0.35s var(--ease-in-out-expo),
@@ -74,6 +75,13 @@
 }
 .card:active, .btn:active, .chip:active {
   transform: scale(0.98);
+  /* 押し込みの瞬間のみ transform を短くする（離しは既定の 0.18s に戻る） */
+  transition:
+    box-shadow 0.35s var(--ease-in-out-expo),
+    background-color 0.35s var(--ease-in-out-expo),
+    color 0.35s var(--ease-in-out-expo),
+    border-color 0.35s var(--ease-in-out-expo),
+    transform 0.12s cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 /* チップの選択状態は押し込みの金環より強く出さない */
 .chip[aria-pressed="true"]:hover { box-shadow: inset 0 0 0 3px rgba(12, 10, 8, 0.4); }

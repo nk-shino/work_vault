@@ -22,10 +22,10 @@
   --rule-strong: rgba(238, 240, 234, 0.34);
 
   /* イージング — out-back（微オーバーシュート）と out-expo の使い分け
-     out-back = 文字・題箋の立ち上がり（跳ねる新しい語彙）
+     out-back = 文字・題箋・13枚の立ち上がり（跳ねる新しい語彙）—
+       GSAP 側の back.out(1.7 / 1.6) が担うため CSS トークンは置かない
      out-expo = フェードと行の追従・hover（easings.net） */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "MS PMincho", serif;
   --font-gothic: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;

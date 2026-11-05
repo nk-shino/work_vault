@@ -5,7 +5,8 @@
    担当:
    - js-armed の管理（reduce・IO未対応では付けない＝何も隠れない）
    - IO出現（fade + rise のみ・一回きり・発火線は画面下30%）
-   - 数字カウンター（バニラ rAF・data 属性の数値・out-quint）
+   - 数字カウンター（バニラ rAF・data 属性の数値・cubic-out —
+     数値の可読性のため出現の out-quint から例外的に分離）
    - typewriter（index のリード1箇所・caret 点滅つき）
    - 所属絞り込み（aria-pressed・aria-live・reduced-motion でも機能）
 
@@ -56,25 +57,12 @@
   /* ---------- IO出現: fade + rise のみ・一回きり・発火線は画面下30% ---------- */
   function setupReveal() {
     // 段差（stagger 125ms）の割り当て:
-    // data-reveal-seq は並び順どおり 0,1,2…（表紙・数字帯・記録の頭）
+    // data-reveal-seq は並び順どおり 0,1,2…（表紙・数字帯・記録の頭）。
+    // 一覧（13枚）は要素別の IO 発火に任せ、行の割り当て機構は持たない
+    //（行単位の --i は行高が発火線をまたぐと待ち時間が実効的に無効化されるため廃止）
     document.querySelectorAll('[data-reveal-seq]').forEach((group) => {
       [...group.querySelectorAll(':scope > [data-reveal]')].forEach((el, i) => {
         el.style.setProperty('--i', String(i));
-      });
-    });
-    // data-reveal-group は同じ行にある要素へ同じ --i（題箋の13枚。
-    // 行単位にしないと下の行が発火のたびに長く待つことになる）
-    document.querySelectorAll('[data-reveal-group]').forEach((group) => {
-      const items = [...group.querySelectorAll(':scope > [data-reveal]')];
-      const rows = [];
-      items.forEach((el) => {
-        const top = Math.round(el.getBoundingClientRect().top);
-        let row = -1;
-        for (let k = 0; k < rows.length; k += 1) {
-          if (Math.abs(rows[k] - top) <= 8) { row = k; break; }
-        }
-        if (row < 0) { row = rows.length; rows.push(top); }
-        el.style.setProperty('--i', String(row));
       });
     });
 
@@ -88,7 +76,7 @@
     document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
   }
 
-  /* ---------- 数字カウンター: バニラ rAF・out-quint・data 属性から ---------- */
+  /* ---------- 数字カウンター: バニラ rAF・cubic-out・data 属性から ---------- */
   function setupCounters() {
     const els = [...document.querySelectorAll('[data-count]')];
     if (!els.length) return;
@@ -118,7 +106,10 @@
     const start = performance.now();
     const tick = (now) => {
       const t = Math.min((now - start) / DURATION, 1);
-      const eased = 1 - Math.pow(1 - t, 5); // out-quint — 案A唯一の曲線
+      // out-quint では最終 15% の到達に曲線の後半をすべて使うため、
+      // 完走後も数値が目標の約半分の位置に留まる（実測）。数値の可読性を
+      // 優先し、この箇所のみ cubic-out に例外的に分離する
+      const eased = 1 - Math.pow(1 - t, 3); // cubic-out
       el.textContent = String(Math.round(end * eased));
       if (t < 1) requestAnimationFrame(tick);
     };

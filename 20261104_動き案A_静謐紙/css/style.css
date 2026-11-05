@@ -22,8 +22,9 @@
   --rule: rgba(43, 38, 32, 0.22);
   --rule-soft: rgba(43, 38, 32, 0.12);
 
-  /* 案Aは out-quint の 1曲線で貫く（easings.net #14）。
-     出現・hover・caret 以外のすべての遷移がこの曲線を使う。 */
+  /* 案Aは出現を out-quint の 1曲線で貫く（easings.net #14）。
+     出現・hover・caret・題字の字間がこの曲線を使う。
+     例外的に数字カウンターのみ cubic-out（数値の可読性のため・js/motion.js runCount）。 */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "MS PMincho", serif;

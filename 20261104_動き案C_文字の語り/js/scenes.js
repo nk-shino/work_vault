@@ -59,7 +59,9 @@
 
   /* ---------- 13枚: stagger random（不採用#16の再検討・初回のみ） ---------- */
   /* 読み込みの一度だけ random 順で立ち上げる。絞り込みの再描画は
-     動かさず即時表示（本番候補の挙動に合わせる）。 */
+     動かさず即時表示（本番候補の挙動に合わせる）。
+     grid: 'auto' は付けない — グリッド近傍順が優先されて random の散らばりが
+     宣言値の 1/3（実測 spread 167ms）に縮むため、from: 'random' だけで並べる */
   function playGridRandom() {
     const cells = gsap.utils.toArray('#grid > li');
     if (!cells.length) return;
@@ -67,7 +69,7 @@
       gsap.from(cells, {
         autoAlpha: 0, y: 26,
         duration: 0.55, ease: 'back.out(1.6)',
-        stagger: { each: 0.042, from: 'random', grid: 'auto' },
+        stagger: { each: 0.042, from: 'random' },
         delay: 0.3
       });
     } catch (err) { /* 何もしない（可視のまま） */ }

@@ -54,11 +54,14 @@
     var hold = curtain.classList.contains('is-hold');
     var cover = curtain.classList.contains('is-cover');
     if (!hold && !cover) return false;
-    if (doorLeft) gsap.set(doorLeft, { xPercent: hold ? 0 : -102 });
-    if (doorRight) gsap.set(doorRight, { xPercent: hold ? 0 : 102 });
+    // xPercent だけでなく x を 0 に明示する: CSS 側の translateX(-101% / -102%)
+    // は gsap が計算済み行列として px 化して x に残留させ、xPercent と二重に効く
+    //（出発時に実効 -202% となり、幕が画面外から走ってくる不具合の修正）
+    if (doorLeft) gsap.set(doorLeft, { x: 0, xPercent: hold ? 0 : -102 });
+    if (doorRight) gsap.set(doorRight, { x: 0, xPercent: hold ? 0 : 102 });
     if (mark) gsap.set(mark, { autoAlpha: hold ? 1 : 0 });
-    if (flowCrimson) gsap.set(flowCrimson, { xPercent: cover ? 0 : -101 });
-    if (flowInk) gsap.set(flowInk, { xPercent: cover ? 0 : -101 });
+    if (flowCrimson) gsap.set(flowCrimson, { x: 0, xPercent: cover ? 0 : -101 });
+    if (flowInk) gsap.set(flowInk, { x: 0, xPercent: cover ? 0 : -101 });
     curtain.classList.remove('is-hold', 'is-cover');
     return hold ? 'hold' : 'cover';
   }
@@ -71,8 +74,11 @@
     }
     bridge.setWipeFlag();
     curtain.classList.add('is-live'); // 先に可視化してから動かす
-    gsap.set(flowCrimson, { xPercent: -101 });
-    gsap.set(flowInk, { xPercent: -101 });
+    // cover 経由で来なかった到着ではフロー層が gsap 未引き取りのまま
+    //（CSS 既定の translateX(-101%) のみ）。ここで x を 0 に明示して
+    // px 化された残留行列を潰してから出発させる
+    gsap.set(flowCrimson, { x: 0, xPercent: -101 });
+    gsap.set(flowInk, { x: 0, xPercent: -101 });
     gsap.timeline({
       onComplete: function () { window.location.href = url; }
     })
