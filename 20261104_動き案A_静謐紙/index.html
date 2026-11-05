@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>HOME（動き案A・静謐紙）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="home">
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="topbar wrap">
+  <p class="topbar-title">回廊の記録<small>動き案A「静謐紙」・破棄前提</small></p>
+  <nav class="topbar-nav" aria-label="主ナビゲーション">
+    <a href="index.html" aria-current="page">HOME</a>
+    <a href="chara.html">人物</a>
+    <a href="detail.html">セラフの記録</a>
+  </nav>
+</header>
+
+<main>
+  <!-- 表紙: 出現は fade+rise のみ。リードは typewriter（全画面でこの1箇所のみ）。 -->
+  <section class="cover wrap" aria-label="表紙">
+    <p class="tategaki tategaki-kiroku" aria-hidden="true">記録</p>
+    <p class="tategaki tategaki-kairou" aria-hidden="true">回廊</p>
+
+    <div class="cover-body" data-reveal-seq>
+      <p class="cover-eyebrow" data-reveal>非公式資料サイト・案Aモック</p>
+      <h1 class="cover-title" data-reveal>回廊の記録</h1>
+      <p class="cover-lead" data-tw>内容は data フォルダの実データのみ。この面は、外部に何も読み込まず紙の静けさで見せる案の見本（破棄前提）。</p>
+      <p class="cover-cue" data-reveal>SCROLL</p>
+    </div>
+  </section>
+
+  <section class="chapter wrap" aria-labelledby="intro-title">
+    <h2 class="sec-title" id="intro-title" data-reveal>序 — この記録のこと</h2>
+    <p class="chapter-text" data-reveal>ある音楽プロジェクトの非公式資料。出典と検証状態をたどれることを最優先にする。肖像は準備中のあいだ、題箋で代用する。</p>
+  </section>
+
+  <section class="count-band" aria-labelledby="count-title">
+    <div class="wrap">
+      <h2 class="sec-title" id="count-title" data-reveal>記録の数</h2>
+      <div class="counts" data-reveal-seq>
+        <div class="count" data-reveal>
+          <span class="count-num" data-count="13">13</span>
+          <span class="count-label">作品</span>
+          <p class="count-note">出典 data/works.json</p>
+        </div>
+        <div class="count" data-reveal>
+          <span class="count-num" data-count="13">13</span>
+          <span class="count-label">人物</span>
+          <p class="count-note">出典 data/characters.json</p>
+        </div>
+        <div class="count" data-reveal>
+          <span class="count-num" data-count="50">50</span>
+          <span class="count-label">目録</span>
+          <p class="count-note">出典 data/catalog.json</p>
+        </div>
+        <div class="count" data-reveal>
+          <span class="count-num" data-count="9">9</span>
+          <span class="count-label">出来事</span>
+          <p class="count-note">出典 data/history.json</p>
+        </div>
+      </div>
+
+      <div class="cover-actions" data-reveal>
+        <a class="quiet-btn" href="chara.html">人物一覧へ</a>
+        <a class="quiet-btn is-plain" href="detail.html">燭守 セラフの記録へ</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">動き案A「静謐紙」— 外部リクエスト 0件（ライブラリ・CDN・Web フォント不使用）。出演・年表・件数はすべて同梱 data/*.json の実データ。破棄前提の検討用。</div>
+</footer>
+
+<script src="js/motion.js"></script>
+</body>
+</html>

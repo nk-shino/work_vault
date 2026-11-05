@@ -1,0 +1,138 @@
+/* ============================================================
+   回廊の記録 — 動き案A「静謐紙」: 動きの層（motion.css）
+   外部依存ゼロ。CSS（scroll-driven animations を含む）と
+   バニラ JS（js/motion.js）のみで運ぶ。
+
+   規約:
+   - 隠し状態はすべて .js-armed 配下（JS が動かないなら何も隠れない）
+   - scroll-driven は @supports + no-preference の二重ガード
+     （未対応環境・reduce 環境では完成形の静止表示になる）
+   - イージングは --ease（out-quint）の 1曲線のみで貫く
+   - 運び: duration 0.9〜1.2秒 / stagger 125ms / 移動 32px
+   ============================================================ */
+
+:root {
+  --dur-reveal: 1.05s; /* 出現 — 0.9〜1.2秒の帯の中段 */
+  --dur-hero: 1.15s;   /* 表紙の題字（字間を含む） */
+  --stagger: 125ms;    /* 段差 — 110〜140ms の帯の中段 */
+  --rise: 32px;        /* 移動距離 — 28〜36px の帯の中段 */
+}
+
+/* ---------- 出現まち（IO出現: fade + rise のみ・一回きり） ---------- */
+.js-armed [data-reveal] { opacity: 0; transform: translateY(var(--rise)); }
+.js-armed [data-reveal].is-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--dur-reveal) var(--ease),
+    transform var(--dur-reveal) var(--ease);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+/* 表紙の題字は字間もいっしょに開く（読み込み時・1回きり）。
+   スクロール時の字間開きは .sec-title が scroll-driven で担う。 */
+.js-armed .cover-title { letter-spacing: 0.04em; }
+.js-armed .cover-title.is-in {
+  letter-spacing: 0.1em;
+  transition:
+    opacity var(--dur-hero) var(--ease),
+    transform var(--dur-hero) var(--ease),
+    letter-spacing var(--dur-hero) var(--ease);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+/* ---------- typewriter（index のリード1箇所・caret 点滅つき） ---------- */
+/* JS 無効・reduced-motion では [data-tw] は素の完成文のまま。 */
+.js-armed [data-tw]:not(.tw-on) { opacity: 0; }
+.js-armed [data-tw].tw-on { opacity: 1; }
+.tw-caret {
+  display: inline-block;
+  width: 1px; height: 1.05em;
+  margin-left: 3px;
+  background: var(--sumi);
+  vertical-align: -0.15em;
+  animation: tw-blink 1.1s step-end infinite;
+}
+@keyframes tw-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* ---------- hover — 枠を一段濃く＋背景をうっすら（CSS のみ・JS 不要） ---------- */
+/* 本番候補と同系の控えめ語彙。scale は使わない。遷移も --ease（out-quint）。 */
+.sheet-card, .quiet-btn, .chip {
+  transition:
+    border-color 0.4s var(--ease),
+    background-color 0.4s var(--ease),
+    color 0.4s var(--ease);
+}
+.sheet-card:hover, .sheet-card:focus-visible {
+  border-color: rgba(43, 38, 32, 0.55);
+  background-color: rgba(166, 61, 43, 0.05);
+}
+.quiet-btn:hover, .quiet-btn:focus-visible {
+  border-color: var(--shu);
+  background-color: rgba(166, 61, 43, 0.06);
+  color: var(--shu-deep);
+}
+.chip:hover { border-color: var(--shu); color: var(--shu-deep); }
+.chip[aria-pressed="true"] {
+  border-color: var(--shu);
+  color: var(--shu-deep);
+  background-color: rgba(166, 61, 43, 0.08);
+}
+
+/* ---------- scroll-driven（進捗バー / 縦書きの漂い / 見出しの字間 / 年表の縦線） ---------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* 窓口: 読み進めの割合 */
+    .progress {
+      animation: a-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes a-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    /* 縦書きの語が紙面に漂う */
+    .tategaki {
+      animation: a-tate-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    @keyframes a-tate-drift {
+      from { transform: translateY(-26px); }
+      to { transform: translateY(26px); }
+    }
+
+    /* 見出しの字間が開く（通過に応じて .02em → .12em） */
+    .sec-title {
+      animation: a-title-track linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 42%;
+    }
+    @keyframes a-title-track {
+      from { letter-spacing: 0.02em; }
+      to { letter-spacing: 0.12em; }
+    }
+
+    /* 年表の縦線が通過に応じて満ちる（未対応環境は满のまま＝静止表示） */
+    .timeline-line {
+      animation: a-line-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 90%;
+    }
+    @keyframes a-line-fill {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+  }
+}
+
+/* ---------- 二重安全（JS 側の arming 抑止と重ねがけ） ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js-armed [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js-armed [data-tw] { opacity: 1 !important; }
+  .tw-caret { display: none; }
+}

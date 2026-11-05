@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回廊の記録｜表紙 — 動き案B「遷移と幕」</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="home" data-curtain-hold="1">
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="wrap masthead">
+  <p class="site">回廊の記録<small>非公式設定資料・モック</small></p>
+  <nav>
+    <a href="index.html" aria-current="page">表紙</a>
+    <a href="chara.html" data-wipe>人物一覧</a>
+    <a href="detail.html" data-wipe>記録見本</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow" data-rise>非公式資料サイト・モック — 動き案B「遷移と幕」</p>
+      <h1>回廊の記録</h1>
+      <p class="hero-lead" data-rise>封印と燭の街の設定記録を、実データのまま扱う試作。この案が主題にするのは画面から画面への移動そのもの——割れ扉、水平の流れ、円弧。</p>
+      <p class="hero-note" data-rise>内容は data/*.json の実データ。動作は破棄前提の試作です。</p>
+      <div class="cta-row" data-rise>
+        <a class="btn" href="chara.html" data-wipe>人物一覧へ</a>
+        <a class="btn is-quiet" href="detail.html" data-wipe>記録見本を開く</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="nums-band" aria-label="収蔵の数">
+    <div class="nums">
+      <div class="num">
+        <span class="num-val" data-count="13">13</span>
+        <span class="num-label">収蔵作品</span>
+        <p class="num-note">data/works.json</p>
+      </div>
+      <div class="num">
+        <span class="num-val" data-count="13">13</span>
+        <span class="num-label">登場人物</span>
+        <p class="num-note">data/characters.json</p>
+      </div>
+      <div class="num">
+        <span class="num-val" data-count="50">50</span>
+        <span class="num-label">目録項目</span>
+        <p class="num-note">data/catalog.json・C-001 は未検証</p>
+      </div>
+      <div class="num">
+        <span class="num-val" data-count="9">9</span>
+        <span class="num-label">出来事</span>
+        <p class="num-note">data/history.json・2023–2026</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap page-foot">
+  <p>回廊の記録 — 非公式の設定資料モック（動き案B「遷移と幕」）。文言と数値は data/*.json の実データに依る。</p>
+</footer>
+
+<!-- 幕: 割れ扉（表紙のみ）＋水平フロー。隠しは .js-armed と is-live に依存する -->
+<div class="curtain" data-curtain aria-hidden="true">
+  <div class="flow flow-crimson"></div>
+  <div class="flow flow-ink"></div>
+  <div class="door door-left"><span class="door-edge"></span></div>
+  <div class="door door-right"><span class="door-edge"></span></div>
+  <p class="curtain-mark">回廊の記録</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="js/motion.js" defer></script>
+<script src="js/scenes.js" defer></script>
+</body>
+</html>

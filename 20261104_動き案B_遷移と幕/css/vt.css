@@ -1,0 +1,55 @@
+/* ============================================================
+   遷移の層（vt.css）— 案B 円弧リビール
+   chara ↔ detail 間の View Transitions で使う。index は読まない
+   （index を挟む移動は js の水平フローが担うため、二重演出を避ける）。
+
+   最大モックとの差分: 円（circle → clip-path）ではなく
+   円弧（conic）でめくる。@property で --vt-sweep を <angle> として
+   登録し、0→360deg の Keyframes で回す。中心はクリック座標
+   （--vt-x / --vt-y は motion.js が :root へ復元する）。
+
+   安全退化: .vt-arc は JS が CSSViewTransitionRule と
+   CSS.registerProperty の両方を確認してから付与する。
+   付かなければ既定のクロスフェードに退く。
+   ============================================================ */
+
+@view-transition { navigation: auto; }
+
+@property --vt-sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* 円弧が使える環境（.vt-arc 付き）だけ既定のクロスフェードを止める:
+   旧画面はそのまま残り、新画面が円弧の面で上からめくれる。
+   .vt-arc が付かない環境では止めない（UA 既定のクロスフェードに退る） */
+:root.vt-arc::view-transition-old(root),
+:root.vt-arc::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+:root.vt-arc::view-transition-new(root) {
+  animation: vt-arc-sweep 0.7s var(--ease-in-out-expo) both;
+  mask: conic-gradient(
+    from 0deg at var(--vt-x, 50%) var(--vt-y, 50%),
+    #000 var(--vt-sweep),
+    transparent var(--vt-sweep)
+  );
+  -webkit-mask: conic-gradient(
+    from 0deg at var(--vt-x, 50%) var(--vt-y, 50%),
+    #000 var(--vt-sweep),
+    transparent var(--vt-sweep)
+  );
+}
+
+@keyframes vt-arc-sweep {
+  from { --vt-sweep: 0deg; }
+  to   { --vt-sweep: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  :root.vt-arc::view-transition-new(root) { animation: none; }
+}

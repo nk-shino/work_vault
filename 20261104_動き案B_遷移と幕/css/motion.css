@@ -1,0 +1,92 @@
+/* ============================================================
+   動きの層（motion.css）— 案B「遷移と幕」
+
+   幕システムの構成（最大モックとのプロパティ差分）:
+   - 読み込み幕 = 左右の割れ扉（画面を縦に二分割し中央から左右へ開く。
+     金線は扉の縁に縦帯として走る。開閉とも in-out-expo）
+   - 遷移ワイプ = 水平方向の流れ（左から右へ page が流れる一方向ワイプ。
+     層は2層で時間差。in-out-expo）
+   - 到着は流れの継続（is-cover = 層が閉じた状態）
+
+   縮退の規約（案Bでも固定）:
+   - 隠し状態は JS（gsap.set）だけが作る。JS がなければ全要素表示
+   - noscript では幕自体が出ない（.is-live が付かない）
+   - prefers-reduced-motion では幕・push-in・進捗を全停止
+   ============================================================ */
+
+/* ---------- 幕: 割れ扉（読み込み・index の is-hold）と水平フロー（遷移） ---------- */
+.curtain {
+  position: fixed; inset: 0; z-index: 90;
+  pointer-events: none; visibility: hidden;
+}
+.curtain.is-live { visibility: visible; }
+
+/* 水平フロー層: 既定は画面の左外に格納。is-cover で閉じた状態から始める */
+.flow {
+  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  transform: translateX(-101%);
+}
+.flow-crimson { background: var(--crimson); z-index: 1; }
+.flow-ink { background: var(--ink); z-index: 2; }
+.curtain.is-cover .flow { transform: translateX(0); }
+
+/* 割れ扉: 既定は左右へ開いた状態。is-hold（表紙の初回）だけ閉じる。
+   金線は扉の内縁に縦帯として走り、開扉とともに左右へ逃げる */
+.door {
+  position: absolute; top: 0; bottom: 0; width: 50.6%;
+  background: var(--ink); z-index: 3;
+}
+.door-left { left: 0; transform: translateX(-102%); }
+.door-right { right: 0; transform: translateX(102%); }
+.curtain.is-hold .door { transform: translateX(0); }
+.door-edge {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(transparent, var(--gold-bright) 18%, var(--gold-bright) 82%, transparent);
+}
+.door-left .door-edge { right: 0; }
+.door-right .door-edge { left: 0; }
+
+/* 扉の面: うっすら縦の目地を入れて「扉」であることを示す */
+.door-left { background: linear-gradient(90deg, var(--ink-2), var(--ink) 24%); }
+.door-right { background: linear-gradient(270deg, var(--ink-2), var(--ink) 24%); }
+
+.curtain-mark {
+  position: absolute; inset: 0; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(20px, 3.4vw, 32px); letter-spacing: 0.5em; text-indent: 0.5em;
+  color: var(--paper); z-index: 5; opacity: 0;
+}
+.curtain.is-hold .curtain-mark { opacity: 1; }
+
+/* ---------- hover = 押し込み（種類の追加） ----------
+   hover で枠が一段内側に現れて育つ（inset の金環）。
+   active で 0.98 に押し込む。曲線は幕系 in-out-expo を借りる */
+.card, .btn, .chip {
+  transition:
+    box-shadow 0.35s var(--ease-in-out-expo),
+    background-color 0.35s var(--ease-in-out-expo),
+    color 0.35s var(--ease-in-out-expo),
+    border-color 0.35s var(--ease-in-out-expo),
+    transform 0.18s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.card:hover, .btn:hover, .chip:hover {
+  box-shadow: inset 0 0 0 3px rgba(233, 201, 106, 0.65);
+}
+.card:active, .btn:active, .chip:active {
+  transform: scale(0.98);
+}
+/* チップの選択状態は押し込みの金環より強く出さない */
+.chip[aria-pressed="true"]:hover { box-shadow: inset 0 0 0 3px rgba(12, 10, 8, 0.4); }
+
+/* ---------- 出現まちは作らない ----------
+   案Bの入口演出は gsap.set（JS が動くときだけ）で準備するため、
+   CSS 側の隠し状態は持たない。JS がなければ全要素が最初から見える */
+
+/* ---------- 縮退 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .curtain { display: none !important; }
+  .card, .btn, .chip { transition: none !important; }
+  .card:hover, .btn:hover, .chip:hover { box-shadow: none; }
+  .card:active, .btn:active, .chip:active { transform: none; }
+  .progress { animation: none !important; transform: scaleX(1) !important; }
+}

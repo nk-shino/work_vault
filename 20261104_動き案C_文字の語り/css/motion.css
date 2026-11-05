@@ -1,0 +1,59 @@
+/* ============================================================
+   回廊の記録 — 動き案C「文字の語り」: CSS 側の動きの層（motion.css）
+   担当: スクロール単語リビール（view()・pin なし）/ shimmer の運転
+   文字の分割・行の追従・カウンターは js/scenes.js（GSAP / anime.js）。
+
+   規約:
+   - 隠し状態は CSS に置かない。単語の不可視は scroll-driven の
+     keyframes が担い、未対応環境では最初から見える
+   - scroll-driven は @supports + no-preference の二重ガード
+   - プロパティ: duration 0.4〜0.7秒 / stagger 30〜50ms（scenes.js 側）
+   ============================================================ */
+
+/* ---------- スクロール単語リビール（序の1箇所・不採用#28の再検討） ---------- */
+/* 単語は HTML 側で分かち書き済み（元文は親の aria-label に退避）。
+   --wd-i は語順。cover の 24% を起点に 1語 3.2% ずつずらして、
+   スクロールの通過に応じて順に浮かせる。
+   同じ行の語は view() 上の通過時刻が同じになるため、語順の変数で
+   範囲をずらして序列を作る。 */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .story-line .wd {
+      animation: c-word-rise linear both;
+      animation-timeline: view();
+      animation-range:
+        cover calc(24% + var(--wd-i, 0) * 3.2%)
+        cover calc(56% + var(--wd-i, 0) * 3.2%);
+    }
+  }
+}
+@keyframes c-word-rise {
+  from { opacity: 0; transform: translateY(0.55em); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- shimmer（Aceternity / Magic UI 系パターンの自作再現・コード非転載） ---------- */
+/* React 不使用の vanilla 移植。no-preference 時のみ運転する。 */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .shimmer {
+    background-image: linear-gradient(105deg, var(--type) 40%, #ffffff 48%, var(--tsuki) 54%, var(--type) 62%);
+    background-size: 260% 100%;
+    background-position: 60% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .shimmer { animation: c-shimmer 6.5s linear infinite; }
+  }
+}
+@keyframes c-shimmer {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+
+/* ---------- 二重安全（scenes.js の REDUCED 判定と重ねがけ） ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer { animation: none; background-position: 60% 0; }
+  .story-line .wd { animation: none; opacity: 1; transform: none; }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>HOME（動き案C・文字の語り）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="home">
+
+<header class="typebar wrap">
+  <p class="typebar-title">回廊の記録<small>動き案C「文字の語り」・破棄前提</small></p>
+  <nav class="typebar-nav" aria-label="主ナビゲーション">
+    <a class="u-sweep" href="index.html" aria-current="page">HOME</a>
+    <a class="u-sweep" href="chara.html">人物</a>
+    <a class="u-sweep" href="detail.html">セラフの記録</a>
+  </nav>
+</header>
+
+<main>
+  <!-- 表紙: 題字は SplitText の文字マスクで右から左へ。光は shimmer。 -->
+  <section class="front wrap" aria-label="表紙">
+    <p class="front-bg-letter" aria-hidden="true">廊</p>
+    <p class="front-eyebrow" data-fade>非公式資料サイト・案Cモック</p>
+    <h1 class="front-title shimmer" data-chars>回廊の記録</h1>
+    <p class="front-lead" data-fade>内容は data フォルダの実データのみ。この面は、文字の立ち上がりで語る案の見本（破棄前提）。</p>
+    <p class="front-cue" data-fade>SCROLL</p>
+  </section>
+
+  <!-- 序: 単語が scroll-driven の view() で順に浮かぶ（pin なし・不採用#28の再検討）。
+       単語は HTML 側で分かち書き済み。元文は親の aria-label に退避。 -->
+  <section class="story wrap" aria-labelledby="story-title">
+    <h2 class="story-h" id="story-title">序 — この記録のこと</h2>
+    <p class="story-line" aria-label="ある音楽プロジェクトの非公式資料。出典と検証状態をたどれることを最優先にする。肖像は準備中のあいだ、題箋で代用する。"><span class="wd" style="--wd-i:0" aria-hidden="true">ある</span><span class="wd" style="--wd-i:1" aria-hidden="true">音楽プロジェクトの</span><span class="wd" style="--wd-i:2" aria-hidden="true">非公式資料。</span><span class="wd" style="--wd-i:3" aria-hidden="true">出典と</span><span class="wd" style="--wd-i:4" aria-hidden="true">検証状態を</span><span class="wd" style="--wd-i:5" aria-hidden="true">たどれることを</span><span class="wd" style="--wd-i:6" aria-hidden="true">最優先にする。</span><span class="wd" style="--wd-i:7" aria-hidden="true">肖像は</span><span class="wd" style="--wd-i:8" aria-hidden="true">準備中の</span><span class="wd" style="--wd-i:9" aria-hidden="true">あいだ、</span><span class="wd" style="--wd-i:10" aria-hidden="true">題箋で</span><span class="wd" style="--wd-i:11" aria-hidden="true">代用する。</span></p>
+  </section>
+
+  <section class="count-band" aria-labelledby="count-title">
+    <div class="wrap">
+      <h2 class="sec-title" id="count-title" data-row>記録の数</h2>
+      <div class="counts">
+        <div class="count">
+          <span class="count-num shimmer" data-count="13">13</span>
+          <span class="count-label">作品</span>
+          <p class="count-note">出典 data/works.json</p>
+        </div>
+        <div class="count">
+          <span class="count-num shimmer" data-count="13">13</span>
+          <span class="count-label">人物</span>
+          <p class="count-note">出典 data/characters.json</p>
+        </div>
+        <div class="count">
+          <span class="count-num shimmer" data-count="50">50</span>
+          <span class="count-label">目録</span>
+          <p class="count-note">出典 data/catalog.json</p>
+        </div>
+        <div class="count">
+          <span class="count-num shimmer" data-count="9">9</span>
+          <span class="count-label">出来事</span>
+          <p class="count-note">出典 data/history.json</p>
+        </div>
+      </div>
+
+      <div class="type-actions">
+        <a class="type-btn u-sweep" href="chara.html">人物一覧へ</a>
+        <a class="type-btn u-sweep" href="detail.html">燭守 セラフの記録へ</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">動き案C「文字の語り」— 外部読み込み: GSAP 3.13.0（gsap・ScrollTrigger・SplitText）／anime.js 3.2.2（いずれも MIT・cdn.jsdelivr.net）。出演・年表・件数はすべて同梱 data/*.json の実データ。破棄前提の検討用。</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/scenes.js"></script>
+</body>
+</html>

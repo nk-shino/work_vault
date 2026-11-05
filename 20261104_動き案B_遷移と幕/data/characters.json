@@ -1,0 +1,17 @@
+{
+  "characters": [
+    {"id": "c001", "name": "燭守 セラフ", "role": "封印の継ぎ手", "image": "", "appearance": "左頬に煤の紋。白い手袋を外さない", "affiliation": "回廊聖堂"},
+    {"id": "c002", "name": "写本屋 ヴェル", "role": "記録の写し手", "image": "", "appearance": "眼帯の奥が銀色。墨に指が染まっている", "affiliation": "独立"},
+    {"id": "c003", "name": "灯番 リュミエ", "role": "燭台の管理人", "image": "", "appearance": "背の低い老婆。灯りを数える癖がある", "affiliation": "回廊聖堂"},
+    {"id": "c004", "name": "異端吏 オクタヴィア", "role": "禁書の検閲官", "image": "", "appearance": "鉄の仮面を下顎だけ外して話す", "affiliation": "教団"},
+    {"id": "c005", "name": "調律師 カノン", "role": "音の封印師", "image": "", "appearance": "耳に蝋の栓。鼻歌で封を締める", "affiliation": "回廊聖堂"},
+    {"id": "c006", "name": "号手 タル", "role": "鐘楼の番人", "image": "", "appearance": "声が大きく、筆談を好む", "affiliation": "鐘楼"},
+    {"id": "c007", "name": "薬師 ミョルニ", "role": "血の代わりの錬成", "image": "", "appearance": "手に焼いた印。包帯を巻き直す前に必ず洗う", "affiliation": "地下病院"},
+    {"id": "c008", "name": "囁き ノクス", "role": "名を盗む者", "image": "", "appearance": "名乗らない。他人の名を借りて話す", "affiliation": "不明"},
+    {"id": "c009", "name": "祝祭主 アレルイ", "role": "断章を集める祭官", "image": "", "appearance": "極彩色の刺繍の法衣。歩く音がしない", "affiliation": "祝祭庁"},
+    {"id": "c010", "name": "鐘鋳師 フォルデ", "role": "鐘を鋳る者", "image": "", "appearance": "耳が聞こえない。振動で会話する", "affiliation": "鐘楼"},
+    {"id": "c011", "name": "塵纏い ルゥ", "role": "掃き溜めの附喪女", "image": "", "appearance": "灰色の髪。捨てられた物の声が聞こえる", "affiliation": "不明"},
+    {"id": "c012", "name": "算官 セウト", "role": "贖罪の勘定係", "image": "", "appearance": "算盤を持たない計算者。指を折らない", "affiliation": "教団"},
+    {"id": "c013", "name": "看取り ヴィゴル", "role": "最期の記録係", "image": "", "appearance": "黒い帳面を胸元に。遺言は書き取らない", "affiliation": "回廊聖堂"}
+  ]
+}

@@ -1,0 +1,303 @@
+/* ============================================================
+   回廊の記録 — 動き案A「静謐紙」
+   静的なデザイン基盤。動きの層は css/motion.css へ分離。
+
+   方向: 外部依存ゼロ（ライブラリ・CDN・Web フォント不使用）。
+   和紙の底色に墨の文字、差し色は朱ひとつ。余白を大きく取り、
+   紙の資料を繰る静けさを基調にする。
+   内容は data/*.json の実データのみ（ダミー文字列なし）。
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* 色 — 和紙・墨・朱 */
+  --paper: #f2ecdf;
+  --paper-2: #eae2cf;
+  --card: #f7f2e7;
+  --sumi: #2b2620;
+  --sumi-sub: #756a58;
+  --shu: #a63d2b;
+  --shu-deep: #7c2e20;
+  --rule: rgba(43, 38, 32, 0.22);
+  --rule-soft: rgba(43, 38, 32, 0.12);
+
+  /* 案Aは out-quint の 1曲線で貫く（easings.net #14）。
+     出現・hover・caret 以外のすべての遷移がこの曲線を使う。 */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "MS PMincho", serif;
+  --wide: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-mincho);
+  color: var(--sumi);
+  background:
+    radial-gradient(1100px 720px at 86% -12%, rgba(166, 61, 43, 0.05), transparent 60%),
+    radial-gradient(900px 680px at -8% 108%, rgba(43, 38, 32, 0.06), transparent 56%),
+    var(--paper);
+  line-height: 1.95;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--shu); outline-offset: 3px; }
+
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
+/* ---------- 窓口（進捗バー・scroll-driven で満ちる。未対応環境では非表示） ---------- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--shu);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 60; pointer-events: none;
+}
+
+/* ---------- 帳場の頭 ---------- */
+.topbar {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding-top: 24px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.topbar-title { margin: 0; font-size: 17px; letter-spacing: 0.14em; }
+.topbar-title small { display: block; font-size: 11px; color: var(--sumi-sub); letter-spacing: 0.2em; margin-top: 2px; }
+.topbar-nav { display: flex; gap: 26px; font-size: 13px; letter-spacing: 0.18em; }
+.topbar-nav a { padding-bottom: 2px; border-bottom: 1px solid transparent; }
+.topbar-nav a:hover { border-bottom-color: var(--shu); }
+.topbar-nav a[aria-current="page"] { color: var(--shu-deep); border-bottom-color: var(--shu); }
+
+/* ---------- 表紙 ---------- */
+.cover {
+  position: relative;
+  min-height: calc(100vh - 120px);
+  min-height: calc(100svh - 120px);
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.cover-body { position: relative; padding: clamp(64px, 10vh, 120px) 0; }
+.cover-eyebrow { margin: 0 0 22px; font-size: 12px; letter-spacing: 0.4em; color: var(--sumi-sub); }
+.cover-title {
+  margin: 0;
+  font-size: clamp(52px, 9.5vw, 104px);
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  line-height: 1.16;
+}
+.cover-lead { max-width: 34em; margin: 30px 0 0; color: var(--sumi-sub); font-size: 16px; min-height: 3.9em; }
+.cover-cue { margin: 44px 0 0; font-size: 11px; letter-spacing: 0.5em; color: var(--sumi-sub); }
+
+/* 縦書きの語 — 紙面にうっすら漂う（scroll-driven は motion.css） */
+.tategaki {
+  position: absolute;
+  writing-mode: vertical-rl;
+  margin: 0;
+  font-size: clamp(38px, 6vw, 64px);
+  letter-spacing: 0.34em;
+  color: rgba(43, 38, 32, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+.tategaki-kiroku { top: 7%; right: clamp(16px, 7vw, 84px); }
+.tategaki-kairou { bottom: 9%; right: clamp(72px, 15vw, 190px); }
+
+/* ---------- 章 ---------- */
+.chapter { padding-top: clamp(84px, 12vh, 132px); }
+.chapter-text { max-width: 36em; margin: 0; }
+.chapter-note { margin: 0 0 24px; font-size: 13px; color: var(--sumi-sub); }
+
+.sec-title {
+  margin: 0 0 30px;
+  font-size: clamp(23px, 3.2vw, 32px);
+  font-weight: normal;
+  letter-spacing: 0.12em;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ---------- 数字 ---------- */
+.count-band {
+  margin-top: clamp(84px, 12vh, 132px);
+  padding: clamp(48px, 7vh, 72px) 0;
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.count-num { display: block; font-size: clamp(42px, 5.6vw, 60px); line-height: 1.1; }
+.count-label { display: block; margin-top: 6px; font-size: 13px; letter-spacing: 0.22em; }
+.count-note { margin: 8px 0 0; font-size: 11px; color: var(--sumi-sub); }
+
+.cover-actions { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 44px; }
+.quiet-btn {
+  display: inline-block;
+  padding: 13px 30px;
+  border: 1px solid var(--rule);
+  font-size: 13px; letter-spacing: 0.2em;
+  background: transparent;
+}
+.quiet-btn.is-plain { border-style: dashed; }
+
+/* ---------- 人物の題箋 ---------- */
+.page-head { padding-top: clamp(56px, 8vh, 88px); }
+.page-head .lead { max-width: 40em; margin: 0; color: var(--sumi-sub); }
+
+.toolbar { margin-top: 36px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  font-family: inherit;
+  font-size: 12px; letter-spacing: 0.14em;
+  color: var(--sumi);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.result-line { margin: 14px 0 0; font-size: 12px; color: var(--sumi-sub); }
+
+.grid {
+  list-style: none;
+  margin: 40px 0 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 22px;
+}
+.sheet-cell { margin: 0; }
+.sheet-card {
+  display: block;
+  height: 100%;
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
+.sheet-plate {
+  position: relative;
+  display: grid; place-items: center;
+  aspect-ratio: 3 / 4;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.sheet-plate-name { writing-mode: vertical-rl; font-size: 19px; letter-spacing: 0.22em; }
+.sheet-plate-id {
+  position: absolute; right: 10px; bottom: 10px;
+  font-size: 10px; letter-spacing: 0.1em;
+  color: var(--paper);
+  background: var(--shu);
+  padding: 2px 7px;
+}
+.sheet-meta { display: block; padding: 12px 14px 14px; }
+.sheet-name { display: block; font-size: 14px; }
+.sheet-role { display: block; margin-top: 2px; font-size: 12px; color: var(--sumi-sub); }
+.sheet-aff { display: block; margin-top: 6px; font-size: 11px; letter-spacing: 0.16em; color: var(--sumi-sub); }
+
+/* ---------- 記録見本 ---------- */
+.record-head {
+  display: grid; grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: end;
+  padding-top: clamp(56px, 8vh, 88px);
+}
+.record-plate {
+  position: relative;
+  display: grid; place-items: center;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
+.record-plate .sheet-plate-name { font-size: clamp(22px, 2.6vw, 30px); }
+.record-plate .sheet-plate-id { right: 12px; bottom: 12px; }
+.record-id { margin: 0 0 10px; font-size: 12px; letter-spacing: 0.3em; color: var(--shu-deep); }
+.record-title { margin: 0; font-size: clamp(38px, 6vw, 62px); font-weight: normal; letter-spacing: 0.08em; line-height: 1.2; }
+.record-role { margin: 12px 0 0; font-size: 15px; letter-spacing: 0.12em; }
+.record-appearance { margin: 8px 0 0; color: var(--sumi-sub); }
+
+.facts { margin: 0; }
+.fact-row {
+  display: grid; grid-template-columns: 10em 1fr;
+  gap: 12px;
+  padding: 13px 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.fact-row:last-child { border-bottom: 1px solid var(--rule-soft); }
+.fact-row dt { font-size: 13px; letter-spacing: 0.18em; color: var(--sumi-sub); }
+.fact-row dd { margin: 0; }
+
+.work-rows { list-style: none; margin: 0; padding: 0; }
+.work-row {
+  display: grid; grid-template-columns: 7em 1fr auto;
+  gap: 16px; align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.work-row:last-child { border-bottom: 1px solid var(--rule-soft); }
+.work-order { margin: 0; font-size: 12px; letter-spacing: 0.2em; color: var(--shu-deep); }
+.work-name { margin: 0; font-size: 16px; font-weight: normal; }
+.work-date { margin: 0; font-size: 12px; color: var(--sumi-sub); }
+
+/* ---------- 年表 ---------- */
+.timeline-frame { position: relative; }
+.timeline {
+  list-style: none;
+  margin: 0; padding: 6px 0 6px 30px;
+  position: relative;
+}
+.timeline-line {
+  position: absolute;
+  left: 8px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--rule);
+  transform-origin: 50% 0;
+}
+.tl-row { position: relative; padding: 15px 0; }
+.tl-row::before {
+  content: "";
+  position: absolute;
+  left: -25px; top: 26px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sumi-sub);
+}
+.tl-row.is-related::before { background: var(--shu); }
+.tl-date { margin: 0 0 4px; font-size: 12px; letter-spacing: 0.14em; color: var(--sumi-sub); }
+.tl-name { margin: 0; font-size: 16px; font-weight: normal; }
+.tl-tag {
+  display: inline-block;
+  margin-left: 10px; padding: 1px 9px;
+  font-size: 11px; letter-spacing: 0.12em;
+  color: var(--shu-deep);
+  border: 1px solid var(--shu);
+  vertical-align: 2px;
+}
+.tl-text { margin: 6px 0 0; font-size: 13px; }
+.tl-src { margin: 4px 0 0; font-size: 11px; color: var(--sumi-sub); }
+
+/* ---------- 奥付 ---------- */
+.colophon {
+  margin-top: clamp(84px, 12vh, 132px);
+  padding: 26px 0 52px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 12px; color: var(--sumi-sub);
+}
+
+/* ---------- 狭い幅 ---------- */
+@media (max-width: 760px) {
+  .counts { grid-template-columns: repeat(2, 1fr); }
+  .record-head { grid-template-columns: 1fr; align-items: start; }
+  .record-plate { max-width: 240px; }
+  .work-row { grid-template-columns: 1fr; gap: 2px; }
+  .fact-row { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (max-width: 640px) {
+  .tategaki { display: none; }
+  .timeline { padding-left: 24px; }
+  .tl-row::before { left: -19px; }
+}

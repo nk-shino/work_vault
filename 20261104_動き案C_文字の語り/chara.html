@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>人物（動き案C・文字の語り）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="chara">
+
+<header class="typebar wrap">
+  <p class="typebar-title">回廊の記録<small>動き案C「文字の語り」・破棄前提</small></p>
+  <nav class="typebar-nav" aria-label="主ナビゲーション">
+    <a class="u-sweep" href="index.html">HOME</a>
+    <a class="u-sweep" href="chara.html" aria-current="page">人物</a>
+    <a class="u-sweep" href="detail.html">セラフの記録</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-head wrap" aria-label="人物一覧">
+    <h1 class="page-title shimmer" data-chars>人物</h1>
+    <p class="lead" data-fade>13人。肖像は準備中のあいだ、題箋で代用する。題箋は読み込みの一度だけ、順序を定めずに立ち上がる（stagger random・最大案では端から。この案では random）。絞り込みの再描画は動かさず即時表示する。燭守 セラフの題箋は記録見本（detail.html）へ続く。</p>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="所属で絞り込み">
+        <button class="chip" type="button" aria-pressed="true" data-aff="all">すべて（13）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="独立">独立（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="教団">教団（2）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="不明">不明（2）</button>
+      </div>
+      <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    </div>
+
+    <!-- 13人分は data/characters.json の実データを静的に埋め込み（noscript でも一覧が見える） -->
+    <ul class="grid" id="grid">
+      <li class="case-cell" data-aff="回廊聖堂">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c001</span><span class="case-plate-name">燭守 セラフ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">燭守 セラフ</span><span class="case-role">封印の継ぎ手</span><span class="case-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="独立">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c002</span><span class="case-plate-name">写本屋 ヴェル</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">写本屋 ヴェル</span><span class="case-role">記録の写し手</span><span class="case-aff">独立</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="回廊聖堂">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c003</span><span class="case-plate-name">灯番 リュミエ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">灯番 リュミエ</span><span class="case-role">燭台の管理人</span><span class="case-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="教団">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c004</span><span class="case-plate-name">異端吏 オクタヴィア</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">異端吏 オクタヴィア</span><span class="case-role">禁書の検閲官</span><span class="case-aff">教団</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="回廊聖堂">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c005</span><span class="case-plate-name">調律師 カノン</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">調律師 カノン</span><span class="case-role">音の封印師</span><span class="case-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="鐘楼">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c006</span><span class="case-plate-name">号手 タル</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">号手 タル</span><span class="case-role">鐘楼の番人</span><span class="case-aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="地下病院">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c007</span><span class="case-plate-name">薬師 ミョルニ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">薬師 ミョルニ</span><span class="case-role">血の代わりの錬成</span><span class="case-aff">地下病院</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="不明">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c008</span><span class="case-plate-name">囁き ノクス</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">囁き ノクス</span><span class="case-role">名を盗む者</span><span class="case-aff">不明</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="祝祭庁">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c009</span><span class="case-plate-name">祝祭主 アレルイ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">祝祭主 アレルイ</span><span class="case-role">断章を集める祭官</span><span class="case-aff">祝祭庁</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="鐘楼">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c010</span><span class="case-plate-name">鐘鋳師 フォルデ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">鐘鋳師 フォルデ</span><span class="case-role">鐘を鋳る者</span><span class="case-aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="不明">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c011</span><span class="case-plate-name">塵纏い ルゥ</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">塵纏い ルゥ</span><span class="case-role">掃き溜めの附喪女</span><span class="case-aff">不明</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="教団">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c012</span><span class="case-plate-name">算官 セウト</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">算官 セウト</span><span class="case-role">贖罪の勘定係</span><span class="case-aff">教団</span></span>
+        </a>
+      </li>
+      <li class="case-cell" data-aff="回廊聖堂">
+        <a class="case-card" href="detail.html">
+          <span class="case-plate" aria-hidden="true"><span class="case-plate-id">c013</span><span class="case-plate-name">看取り ヴィゴル</span></span>
+          <span class="case-meta"><span class="case-name u-sweep">看取り ヴィゴル</span><span class="case-role">最期の記録係</span><span class="case-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">動き案C「文字の語り」— 人物13人の記載は data/characters.json、出演対応は data/works.json のみを原典にする。記録見本（detail.html）は燭守 セラフ（c001）の1人分。外部読み込み: GSAP 3.13.0（gsap・ScrollTrigger・SplitText）／anime.js 3.2.2（いずれも MIT）。</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/scenes.js"></script>
+</body>
+</html>

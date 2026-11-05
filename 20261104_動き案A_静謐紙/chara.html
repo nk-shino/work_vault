@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>人物（動き案A・静謐紙）</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body data-page="chara">
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="topbar wrap">
+  <p class="topbar-title">回廊の記録<small>動き案A「静謐紙」・破棄前提</small></p>
+  <nav class="topbar-nav" aria-label="主ナビゲーション">
+    <a href="index.html">HOME</a>
+    <a href="chara.html" aria-current="page">人物</a>
+    <a href="detail.html">セラフの記録</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-head wrap" aria-label="人物一覧">
+    <div class="page-head-intro" data-reveal-seq>
+      <h1 class="page-title" data-reveal>人物</h1>
+      <p class="lead" data-reveal>13人。肖像は準備中のあいだ、題箋で代用する（絵が入った日は同じ枠へ入る）。縦横比は 3:4 に固定。題箋は画面下の発火線を越えた行から順に浮かぶ。燭守 セラフの題箋は記録見本（detail.html）へ続く。</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="所属で絞り込み">
+        <button class="chip" type="button" aria-pressed="true" data-aff="all">すべて（13）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="回廊聖堂">回廊聖堂（4）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="独立">独立（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="教団">教団（2）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="鐘楼">鐘楼（2）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="地下病院">地下病院（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="祝祭庁">祝祭庁（1）</button>
+        <button class="chip" type="button" aria-pressed="false" data-aff="不明">不明（2）</button>
+      </div>
+      <p class="result-line" id="result-line" aria-live="polite">13人を表示中。</p>
+    </div>
+
+    <!-- 13人分は data/characters.json の実データを静的に埋め込み（noscript でも一覧が見える） -->
+    <ul class="grid" id="grid" data-reveal-group>
+      <li class="sheet-cell" data-reveal data-aff="回廊聖堂">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">燭守 セラフ</span><span class="sheet-plate-id">c001</span></span>
+          <span class="sheet-meta"><span class="sheet-name">燭守 セラフ</span><span class="sheet-role">封印の継ぎ手</span><span class="sheet-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="独立">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">写本屋 ヴェル</span><span class="sheet-plate-id">c002</span></span>
+          <span class="sheet-meta"><span class="sheet-name">写本屋 ヴェル</span><span class="sheet-role">記録の写し手</span><span class="sheet-aff">独立</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="回廊聖堂">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">灯番 リュミエ</span><span class="sheet-plate-id">c003</span></span>
+          <span class="sheet-meta"><span class="sheet-name">灯番 リュミエ</span><span class="sheet-role">燭台の管理人</span><span class="sheet-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="教団">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">異端吏 オクタヴィア</span><span class="sheet-plate-id">c004</span></span>
+          <span class="sheet-meta"><span class="sheet-name">異端吏 オクタヴィア</span><span class="sheet-role">禁書の検閲官</span><span class="sheet-aff">教団</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="回廊聖堂">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">調律師 カノン</span><span class="sheet-plate-id">c005</span></span>
+          <span class="sheet-meta"><span class="sheet-name">調律師 カノン</span><span class="sheet-role">音の封印師</span><span class="sheet-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="鐘楼">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">号手 タル</span><span class="sheet-plate-id">c006</span></span>
+          <span class="sheet-meta"><span class="sheet-name">号手 タル</span><span class="sheet-role">鐘楼の番人</span><span class="sheet-aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="地下病院">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">薬師 ミョルニ</span><span class="sheet-plate-id">c007</span></span>
+          <span class="sheet-meta"><span class="sheet-name">薬師 ミョルニ</span><span class="sheet-role">血の代わりの錬成</span><span class="sheet-aff">地下病院</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="不明">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">囁き ノクス</span><span class="sheet-plate-id">c008</span></span>
+          <span class="sheet-meta"><span class="sheet-name">囁き ノクス</span><span class="sheet-role">名を盗む者</span><span class="sheet-aff">不明</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="祝祭庁">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">祝祭主 アレルイ</span><span class="sheet-plate-id">c009</span></span>
+          <span class="sheet-meta"><span class="sheet-name">祝祭主 アレルイ</span><span class="sheet-role">断章を集める祭官</span><span class="sheet-aff">祝祭庁</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="鐘楼">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">鐘鋳師 フォルデ</span><span class="sheet-plate-id">c010</span></span>
+          <span class="sheet-meta"><span class="sheet-name">鐘鋳師 フォルデ</span><span class="sheet-role">鐘を鋳る者</span><span class="sheet-aff">鐘楼</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="不明">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">塵纏い ルゥ</span><span class="sheet-plate-id">c011</span></span>
+          <span class="sheet-meta"><span class="sheet-name">塵纏い ルゥ</span><span class="sheet-role">掃き溜めの附喪女</span><span class="sheet-aff">不明</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="教団">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">算官 セウト</span><span class="sheet-plate-id">c012</span></span>
+          <span class="sheet-meta"><span class="sheet-name">算官 セウト</span><span class="sheet-role">贖罪の勘定係</span><span class="sheet-aff">教団</span></span>
+        </a>
+      </li>
+      <li class="sheet-cell" data-reveal data-aff="回廊聖堂">
+        <a class="sheet-card" href="detail.html">
+          <span class="sheet-plate" aria-hidden="true"><span class="sheet-plate-name">看取り ヴィゴル</span><span class="sheet-plate-id">c013</span></span>
+          <span class="sheet-meta"><span class="sheet-name">看取り ヴィゴル</span><span class="sheet-role">最期の記録係</span><span class="sheet-aff">回廊聖堂</span></span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">動き案A「静謐紙」— 人物13人の記載は data/characters.json、出演対応は data/works.json のみを原典にする。記録見本（detail.html）は燭守 セラフ（c001）の1人分。外部リクエスト 0件。</div>
+</footer>
+
+<script src="js/motion.js"></script>
+</body>
+</html>

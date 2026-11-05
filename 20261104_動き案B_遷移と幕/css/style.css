@@ -1,0 +1,267 @@
+/* ============================================================
+   回廊の記録 — 動き案B「遷移と幕」（破棄前提の多様性案）
+   画面から画面への移動そのものを主題にする。幕システムが主役。
+
+   イージングの役割分担（最大モックとの差分が多様性の主軸）:
+   - 出現系  = out-back（微オーバーシュート・easings.net #24 相当）
+   - 幕系    = in-out-expo（#20 相当）
+   曲線はこの2つに統一する。hover の押し込みは短い ease-out を許容。
+
+   内容は data/*.json の実データのみ。動きの層は motion.css / vt.css。
+   ============================================================ */
+
+:root {
+  /* 色 — 夜の書庫（既存の設計言語を維持） */
+  --ink: #0c0a08;
+  --ink-2: #14100b;
+  --ink-3: #1c1710;
+  --paper: #ece2cf;
+  --paper-sub: #a99d86;
+  --gold: #c9a13b;
+  --gold-bright: #e9c96a;
+  --crimson: #a8323b;
+  --rule: rgba(236, 226, 207, 0.14);
+  --rule-strong: rgba(236, 226, 207, 0.34);
+
+  /* 曲線 — 2曲線の役割分担 */
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);   /* 出現系（微オーバーシュート） */
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);   /* 幕系（往復とも重い） */
+
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+  --wide: 1120px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-mincho);
+  color: var(--paper);
+  background:
+    radial-gradient(1100px 700px at 20% -14%, rgba(168, 50, 59, 0.09), transparent 60%),
+    radial-gradient(900px 620px at 92% 18%, rgba(201, 161, 59, 0.08), transparent 58%),
+    var(--ink);
+  line-height: 1.9;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--gold-bright); text-decoration: none; text-underline-offset: 4px; }
+a:hover { color: var(--paper); text-decoration: underline; text-decoration-color: var(--gold); }
+
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+/* ---------- 進捗（細い金線・右上起点で左へ） ---------- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold-bright), var(--crimson));
+  transform-origin: 100% 50%; transform: scaleX(0);
+  z-index: 70; pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .progress { animation: progress-grow linear both; animation-timeline: scroll(root); }
+    @keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  }
+}
+
+/* ---------- 帳場の頭 ---------- */
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--rule);
+  position: relative; z-index: 10;
+}
+.masthead .site { margin: 0; font-size: 17px; letter-spacing: 0.14em; }
+.masthead .site small { display: block; font-size: 11px; color: var(--paper-sub); letter-spacing: 0.22em; margin-top: 2px; }
+.masthead nav { display: flex; gap: 26px; font-size: 13px; letter-spacing: 0.18em; }
+.masthead nav a[aria-current="page"] { color: var(--paper); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+
+/* ---------- 表紙ヒーロー ---------- */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 90px);
+  min-height: calc(100svh - 90px);
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+}
+/* 扉の名残: 画面中央の縦の金線がヒーローに残る（幕の縦帯と同系の軸） */
+.hero::before {
+  content: ""; position: absolute; left: 50%; top: 8%; bottom: 8%;
+  width: 1px; pointer-events: none;
+  background: linear-gradient(transparent, rgba(201, 161, 59, 0.35), transparent);
+}
+.hero-inner { position: relative; }
+.hero-eyebrow {
+  margin: 0 0 18px; font-size: 12px; letter-spacing: 0.42em;
+  color: var(--gold); border-left: 1px solid var(--gold); padding-left: 14px;
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(52px, 11vw, 124px);
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  line-height: 1.14;
+}
+.hero .hero-lead { max-width: 34em; margin: 26px 0 0; color: var(--paper-sub); font-size: 16px; }
+.hero .hero-note { margin: 14px 0 0; font-size: 12px; letter-spacing: 0.2em; color: var(--paper-sub); }
+
+/* ---------- 記録の数（バニラ rAF カウンター・GSAP 不要） ---------- */
+.nums-band { border-top: 1px solid var(--rule); padding: clamp(70px, 10vh, 120px) 0; }
+.nums {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 3vw, 40px);
+}
+.num { border-left: 1px solid var(--rule); padding-left: clamp(14px, 2vw, 26px); }
+.num-val { display: block; font-size: clamp(54px, 7vw, 92px); line-height: 1.1; color: var(--gold-bright); }
+.num-label { display: block; margin-top: 6px; font-size: 13px; letter-spacing: 0.3em; color: var(--paper-sub); }
+.num-note { margin: 8px 0 0; font-size: 12px; color: var(--paper-sub); }
+
+.cta-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: clamp(40px, 6vh, 70px); }
+.btn {
+  display: inline-block; padding: 15px 34px;
+  border: 1px solid var(--gold); color: var(--gold-bright);
+  font-family: inherit; font-size: 14px; letter-spacing: 0.22em;
+  background: transparent;
+}
+.btn:hover { background: var(--gold); color: var(--ink); text-decoration: none; }
+.btn.is-quiet { border-color: var(--rule-strong); color: var(--paper); }
+.btn.is-quiet:hover { background: var(--ink-3); color: var(--paper); }
+
+/* ---------- 人物一覧 ---------- */
+.page-head { padding: clamp(48px, 8vh, 90px) 0 10px; }
+.page-head h1 { margin: 0; font-size: clamp(44px, 7vw, 84px); font-weight: normal; letter-spacing: 0.14em; line-height: 1.15; }
+.page-head .lead { max-width: 38em; color: var(--paper-sub); margin: 20px 0 0; }
+
+.toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 34px 0 8px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-family: inherit; font-size: 12.5px; letter-spacing: 0.1em;
+  color: var(--paper-sub); background: var(--ink-2);
+  border: 1px solid var(--rule); padding: 7px 14px; cursor: pointer;
+}
+.chip:hover { color: var(--paper); }
+.chip[aria-pressed="true"] { color: var(--ink); background: var(--gold); border-color: var(--gold); }
+.result-line { margin: 10px 0 26px; font-size: 12.5px; color: var(--paper-sub); letter-spacing: 0.12em; }
+
+.grid {
+  list-style: none; margin: 0 0 clamp(70px, 9vh, 110px); padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: clamp(22px, 3vw, 36px);
+}
+.cell[hidden] { display: none !important; }
+
+.card {
+  display: block; color: inherit; position: relative;
+  border: 1px solid var(--rule); background: var(--ink-2);
+  padding: 18px 18px 20px;
+}
+.card:hover { text-decoration: none; color: inherit; }
+
+.plate {
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: 3 / 4; position: relative;
+  background:
+    linear-gradient(160deg, rgba(201, 161, 59, 0.13), transparent 42%),
+    linear-gradient(20deg, rgba(168, 50, 59, 0.12), transparent 46%),
+    var(--ink-3);
+  border: 1px solid var(--rule-strong);
+  box-shadow: inset 0 0 0 1px rgba(12, 10, 8, 0.9), inset 0 0 0 2px rgba(201, 161, 59, 0.28);
+  overflow: hidden;
+}
+.plate-name {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: clamp(19px, 2vw, 24px); letter-spacing: 0.42em;
+  color: var(--paper); line-height: 1.6;
+  padding-top: 0.42em;
+}
+.plate-seal {
+  position: absolute; right: 10px; bottom: 10px;
+  font-size: 10px; letter-spacing: 0.2em; color: var(--gold);
+  opacity: 0.75;
+}
+.card-meta { display: block; margin-top: 14px; }
+.card-meta .name { display: block; font-size: 15px; letter-spacing: 0.08em; }
+.card-meta .role { display: block; font-size: 12px; color: var(--paper-sub); margin-top: 2px; }
+.card-meta .aff {
+  display: inline-block; margin-top: 10px; font-size: 11px; letter-spacing: 0.16em;
+  color: var(--gold); border-top: 1px solid var(--rule); padding-top: 8px;
+}
+
+/* ---------- 記録見本（燭守 セラフ） ---------- */
+.record-hero {
+  position: relative;
+  display: grid; grid-template-columns: minmax(240px, 340px) 1fr;
+  gap: clamp(28px, 4vw, 60px);
+  align-items: end;
+  padding: clamp(46px, 8vh, 90px) 0 clamp(40px, 6vh, 70px);
+}
+.record-hero .hero-plate { position: relative; }
+.record-hero .hero-id { margin: 0 0 12px; font-size: 12.5px; letter-spacing: 0.32em; color: var(--gold); }
+.record-hero h1 { margin: 0; font-size: clamp(46px, 7.5vw, 92px); font-weight: normal; letter-spacing: 0.1em; line-height: 1.2; }
+.record-hero .hero-role { margin: 14px 0 0; font-size: 16px; letter-spacing: 0.2em; color: var(--paper); }
+.record-hero .hero-appearance { margin: 16px 0 0; color: var(--paper-sub); max-width: 30em; }
+
+.section { padding: clamp(46px, 7vh, 80px) 0; border-top: 1px solid var(--rule); }
+.section > h2 {
+  margin: 0 0 30px; font-size: clamp(22px, 3vw, 30px); font-weight: normal;
+  letter-spacing: 0.24em; display: flex; align-items: center; gap: 16px;
+}
+.section > h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.section .section-note { margin: -16px 0 30px; font-size: 12.5px; color: var(--paper-sub); }
+
+.facts { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 28px; }
+.facts dt { font-size: 12.5px; letter-spacing: 0.2em; color: var(--gold); padding-top: 3px; }
+.facts dd { margin: 0; }
+
+.work-list { list-style: none; margin: 0; padding: 0; }
+.work-row {
+  display: grid; grid-template-columns: max-content 1fr max-content;
+  gap: 8px 26px; align-items: baseline;
+  padding: 18px 6px; border-bottom: 1px solid var(--rule);
+}
+.work-row:first-child { border-top: 1px solid var(--rule); }
+.work-order { font-size: 12.5px; letter-spacing: 0.18em; color: var(--gold); }
+.work-row h3 { margin: 0; font-size: 17px; font-weight: normal; letter-spacing: 0.06em; }
+.work-date { font-size: 12.5px; color: var(--paper-sub); }
+
+/* 年表 */
+.timeline { list-style: none; margin: 0; padding: 0 0 0 clamp(26px, 4vw, 44px); position: relative; }
+.timeline::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: var(--rule); }
+.tl-row { position: relative; padding: 22px 0 26px; border-bottom: 1px dashed var(--rule); }
+.tl-row:last-child { border-bottom: none; }
+.tl-row::before {
+  content: ""; position: absolute; left: calc(-1 * clamp(26px, 4vw, 44px) - 4px); top: 34px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ink); border: 1px solid var(--rule-strong);
+}
+.tl-row.is-related::before { background: var(--gold-bright); border-color: var(--gold-bright); }
+.tl-date { margin: 0 0 4px; font-size: 12.5px; letter-spacing: 0.24em; color: var(--paper-sub); }
+.tl-row h3 { margin: 0 0 6px; font-size: 17px; font-weight: normal; letter-spacing: 0.05em; }
+.tl-body p { margin: 0; color: var(--paper-sub); font-size: 14px; }
+.tl-src { margin-top: 6px; font-size: 11.5px; letter-spacing: 0.12em; color: var(--paper-sub); }
+.tl-tag {
+  display: inline-block; margin-left: 12px; padding: 1px 10px; vertical-align: 2px;
+  font-size: 11px; letter-spacing: 0.16em; color: var(--ink); background: var(--gold-bright);
+}
+
+/* ---------- 下り ---------- */
+.page-foot {
+  border-top: 1px solid var(--rule); margin-top: 20px;
+  padding: 30px 0 44px; font-size: 12px; color: var(--paper-sub); letter-spacing: 0.06em;
+}
+
+@media (max-width: 860px) {
+  .nums { grid-template-columns: repeat(2, 1fr); }
+  .record-hero { grid-template-columns: 1fr; align-items: start; }
+  .record-hero .hero-plate { max-width: 300px; }
+  .facts { grid-template-columns: 1fr; gap: 2px 0; }
+  .facts dt { margin-top: 12px; }
+  .work-row { grid-template-columns: 1fr; }
+}

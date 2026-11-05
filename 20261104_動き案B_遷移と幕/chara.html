@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回廊の記録｜人物一覧 — 動き案B「遷移と幕」</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+<link rel="stylesheet" href="css/vt.css">
+</head>
+<body data-page="chara">
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="wrap masthead">
+  <p class="site">回廊の記録<small>非公式設定資料・モック</small></p>
+  <nav>
+    <a href="index.html" data-wipe>表紙</a>
+    <a href="chara.html" aria-current="page">人物一覧</a>
+    <a href="detail.html" data-vt>記録見本</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="page-head">
+    <h1>人物一覧</h1>
+    <p class="lead">登録された 13 名の記録。所属ごとに絞り込んで表示する。表紙を跨ぐ移動は水平の流れ、記録を開く操作は円弧——遷移の役割を分けてある。</p>
+  </section>
+
+  <div class="toolbar" data-filter>
+    <div class="chips" role="group" aria-label="所属で絞り込み">
+      <button type="button" class="chip" data-key="all" aria-pressed="true">すべて 13</button>
+      <button type="button" class="chip" data-key="回廊聖堂" aria-pressed="false">回廊聖堂 4</button>
+      <button type="button" class="chip" data-key="独立" aria-pressed="false">独立 1</button>
+      <button type="button" class="chip" data-key="教団" aria-pressed="false">教団 2</button>
+      <button type="button" class="chip" data-key="鐘楼" aria-pressed="false">鐘楼 2</button>
+      <button type="button" class="chip" data-key="地下病院" aria-pressed="false">地下病院 1</button>
+      <button type="button" class="chip" data-key="祝祭庁" aria-pressed="false">祝祭庁 1</button>
+      <button type="button" class="chip" data-key="不明" aria-pressed="false">不明 2</button>
+    </div>
+  </div>
+  <p class="result-line" data-result aria-live="polite">13人を表示中。</p>
+
+  <ul class="grid">
+    <li class="cell" data-aff="回廊聖堂">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">燭守 セラフ</span><span class="plate-seal">C-001</span></span>
+        <span class="card-meta"><span class="name">燭守 セラフ</span><span class="role">封印の継ぎ手</span><span class="aff">回廊聖堂</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="独立">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">写本屋 ヴェル</span><span class="plate-seal">C-002</span></span>
+        <span class="card-meta"><span class="name">写本屋 ヴェル</span><span class="role">記録の写し手</span><span class="aff">独立</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="回廊聖堂">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">灯番 リュミエ</span><span class="plate-seal">C-003</span></span>
+        <span class="card-meta"><span class="name">灯番 リュミエ</span><span class="role">燭台の管理人</span><span class="aff">回廊聖堂</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="教団">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">異端吏 オクタヴィア</span><span class="plate-seal">C-004</span></span>
+        <span class="card-meta"><span class="name">異端吏 オクタヴィア</span><span class="role">禁書の検閲官</span><span class="aff">教団</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="回廊聖堂">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">調律師 カノン</span><span class="plate-seal">C-005</span></span>
+        <span class="card-meta"><span class="name">調律師 カノン</span><span class="role">音の封印師</span><span class="aff">回廊聖堂</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="鐘楼">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">号手 タル</span><span class="plate-seal">C-006</span></span>
+        <span class="card-meta"><span class="name">号手 タル</span><span class="role">鐘楼の番人</span><span class="aff">鐘楼</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="地下病院">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">薬師 ミョルニ</span><span class="plate-seal">C-007</span></span>
+        <span class="card-meta"><span class="name">薬師 ミョルニ</span><span class="role">血の代わりの錬成</span><span class="aff">地下病院</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="不明">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">囁き ノクス</span><span class="plate-seal">C-008</span></span>
+        <span class="card-meta"><span class="name">囁き ノクス</span><span class="role">名を盗む者</span><span class="aff">不明</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="祝祭庁">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">祝祭主 アレルイ</span><span class="plate-seal">C-009</span></span>
+        <span class="card-meta"><span class="name">祝祭主 アレルイ</span><span class="role">断章を集める祭官</span><span class="aff">祝祭庁</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="鐘楼">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">鐘鋳師 フォルデ</span><span class="plate-seal">C-010</span></span>
+        <span class="card-meta"><span class="name">鐘鋳師 フォルデ</span><span class="role">鐘を鋳る者</span><span class="aff">鐘楼</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="不明">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">塵纏い ルゥ</span><span class="plate-seal">C-011</span></span>
+        <span class="card-meta"><span class="name">塵纏い ルゥ</span><span class="role">掃き溜めの附喪女</span><span class="aff">不明</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="教団">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">算官 セウト</span><span class="plate-seal">C-012</span></span>
+        <span class="card-meta"><span class="name">算官 セウト</span><span class="role">贖罪の勘定係</span><span class="aff">教団</span></span>
+      </a>
+    </li>
+    <li class="cell" data-aff="回廊聖堂">
+      <a class="card" href="detail.html" data-vt>
+        <span class="plate"><span class="plate-name">看取り ヴィゴル</span><span class="plate-seal">C-013</span></span>
+        <span class="card-meta"><span class="name">看取り ヴィゴル</span><span class="role">最期の記録係</span><span class="aff">回廊聖堂</span></span>
+      </a>
+    </li>
+  </ul>
+</main>
+
+<footer class="wrap page-foot">
+  <p>回廊の記録 — 非公式の設定資料モック（動き案B「遷移と幕」）。人物の名称・役割・所属は data/characters.json の実データに依る。</p>
+</footer>
+
+<!-- 幕: 水平フローのみ（割れ扉は表紙専用） -->
+<div class="curtain" data-curtain aria-hidden="true">
+  <div class="flow flow-crimson"></div>
+  <div class="flow flow-ink"></div>
+  <p class="curtain-mark">回廊の記録</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="js/motion.js" defer></script>
+<script src="js/scenes.js" defer></script>
+</body>
+</html>
