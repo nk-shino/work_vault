@@ -44,3 +44,6 @@ __pycache__/
 # ブラウザの netlog・内部ログ(企業管理通信や認証関連の項目を含み得るため追跡しない)
 netlog*.json
 **/shots/console-*.log
+
+# Node の依存(CLI等の導入物。lock ファイルは追跡する)
+node_modules/
