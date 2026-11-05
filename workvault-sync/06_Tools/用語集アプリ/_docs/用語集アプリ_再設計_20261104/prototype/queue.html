@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提案キュー — 社内用語集</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js" defer></script>
+</head>
+<body data-page="queue">
+<a class="skip" href="#main">本文へ</a>
+
+<header>
+  <a class="brand" href="index.html">社内用語集</a>
+  <nav aria-label="メイン">
+    <a href="index.html">用語一覧</a>
+    <a href="queue.html" aria-current="page">提案キュー<span class="nav-badge num" aria-label="未処理の提案 7 件">7</span></a>
+    <a href="review.html">見直し<span class="nav-badge num" aria-label="評価待ちの語義 11 件">11</span></a>
+    <a href="history.html">履歴</a>
+  </nav>
+  <a href="#" id="open-palette" class="tool-link" hidden role="button">語を探す<kbd>Ctrl+K</kbd></a>
+  <span class="notice num">確認済み 2026-11-04 08:40</span>
+</header>
+
+<main id="main">
+  <h1>提案キュー</h1>
+  <p class="hint">郵便回りの文書から集めた新しい語義・関係・用例の提案です。採用したものだけが辞書に入ります。ここでの決定は履歴に残ります。</p>
+
+  <!-- FR-016: 結果はページ上部の帯で示す（aria-live で読み上げる） -->
+  <p id="queue-band" class="band success" role="status" aria-live="polite" hidden></p>
+
+  <div class="filters">
+    <label>状態
+      <select>
+        <option>未処理（5 件）</option>
+        <option>採用済み</option>
+        <option>却下</option>
+        <option>すべて</option>
+      </select>
+    </label>
+    <div class="seg" role="group" aria-label="種別で絞り込む">
+      <a href="#" data-kind="all" aria-pressed="true">すべて</a>
+      <a href="#" data-kind="sense">語義</a>
+      <a href="#" data-kind="relation">関係</a>
+      <a href="#" data-kind="evidence">用例</a>
+    </div>
+  </div>
+  <p class="hint knav-hint" hidden>入力欄以外で <kbd>j</kbd>/<kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>x</kbd> で却下。<kbd>?</kbd> でヘルプ。</p>
+
+  <!-- 提案 1: mock 分類・保護対象（出典 1 種類） -->
+  <article class="proposal is-pending" data-type="sense" data-protected aria-labelledby="prop-1">
+    <span class="prop-check"><input type="checkbox" aria-label="この提案を一括処理の対象にする"></span>
+    <h2 id="prop-1"><span class="ai-chip">mock</span>語義の提案 — <span class="hw-inline">卵温計</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line num">提案元: mail 2026-11-03 ・ 分類 confidence 0.80 ・ 出典 3 件（1 種類）</p>
+    <div class="meter-wrap">
+      <span class="meter-k">採用基準との距離</span>
+      <span class="meter" role="img" aria-label="採用基準 0.80、基準値 0.70"><i style="width:80%"></i></span>
+      <span class="num hint">0.80 / 基準 0.70</span>
+    </div>
+    <p class="decision">保留: 出典が 1 種類（2 種類以上が必要）。3 件とも同じ部署の文書です。</p>
+    <p class="definition">孵化枠の卵の温度を測る計器。卵温の基準は 37.8 度。</p>
+    <ul class="evidences">
+      <li><q>卵温計が 37 度を下回ったら当直に連絡。</q><small> — 交信記録 2026-11-03</small></li>
+      <li><q>卵温計の電池交換は月次点検に含める。</q><small> — 運用メモ 2026-11-01</small></li>
+    </ul>
+    <details class="ev-more">
+      <summary>ほかの用例 1 件</summary>
+      <ul class="evidences">
+        <li><q>卵温計は竜舎の壁掛けに戻す。</q><small> — 交信記録 2026-10-28</small></li>
+      </ul>
+    </details>
+    <div class="actions">
+      <a class="tool-link" href="new.html">修正して採用…</a>
+      <button type="button" class="danger" id="reject-1">却下</button>
+      <span class="protected-note">出典が 1 種類のため、一括採用・自動採用の対象になりません。</span>
+    </div>
+  </article>
+
+  <!-- 提案 2: mock 分類・基準を満たす -->
+  <article class="proposal is-pending" data-type="sense" aria-labelledby="prop-2">
+    <span class="prop-check"><input type="checkbox" aria-label="この提案を一括処理の対象にする"></span>
+    <h2 id="prop-2"><span class="ai-chip">mock</span>語義の提案 — <span class="hw-inline">雲切り</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line num">提案元: mail 2026-11-02 ・ 分類 confidence 0.74 ・ 出典 4 件（2 種類）</p>
+    <div class="meter-wrap">
+      <span class="meter-k">採用基準との距離</span>
+      <span class="meter" role="img" aria-label="採用基準 0.74、基準値 0.70"><i style="width:74%"></i></span>
+      <span class="num hint">0.74 / 基準 0.70</span>
+    </div>
+    <p class="decision">採用で自動反映されます（出典 2 種類・confidence 0.74）。</p>
+    <p class="definition">離陸前に翼の縁の氷と雲の粒を払い落とす作業。雲切り後 10 分は飛行禁止。</p>
+    <ul class="evidences">
+      <li><q>雲切りは二人で行い、終わったら合図。</q><small> — 運用マニュアル 第 3 版 p.31</small></li>
+      <li><q>雲切りが終わっていない便は欠航扱い。</q><small> — 交信記録 2026-11-02</small></li>
+    </ul>
+    <div class="actions">
+      <button type="button" class="primary" id="accept-2">採用</button>
+      <button type="button" class="danger" id="reject-2">却下</button>
+    </div>
+  </article>
+
+  <!-- 提案 3: 関係の提案 -->
+  <article class="proposal is-pending" data-type="relation" aria-labelledby="prop-3">
+    <span class="prop-check"><input type="checkbox" aria-label="この提案を一括処理の対象にする"></span>
+    <h2 id="prop-3"><span class="ai-chip">mock</span>関係の提案 — <span class="hw-inline">竜舎</span> と <span class="hw-inline">浮遊石</span><span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line num">提案元: mail 2026-11-01 ・ 分類 score 0.42（共起）</p>
+    <p class="definition">同じ文書に 12 回出てきます。「竜舎の下の浮遊石を点検する」のような使い方です。</p>
+    <div class="actions">
+      <button type="button" class="primary" id="accept-3">採用</button>
+      <button type="button" class="danger" id="reject-3">却下</button>
+    </div>
+  </article>
+
+  <!-- 提案 4: 用例の提案 -->
+  <article class="proposal is-pending" data-type="evidence" aria-labelledby="prop-4">
+    <span class="prop-check"><input type="checkbox" aria-label="この提案を一括処理の対象にする"></span>
+    <h2 id="prop-4"><span class="ai-chip">mock</span>用例の提案 — <span class="hw-inline">竜舎</span> 語義 1<span class="badge st-pending">未処理</span></h2>
+    <p class="meta-line num">提案元: mail 2026-10-31 ・ 2 件</p>
+    <ul class="evidences">
+      <li><q>竜舎の羽根戸は霧が晴れるまで開けない。</q><small> — 交信記録 2026-10-31</small></li>
+      <li><q>竜舎内は足元が濡れるのでマットを敷く。</q><small> — 運用メモ 2026-10-30</small></li>
+    </ul>
+    <div class="actions">
+      <button type="button" class="primary" id="accept-4">採用</button>
+      <button type="button" class="danger" id="reject-4">却下</button>
+    </div>
+  </article>
+
+  <!-- 処理済みの例 -->
+  <article class="proposal is-done" data-type="sense" aria-labelledby="prop-5">
+    <h2 id="prop-5">語義の提案 — <span class="hw-inline">星読み台帳</span><span class="badge st-accepted">採用済み</span></h2>
+    <p class="meta-line num">2026-11-02 ・ 採用 ・ 自動反映 ・ 処理した人: 篠原</p>
+  </article>
+
+  <nav class="pager" aria-label="ページ送り">
+    <a href="#">次の 2 件 →</a>
+  </nav>
+</main>
+
+<!-- 一括処理バー（FR-006: 個別の判断を止めない。保護対象は除外される） -->
+<div id="bulk-bar" class="bulk-bar" hidden>
+  <p class="bulk-count num" id="bulk-count" aria-live="polite">0 件を選択</p>
+  <button type="button" class="primary" id="bulk-accept">選択を一括採用</button>
+  <button type="button" class="danger" id="bulk-reject">選択を却下</button>
+  <p class="bulk-warn">出典数が基準に満たない提案は一括採用の対象になりません（個別に判断します）。</p>
+</div>
+
+<p id="knav-status" class="sr-only" role="status" aria-live="polite"></p>
+</body>
+</html>

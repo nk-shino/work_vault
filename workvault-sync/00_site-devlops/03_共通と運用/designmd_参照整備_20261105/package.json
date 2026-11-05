@@ -1,0 +1,9 @@
+{
+  "name": "design-md-reference",
+  "version": "1.0.0",
+  "private": true,
+  "description": "google-labs-code/design.md の参照整備（CLI: @google/design.md）",
+  "dependencies": {
+    "@google/design.md": "^0.4.0"
+  }
+}
