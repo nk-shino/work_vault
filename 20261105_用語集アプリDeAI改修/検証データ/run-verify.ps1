@@ -29,7 +29,7 @@ if (-not $KeepData -and (Test-Path $Db)) {
 }
 
 # 3. サーバー起動。起動スクリプト自身が /terms の応答まで待つ
-powershell -NoProfile -ExecutionPolicy Bypass -File 'C:\Users\ss80751\AppData\Local\Temp\kohden-code\start-glossary-server-p2.ps1'
+powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'start-glossary-server-p2.ps1')
 $probe = Invoke-WebRequest -Uri ('http://127.0.0.1:{0}/terms' -f $Port) -UseBasicParsing -TimeoutSec 5
 if ($probe.StatusCode -ne 200) { throw 'サーバーが起動していません' }
 Write-Output '== サーバー起動 =='
