@@ -23,7 +23,9 @@ async (page) => {
       await page.goto(url);
       const id = await page.evaluate(([label, kind]) => {
         for (const h of document.querySelectorAll('article.proposal h2')) {
-          if (h.textContent.replace(/\s+/g, ' ').trim().startsWith(label + ' ' + kind)) return h.id;
+          const t = h.textContent.replace(/\s+/g, ' ').trim();
+          // 語義カードは「見出し 種類」、関係カードは「A と B（関係ラベル） 種類」の書式
+          if (t.startsWith(label + ' ' + kind) || t.startsWith(label + '（')) return h.id;
         }
         return null;
       }, [label, kind]);
@@ -62,10 +64,10 @@ async (page) => {
     after: clean(await page.locator('main > p').first().innerText()), ...(await state()) });
 
   // 2. 両端の語が未登録の関係提案を採用する（エラーになるはず）
-  const bad = await findCard('BGA ⇔ 不良', '関係');
+  const bad = await findCard('BGA と 不良', '関係');
   if (bad) {
     await nav(() => bad.locator('form[data-kaction="accept"] button').click());
-    log.push({ step: '採用できない関係提案 BGA ⇔ 不良', ...(await state()) });
+    log.push({ step: '採用できない関係提案 BGA と 不良', ...(await state()) });
     await page.screenshot({ path: SHOTS + 'error-relation-accept-unregistered.png', fullPage: true });
   }
 
@@ -88,10 +90,10 @@ async (page) => {
   await adopt('BGA', '部品の裏面に格子状に並べたはんだボールで、基板と接続するパッケージ。接合部が部品の下に隠れるため、外観からは確認できない。', '製造');
 
   // 5. 両端に語義ができた関係提案を採用する
-  const ok = await findCard('BGA ⇔ ブリッジ', '関係');
+  const ok = await findCard('BGA と ブリッジ', '関係');
   if (ok) {
     await nav(() => ok.locator('form[data-kaction="accept"] button').click());
-    log.push({ step: '関係提案の採用 BGA ⇔ ブリッジ', ...(await state()) });
+    log.push({ step: '関係提案の採用 BGA と ブリッジ', ...(await state()) });
   }
 
   // 6. 断り書きから拾われた語の候補を却下する

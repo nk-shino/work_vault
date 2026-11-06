@@ -40,7 +40,8 @@ async (page) => {
   await page.goto(BASE + '/terms?sort=reading&direction=asc');
   log.push({ step: '読みで並べ替え', hits: await page.locator('#terms-table a.hw').allInnerTexts() });
   await page.goto(BASE + '/terms');
-  log.push({ step: '一覧 統計', stats: await text('section.stats'), count: await text('.table-tools p'),
+  log.push({ step: '一覧 既定の並びと件数', count: await text('.table-tools p'),
+    hits: (await page.locator('#terms-table a.hw').allInnerTexts()).slice(0, 10),
     tags: await page.locator('#tag option').allInnerTexts() });
 
   // C. 関連語の向き（上位概念・下位概念が相手側でどう見えるか）
