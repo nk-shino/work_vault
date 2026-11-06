@@ -47,3 +47,9 @@ netlog*.json
 
 # Node の依存(CLI等の導入物。lock ファイルは追跡する)
 node_modules/
+
+# deepwork の進行ファイル(git 追跡外・OpenCode からは .ignore で可読)
+.slim/deepwork/
+
+# vault正本のスナップショット(バイナリ複製・SHAは変更リストに記録済み)
+stash3_20261106/
