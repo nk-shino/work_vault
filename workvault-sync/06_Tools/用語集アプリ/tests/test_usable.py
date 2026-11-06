@@ -15,8 +15,9 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from glossary.adapters.llm.mock_adapter import MOCK_MODEL_NAME, MockLlmAdapter
 from glossary.adapters.source.export_file_adapter import ExportFileAdapter
+from glossary.db.guards import edit_context
 from glossary.db.models import Evidence, Proposal, Sense, Term
-from glossary.domain import proposals
+from glossary.domain import proposals, queries
 from glossary.preprocess.cleaner import Cleaner
 from glossary.preprocess.masking import Masker
 from glossary.preprocess.pipeline import preprocess
@@ -153,6 +154,50 @@ def test_add_relation_from_detail(db_url: str, factory: sessionmaker[Session]) -
     assert "混同注意" in c.get(f"/terms/{term_id}").text
     missing = c.post(f"/terms/{term_id}/relations", data={"relation_type": "related", "other": "無い語"})
     assert missing.status_code == 400
+
+
+def test_relation_direction_is_inverted_for_the_other_side(db_url: str, factory: sessionmaker[Session]) -> None:
+    with factory() as db:
+        narrow_id = accepted_sense(db, "竜舎").term_id
+        broad_id = accepted_sense(db, "幻獣").term_id
+        abbr_id = accepted_sense(db, "竜車").term_id
+        full_id = accepted_sense(db, "空飛ぶ馬車").term_id
+    c = client(db_url)
+    # 竜舎から見て幻獣は上位概念。竜車の略語の元は空飛ぶ馬車
+    assert c.post(f"/terms/{narrow_id}/relations", data={"relation_type": "broader", "other": "幻獣"},
+                  follow_redirects=False).status_code == 303  # fmt: skip
+    assert c.post(f"/terms/{abbr_id}/relations", data={"relation_type": "abbrev_of", "other": "空飛ぶ馬車"},
+                  follow_redirects=False).status_code == 303  # fmt: skip
+    # 登録した側はそのままのラベル
+    narrow_html = c.get(f"/terms/{narrow_id}").text
+    assert "<h3>上位概念</h3>" in narrow_html and "幻獣" in narrow_html
+    abbr_html = c.get(f"/terms/{abbr_id}").text
+    assert "<h3>略語の元</h3>" in abbr_html and "空飛ぶ馬車" in abbr_html
+    # 相手側では向きが反転する。幻獣から見て竜舎は下位概念、空飛ぶ馬車から見て竜車は略語
+    broad_html = c.get(f"/terms/{broad_id}").text
+    assert "<h3>下位概念</h3>" in broad_html and "竜舎" in broad_html
+    assert "<h3>上位概念</h3>" not in broad_html
+    full_html = c.get(f"/terms/{full_id}").text
+    assert "<h3>略語</h3>" in full_html and "竜車" in full_html
+    assert "<h3>略語の元</h3>" not in full_html
+
+
+def test_terms_default_order_is_by_reading(db_url: str, factory: sessionmaker[Session]) -> None:
+    with factory() as db:
+        crt = accepted_sense(db, "CRT").term
+        bga = accepted_sense(db, "BGA").term
+        handa = accepted_sense(db, "はんだ").term
+        with edit_context(db, "テスト", "読みを入力"):
+            crt.reading = "しーあーるてぃー"
+            handa.reading = "はんだ"
+            db.commit()
+        # 読み順が既定。読みの無い語は後ろに回り、その中では見出し順
+        page = queries.list_terms(db)
+        assert [t.headword for t in page.items] == ["CRT", "はんだ", "BGA"]
+        assert bga.reading is None
+        # 画面の /terms も同じ既定に従う（ルート側の既定値の取り違えを防ぐ）
+        html = client(db_url).get("/terms").text
+        assert html.index("CRT") < html.index("はんだ") < html.index("BGA")
 
 
 def test_csv_export(db_url: str, factory: sessionmaker[Session]) -> None:

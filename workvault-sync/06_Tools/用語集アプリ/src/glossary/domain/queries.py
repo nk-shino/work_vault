@@ -66,7 +66,7 @@ def list_terms(
     tag: str = "",
     status: str = "",
     page: int = 1,
-    sort: str = "headword",
+    sort: str = "reading",
     direction: str = "asc",
 ) -> TermPage:
     stmt = select(Term)
@@ -87,8 +87,8 @@ def list_terms(
     total = session.scalar(select(func.count()).select_from(stmt.subquery())) or 0
     pages = max(1, -(-total // PER_PAGE))
     page = min(max(1, page), pages)
-    # ソート列の指定が不正なときは既定（見出し）に戻す。第2キーを見出しにして並びを安定させる
-    column = SORTABLE.get(sort, Term.headword)
+    # ソート列の指定が不正なときは既定（読み）に戻す。第2キーを見出しにして並びを安定させる
+    column = SORTABLE.get(sort, Term.reading)
     order = column.desc() if direction == "desc" else column.asc().nulls_last()
     items = session.scalars(
         stmt.order_by(order, Term.headword.asc()).offset((page - 1) * PER_PAGE).limit(PER_PAGE)
@@ -120,6 +120,12 @@ class TermDetail:
     relations: dict[str, list[RelatedItem]] = field(default_factory=dict)
 
 
+# from 側で登録した関係は to 側の語では意味が逆向きになる。読み出し時に反転させる。
+# broader（上位概念）↔ narrower（下位概念）。abbrev_of（略語の元）の逆は has_abbrev（略語）。
+# related・synonym・confused_with は向きを持たないのでそのまま使う
+INVERSE_RELATION_TYPES = {"broader": "narrower", "narrower": "broader", "abbrev_of": "has_abbrev"}
+
+
 def term_detail(session: Session, term_id: str) -> TermDetail | None:
     term = session.get(Term, term_id)
     if term is None:
@@ -141,10 +147,12 @@ def term_detail(session: Session, term_id: str) -> TermDetail | None:
             .options(selectinload(Relation.from_sense), selectinload(Relation.to_sense))
         ).all()
         for r in rels:
-            other = r.to_sense if r.from_sense_id in ids else r.from_sense
+            from_side = r.from_sense_id in ids
+            other = r.to_sense if from_side else r.from_sense
             other_term = session.get(Term, other.term_id)
             assert other_term is not None
-            grouped[r.relation_type].append(
+            key = r.relation_type if from_side else INVERSE_RELATION_TYPES.get(r.relation_type, r.relation_type)
+            grouped.setdefault(key, []).append(
                 RelatedItem(other_term.headword, other_term.id, r.score, r.method)
             )
     return TermDetail(term, senses, {k: v for k, v in grouped.items() if v})

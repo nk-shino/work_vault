@@ -57,6 +57,7 @@ LABELS = {
     "related": "関連",
     "synonym": "同義",
     "abbrev_of": "略語の元",
+    "has_abbrev": "略語",
     "broader": "上位概念",
     "narrower": "下位概念",
     "confused_with": "混同注意",
@@ -149,7 +150,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     @app.get("/terms", response_class=HTMLResponse)
     def terms_list(
         request: Request, db: Db, q: str = "", tag: str = "", status: str = "", page: int = 1,
-        sort: str = "headword", direction: str = "asc",
+        sort: str = "reading", direction: str = "asc",
     ) -> HTMLResponse:
         result = queries.list_terms(
             db, q=q.strip(), tag=tag, status=status, page=page, sort=sort, direction=direction
@@ -174,8 +175,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
         def page_url(n: int) -> str:
             # 検索条件は URL に全部載せる。リンクを共有すれば同じ一覧が開ける
             params = {k: v for k, v in {"q": q, "tag": tag, "status": status}.items() if v}
-            # 並びは既定（見出し・昇順）のときは省く。URL を短く保つ
-            if sort != "headword":
+            # 並びは既定（読み・昇順）のときは省く。URL を短く保つ
+            if sort != "reading":
                 params["sort"] = sort
             if direction != "asc":
                 params["direction"] = direction
