@@ -8,12 +8,24 @@
     <option value="" {% if not status %}selected{% endif %}>すべて</option>
     {% for s in statuses %}<option value="{{ s }}" {% if s == status %}selected{% endif %}>{{ label(s) }}</option>{% endfor %}
   </select>
+  <label for="pkind">種類</label>
+  <select id="pkind" name="kind">
+    <option value="" {% if not kind %}selected{% endif %}>すべて</option>
+    {% for k in kinds %}<option value="{{ k }}" {% if k == kind %}selected{% endif %}>{{ label(k) }}</option>{% endfor %}
+  </select>
+  <label for="psort">並び</label>
+  <select id="psort" name="sort">
+    <option value="type" {% if sort != "score" %}selected{% endif %}>種類ごと（語義を先）</option>
+    <option value="score" {% if sort == "score" %}selected{% endif %}>スコア順</option>
+  </select>
   <button type="submit">表示</button>
 </form>
 {% set bulk_error = request.query_params.get("error") %}
 {% if bulk_error %}
 <div class="error" role="alert">
-  {% if bulk_error == "mock" %}モック草案の定義 {{ request.query_params.get("n") or 0 }} 件を含むため、一括採用は中止しました。それらは「修正して採用」で定義を書いてから採用してください。
+  {% if bulk_error == "adopt" %}採用できませんでした。{{ request.query_params.get("msg") or "一覧を更新してやり直してください。" }}
+  {% elif bulk_error == "reject" %}却下できませんでした。{{ request.query_params.get("msg") or "一覧を更新してやり直してください。" }}
+  {% elif bulk_error == "mock" %}モック草案の定義 {{ request.query_params.get("n") or 0 }} 件を含むため、一括採用は中止しました。それらは「修正して採用」で定義を書いてから採用してください。
   {% elif bulk_error == "stale" %}選択した提案を処理できませんでした。処理済みのものが混ざっているか、先に他で処理された可能性があります。一覧を更新して選び直してください。
   {% elif bulk_error == "empty" %}提案が選ばれていません。一覧でチェックを付けてからボタンを押してください。
   {% else %}操作の指定が正しくありません。一覧からやり直してください。
@@ -79,10 +91,18 @@
     <p class="hint">定義文はモック（仮の文）です。採用するなら「修正して採用」で定義を書いてください。</p>
     {% else %}
     <form method="post" action="/proposals/{{ p.id }}/accept" class="busy-on-submit" data-kaction="accept">
+      <input type="hidden" name="status" value="{{ status }}">
+      <input type="hidden" name="kind" value="{{ kind }}">
+      <input type="hidden" name="sort" value="{{ sort }}">
+      <input type="hidden" name="page" value="{{ page }}">
       <button type="submit" class="primary">採用</button>
     </form>
     {% endif %}
     <form method="post" action="/proposals/{{ p.id }}/reject" class="busy-on-submit" data-kaction="reject">
+      <input type="hidden" name="status" value="{{ status }}">
+      <input type="hidden" name="kind" value="{{ kind }}">
+      <input type="hidden" name="sort" value="{{ sort }}">
+      <input type="hidden" name="page" value="{{ page }}">
       <button type="submit" class="danger">却下</button>
     </form>
     {% if p.proposal_type == "sense" %}<a href="/proposals/{{ p.id }}/edit">修正して採用…</a>{% endif %}
@@ -94,12 +114,14 @@
 {% endfor %}
 </div>
 <nav aria-label="ページ送り" class="pager">
-  {% if page > 1 %}<a href="/proposals?status={{ status }}&page={{ page - 1 }}" rel="prev">前のページ</a>{% endif %}
-  {% if page < pages %}<a href="/proposals?status={{ status }}&page={{ page + 1 }}" rel="next">次のページ</a>{% endif %}
+  {% if page > 1 %}<a href="/proposals?{{ qs }}&page={{ page - 1 }}" rel="prev">前のページ</a>{% endif %}
+  {% if page < pages %}<a href="/proposals?{{ qs }}&page={{ page + 1 }}" rel="next">次のページ</a>{% endif %}
 </nav>
 {% if has_pending %}
 <form id="bulk-bar-form" method="post" action="/proposals/bulk" class="bulk-bar busy-on-submit" aria-label="選択した提案の一括処理">
   <input type="hidden" name="status" value="{{ status }}">
+  <input type="hidden" name="kind" value="{{ kind }}">
+  <input type="hidden" name="sort" value="{{ sort }}">
   <input type="hidden" name="page" value="{{ page }}">
   <p class="bulk-count" id="bulk-count" aria-live="polite">選択 0 件</p>
   <button type="button" id="bulk-select-all" class="js-only" hidden>このページをすべて選択</button>

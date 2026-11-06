@@ -120,13 +120,67 @@ def test_mock_draft_cannot_be_accepted_as_is(db_url: str, factory: sessionmaker[
         db.commit()
         pid = p.id
     c = client(db_url)
-    assert c.post(f"/proposals/{pid}/accept").status_code == 400
+    r = c.post(f"/proposals/{pid}/accept", follow_redirects=False)
+    # error.html ではなく提案キューへ戻り、理由帯が出る
+    assert r.status_code == 303 and "error=adopt" in r.headers["location"]
+    assert "修正して採用" in c.get(r.headers["location"]).text
     assert "【モック草案】" not in c.get(f"/proposals/{pid}/edit").text
     empty = c.post(f"/proposals/{pid}/edit", data={"definition": "", "change_reason": "r"})
     assert empty.status_code == 400
     ok = c.post(f"/proposals/{pid}/edit", data={"definition": "竜を飼う建物。", "change_reason": "定義を記入"},
                 follow_redirects=False)  # fmt: skip
     assert ok.status_code == 303
+
+
+def test_proposals_kind_filter_and_default_order(db_url: str, factory: sessionmaker[Session]) -> None:
+    with factory() as db:
+        proposals.add_proposal(
+            db, proposal_type="relation",
+            payload={"from_headword": "竜舎", "to_headword": "幻獣", "relation_type": "broader",
+                     "method": "human", "score": None},
+            model_name=proposals.HUMAN, prompt_version="t", score=0.99,
+        )  # fmt: skip
+        proposals.add_proposal(
+            db, proposal_type="sense",
+            payload={"headword": "星読み", "definition": "星の動きを読み取る係。", "context_tag": "",
+                     "evidences": [{"source_type": "mail", "source_ref": "eml:1", "excerpt": "星読みの記録。",
+                                    "occurred_at": None, "masked": True}]},
+            model_name=proposals.HUMAN, prompt_version="t", score=0.10,
+        )  # fmt: skip
+        db.commit()
+    c = client(db_url)
+    # 既定は種類ごと。スコアの高い関係提案より、今すぐ処理できる語義の提案が先に出る
+    html = c.get("/proposals").text
+    assert html.index("星読み") < html.index("幻獣")
+    # 種類フィルタで関係だけを表示する
+    only = c.get("/proposals", params={"kind": "relation"}).text
+    assert "幻獣" in only and "星読み" not in only
+    # スコア順に切り替えると、スコアの高い関係提案が先に戻る
+    by_score = c.get("/proposals", params={"sort": "score"}).text
+    assert by_score.index("幻獣") < by_score.index("星読み")
+
+
+def test_relation_accept_failure_returns_to_queue(db_url: str, factory: sessionmaker[Session]) -> None:
+    with factory() as db:
+        p = proposals.add_proposal(
+            db, proposal_type="relation",
+            payload={"from_headword": "竜舎", "to_headword": "幻獣", "relation_type": "broader",
+                     "method": "human", "score": None},
+            model_name=proposals.HUMAN, prompt_version="t", score=None,
+        )  # fmt: skip
+        db.commit()
+        pid = p.id
+    c = client(db_url)
+    r = c.post(f"/proposals/{pid}/accept", data={"status": "pending", "kind": "relation", "page": "1"},
+               follow_redirects=False)  # fmt: skip
+    # error.html ではなく、同じ条件のキューへ理由帯つきで戻る
+    assert r.status_code == 303 and "error=adopt" in r.headers["location"]
+    assert "kind=relation" in r.headers["location"]
+    band = c.get(r.headers["location"])
+    assert "関係の両端の語には、先に語義を採用しておく必要があります" in band.text
+    # 提案は未処理のまま残る
+    with factory() as db:
+        assert db.get(Proposal, pid).status == "pending"
 
 
 def test_term_edit_and_conflict(db_url: str, factory: sessionmaker[Session]) -> None:

@@ -1,7 +1,9 @@
 /* 社内用語集 の見た目。
  * トークン: 02a（デザイン規則の適用設計・2026-11-06）。余白は 4px の倍数、
  * 文字は Noto Sans JP の自己配信、明は cream 地の維持、暗はダークグレー地。
- * 状態の色は文字と罫で示す。hover での浮き上げ・画面内の動きはしない。
+ * 状態の色は文字と罫で示す。hover での浮き上げはしない。
+ * 動きは状態切替の短いフェードに限る（--dur・--dur-fast・--ease で一括管理）。
+ * 飾りの動き・自動再生・画面内の移動は置かない（2026-11-06 利用者の決定）。
  * サイズは px で書く（02a §1.3・§1.2 の基準）。罫の幅と位置合わせの補正は例外とする。 */
 
 @font-face {
@@ -59,6 +61,10 @@
   --space-5: 24px;
   --space-6: 32px;
   --space-7: 48px;
+  /* 動きの tokens。曲線は1種だけ（はじめが速く、静かに止まる）。時間も2段に限る */
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --ease: cubic-bezier(.2, 0, 0, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -102,7 +108,10 @@ body {
   background: var(--paper);
 }
 
-a { color: var(--roku); text-decoration-color: color-mix(in srgb, var(--roku) 40%, transparent); }
+a {
+  color: var(--roku); text-decoration-color: color-mix(in srgb, var(--roku) 40%, transparent);
+  transition: color var(--dur-fast) var(--ease);
+}
 a:hover { color: var(--roku-strong); }
 
 :focus-visible { outline: 2px solid var(--roku); outline-offset: 2px; border-radius: 2px; }
@@ -227,6 +236,7 @@ input, select, textarea {
   font: inherit; padding: var(--space-2);
   border: 1px solid var(--line-strong); border-radius: var(--radius-field);
   background: var(--surface); color: var(--ink);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 input:hover, select:hover, textarea:hover { border-color: var(--muted); }
 input:focus, select:focus, textarea:focus {
@@ -260,6 +270,8 @@ button {
   font: inherit; padding: var(--space-2) var(--space-4); margin-top: var(--space-2);
   border: 1px solid var(--line); border-radius: var(--radius-field);
   background: var(--surface); color: var(--ink); cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
 }
 button:hover { border-color: var(--roku); color: var(--roku-strong); background: var(--roku-soft); }
 /* 進行系の主操作（保存・登録・採用）は緑青の面。文字は濃色の緑青 */
@@ -301,6 +313,7 @@ th:not(.sorted) a.sort::after {
   content: ""; display: inline-block; width: 12px; height: 12px;
   margin-left: var(--space-1); vertical-align: -2px;
   background-color: currentColor; opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 16-4 4-4-4'/%3E%3Cpath d='M17 20V4'/%3E%3Cpath d='m3 8 4-4 4 4'/%3E%3Cpath d='M7 2v16'/%3E%3C/svg%3E") center/contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 16-4 4-4-4'/%3E%3Cpath d='M17 20V4'/%3E%3Cpath d='m3 8 4-4 4 4'/%3E%3Cpath d='M7 2v16'/%3E%3C/svg%3E") center/contain no-repeat;
 }
@@ -324,7 +337,7 @@ td .prev summary {
 }
 td .prev summary::-webkit-details-marker { display: none; }
 td .prev summary:hover { color: var(--roku); background: var(--roku-soft); }
-td .prev summary .ic { width: 12px; height: 12px; vertical-align: -2px; }
+td .prev summary .ic { width: 12px; height: 12px; vertical-align: -2px; transition: transform var(--dur) var(--ease); }
 td .prev[open] summary .ic { transform: rotate(90deg); }
 .prev-body {
   margin: var(--space-1) 0 0; padding: 0 0 0 var(--space-2);
@@ -369,6 +382,7 @@ td .hw:hover { color: var(--roku-strong); }
   border: 1px solid var(--line); background: var(--surface);
   border-radius: var(--radius-card); padding: var(--space-3) var(--space-4); margin: var(--space-4) 0;
   position: relative;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 .sense.disputed { border-color: var(--kuchi-fg); }
 
@@ -510,7 +524,7 @@ td .hw:hover { color: var(--roku-strong); }
   list-style: none; cursor: pointer; color: var(--roku); font-weight: bold;
 }
 .fold > summary::-webkit-details-marker { display: none; }
-.fold > summary .ic { width: 12px; height: 12px; vertical-align: -2px; }
+.fold > summary .ic { width: 12px; height: 12px; vertical-align: -2px; transition: transform var(--dur) var(--ease); }
 .fold[open] > summary .ic { transform: rotate(90deg); }
 .fold > div, .fold > form, .fold > ul, .fold > ol, .fold > p { margin-top: var(--space-2); }
 
@@ -526,8 +540,24 @@ ol.history li::before {
 ol.history h2 { margin: 0; font-size: 15px; line-height: 24px; }
 ol.history p { margin: var(--space-1) 0; }
 
+/* ---- 状態切替の動き。短いフェードだけ。曲線と時間は --dur・--dur-fast・--ease ---- */
+
+@keyframes fade-in { from { opacity: 0; } }
+/* 理由帯・注意帯。ページ表示のときに1回、淡く現れる */
+.error, .warn { animation: fade-in var(--dur) var(--ease); }
+/* JS が表示を切り替える部品。display の切替でも animation は1回走る */
+.bulk-bar:not([hidden]) { animation: fade-in var(--dur) var(--ease); }
+#busy-status:not([hidden]) { animation: fade-in var(--dur) var(--ease); }
+/* details の開閉。開いた中身だけを淡く出す。記号は transform の切替で回る */
+td .prev[open] .prev-body, .fold[open] > :not(summary) { animation: fade-in var(--dur) var(--ease); }
+
 /* ---- 動きを減らす設定 ---- */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  /* 切替の動きも止める。状態の変化は色と文字だけで分かる */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }

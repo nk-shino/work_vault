@@ -21,7 +21,7 @@ from fastapi import Depends, FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import func, select
+from sqlalchemy import case, func, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from glossary.adapters.llm.mock_adapter import MOCK_MODEL_NAME
@@ -59,11 +59,29 @@ templates.env.globals["MOCK_MODEL_NAME"] = MOCK_MODEL_NAME
 # 人手で登録した提案には AI の目印を付けない。テンプレート側で生成元の判定に使う
 templates.env.globals["HUMAN"] = HUMAN
 PROPOSALS_PER_PAGE = 20
+# 提案キューの種類フィルタの選択肢。生成側（propose.py・tasks.py）が作る3種。出てこない種類は選ばせない
+PROPOSAL_KINDS = ("sense", "evidence", "relation")
 
 
 def _is_protected_mock(p: Proposal) -> bool:
     """モックの定義文のまま採用できない提案か。単独の一括を問わず、採用の入口で必ず見る。"""
     return p.proposal_type == "sense" and p.model_name == MOCK_MODEL_NAME
+
+
+def _queue_back(status: str, kind: str, page: int, sort: str = "type") -> str:
+    """単独の採用・却下の戻り先。キューの絞り込み条件を保った URL を作る。
+
+    失敗時に error.html へ飛ぶと、どの提案で失敗したかという文脈が消える。
+    同じ条件の一覧へ戻して理由を帯で出す（一括採用と同じ方式）。
+    """
+    params: dict[str, Any] = {"status": status}
+    if kind in PROPOSAL_KINDS:
+        params["kind"] = kind
+    if sort == "score":
+        params["sort"] = sort
+    if page > 1:
+        params["page"] = str(page)
+    return "/proposals?" + urlencode(params)
 
 
 def get_session(request: Request) -> Iterator[Session]:
@@ -288,46 +306,87 @@ def create_app(database_url: str | None = None) -> FastAPI:
 
     @app.get("/proposals", response_class=HTMLResponse)
     def proposals_list(
-        request: Request, db: Db, status: str = "pending", page: int = 1
+        request: Request, db: Db, status: str = "pending", kind: str = "", sort: str = "type",
+        page: int = 1,
     ) -> HTMLResponse:
+        """提案キュー。既定の並びは種類ごとにまとめる（語義→用例→関係）。
+
+        スコア順のままだと、頁 1 が両端の採用待ちで動かない関係提案で埋まることがある。
+        今すぐ処理できる語義の提案を先に出し、種類内は従来どおりスコア降順で並べる。
+        スコア順そのものも sort=score で選べる。
+        """
         stmt = select(Proposal)
         if status:
             stmt = stmt.where(Proposal.status == status)
+        if kind in PROPOSAL_KINDS:
+            stmt = stmt.where(Proposal.proposal_type == kind)
         total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
         pages = max(1, -(-total // PROPOSALS_PER_PAGE))
         page = min(max(1, page), pages)
+        if sort == "score":
+            order: tuple[Any, ...] = (Proposal.score.desc(), Proposal.created_at)
+        else:
+            priority = case(
+                {"sense": 1, "evidence": 2, "relation": 3}, value=Proposal.proposal_type, else_=4
+            )
+            order = (priority, Proposal.score.desc(), Proposal.created_at)
         items = db.scalars(
-            stmt.order_by(Proposal.score.desc(), Proposal.created_at)
+            stmt.order_by(*order)
             .offset((page - 1) * PROPOSALS_PER_PAGE)
             .limit(PROPOSALS_PER_PAGE)
         ).all()
         rows = [(p, json.loads(p.payload_json)) for p in items]
         has_pending = any(p.status == "pending" for p, _ in rows)
+        view: dict[str, Any] = {"status": status}
+        if kind in PROPOSAL_KINDS:
+            view["kind"] = kind
+        if sort == "score":
+            view["sort"] = sort
         return render(
             request, "proposals.html", rows=rows, status=status, statuses=PROPOSAL_STATUSES,
+            kind=kind, sort=sort, kinds=PROPOSAL_KINDS, qs=urlencode(view),
             page=page, pages=pages, total=total, has_pending=has_pending,
         )  # fmt: skip
 
     @app.post("/proposals/{pid}/accept")
     def proposal_accept(
-        db: Db, pid: str
+        db: Db, pid: str, status: Annotated[str, Form()] = "pending",
+        kind: Annotated[str, Form()] = "", sort: Annotated[str, Form()] = "type",
+        page: Annotated[int, Form()] = 1,
     ) -> RedirectResponse:
+        """単独の採用。失敗したら同じ条件のキューへ戻し、理由を帯で出す。
+
+        error.html に飛ばすと提案の一覧が消え、失敗の文脈も失われる。一括採用と同じ
+        方式で、元の一覧に理由帯を添えて戻す。domain の保護文言はそのまま使う。
+        """
+        back = _queue_back(status, kind, page, sort)
         p = db.get(Proposal, pid)
         if p is not None and _is_protected_mock(p):
-            raise ValidationFailed(
-                "モックの定義文はそのまま採用できない。「修正して採用」で定義を書いてください"
-            )
-        proposals.accept(db, pid, reviewer=None)
-        db.commit()
-        return RedirectResponse("/proposals", status_code=303)
+            msg = "モックの定義文はそのまま採用できない。「修正して採用」で定義を書いてください"
+            return RedirectResponse(back + "&error=adopt&" + urlencode({"msg": msg}), status_code=303)
+        try:
+            proposals.accept(db, pid, reviewer=None)
+            db.commit()
+        except DomainError as e:
+            db.rollback()
+            return RedirectResponse(back + "&error=adopt&" + urlencode({"msg": str(e)}), status_code=303)
+        return RedirectResponse(back, status_code=303)
 
     @app.post("/proposals/{pid}/reject")
     def proposal_reject(
-        db: Db, pid: str
+        db: Db, pid: str, status: Annotated[str, Form()] = "pending",
+        kind: Annotated[str, Form()] = "", sort: Annotated[str, Form()] = "type",
+        page: Annotated[int, Form()] = 1,
     ) -> RedirectResponse:
-        proposals.reject(db, pid, reviewer=None)
-        db.commit()
-        return RedirectResponse("/proposals", status_code=303)
+        """単独の却下。採用と同じく、失敗時はキューへ戻して理由を出す。"""
+        back = _queue_back(status, kind, page, sort)
+        try:
+            proposals.reject(db, pid, reviewer=None)
+            db.commit()
+        except DomainError as e:
+            db.rollback()
+            return RedirectResponse(back + "&error=reject&" + urlencode({"msg": str(e)}), status_code=303)
+        return RedirectResponse(back, status_code=303)
 
     @app.post("/proposals/bulk")
     def proposals_bulk(
@@ -336,6 +395,8 @@ def create_app(database_url: str | None = None) -> FastAPI:
         action: Annotated[str, Form()] = "",
         ids: Annotated[list[str] | None, Form()] = None,
         status: Annotated[str, Form()] = "pending",
+        kind: Annotated[str, Form()] = "",
+        sort: Annotated[str, Form()] = "type",
         page: Annotated[int, Form()] = 1,
     ) -> RedirectResponse:
         """チェックを付けた提案をまとめて採用・却下する。
@@ -344,10 +405,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         モックの定義文をそのまま確定させない。処理は全部か無しかで、1件でも失敗したら
         コミットせず一覧へ戻り、理由を帯で出す。
         """
-        params: dict[str, Any] = {"status": status}
-        if page > 1:
-            params["page"] = page
-        back = "/proposals?" + urlencode(params)
+        back = _queue_back(status, kind, page, sort)
         selected = ids or []
         if action not in ("accept", "reject"):
             return RedirectResponse(back + "&error=invalid", status_code=303)

@@ -78,7 +78,8 @@ def test_review_ui_end_to_end(pipeline: Path, db_url: str, factory: sessionmaker
     page = client.get("/proposals")
     assert page.status_code == 200 and "採用" in page.text
     # モックの定義文はそのまま採用できない。定義を書いて「修正して採用」する
-    assert client.post(f"/proposals/{first_id}/accept").status_code == 400
+    mock_block = client.post(f"/proposals/{first_id}/accept", follow_redirects=False)
+    assert mock_block.status_code == 303 and "error=adopt" in mock_block.headers["location"]
     r = client.post(f"/proposals/{first_id}/edit",
                     data={"definition": "人が書いた定義。", "change_reason": "定義を記入"},
                     follow_redirects=False)  # fmt: skip
