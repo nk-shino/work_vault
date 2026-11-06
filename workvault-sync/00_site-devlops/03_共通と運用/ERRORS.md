@@ -736,3 +736,32 @@ verify_v6_data.py: v5との差分 = 全パート(期待: 編集済みスライ�
 ### Resolution
 - **Resolved**: 2026-11-02(当日)。build_v6_minimal.pyでv5骨格+編集済み9スライドXML移植のv6を構築し、差分=スライドXML9枚のみ・媒体/フォント/OLE31パートバイト一致・行間(0,1,0)維持・br+11で検証OK。このv6(b9286b9c)を両配備先へ配備
 - **Notes**: Pattern-Key: `pptx.full-reserialize-breaks-minimal-diff`
+
+## [ERR-20261106-006] a:endParaRPrをランより前に残したXML手術でPowerPointが段落を空描画した
+
+**Logged**: 2026-11-06T15:29:52+09:00
+**Priority**: medium
+**Status**: resolved
+**Area**: pptx / XML手術(python-pptx+lxml)
+
+### Summary
+手順書スライドv7のS27注記改訂で、段落のラン群を削除して新ランへ差し替えた際、元段落の`<a:endParaRPr>`がランより前の位置に残った。スキーマ上endParaRPrは段落内の最終要素(ECMA-376)であるため順序違反となり、PowerPoint(COM)のレンダリングでその段落だけが空描画された。python-pptxの読み戻し検証ではエラーにならず、レンダ目視で初めて発見した。
+
+### Error
+```
+rebuild()後のS27 p1: <a:p><a:endParaRPr/>…新ラン群</a:p>(順序違反)
+→ PowerPoint描画: ※SQL実行(SSMS)行が空白・python-pptx読み戻しはPASS
+```
+
+### Context
+- v6のS27 p1は9ラン+末尾endParaRPr。ランの削除と再追加を別々に行うとendParaRPrがランの前に残る
+- S11の対象段落はendParaRPrを持たないため本不具合の影響外——同一スクリプトでも段落構成次第で発火する
+- スキーマ検証を持たないライブラリ(python-pptx)は順序違反を黙って保存する
+
+### Suggested Fix
+- XML手術でランを差し替えるときは、endParaRPrを段落末尾へ移動してから新ランを追加する(rebuild()でp.append(endParaRPr)により強制)
+- レンダQA(描画結果の目視)はスキーマ検証・読み戻し検証の代替にならない——両方を実施する
+
+### Resolution
+- **Resolved**: 2026-11-06(当日)。build_v7_text.pyのrebuild()へendParaRPr末尾移動を実装し、v7(6a301f86)を再構築。S27のSQL実行行は正常描画をレンダ目視で確認のうえ両配備先へ配備
+- **Notes**: Pattern-Key: `pptx.endpararpr-order-blank-render`
