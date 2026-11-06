@@ -11,6 +11,7 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, selectinload
 
 from glossary.db.models import RELATION_TYPES, Relation, Revision, Sense, Term
+from glossary.domain.labels import LABELS
 
 PER_PAGE = 20
 
@@ -197,7 +198,10 @@ EXPORT_HEADER = [
 
 
 def export_rows(session: Session) -> list[list[str]]:
-    """用語集を1語義1行で書き出す。アーカイブ済みは外す（消した扱いのものを配らないため）。"""
+    """用語集を1語義1行で書き出す。アーカイブ済みは外す（消した扱いのものを配らないため）。
+
+    状態と関係の種類は内部値（英語）ではなく日本語ラベルで出す。Excel で見るのが主目的のため。
+    """
     rows: list[list[str]] = []
     terms = session.scalars(
         select(Term).where(Term.status != "archived").order_by(Term.headword)
@@ -206,14 +210,14 @@ def export_rows(session: Session) -> list[list[str]]:
         detail = term_detail(session, term.id)
         assert detail is not None
         related = " / ".join(
-            f"{r.headword}（{t}）" for t, items in detail.relations.items() for r in items
+            f"{r.headword}（{LABELS.get(t, t)}）" for t, items in detail.relations.items() for r in items
         )
         for i, s in enumerate(detail.senses, 1):
             rows.append(
                 [
                     term.headword, term.reading or "", term.english or "",
-                    term.abbreviation or "", term.status, str(i), s.definition,
-                    s.scope_note or "", s.context_tag or "", s.status,
+                    term.abbreviation or "", LABELS.get(term.status, term.status), str(i), s.definition,
+                    s.scope_note or "", s.context_tag or "", LABELS.get(s.status, s.status),
                     " / ".join(e.excerpt for e in s.evidences),
                     " / ".join(e.source_ref for e in s.evidences), related,
                 ]

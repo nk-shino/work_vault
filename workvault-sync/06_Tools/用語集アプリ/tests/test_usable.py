@@ -202,21 +202,28 @@ def test_terms_default_order_is_by_reading(db_url: str, factory: sessionmaker[Se
 
 def test_csv_export(db_url: str, factory: sessionmaker[Session]) -> None:
     with factory() as db:
-        accepted_sense(db, "竜舎", "竜を飼う建物。")
+        ryusha_id = accepted_sense(db, "竜舎", "竜を飼う建物。").term_id
+        accepted_sense(db, "竜車")
         gone = accepted_sense(db, "古い語").term
         from glossary.domain import review
 
         review.archive_term(db, gone.id, expected_revision=gone.revision_number,
                             editor_name=None, change_reason="使われなくなった")  # fmt: skip
         db.commit()
-    r = client(db_url).get("/export.csv")
+    c = client(db_url)
+    assert c.post(f"/terms/{ryusha_id}/relations", data={"relation_type": "confused_with", "other": "竜車"},
+                  follow_redirects=False).status_code == 303  # fmt: skip
+    r = c.get("/export.csv")
     assert r.status_code == 200
     raw = r.content.decode("utf-8")
     assert raw.startswith("﻿")  # Excel で開いて化けないように
     rows = list(csv.reader(io.StringIO(raw.lstrip("﻿"))))
     assert rows[0][0] == "見出し"
-    assert [row[0] for row in rows[1:]] == ["竜舎"]  # アーカイブ済みは出さない
+    assert [row[0] for row in rows[1:]] == ["竜舎", "竜車"]  # アーカイブ済みは出さない
     assert rows[1][6] == "竜を飼う建物。"
+    # 状態と関係の種類は日本語ラベルで出す
+    assert rows[1][4] == "有効" and rows[1][9] == "確定"
+    assert rows[1][12] == "竜車（混同注意）"
 
 
 def test_nav_links_exist(db_url: str) -> None:

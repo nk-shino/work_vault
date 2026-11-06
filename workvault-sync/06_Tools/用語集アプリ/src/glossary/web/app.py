@@ -37,41 +37,13 @@ from glossary.db.models import (
 from glossary.db.session import make_engine, make_session_factory
 from glossary.domain import evaluations, proposals, queries, review
 from glossary.domain.errors import ConflictError, DomainError, NotFound, ValidationFailed
+from glossary.domain.labels import LABELS
 from glossary.domain.proposals import HUMAN, SenseOverrides
 from glossary.settings import load_settings
 
 HERE = Path(__file__).parent
 templates = Jinja2Templates(directory=str(HERE / "templates"))
 
-LABELS = {
-    "draft": "草案",
-    "active": "有効",
-    "disputed": "係争中",
-    "archived": "アーカイブ済み",
-    "ai_draft": "AI草案",
-    "needs_review": "要レビュー",
-    "confirmed": "確定",
-    "rejected": "却下",
-    "pending": "未処理",
-    "accepted": "採用済み",
-    "related": "関連",
-    "synonym": "同義",
-    "abbrev_of": "略語の元",
-    "has_abbrev": "略語",
-    "broader": "上位概念",
-    "narrower": "下位概念",
-    "confused_with": "混同注意",
-    "sense": "語義",
-    "relation": "関係",
-    "evidence": "用例の追加",
-    "term": "用語",
-    "auto": "自動採用",
-    "correct": "正しい",
-    "needs_fix": "修正が必要",
-    "unsure": "判断できない",
-    "useful": "役に立つ",
-    "not_useful": "役に立たない",
-}
 templates.env.globals["label"] = lambda key: LABELS.get(key, key)
 JST = timezone(timedelta(hours=9))
 
