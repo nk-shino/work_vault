@@ -51,6 +51,19 @@ async (page) => {
   await page.goto(BASE + '/proposals');
   await page.evaluate(() => document.activeElement && document.activeElement.blur());
   const total0 = clean(await page.locator('main > p').first().innerText());
+  // 0. 既定の並びと種類フィルタ（issue #19）。既定は種類ごとに語義→用例→関係の順
+  const firstBadge = clean(await page.locator('article.proposal').first().locator('h2 .badge').first().innerText());
+  await page.goto(BASE + '/proposals?kind=relation');
+  const relTotal = clean(await page.locator('main > p').first().innerText());
+  const relOnlyOk = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll('article.proposal')];
+    return cards.length > 0 && cards.every((c) => {
+      const b = c.querySelector('h2 .badge');
+      return !!b && b.textContent.trim() === '関係';
+    });
+  });
+  log.push({ step: '既定の並びと種類フィルタ', firstBadge, firstIsSenseOk: firstBadge === '語義',
+    relationTotal: relTotal, relationOnlyOk: relOnlyOk });
   await page.keyboard.press('j');
   const s1 = clean(await page.locator('#knav-status').textContent());
   await page.keyboard.press('j');
@@ -63,12 +76,17 @@ async (page) => {
   log.push({ step: 'キーボード j/j/x/x/r', before: total0, status1: s1, status2: s2, selected: sel1, unselected: sel0,
     after: clean(await page.locator('main > p').first().innerText()), ...(await state()) });
 
-  // 2. 両端の語が未登録の関係提案を採用する（エラーになるはず）
+  // 2. 両端の語が未登録の関係提案を採用する。error.html ではなく同じ条件のキューへ戻り、
+  //    理由帯が出て、提案は未処理のまま残る（issue #19）
   const bad = await findCard('BGA と 不良', '関係');
   if (bad) {
     await nav(() => bad.locator('form[data-kaction="accept"] button').click());
-    log.push({ step: '採用できない関係提案 BGA と 不良', ...(await state()) });
-    await page.screenshot({ path: SHOTS + 'error-relation-accept-unregistered.png', fullPage: true });
+    const s = await state();
+    const bandOk = !!(s.msg && s.msg.includes('関係の両端の語には、先に語義を採用しておく必要があります'));
+    const stillPending = !!(await findCard('BGA と 不良', '関係'));
+    log.push({ step: '採用できない関係提案 BGA と 不良', ...s, backToQueueOk: s.url.includes('error=adopt'),
+      bandOk, stillPendingOk: stillPending, ok: s.url.includes('error=adopt') && bandOk && stillPending });
+    await page.screenshot({ path: SHOTS + 'queue-adopt-error-band.png', fullPage: true });
   }
 
   // 3. 一括採用にモック草案を含める（中止されるはず）

@@ -18,14 +18,14 @@ description: 朱は、人の手が入ったところにだけ刷る。自動判�
 - **暗テーマ**: トークンを作り直した（`--paper: #2b2f36`・`--surface: #33383f`・`--surface-2: #3c424a`・`--ink: #e8e6df`・`--muted: #a8adb8`）。本文の `paper-dark: #191b1f` 等の値は廃止。muted と surface-2 の組合せは 4.51:1
 - **角丸**: card 8px / field 6px / chip 4px。pill（999px）は廃止
 - **間隔**: `--space-1`〜`--space-7` = 4 / 8 / 12 / 16 / 24 / 32 / 48 px（4px グリッド）
-- **動き**: モーショントークン（`--dur-*`・`--ease-*`）とパターン M-01〜M-11 は全部廃止した。CSS の transition・animation は 0。`html { scroll-behavior: smooth }` のみを残し、`prefers-reduced-motion: reduce` では auto にする。共有要素遷移（`view-transition-name`）は使わない
+- **動き**: モーショントークン（`--dur-*`・`--ease-*`）とパターン M-01〜M-11 は全部廃止した。`html { scroll-behavior: smooth }` のみを残し、`prefers-reduced-motion: reduce` では auto にする。共有要素遷移（`view-transition-name`）は使わない。**2026-11-06 の利用者の決定で一部を変更**: 状態切替の短いフェードを入れた（`--dur-fast: 120ms`・`--dur: 180ms`・曲線は `cubic-bezier(.2, 0, 0, 1)` の1種）。対象はリンクとボタンと入力欄の色の切替、理由帯・注意帯の出現、bulk バーと処理中表示の表示、details の開閉、キーボードカーソルの枠。hover の浮き上げ・飾りの動き・自動再生は置かない。`prefers-reduced-motion: reduce` では transition・animation を全停止する
 - **機能（Phase 3）**: 一覧の既定並びは読み順（昇順。読みの無い語は末尾に置き、その中で見出し順）。関係の表示は読み出し時に向きを反転する（broader↔narrower、abbrev_of↔「略語」、related・synonym・confused_with は対称）。関係を登録するときの操作は変更なし
 
 ### 未決の整理
 
 - 設計書 §4.2・未決 7（OFL フォントの同梱）は「同梱する」で確定
 - CSV 出力の状態・関係ラベルの日本語化は 2026-11-06 に利用者の承認を得て適用した（ラベルは `domain/labels.py` に統一。画面と CSV で同じ対応表を使う）
-- 提案キューの絞り込み（種類フィルタ・並び・採用失敗時の戻り先）は別課題として issue #19 に起票した
+- 提案キューの絞り込み（種類フィルタ・並び・採用失敗時の戻り先）は issue #19 として起票し、2026-11-06 に適用した（既定の並びは種類ごとに語義→用例→関係、`sort=score` でスコア順。単独の採用・却下の失敗は同じ条件のキューへ戻して理由帯を出す）
 
 ## Overview
 
