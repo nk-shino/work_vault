@@ -1,0 +1,22 @@
+{
+ "sheets": {
+  "相関図①": {
+   "cells": 44,
+   "segments": 13,
+   "arrows": 5,
+   "missing_texts": []
+  },
+  "相関図②": {
+   "cells": 90,
+   "segments": 18,
+   "arrows": 6,
+   "missing_texts": []
+  },
+  "相関図③": {
+   "cells": 77,
+   "segments": 22,
+   "arrows": 2,
+   "missing_texts": []
+  }
+ }
+}
