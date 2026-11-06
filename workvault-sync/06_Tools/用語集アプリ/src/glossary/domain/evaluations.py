@@ -33,7 +33,7 @@ def evaluate(
 ) -> Evaluation:
     sense = session.get(Sense, sense_id)
     if sense is None:
-        raise NotFound(f"語義が無い: {sense_id}")
+        raise NotFound("対象の語義が見つかりません")
     if accuracy is None and usefulness is None:
         raise ValidationFailed("評価を選んでください")
     if accuracy is not None and accuracy not in ACCURACY_VALUES:
@@ -42,10 +42,10 @@ def evaluate(
         raise ValidationFailed(f"有用性の値が不正: {usefulness}")
     # 画面を開いた後に定義が直されていたら、古い定義への評価を新しい版に付けない
     if sense.revision_number != seen_revision:
-        raise ValidationFailed("評価している間に定義が更新されました。表示し直してから評価してください")
+        raise ValidationFailed("評価している間に定義が更新されました。画面を表示し直してから、もう一度評価してください")
     text = (comment or "").strip() or None
     if text and len(text) > COMMENT_MAX_LEN:
-        raise ValidationFailed(f"理由・修正案は {COMMENT_MAX_LEN} 文字まで")
+        raise ValidationFailed(f"理由・修正案は {COMMENT_MAX_LEN} 文字以内で入力してください")
     ev = Evaluation(
         sense_id=sense.id,
         sense_revision=sense.revision_number,

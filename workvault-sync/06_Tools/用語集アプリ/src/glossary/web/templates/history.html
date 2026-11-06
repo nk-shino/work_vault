@@ -10,7 +10,7 @@
 {% for h in entries|reverse %}
   <li>
     <h2>版 {{ h.revision.revision_number }}</h2>
-    <p>{{ h.revision.created_at|jst }} ／ 理由：{{ h.revision.change_reason }}</p>
+    <p>{{ h.revision.created_at|jst }}<br>理由：{{ h.revision.change_reason }}</p>
     {% if h.diff %}
     <pre class="diff">{% for line in h.diff %}<span class="{{ 'add' if line.startswith('+') else 'del' if line.startswith('-') else '' }}">{{ line }}</span>
 {% endfor %}</pre>

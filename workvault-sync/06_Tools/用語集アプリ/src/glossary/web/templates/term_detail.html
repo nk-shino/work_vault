@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ d.term.headword }} - 社内用語集{% endblock %}
 {% block main %}
-<nav class="crumbs" aria-label="現在位置"><a href="/terms">用語一覧</a> ／ {{ d.term.headword }}</nav>
+<nav class="crumbs" aria-label="現在位置"><a href="/terms">用語一覧</a> <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chevron-right"/></svg> {{ d.term.headword }}</nav>
 <section class="hero">
   <h1><span class="hw hw-big">{{ d.term.headword }}</span>{% if d.term.reading %}<span class="reading">{{ d.term.reading }}</span>{% endif %} <span class="badge st-{{ d.term.status }}">状態：{{ label(d.term.status) }}</span></h1>
   <dl class="meta">
@@ -9,12 +9,12 @@
     {% if d.term.abbreviation %}<dt>略語</dt><dd>{{ d.term.abbreviation }}</dd>{% endif %}
     <dt>版</dt><dd>{{ d.term.revision_number }}（<a href="/history/term/{{ d.term.id }}">用語の履歴</a>）</dd>
   </dl>
-  <p class="hero-links"><a href="/terms/{{ d.term.id }}/edit">読み・英語・略語を編集</a> ／ <a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
+  <p class="hero-links"><a href="/terms/{{ d.term.id }}/edit">読み・英語・略語を編集</a> <a href="/new?headword={{ d.term.headword|urlencode }}">別の語義を足す</a></p>
 </section>
 
 {% if d.relations.get("confused_with") %}
 <section class="confused" aria-labelledby="confused-h">
-  <h2 id="confused-h"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" focusable="false"><path fill="currentColor" d="M12 2 1 21h22L12 2zm0 5 8.2 14.4H3.8L12 7zm-1 4h2v4h-2v-4zm0 5h2v2h-2v-2z"/></svg>混同注意</h2>
+  <h2 id="confused-h"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>混同注意</h2>
   <p>次の語と取り違えやすい。意味が違うので注意すること。</p>
   <ul>{% for r in d.relations["confused_with"] %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a></li>{% endfor %}</ul>
 </section>
@@ -33,9 +33,6 @@
   <h3 id="sense-{{ s.id }}">語義 {{ loop.index }}
     <span class="badge st-{{ s.status }}">状態：{{ label(s.status) }}</span>
     {% if s.context_tag %}<span class="tag">文脈：{{ s.context_tag }}</span>{% endif %}
-    <span class="src">出どころ：{{ label(s.source_type) }}</span>
-    <span class="src">{{ "自動採用" if s.adopted_by == "auto" else "人が採用" }}</span>
-    {% if s.source_type == "ai" %}<span class="ai-chip" title="AI が生成した定義">AI</span>{% endif %}
   </h3>
   {% if s.status == 'disputed' %}<p class="warn">この語義は係争中です。解釈が割れているので、確定するまで引用しないでください。</p>{% endif %}
   <p class="definition">{{ s.definition }}</p>
@@ -44,17 +41,16 @@
   <ul class="evidences">
   {% for e in s.evidences %}
     <li><q>{{ e.excerpt }}</q>
-      <small>{{ e.occurred_at|jst }} ／ 出典 {{ e.source_ref }}{% if e.masked %} ／ マスキング済み{% endif %}</small></li>
+      <small>出典 {{ e.source_ref }}（{{ e.occurred_at|jst }}{% if e.masked %}、マスキング処理済み{% endif %}）</small></li>
   {% endfor %}
   </ul>
-  <p><a href="/senses/{{ s.id }}/edit">この語義を編集</a> ／ <a href="/history/sense/{{ s.id }}">語義の履歴</a>（版 {{ s.revision_number }}）</p>
+  <p><a href="/senses/{{ s.id }}/edit">この語義を編集</a> <a href="/history/sense/{{ s.id }}">語義の履歴</a>（版 {{ s.revision_number }}）</p>
   {% set sm = evals[s.id] %}
   <section class="evaluate" aria-labelledby="ev-{{ s.id }}">
     <h4 id="ev-{{ s.id }}">この定義を評価する（版 {{ s.revision_number }}）</h4>
     <p class="hint">
       {% if sm.unevaluated %}まだ評価はありません。{% if s.adopted_by == "auto" %}自動で採用された定義なので、読んだら評価してください。{% endif %}
-      {% else %}この版への評価：{% for k, n in sm.accuracy.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% if sm.accuracy and sm.usefulness %} ／ {% endif %}{% for k, n in sm.usefulness.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}
-      （押された回数です。評価した人は区別していないので、人数ではありません）{% endif %}
+      {% else %}この版への評価は、{% if sm.accuracy %}正確性が{% for k, n in sm.accuracy.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% endif %}{% if sm.accuracy and sm.usefulness %}、{% endif %}{% if sm.usefulness %}有用性が{% for k, n in sm.usefulness.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% endif %}です（押された回数です。評価した人は区別していないので、人数ではありません）{% endif %}
       {% if sm.older %}旧版への評価 {{ sm.older }} 回は数えていません。{% endif %}
     </p>
     <form method="post" action="/senses/{{ s.id }}/evaluate" class="busy-on-submit ev-form">
@@ -77,6 +73,7 @@
     <ul class="ev-comments">{% for c in sm.comments[:5] %}<li>{{ c.created_at|jst }}　{{ label(c.accuracy) if c.accuracy else label(c.usefulness) }}：{{ c.comment }}</li>{% endfor %}</ul>
     {% endif %}
   </section>
+  <p class="src-line">出どころ：{{ "AI が作成" if s.source_type == "ai" else "人が作成" }}　採用：{{ "自動採用" if s.adopted_by == "auto" else "人が採用" }}</p>
 </article>
 {% endfor %}
 
@@ -85,17 +82,17 @@
 {% if others %}
 {% for rtype, items in others %}
 <h3>{{ label(rtype) }}</h3>
-<ul>{% for r in items %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a> <small>（{{ r.method }}{% if r.score is not none %}、スコア {{ "%.2f"|format(r.score) }}{% endif %}）</small></li>{% endfor %}</ul>
+<ul>{% for r in items %}<li><a href="/terms/{{ r.term_id }}">{{ r.headword }}</a></li>{% endfor %}</ul>
 {% endfor %}
 {% else %}
 <div class="empty">
   <p class="empty-h">関連語はまだありません</p>
-  <p class="empty-d">この下の「関連語を追加する」から、混同しやすい語や同義語を結べます。</p>
+  <p class="empty-d">「関連語を追加する」から、混同しやすい語や同義語を登録できます。</p>
 </div>
 {% endif %}
 
-<details>
-  <summary>関連語を追加する</summary>
+<details class="fold">
+  <summary><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chevron-right"/></svg>関連語を追加する</summary>
   <form method="post" action="/terms/{{ d.term.id }}/relations" class="busy-on-submit">
     <label for="rel-type">関係</label>
     <select id="rel-type" name="relation_type">
@@ -108,8 +105,8 @@
 </details>
 
 {% if d.term.status != 'archived' %}
-<details>
-  <summary>この用語をアーカイブする</summary>
+<details class="fold">
+  <summary><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chevron-right"/></svg>この用語をアーカイブする</summary>
   <form method="post" action="/terms/{{ d.term.id }}/archive" class="busy-on-submit">
     <input type="hidden" name="revision_number" value="{{ d.term.revision_number }}">
     <label for="arch-reason">理由（必須）</label>

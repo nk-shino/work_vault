@@ -50,23 +50,7 @@ window.addEventListener("pageshow", function () {
   });
 });
 
-// 統計カードの数をゆっくり上げる。動きは飾りで、数値自体は HTML に書いてある（JS が無くても読める）
-(function () {
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll(".stat .n[data-count]").forEach(function (el) {
-    var target = parseInt(el.dataset.count, 10) || 0;
-    if (!target || reduce) return;
-    var t0 = null;
-    function step(t) {
-      if (t0 === null) t0 = t;
-      var k = Math.min((t - t0) / 500, 1);
-      k = 1 - Math.pow(1 - k, 3);
-      el.textContent = String(Math.round(target * k));
-      if (k < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  });
-})();
+// 統計の数値は HTML に直接書いてある（JS は関与しない）。
 
 // ---- 提案キュー: 一括処理の選択バー ----
 // チェックの数を数えてバーに出す。0件のときはバーを隠す（JS が無ければ常に見えていて、
@@ -168,7 +152,7 @@ window.addEventListener("pageshow", function () {
     var note = card.dataset.protected === "1"
       ? name + "（定義の記入が必要です。「修正して採用」で開いてください）"
       : name;
-    say(note + " ／ " + (cur + 1) + "件目（全 " + cards.length + " 件）");
+    say(note + "。" + (cur + 1) + " 件目（全 " + cards.length + " 件）");
   }
   function act(card, action) {
     var form = card.querySelector('form[data-kaction="' + action + '"]');

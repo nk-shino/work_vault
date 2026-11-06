@@ -62,9 +62,9 @@ def add_proposal(
 def _pending(session: Session, proposal_id: str) -> Proposal:
     p = session.get(Proposal, proposal_id)
     if p is None:
-        raise NotFound(f"提案が無い: {proposal_id}")
+        raise NotFound("対象の提案が見つかりません")
     if p.status != "pending":
-        raise ValidationFailed(f"この提案は処理済み（{p.status}）")
+        raise ValidationFailed("この提案はすでに処理されています")
     return p
 
 
@@ -101,7 +101,7 @@ def _evidence_inputs(payload: dict[str, Any]) -> list[EvidenceInput]:
 def _accept_evidence(session: Session, payload: dict[str, Any]) -> None:
     sense = session.get(Sense, payload["sense_id"])
     if sense is None or sense.status == "rejected":
-        raise ValidationFailed("用例を足す先の語義が無い（却下済みを含む）")
+        raise ValidationFailed("用例を足す先の語義が見つかりません。却下済みの語義は使えません")
     sense_writer.add_evidences(session, sense, _evidence_inputs(payload))
 
 
@@ -140,13 +140,13 @@ def _accept_sense(
 
 def _accept_relation(session: Session, payload: dict[str, Any]) -> None:
     if payload["relation_type"] not in RELATION_TYPES or payload["method"] not in RELATION_METHODS:
-        raise ValidationFailed("関係の種類または算出方法が不正")
+        raise ValidationFailed("関係の種類または算出方法の値が正しくありません")
     src = _first_live_sense(session, payload["from_headword"])
     dst = _first_live_sense(session, payload["to_headword"])
     if src is None or dst is None:
-        raise ValidationFailed("関係の両端の語に、先に語義を採用しておく必要がある")
+        raise ValidationFailed("関係の両端の語には、先に語義を採用しておく必要があります")
     if src.id == dst.id:
-        raise ValidationFailed("同じ語義どうしは関係付けできない")
+        raise ValidationFailed("同じ語義どうしは関係付けできません")
     session.add(
         Relation(
             from_sense_id=src.id,

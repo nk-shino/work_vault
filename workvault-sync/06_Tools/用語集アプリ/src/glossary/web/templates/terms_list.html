@@ -2,12 +2,7 @@
 {% block title %}用語一覧 - 社内用語集{% endblock %}
 {% block main %}
 <h1>用語一覧</h1>
-<section class="stats" aria-label="全体の状況">
-  <div class="stat"><span class="n" data-count="{{ stats.terms }}">{{ stats.terms }}</span><span class="k">登録された語</span></div>
-  <a class="stat" href="/proposals"><span class="n n-is-human" data-count="{{ stats.pending }}">{{ stats.pending }}</span><span class="k">未処理の提案</span></a>
-  <div class="stat"><span class="n" data-count="{{ stats.disputed }}">{{ stats.disputed }}</span><span class="k">係争中の語義</span></div>
-  <div class="stat"><span class="n" data-count="{{ stats.confirmed }}">{{ stats.confirmed }}</span><span class="k">確定した語義</span></div>
-</section>
+<p class="summary">登録された語 {{ stats.terms }} 件。<a href="/proposals">未処理の提案 {{ stats.pending }} 件</a>。係争中の語義 {{ stats.disputed }} 件、確定した語義 {{ stats.confirmed }} 件。</p>
 <form method="get" action="/terms" class="filters" role="search">
   <label for="q">検索（見出し・読み・英語・略語）<kbd>/</kbd></label>
   <input id="q" name="q" type="search" value="{{ q }}" accesskey="s">
@@ -24,24 +19,25 @@
   <button type="submit">絞り込む</button>
 </form>
 
+{% if result.items %}
 <div class="table-tools">
   <p>{{ result.total }} 件（{{ result.page }} / {{ result.pages }} ページ）</p>
   <button type="button" id="density-toggle" class="js-only" aria-pressed="false" hidden>行を狭く</button>
 </div>
-{% if result.items %}
+<div class="table-scroll">
 <table id="terms-table">
   <thead><tr>
-    <th scope="col" {% if sort == "headword" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('headword') }}">見出し</a>{% if sort == "headword" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
-    <th scope="col" {% if sort == "reading" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('reading') }}">読み</a>{% if sort == "reading" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
+    <th scope="col" {% if sort == "headword" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('headword') }}">見出し</a></th>
+    <th scope="col" {% if sort == "reading" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('reading') }}">読み</a></th>
     <th scope="col">略語</th>
-    <th scope="col" {% if sort == "status" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('status') }}">状態</a>{% if sort == "status" %}<span class="dir" aria-hidden="true">{{ "▲" if direction == "asc" else "▼" }}</span>{% endif %}</th>
+    <th scope="col" {% if sort == "status" %}class="sorted" aria-sort="{{ 'ascending' if direction == 'asc' else 'descending' }}"{% endif %}><a class="sort" href="{{ sort_url('status') }}">状態</a></th>
   </tr></thead>
   <tbody>
   {% for t in result.items %}
     <tr>
       <td>
         <a class="hw" href="/terms/{{ t.id }}">{{ t.headword }}</a>{% set pv = result.previews.get(t.id) %}{% if pv %} <details class="prev">
-          <summary><span class="prev-arrow" aria-hidden="true">▶</span><span class="sr-only">語義プレビューを開く</span></summary>
+          <summary><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chevron-right"/></svg><span class="sr-only">語義プレビューを開く</span></summary>
           <p class="prev-body">{{ pv.text }}</p>
           {% if pv.count > 1 %}<p class="prev-meta">最初の語義（ほかの語義 {{ pv.count - 1 }} 件）</p>{% endif %}
         </details>{% endif %}
@@ -53,6 +49,7 @@
   {% endfor %}
   </tbody>
 </table>
+</div>
 <nav aria-label="ページ送り" class="pager">
   {% if result.page > 1 %}<a href="{{ page_url(result.page - 1) }}" rel="prev">前のページ</a>{% endif %}
   {% if result.page < result.pages %}<a href="{{ page_url(result.page + 1) }}" rel="next">次のページ</a>{% endif %}

@@ -2,7 +2,7 @@
 {% block title %}見直し - 社内用語集{% endblock %}
 {% block main %}
 <h1>見直し</h1>
-<p>登録された語義のうち、人の目が要りそうなものを並べます。評価は定義を書き換えません。直すときは各語義の「この語義を編集」から。</p>
+<p>登録された語義のうち、人の目が要りそうなものを並べます。評価の操作で定義が書き変わることはありません。定義を直すときは、各語義の「この語義を編集」から開いてください。</p>
 <nav class="review-kinds" aria-label="見直しの種類">
   {% for k, text in kinds.items() %}
   <a href="/review?kind={{ k }}" {% if k == kind %}aria-current="page"{% endif %}>{{ text }}（{{ counts[k] }}）</a>
@@ -14,6 +14,7 @@
   <p class="empty-d">評価の状態が変わると、この一覧から外れます。上の種類を選ぶと別の見直し対象が出ます。</p>
 </div>
 {% else %}
+<div class="table-scroll">
 <table>
   <thead><tr><th scope="col">見出し</th><th scope="col">定義</th><th scope="col">採用</th><th scope="col">この版への評価（押された回数）</th></tr></thead>
   <tbody>
@@ -21,11 +22,12 @@
     <tr>
       <td><a class="hw" href="/terms/{{ it.term.id }}#sense-{{ it.sense.id }}">{{ it.term.headword }}</a></td>
       <td>{{ it.sense.definition[:60] }}{% if it.sense.definition|length > 60 %}…{% endif %}</td>
-      <td>{{ "自動" if it.sense.adopted_by == "auto" else "人" }}</td>
-      <td>{% if it.summary.unevaluated %}未評価{% else %}{% for k, n in it.summary.accuracy.items() %}{{ label(k) }} {{ n }} {% endfor %}{% for k, n in it.summary.usefulness.items() %}{{ label(k) }} {{ n }} {% endfor %}{% endif %}</td>
+      <td>{{ "自動採用" if it.sense.adopted_by == "auto" else "人が採用" }}</td>
+      <td>{% if it.summary.unevaluated %}未評価{% else %}{% if it.summary.accuracy %}正確性：{% for k, n in it.summary.accuracy.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% endif %}{% if it.summary.accuracy and it.summary.usefulness %}　{% endif %}{% if it.summary.usefulness %}有用性：{% for k, n in it.summary.usefulness.items() %}{{ label(k) }} {{ n }} 回{% if not loop.last %}・{% endif %}{% endfor %}{% endif %}{% endif %}</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
+</div>
 {% endif %}
 {% endblock %}

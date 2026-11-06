@@ -21,12 +21,12 @@
 </div>
 {% endif %}
 <p>{{ total }} 件（{{ page }} / {{ pages }} ページ）</p>
-<p class="hint js-only" hidden>キーボードでも処理できます。<kbd>j</kbd>／<kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>r</kbd> で却下、<kbd>x</kbd> で選択の切り替え。入力欄やボタンにいるときは効きません。</p>
+<p class="hint js-only" hidden>キーボードでも処理できます。<kbd>j</kbd> と <kbd>k</kbd> で移動、<kbd>a</kbd> で採用、<kbd>r</kbd> で却下、<kbd>x</kbd> で選択の切り替え。入力欄やボタンにいるときは効きません。</p>
 {% if not rows %}
 <div class="empty">
   {% if status == "pending" %}
   <p class="empty-h">未処理の提案はありません</p>
-  <p class="empty-d"><code>python tasks.py import フォルダ</code> でメールや資料から候補を取り込めます。</p>
+  <p class="empty-d"><code>tasks.py import</code> でメールや資料を取り込むと、ここに候補が届きます。</p>
   {% else %}
   <p class="empty-h">該当する提案はありません</p>
   <p class="empty-d">状態を「すべて」に変えると、処理済みの提案も表示されます。</p>
@@ -44,12 +44,11 @@
   </div>
   {% endif %}
   <h2 id="p-{{ p.id }}">
-    {% if p.proposal_type in ("sense", "evidence") %}<span class="hw-inline">{{ payload.headword }}</span>{% else %}<span class="hw-inline">{{ payload.from_headword }}</span> ⇔ <span class="hw-inline">{{ payload.to_headword }}</span>{% endif %}
+    {% if p.proposal_type in ("sense", "evidence") %}<span class="hw-inline">{{ payload.headword }}</span>{% else %}<span class="hw-inline">{{ payload.from_headword }}</span> と <span class="hw-inline">{{ payload.to_headword }}</span>（{{ label(payload.relation_type) }}）{% endif %}
     <span class="badge">{{ label(p.proposal_type) }}</span>
     <span class="badge st-{{ p.status }}">{{ label(p.status) }}</span>
   </h2>
   {% if p.decision_note %}<p class="decision">判定：{{ p.decision_note }}</p>{% endif %}
-  <p class="meta-line">スコア {{ "%.2f"|format(p.score) if p.score is not none else "—" }} ／ 生成元 {{ p.model_name }} ／ プロンプト版 {{ p.prompt_version }}</p>
   {% if p.status == "pending" and p.proposal_type == "sense" and p.score is not none %}
   <div class="meter-wrap">
     <span class="meter-k">確からしさ</span>
@@ -66,13 +65,13 @@
   </p>
   {% endif %}
   {% if p.proposal_type == "evidence" %}
-    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
+    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>出典 {{ e.source_ref }}</small></li>{% endfor %}</ul>
   {% elif p.proposal_type == "sense" %}
-    <p class="definition">{% if p.model_name != HUMAN %}<span class="ai-chip" title="この定義文は AI が生成しました">AI</span>{% endif %}{{ payload.definition }}</p>
+    <p class="definition">{{ payload.definition }}</p>
     <p>文脈タグ：{{ payload.context_tag }}</p>
-    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.occurred_at[:16] if e.occurred_at else "" }} ／ {{ e.source_ref }}</small></li>{% endfor %}</ul>
+    <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>出典 {{ e.source_ref }}{% if e.occurred_at %}（{{ e.occurred_at[:16]|replace("T", " ") }}）{% endif %}</small></li>{% endfor %}</ul>
   {% else %}
-    <p>関係：{{ label(payload.relation_type) }}（{{ payload.method }}）</p>
+    {% if p.status == "pending" %}<p class="hint">両端の語の語義が採用済みになると採用できます。</p>{% endif %}
   {% endif %}
   {% if p.status == "pending" %}
   <div class="actions">
@@ -89,7 +88,7 @@
     {% if p.proposal_type == "sense" %}<a href="/proposals/{{ p.id }}/edit">修正して採用…</a>{% endif %}
   </div>
   {% else %}
-  <p>処理：{{ p.reviewed_by or "画面から" }}（{{ p.reviewed_at|jst }}）</p>
+  <p>{{ p.reviewed_at|jst }} に処理（{{ p.reviewed_by or "画面" }}）</p>
   {% endif %}
 </article>
 {% endfor %}

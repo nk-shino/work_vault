@@ -9,6 +9,8 @@
 <p class="hint">独立検証の指摘：{{ v.reason }}</p>
 {% endif %}
 <form method="post" action="/proposals/{{ p.id }}/edit" class="busy-on-submit edit">
+  <h2>用例</h2>
+  <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>出典 {{ e.source_ref }}</small></li>{% endfor %}</ul>
   <label for="definition">定義</label>
   <textarea id="definition" name="definition" rows="4" required placeholder="用例を読んで、この語の意味を書いてください">{{ payload.definition }}</textarea>
   <label for="context_tag">文脈タグ</label>
@@ -17,8 +19,6 @@
   <textarea id="scope_note" name="scope_note" rows="2"></textarea>
   <label for="change_reason">編集理由（必須）</label>
   <input id="change_reason" name="change_reason" required>
-  <h2>用例（この提案に付いているもの）</h2>
-  <ul class="evidences">{% for e in payload.evidences %}<li><q>{{ e.excerpt }}</q> <small>{{ e.source_ref }}</small></li>{% endfor %}</ul>
   <button type="submit" class="primary">修正して採用する</button>
   <a href="/proposals">取り消して戻る</a>
 </form>

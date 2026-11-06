@@ -1,33 +1,38 @@
-/* 社内用語集 の見た目と操作感。
- * 方針: DESIGN.md（2026-11-05・lint 合格）のトークンに統一。
- * 概念: 「朱は、人の手が入ったところにだけ刷る」
- *  - 紙と墨: 辞書の地（本文・定義・表）
- *  - 緑青: 構造と導線（リンク・フォーカス・進行）
- *  - 朱: 人の手（評価・採用・訂正・混同注意）
- * 情報の密度は落とさず、押したときの反応と位置の分かりやすさを足す。
- * hover での浮き上げはしない（border と背景だけ変える）。
- * 色は変数に集め、OS の明暗設定に応じて自動で切り替わる。 */
+/* 社内用語集 の見た目。
+ * トークン: 02a（デザイン規則の適用設計・2026-11-06）。余白は 4px の倍数、
+ * 文字は Noto Sans JP の自己配信、明は cream 地の維持、暗はダークグレー地。
+ * 状態の色は文字と罫で示す。hover での浮き上げ・画面内の動きはしない。
+ * サイズは px で書く（02a §1.3・§1.2 の基準）。罫の幅と位置合わせの補正は例外とする。 */
+
+@font-face {
+  font-family: "Noto Sans JP";
+  src: url("/static/fonts/NotoSansJP-VF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* 紙と墨 */
   --paper: #f8f7f2;
-  --paper-top: #fbfaf6;
   --surface: #ffffff;
   --surface-2: #f1efe8;
   --ink: #26282e;
   --muted: #5c6270;
   --line: #d8d5ca;
   --line-soft: #e7e4da;
+  --line-strong: #767d89;
   /* 緑青（構造と導線） */
   --roku: #14685b;
   --roku-strong: #0f544a;
   --roku-soft: #e7f1ee;
+  --roku-soft-hover: #d7e9e4;
   --focus-ring: rgba(20, 104, 91, .25);
-  /* 朱（人の手） */
+  /* 朱（人の手・注意） */
   --shu: #b23a24;
   --shu-strong: #8f2a1c;
   --shu-soft: #f9ebe7;
-  /* 状態（黄=保留/注意・緑=確定/成功） */
+  /* 状態（黄=保留・緑=確定） */
   --kuchi-fg: #7a5a00;
   --kuchi-bg: #fbf1d8;
   --kuchi-border: #e3cd93;
@@ -38,61 +43,63 @@
   --danger-bg: #f9ebe7;
   --danger-border: #e5b8ad;
   /* 影・角丸 */
-  --shadow-1: 0 1px 2px rgba(32, 32, 40, .05), 0 1px 6px rgba(32, 32, 40, .06);
-  --shadow-2: 0 6px 16px rgba(32, 32, 40, .14);
-  --radius: 10px;
-  --r-1: 6px;
-  --r-pill: 999px;
-  --header-bg: rgba(248, 247, 242, .88);
-  /* 書体 */
-  --font-ui: "Yu Gothic UI", "Meiryo UI", "Segoe UI", sans-serif;
-  --font-mincho: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
-  --font-num: "Segoe UI Variable Text", "Yu Gothic UI", "Meiryo UI", sans-serif;
+  --shadow-float: 0 6px 16px rgba(32, 32, 40, .14);
+  --radius-card: 8px;
+  --radius-field: 6px;
+  --radius-chip: 4px;
+  /* 書体と寸法 */
+  --font-ui: "Noto Sans JP", "Yu Gothic UI", "Meiryo", sans-serif;
   --font-mono: Consolas, "Courier New", monospace;
+  --icon-s: 16px;
+  --icon-m: 20px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #191b1f;
-    --paper-top: #1c1e23;
-    --surface: #1f2126;
-    --surface-2: #26282e;
+    --paper: #2b2f36;
+    --surface: #33383f;
+    --surface-2: #3c424a;
     --ink: #e8e6df;
-    --muted: #9aa0ab;
-    --line: #3a3d44;
-    --line-soft: #2c2f35;
+    --muted: #a8adb8;
+    --line: #454a53;
+    --line-soft: #363b42;
+    --line-strong: #9299a4;
     --roku: #7cc8b4;
     --roku-strong: #a5dccb;
-    --roku-soft: #1d2b28;
+    /* 暗では pastel の面を表面の一段明るい色に寄せる（02a §2.1） */
+    --roku-soft: var(--surface-2);
+    --roku-soft-hover: var(--surface);
     --focus-ring: rgba(124, 200, 180, .28);
-    --shu: #f08a72;
+    --shu: #e8a898;
     --shu-strong: #f6b09c;
-    --shu-soft: #33211c;
+    --shu-soft: var(--surface-2);
     --kuchi-fg: #e0b45c;
-    --kuchi-bg: #332a17;
-    --kuchi-border: #5c4c22;
+    --kuchi-bg: var(--surface-2);
+    --kuchi-border: var(--kuchi-fg);
     --matsu-fg: #7cc89b;
-    --matsu-bg: #1d3326;
-    --matsu-border: #2f5a3d;
-    --danger-fg: #f08a72;
-    --danger-bg: #331e19;
-    --danger-border: #5c3a30;
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 6px rgba(0, 0, 0, .25);
-    --shadow-2: 0 6px 16px rgba(0, 0, 0, .45);
-    --header-bg: rgba(25, 27, 31, .88);
+    --matsu-bg: var(--surface-2);
+    --matsu-border: var(--matsu-fg);
+    --danger-fg: #e8a898;
+    --danger-bg: var(--surface-2);
+    --danger-border: var(--danger-fg);
+    --shadow-float: 0 6px 16px rgba(0, 0, 0, .45);
   }
 }
 
 body {
   margin: 0;
   font-family: var(--font-ui);
-  font-feature-settings: "palt";
+  font-size: 15px;
+  line-height: 24px;
   color: var(--ink);
-  background:
-    radial-gradient(60rem 18rem at 85% -6rem, var(--roku-soft), transparent 55%),
-    linear-gradient(180deg, var(--paper-top), var(--paper) 26rem) fixed,
-    var(--paper);
-  line-height: 1.65;
+  background: var(--paper);
 }
 
 a { color: var(--roku); text-decoration-color: color-mix(in srgb, var(--roku) 40%, transparent); }
@@ -103,7 +110,12 @@ a:hover { color: var(--roku-strong); }
 html { scroll-behavior: smooth; }
 
 .skip { position: absolute; left: -999px; }
-.skip:focus { left: 1rem; top: .5rem; background: var(--surface); color: var(--ink); padding: .3rem .6rem; z-index: 10; box-shadow: var(--shadow-2); border-radius: var(--r-1); }
+.skip:focus {
+  left: var(--space-4); top: var(--space-2);
+  background: var(--surface); color: var(--ink);
+  padding: var(--space-1) var(--space-2); z-index: 10;
+  box-shadow: var(--shadow-float); border-radius: var(--radius-field);
+}
 
 /* 見た目には出さず、読み上げとラベル付けのためだけにある文字 */
 .sr-only {
@@ -112,443 +124,410 @@ html { scroll-behavior: smooth; }
   white-space: nowrap; border: 0;
 }
 
-/* ---- ヘッダー。上罫は緑青で始まり、右端だけ朱が覗く（人の手の入口） ---- */
+/* インライン SVG アイコンの基本。Lucide（ISC License） */
+.ic {
+  width: var(--icon-s); height: var(--icon-s);
+  vertical-align: -3px;
+  fill: none;
+}
+
+/* ---- ヘッダー。上の帯は置かず、下罫だけ ---- */
 
 header {
-  display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
-  padding: .55rem 1.5rem;
+  display: flex; gap: var(--space-5); align-items: center; flex-wrap: wrap;
+  padding: var(--space-2) var(--space-5);
   border-bottom: 1px solid var(--line);
-  background: var(--header-bg);
-  backdrop-filter: blur(6px);
+  background: var(--paper);
   position: sticky; top: 0; z-index: 5;
 }
-header::before {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
-  background: linear-gradient(90deg, var(--roku), var(--shu) 82%, transparent);
-  opacity: .85;
-}
-header .brand { display: flex; align-items: center; gap: .5rem; }
-header .brand::before {
-  content: "語";
-  display: inline-grid; place-items: center;
-  width: 1.7rem; height: 1.7rem; border-radius: .45rem;
-  background: var(--roku); color: var(--paper);
-  font-family: var(--font-mincho); font-size: 1.05rem; font-weight: bold;
-}
-header nav { display: flex; gap: .25rem; flex-wrap: wrap; }
+header .brand { display: flex; align-items: center; gap: var(--space-2); }
+header .brand .ic { width: var(--icon-m); height: var(--icon-m); color: var(--roku); vertical-align: -4px; }
+header nav { display: flex; gap: var(--space-1); flex-wrap: wrap; }
 header nav a {
-  margin-right: 0; padding: .3rem .75rem; border-radius: var(--r-pill);
-  text-decoration: none; color: var(--ink); font-size: .95rem;
-  transition: background-color .15s ease, color .15s ease;
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 2px solid transparent;
+  text-decoration: none; color: var(--ink); font-size: 15px;
 }
-header nav a:hover { background: var(--roku-soft); color: var(--roku-strong); }
-header nav a[aria-current="page"] { background: var(--roku-soft); color: var(--roku-strong); font-weight: bold; }
+header nav a:hover { color: var(--roku-strong); text-decoration: underline; }
+header nav a[aria-current="page"] {
+  color: var(--roku-strong); font-weight: bold;
+  border-bottom-color: var(--roku);
+}
 /* 数値入りバッジ（未処理の提案の件数）。0件のときは出さない。
- * 未処理は人の対応待ちなので朱。明暗で白文字のコントラストが足りないため、
- * 暗テーマでは紙色の文字に返す */
+ * 未処理は人の対応待ちなので、朱の面に朱の濃色の文字 */
 .nav-badge {
-  display: inline-block; min-width: 1.5em; text-align: center;
-  margin-left: .35em; padding: 0 .4em; border-radius: var(--r-pill);
-  background: var(--shu); color: #fff;
-  font-size: .78rem; font-weight: bold; line-height: 1.6;
-  font-variant-numeric: tabular-nums; vertical-align: .08em;
-}
-@media (prefers-color-scheme: dark) {
-  .nav-badge { color: var(--paper); }
+  display: inline-block; min-width: 20px; text-align: left;
+  margin-left: var(--space-1); padding: 0 var(--space-2);
+  border-radius: var(--radius-chip);
+  border: 1px solid var(--shu);
+  background: var(--shu-soft); color: var(--shu-strong);
+  font-size: 12px; font-weight: bold; line-height: 16px;
+  font-variant-numeric: tabular-nums; vertical-align: 2px;
 }
 .notice {
-  margin-left: auto; color: var(--muted); font-size: .8rem;
-  border: 1px solid var(--line-soft); border-radius: var(--r-pill); padding: .1rem .7rem;
-  background: var(--surface); white-space: nowrap;
+  margin-left: auto; color: var(--muted); font-size: 13px;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .notice { margin-left: 0; flex-basis: 100%; white-space: normal; }
 }
 
 /* ---- 本文 ---- */
 
-main { max-width: 62rem; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; animation: rise .26s ease-out both; }
-@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+main { max-width: 992px; margin: 0 auto; padding: var(--space-5) var(--space-5) var(--space-7); }
 
-h1 {
-  font-size: 1.4rem; letter-spacing: .02em;
-  margin: .2rem 0 1rem;
-}
-h2 { font-size: 1.12rem; margin-top: 1.6rem; }
-h2 .ic { vertical-align: -3px; margin-right: .35rem; }
-h3 { font-size: 1rem; margin: .2rem 0 .5rem; }
+h1 { font-size: 20px; line-height: 28px; margin: 0 0 var(--space-4); }
+h2 { font-size: 17px; line-height: 24px; margin-top: var(--space-5); }
+h2 .ic { vertical-align: -4px; margin-right: var(--space-1); }
+h3 { font-size: 15px; line-height: 24px; margin: 0 0 var(--space-2); }
 
 h1, h2, h3 { text-wrap: balance; }
 main p { text-wrap: pretty; }
 
-label { display: block; font-weight: bold; margin-top: .6rem; }
-.hint { color: var(--muted); font-size: .85rem; }
+label { display: block; font-weight: bold; margin-top: var(--space-2); }
+.hint { color: var(--muted); font-size: 13px; line-height: 20px; }
 
-/* ---- 健全性ストリップ（一覧の上部。数値は HTML に直接書いてあり、JS は飾り） ---- */
+/* ---- 一覧の上部。数値は HTML に直接書いた1文。JS は関与しない ---- */
 
-.stats {
-  display: flex; flex-wrap: wrap;
-  background: var(--surface); border: 1px solid var(--line-soft);
-  border-radius: var(--radius); box-shadow: var(--shadow-1);
-  margin: .2rem 0 1.1rem; overflow: hidden;
-}
-.stat {
-  position: relative;
-  flex: 1 1 9rem; min-width: 8.5rem;
-  display: block; color: inherit; text-decoration: none;
-  border-right: 1px solid var(--line-soft);
-  padding: .55rem .9rem .5rem;
-  transition: background-color .15s ease;
-}
-.stat:last-child { border-right: none; }
-a.stat:hover { background: var(--roku-soft); }
-.stat .n {
-  display: block; font-family: var(--font-num);
-  font-size: 1.35rem; font-weight: bold;
-  font-variant-numeric: tabular-nums; letter-spacing: .02em; line-height: 1.3;
-}
-.stat .k { display: block; color: var(--muted); font-size: .78rem; }
-/* 未処理は人の対応待ち → 数値を朱で示す（人の手が要るところ） */
-.stat .n-is-human { color: var(--shu); }
+.summary { margin: 0 0 var(--space-4); font-variant-numeric: tabular-nums; }
 
-/* ---- パンくずと見出しの一段 ---- */
+/* ---- パンくず ---- */
 
-.crumbs { font-size: .85rem; color: var(--muted); margin: .1rem 0 .6rem; }
+.crumbs { font-size: 13px; line-height: 20px; color: var(--muted); margin: 0 0 var(--space-2); }
 .crumbs a { color: var(--muted); text-decoration: none; }
 .crumbs a:hover { color: var(--roku); text-decoration: underline; }
+.crumbs .ic { width: 12px; height: 12px; vertical-align: -2px; margin: 0 var(--space-1); color: var(--line-strong); }
 
-/* ---- 辞書項目ヒーロー（詳細） ---- */
+/* ---- 詳細の見出しブロック ---- */
 
 .hero {
-  position: relative; overflow: hidden;
   background: var(--surface); border: 1px solid var(--line-soft);
-  border-radius: var(--radius); box-shadow: var(--shadow-1);
-  padding: 1.2rem 1.6rem 1.05rem; margin: .2rem 0 1.2rem;
+  border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-5); margin: 0 0 var(--space-4);
 }
 .hero .hw-big {
-  font-family: var(--font-mincho); font-weight: bold; letter-spacing: .04em;
-  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+  font-weight: bold;
+  font-size: clamp(32px, 4vw, 40px); line-height: 48px;
   color: var(--ink); text-decoration: none;
 }
-.hero .hw-big::before, .hero .hw-big::after { color: var(--line); font-weight: normal; }
-.hero .hw-big::before { content: "【"; }
-.hero .hw-big::after { content: "】"; }
-/* 読みは送り仮名のように。文字の間を空けて辞書の板書に寄せる */
-.hero .reading { color: var(--muted); font-size: 1rem; margin-left: .6rem; letter-spacing: .3em; }
-.hero .meta { margin: .5rem 0 .3rem; }
-.hero-links { margin: .35rem 0 0; font-size: .92rem; }
+.hero .reading {
+  color: var(--muted); font-size: 14px; line-height: 20px;
+  margin-left: var(--space-2); letter-spacing: .16em;
+}
+.hero .meta { margin: var(--space-2) 0 var(--space-1); }
+.hero-links { display: flex; gap: var(--space-3); flex-wrap: wrap; margin: var(--space-1) 0 0; font-size: 14px; }
 
 /* ---- フォーム ---- */
 
-.filters { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: end; }
-.filters label { margin: 0; font-size: .85rem; color: var(--muted); font-weight: normal; }
+.filters { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: end; }
+.filters label { margin: 0; font-size: 13px; line-height: 20px; color: var(--muted); font-weight: normal; }
 .filters > button { margin-top: 0; }
 
 input, select, textarea {
-  font: inherit; padding: .4rem .6rem;
-  border: 1px solid var(--line); border-radius: var(--r-1); background: var(--surface);
-  color: var(--ink);
-  transition: border-color .15s ease, box-shadow .15s ease;
+  font: inherit; padding: var(--space-2);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-field);
+  background: var(--surface); color: var(--ink);
 }
 input:hover, select:hover, textarea:hover { border-color: var(--muted); }
 input:focus, select:focus, textarea:focus {
   outline: none; border-color: var(--roku);
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
-input[type="search"]#q { min-width: 15rem; font-size: 1.02rem; }
+input#q { min-width: 240px; font-size: 15px; }
+@media (max-width: 720px) {
+  #q { flex: 1 1 100%; min-width: 0; width: 100%; }
+}
 
 kbd {
-  display: inline-block; min-width: 1.3em; text-align: center;
-  font: inherit; font-size: .78rem; line-height: 1.4;
-  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px;
-  background: var(--surface); color: var(--muted); padding: 0 .3em; margin-left: .4em;
+  display: inline-block; min-width: 16px; text-align: left;
+  font: inherit; font-size: 12px; line-height: 16px;
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: var(--radius-chip);
+  background: var(--surface); color: var(--muted);
+  padding: 0 var(--space-1); margin-left: var(--space-1);
 }
 
 .edit textarea, .edit input { width: 100%; box-sizing: border-box; }
-.edit { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 1rem 1.25rem 1.25rem; margin-top: .8rem; }
+.edit {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-5); margin-top: var(--space-3);
+}
+/* 登録フォームの項目グループ（辞書向けの情報） */
+fieldset { border: 1px solid var(--line-soft); border-radius: var(--radius-field); margin: var(--space-4) 0 0; padding: var(--space-1) var(--space-4) var(--space-2); }
+legend { font-weight: bold; color: var(--muted); font-size: 14px; line-height: 20px; padding: 0 var(--space-1); }
 
 button {
-  font: inherit; padding: .42rem 1.1rem; margin-top: .6rem;
-  border: 1px solid var(--line); border-radius: var(--r-1);
-  background: var(--surface);
-  color: var(--ink); cursor: pointer; box-shadow: var(--shadow-1);
-  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+  font: inherit; padding: var(--space-2) var(--space-4); margin-top: var(--space-2);
+  border: 1px solid var(--line); border-radius: var(--radius-field);
+  background: var(--surface); color: var(--ink); cursor: pointer;
 }
 button:hover { border-color: var(--roku); color: var(--roku-strong); background: var(--roku-soft); }
-button:active { box-shadow: var(--shadow-1); }
-
-/* 進行系の主操作（保存・登録・採用）は緑青。人の手で確定する一段 */
+/* 進行系の主操作（保存・登録・採用）は緑青の面。文字は濃色の緑青 */
 button.primary {
-  background: var(--roku); border-color: var(--roku); color: var(--paper); font-weight: bold;
+  background: var(--roku-soft); border-color: var(--roku); color: var(--roku-strong); font-weight: bold;
 }
-button.primary:hover { background: var(--roku-strong); border-color: var(--roku-strong); color: var(--paper); }
-/* 取り消し系（却下）は朱の縁。押すと朱の地になる */
+button.primary:hover { background: var(--roku-soft-hover); border-color: var(--roku-strong); }
+/* 取り消し系（却下）は朱の縁。押すと朱の面になる */
 button.danger { color: var(--danger-fg); border-color: var(--danger-border); background: var(--surface); }
 button.danger:hover { background: var(--danger-bg); border-color: var(--danger-fg); color: var(--danger-fg); }
 
 /* ---- 表 ---- */
 
+.table-scroll { overflow-x: auto; }
+@media (max-width: 500px) {
+  .table-scroll table { min-width: 640px; }
+}
 table {
   border-collapse: separate; border-spacing: 0; width: 100%;
-  background: var(--surface); border-radius: var(--radius);
-  box-shadow: var(--shadow-1); border: 1px solid var(--line-soft); overflow: hidden;
+  background: var(--surface); border-radius: var(--radius-card);
+  border: 1px solid var(--line-soft); overflow: hidden;
 }
-th, td { border-bottom: 1px solid var(--line-soft); padding: .5rem .7rem; text-align: left; }
+th, td { border-bottom: 1px solid var(--line-soft); padding: var(--space-2) var(--space-3); text-align: left; }
 thead th {
-  background: var(--surface-2); font-size: .82rem; font-weight: bold; color: var(--muted);
+  background: var(--surface-2); font-size: 13px; line-height: 20px;
+  font-weight: bold; color: var(--muted);
   border-bottom: 1px solid var(--line); white-space: nowrap;
 }
-thead th:first-child { border-top-left-radius: var(--radius); }
-thead th:last-child { border-top-right-radius: var(--radius); }
+thead th:first-child { border-top-left-radius: var(--radius-card); }
+thead th:last-child { border-top-right-radius: var(--radius-card); }
 tbody tr:last-child td { border-bottom: none; }
 td a { font-weight: inherit; text-decoration: none; }
 td a:hover { text-decoration: underline; }
-/* 列ソート。矢印は並び替えている列にだけ常に出し、ほかの列はホバーで出して並べ替えられることを示す */
+/* 列ソート。現在地の列は太字と基調色の下線。ほかの列はホバーで矢印を出して並べ替えられることを示す */
 th a.sort { color: inherit; text-decoration: none; }
 th a.sort:hover { color: var(--roku); }
-th .dir { font-size: .72rem; margin-left: .25rem; color: var(--roku); }
+th.sorted a.sort { font-weight: bold; border-bottom: 2px solid var(--roku); }
 th:not(.sorted) a.sort::after {
-  content: "⇅"; opacity: 0; font-size: .72rem; margin-left: .25rem;
-  transition: opacity .12s ease;
+  content: ""; display: inline-block; width: 12px; height: 12px;
+  margin-left: var(--space-1); vertical-align: -2px;
+  background-color: currentColor; opacity: 0;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 16-4 4-4-4'/%3E%3Cpath d='M17 20V4'/%3E%3Cpath d='m3 8 4-4 4 4'/%3E%3Cpath d='M7 2v16'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 16-4 4-4-4'/%3E%3Cpath d='M17 20V4'/%3E%3Cpath d='m3 8 4-4 4 4'/%3E%3Cpath d='M7 2v16'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 th:hover a.sort::after { opacity: .55; }
 
 /* 件数行と密度切替のボタン */
-.table-tools { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.table-tools { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
 .table-tools p { margin: 0; }
 .table-tools button { margin-top: 0; }
 /* 狭い表示。行の余白だけ詰めて、文字の大きさは変えない */
-table.compact th, table.compact td { padding: .16rem .55rem; }
+table.compact th, table.compact td { padding: var(--space-1) var(--space-2); }
 
-/* 一覧行を展開した語義プレビュー。details/summary なので JS が無くても開閉できる */
-td .prev { display: block; margin-top: .15rem; }
+/* 一覧行を展開した語義プレビュー。details/summary なので JS が無くても開閉できる。
+ * 閉じている間は inline にして、記号を見出し語と同じ行に置く */
+td .prev { display: inline; margin-left: var(--space-1); }
+td .prev[open] { display: block; }
 td .prev summary {
-  display: inline-flex; align-items: center; gap: .3rem;
-  list-style: none; cursor: pointer; color: var(--muted); font-size: .8rem;
-  padding: .05rem .35rem; margin-left: .3rem; border-radius: var(--r-1);
-  transition: background-color .12s ease, color .12s ease;
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  list-style: none; cursor: pointer; color: var(--muted); font-size: 13px; line-height: 20px;
+  padding: 0 var(--space-1); border-radius: var(--radius-chip);
 }
 td .prev summary::-webkit-details-marker { display: none; }
 td .prev summary:hover { color: var(--roku); background: var(--roku-soft); }
-.prev-arrow { display: inline-block; font-size: .66rem; transition: transform .15s ease; }
-.prev[open] .prev-arrow { transform: rotate(90deg); }
-/* プレビューも定義文なので、詳細と同じ明朝の組版を小さめで使う */
+td .prev summary .ic { width: 12px; height: 12px; vertical-align: -2px; }
+td .prev[open] summary .ic { transform: rotate(90deg); }
 .prev-body {
-  margin: .3rem 0 .1rem; padding: .15rem 0 .15rem .7rem;
-  border-left: 2px solid var(--line); max-width: 46rem;
-  font-family: var(--font-mincho);
-  font-size: .95rem; line-height: 1.75; letter-spacing: .01em; color: var(--ink);
+  margin: var(--space-1) 0 0; padding: 0 0 0 var(--space-2);
+  border-left: 2px solid var(--line); max-width: 736px;
+  font-size: 15px; line-height: 24px; color: var(--ink);
 }
-.prev-meta { margin: 0; color: var(--muted); font-size: .78rem; }
+.prev-meta { margin: 0; color: var(--muted); font-size: 13px; line-height: 20px; }
 
-/* ---- 見出し語。辞書の【】を罫で示す（読み上げ・copy は語の文字列のみ） ---- */
+/* ---- 見出し語 ---- */
 
-.hw { font-family: var(--font-mincho); font-weight: bold; letter-spacing: .04em; }
-td .hw { font-size: 1.08rem; color: var(--ink); text-decoration: none; }
-td .hw::before, td .hw::after { color: var(--muted); font-weight: normal; }
-td .hw::before { content: "【"; }
-td .hw::after { content: "】"; }
+.hw { font-weight: bold; }
+td .hw { font-size: 16px; line-height: 24px; color: var(--ink); text-decoration: none; }
 td .hw:hover { color: var(--roku-strong); }
-td .hw:hover::before, td .hw:hover::after { color: var(--roku-strong); }
 
-.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
 
-/* ---- 状態の表示。badge は色＋文字併記（点は ::before）。色だけでは状態を伝えない ---- */
+/* ---- 状態の表示。badge は色＋文字併記。点は置かない ---- */
 
 .badge {
-  display: inline-block; font-size: .74rem; font-weight: normal;
-  padding: .06rem .6rem; border-radius: var(--r-pill);
+  display: inline-block; font-size: 12px; line-height: 16px; font-weight: normal;
+  padding: 0 var(--space-2); border-radius: var(--radius-chip);
   border: 1px solid var(--line); background: var(--surface); color: var(--muted);
   white-space: nowrap;
 }
-.badge::before {
-  content: ""; display: inline-block; width: .42em; height: .42em;
-  border-radius: 50%; background: var(--muted); margin-right: .4em; vertical-align: .08em;
-}
-/* 係争中・保留は「注意・対応待ち」。黄で示す */
+/* 係争中・保留は黄。確定・有効は緑 */
 .badge.st-disputed { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-fg); }
-.badge.st-disputed::before { background: var(--kuchi-fg); }
 .badge.st-pending { background: var(--kuchi-bg); color: var(--kuchi-fg); border-color: var(--kuchi-border); }
-.badge.st-pending::before { background: var(--kuchi-fg); }
 .badge.st-archived, .badge.st-rejected { color: var(--muted); }
 .badge.st-confirmed, .badge.st-active, .badge.st-accepted {
   background: var(--matsu-bg); color: var(--matsu-fg); border-color: var(--matsu-border);
 }
-.badge.st-confirmed::before, .badge.st-active::before, .badge.st-accepted::before { background: var(--matsu-fg); }
 
-.tag, .src { font-size: .8rem; font-weight: normal; color: var(--muted); margin-left: .5rem; }
-.tag { border-bottom: 1px dotted var(--line); }
-/* AI が生成した定義の目印。朱は使わない（AI の生成物は人の手ではない）。
- * 「AI」の文字と title でも示し、色だけに頼らない */
-.ai-chip {
-  display: inline-block; font-size: .7rem; font-weight: bold; padding: 0 .45em;
-  border-radius: 4px; border: 1px solid var(--roku); color: var(--roku-strong);
-  vertical-align: .1em; margin-right: .35em; letter-spacing: .04em;
-}
+/* 文脈タグは緑青の枠で、状態タグと区別する */
+.tag { font-size: 13px; line-height: 20px; font-weight: normal; color: var(--roku-strong); margin-left: var(--space-1); border: 1px solid var(--roku); border-radius: var(--radius-chip); padding: 0 var(--space-1); }
+.src { font-size: 13px; line-height: 20px; font-weight: normal; color: var(--muted); margin-left: var(--space-1); }
+/* カード末尾の注記行（出どころ・採用）。地色は置かない */
+.src-line { color: var(--muted); font-size: 13px; line-height: 20px; margin: var(--space-2) 0 0; }
 
-/* ---- 卡片（語義・提案）。hover で浮き上げない ---- */
+/* ---- 語義・提案のカード。hover で浮き上げない ---- */
 
 .sense, .proposal {
   border: 1px solid var(--line); background: var(--surface);
-  border-radius: var(--radius); padding: .8rem 1.2rem; margin: 1rem 0;
-  box-shadow: var(--shadow-1);
+  border-radius: var(--radius-card); padding: var(--space-3) var(--space-4); margin: var(--space-4) 0;
   position: relative;
 }
-.sense.disputed { border: 2px solid var(--kuchi-fg); }
+.sense.disputed { border-color: var(--kuchi-fg); }
 
-/* 提案カードなどの文中に出る見出し語も辞書の書体で */
-.hw-inline { font-family: var(--font-mincho); font-weight: bold; font-size: 1.1rem; }
+/* 提案カードなどの文中に出る見出し語 */
+.hw-inline { font-weight: bold; font-size: 16px; line-height: 24px; }
 
 /* 一括処理の選択。チェック欄をカードの左端に置き、本文はその分下がる */
-.proposal.is-pending { padding-left: 2.7rem; }
-.prop-check { position: absolute; left: 1.05rem; top: 1.2rem; }
+.proposal.is-pending { padding-left: var(--space-7); }
+.prop-check { position: absolute; left: var(--space-4); top: var(--space-4); }
 .prop-check input {
-  width: 1.05rem; height: 1.05rem; margin: 0; cursor: pointer;
+  width: 16px; height: 16px; margin: 0; cursor: pointer;
   accent-color: var(--roku);
 }
-/* キーボードトリアージ（j/k）でいま指している提案。枠の色と影で示し、位置はフォーカス輪郭でも分かる */
-.proposal.kcursor { border-color: var(--roku); box-shadow: var(--shadow-2); }
+/* キーボードトリアージ（j/k）でいま指している提案。枠の色と影で示す */
+.proposal.kcursor { border-color: var(--roku); box-shadow: var(--shadow-float); }
 
 /* 選択バー（画面の下端に置く）。チェックが0件のときは JS が隠す。JS が無ければ常に見えている */
 .bulk-bar {
-  position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%);
+  position: fixed; left: 50%; bottom: var(--space-4); transform: translateX(-50%);
   z-index: 6; box-sizing: border-box; margin: 0;
-  display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
-  width: min(56rem, calc(100vw - 2rem));
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow-2); padding: .55rem 1.1rem;
+  display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: center;
+  width: min(896px, calc(100vw - 32px));
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-card);
+  box-shadow: var(--shadow-float); padding: var(--space-2) var(--space-4);
 }
 .bulk-bar[hidden] { display: none; }
 .bulk-count { margin: 0; font-weight: bold; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.bulk-warn { margin: 0; flex: 1 1 100%; color: var(--kuchi-fg); font-size: .85rem; }
+.bulk-warn { margin: 0; flex: 1 1 100%; color: var(--kuchi-fg); font-size: 13px; line-height: 20px; }
 .bulk-bar button { margin-top: 0; }
 
 /* 注意の帯。黄=対応待ち */
-.warn { background: var(--kuchi-bg); color: var(--kuchi-fg); padding: .35rem .7rem; border-radius: var(--r-1); }
+.warn { background: var(--kuchi-bg); color: var(--kuchi-fg); padding: var(--space-1) var(--space-2); border-radius: var(--radius-field); }
 
-/* ---- 混同注意（人の手で付けられた注意 → 朱）。斜線地は置いて、朱の縁と地で静かに示す ---- */
+/* ---- 混同注意（人の手で付けられた注意 → 朱） ---- */
 
 .confused {
-  border: 2px solid var(--shu-strong); border-left-width: 6px;
+  border: 1px solid var(--shu-strong);
   background: var(--shu-soft);
-  color: var(--shu-strong); padding: .55rem 1rem; border-radius: var(--radius);
+  color: var(--shu-strong); padding: var(--space-2) var(--space-4); border-radius: var(--radius-card);
 }
-.confused h2 { margin: 0 0 .15rem; font-size: 1rem; }
+.confused h2 { margin: 0 0 var(--space-1); font-size: 15px; line-height: 24px; }
+.confused .ic { width: var(--icon-m); height: var(--icon-m); color: var(--shu); }
 .confused a { color: var(--shu-strong); font-weight: bold; }
 
-/* 定義文は辞書の項目のように。明朝で行間を大きく取り、左に朱の罫を引く
- * （定義は人が書いたもの。朱は人の手が入ったところに刷る） */
+/* 定義文。行間を大きく取り、左に罫を引く */
 .definition {
-  font-family: var(--font-mincho);
-  font-size: 1.1rem; line-height: 1.9; letter-spacing: .02em;
-  border-left: 3px solid var(--shu); padding-left: .85rem;
+  font-size: 17px; line-height: 32px;
+  border-left: 3px solid var(--line); padding-left: var(--space-3);
   white-space: pre-wrap;
 }
-/* 提案カードの中の定義はまだ人の手が入っていないので、罫は墨に戻す */
-.proposal .definition { border-left-color: var(--line); }
-.evidences { padding-left: 1.2rem; }
-.evidences li { margin: .25rem 0; }
+.evidences { padding-left: var(--space-4); }
+.evidences li { margin: var(--space-1) 0; }
 .evidences q, .proposal q {
-  background: var(--surface-2); padding: .08rem .4rem; border-radius: 5px; quotes: "「" "」";
+  background: var(--surface-2); padding: 0 var(--space-1); border-radius: var(--radius-chip); quotes: "「" "」";
 }
 .evidences small, .meta-line { color: var(--muted); }
-/* 空状態は見出し+説明+次の一手の3段。左揃えのブロックにして、状態と取れる手段をはっきり述べる */
+.evidences small { font-size: 13px; line-height: 20px; }
+/* 空状態は見出し+説明+次の一手の3段。左揃えのブロック */
 .empty {
   color: var(--muted);
-  border: 1.5px dashed var(--line); border-radius: var(--radius);
-  padding: 1.2rem 1.4rem; text-align: left; margin: 1rem 0;
+  border: 1px dashed var(--line); border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-5); text-align: left; margin: var(--space-4) 0;
 }
-.empty-h { font-weight: bold; color: var(--ink); margin: .1rem 0 .2rem; }
-.empty-d { color: var(--muted); margin: 0 0 .5rem; }
-.empty-actions { margin: 0; font-size: .92rem; }
+.empty-h { font-weight: bold; color: var(--ink); margin: 0 0 var(--space-1); }
+.empty-d { color: var(--muted); margin: 0 0 var(--space-2); }
+.empty-actions { margin: 0; font-size: 14px; }
 /* エラーと注意の帯 */
-.error { background: var(--danger-bg); color: var(--danger-fg); padding: .5rem .9rem; border-radius: var(--r-1); border: 1px solid var(--danger-border); }
+.error { background: var(--danger-bg); color: var(--danger-fg); padding: var(--space-2) var(--space-3); border-radius: var(--radius-field); border: 1px solid var(--danger-border); }
 
 /* 提案の確からしさ。値は p.score（0〜1）で、バーの長さで示す */
-.meter-wrap { display: flex; align-items: center; gap: .6rem; margin: .15rem 0 .2rem; }
-.meter-k { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+.meter-wrap { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-1); }
+.meter-k { font-size: 13px; line-height: 20px; color: var(--muted); white-space: nowrap; }
 .meter {
-  flex: 1; max-width: 16rem; height: .5rem; display: block;
+  flex: 1; max-width: 256px; height: 8px; display: block;
   background: var(--surface-2); border: 1px solid var(--line-soft);
-  border-radius: var(--r-pill); overflow: hidden;
+  border-radius: var(--radius-chip); overflow: hidden;
 }
-.meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--roku), var(--shu)); }
+.meter i { display: block; height: 100%; border-radius: inherit; background: var(--roku); }
 
-.actions { display: flex; gap: 1.2rem; align-items: end; flex-wrap: wrap; }
-.actions label { font-weight: normal; font-size: .85rem; }
+.actions { display: flex; gap: var(--space-4); align-items: end; flex-wrap: wrap; }
+.actions label { font-weight: normal; font-size: 13px; line-height: 20px; }
 .actions form { margin: 0; }
 .actions button { margin-top: 0; }
-.actions > a { align-self: center; font-size: .92rem; }
+.actions > a { align-self: center; font-size: 14px; }
 
-.pager { margin: 1.2rem 0; }
+.pager { margin: var(--space-4) 0; }
 .pager a {
-  display: inline-block; margin-right: .6rem; padding: .3rem 1rem;
-  border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface);
-  text-decoration: none; box-shadow: var(--shadow-1);
-  transition: border-color .15s ease, background-color .15s ease;
+  display: inline-block; margin-right: var(--space-2); padding: var(--space-1) var(--space-4);
+  border: 1px solid var(--line); border-radius: var(--radius-field); background: var(--surface);
+  text-decoration: none;
 }
 .pager a:hover { border-color: var(--roku); background: var(--roku-soft); }
 
-.diff { background: var(--surface-2); padding: .6rem .8rem; overflow-x: auto; border-radius: var(--r-1); border: 1px solid var(--line-soft); font-family: var(--font-mono); font-size: .88rem; }
-.diff .add { color: var(--matsu-fg); }
-.diff .del { color: var(--shu-strong); }
+.diff { background: var(--surface-2); padding: var(--space-2) var(--space-3); overflow-x: auto; border-radius: var(--radius-field); border: 1px solid var(--line-soft); font-family: var(--font-mono); font-size: 14px; line-height: 20px; }
+.diff .add { color: var(--matsu-fg); background: var(--matsu-bg); }
+.diff .del { color: var(--shu-strong); background: var(--danger-bg); }
 
 /* 処理中のしるし。動きは出さず、場所と文言で示す */
 .busy {
-  position: fixed; right: 1rem; bottom: 1rem;
-  background: var(--ink); color: var(--paper); padding: .5rem 1.1rem;
-  border-radius: var(--r-pill); box-shadow: var(--shadow-2);
+  position: fixed; right: var(--space-4); bottom: var(--space-4);
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius-field);
+  padding: var(--space-2) var(--space-4); box-shadow: var(--shadow-float);
 }
 
-.meta dt { float: left; clear: left; width: 4rem; color: var(--muted); }
-.meta dd { margin-left: 4.5rem; }
+.meta dt { float: left; clear: left; width: 64px; color: var(--muted); }
+.meta dd { margin-left: 72px; }
 
-/* ---- 評価（人の手 → 朱印。押すと人の印が刷られる） ---- */
+/* ---- 評価 ---- */
 
 .evaluate {
-  border: 1px solid var(--line); border-top: 3px solid var(--shu);
-  background: var(--surface); border-radius: var(--radius);
-  box-shadow: var(--shadow-1);
-  margin-top: .9rem; padding: .8rem 1rem .95rem;
+  border: 1px solid var(--line);
+  background: var(--surface); border-radius: var(--radius-card);
+  margin-top: var(--space-3); padding: var(--space-3) var(--space-4);
 }
-.evaluate h4 { margin: .2rem 0; font-size: .95rem; }
-.ev-buttons { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; margin-top: .25rem; }
-.ev-buttons > span { font-size: .85rem; color: var(--muted); }
+.evaluate h4 { margin: 0; font-size: 14px; line-height: 20px; }
+.ev-form input { width: 100%; max-width: 640px; box-sizing: border-box; }
+.ev-buttons { display: flex; gap: var(--space-1); align-items: center; flex-wrap: wrap; margin-top: var(--space-1); }
+.ev-buttons > span { font-size: 13px; line-height: 20px; color: var(--muted); }
+.ev-comments { color: var(--muted); font-size: 13px; line-height: 20px; }
+/* 採用・却下の結果は地色のない小さな注記行 */
+.decision { color: var(--ink); font-size: 13px; line-height: 20px; margin: var(--space-1) 0; }
 
-/* 朱印ボタン。評価の極性は文字で示し、押した印は朱で揃える */
-.stamp {
-  position: relative;
-  border: 1px solid var(--line); border-radius: var(--r-pill);
-  background: var(--surface); color: var(--ink);
-  padding: .22rem .8rem; font-size: .86rem; cursor: pointer;
-  min-height: 1.9rem; margin-top: .25rem; box-shadow: none;
-  transition: border-color .12s ease, color .12s ease, background-color .12s ease;
-}
-.stamp:hover { border-color: var(--roku); color: var(--roku-strong); background: var(--roku-soft); }
-.ev-comments { color: var(--muted); font-size: .85rem; }
-.decision { background: var(--roku-soft); color: var(--roku-strong); padding: .25rem .7rem; font-size: .9rem; border-radius: var(--r-1); display: inline-block; }
-
-.review-kinds { display: flex; gap: .4rem; flex-wrap: wrap; margin: .8rem 0 1.2rem; }
+.review-kinds { display: flex; gap: var(--space-1); flex-wrap: wrap; margin: var(--space-3) 0 var(--space-4); }
 .review-kinds a {
-  margin-right: 0; padding: .25rem .85rem; border: 1px solid var(--line);
-  border-radius: var(--r-pill); background: var(--surface); text-decoration: none; font-size: .92rem;
-  color: var(--ink); box-shadow: var(--shadow-1); transition: border-color .15s ease, background-color .15s ease;
+  padding: var(--space-1) var(--space-3);
+  border-bottom: 2px solid transparent;
+  text-decoration: none; font-size: 14px; line-height: 20px;
+  color: var(--ink);
 }
-.review-kinds a:hover { border-color: var(--roku); background: var(--roku-soft); }
-.review-kinds a[aria-current="page"] { font-weight: bold; background: var(--roku-soft); border-color: var(--roku); color: var(--roku-strong); }
+.review-kinds a:hover { color: var(--roku); }
+.review-kinds a[aria-current="page"] { font-weight: bold; color: var(--roku-strong); border-bottom-color: var(--roku); }
 
-/* ---- 履歴。点は緑青、罫は墨の淡色。版の並び自体は人の手の記録 ---- */
+/* ---- 折りたたみ（details）。記号で開閉を示す ---- */
 
-ol.history { list-style: none; margin: 1rem 0; padding: 0 0 0 1.1rem; border-left: 3px solid var(--line-soft); }
-ol.history li { position: relative; padding: 0 0 1.4rem .9rem; }
+.fold { margin: var(--space-4) 0; }
+.fold > summary {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  list-style: none; cursor: pointer; color: var(--roku); font-weight: bold;
+}
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary .ic { width: 12px; height: 12px; vertical-align: -2px; }
+.fold[open] > summary .ic { transform: rotate(90deg); }
+.fold > div, .fold > form, .fold > ul, .fold > ol, .fold > p { margin-top: var(--space-2); }
+
+/* ---- 履歴。点は緑青、罫は墨の淡色 ---- */
+
+ol.history { list-style: none; margin: var(--space-4) 0; padding: 0 0 0 var(--space-4); border-left: 3px solid var(--line-soft); }
+ol.history li { position: relative; padding: 0 0 var(--space-6) var(--space-4); }
 ol.history li::before {
-  content: ""; position: absolute; left: -1.44rem; top: .35rem;
-  width: .62rem; height: .62rem; border-radius: 50%;
+  content: ""; position: absolute; left: -24px; top: var(--space-2);
+  width: 12px; height: 12px; border-radius: 50%;
   background: var(--surface); border: 3px solid var(--roku);
 }
-ol.history h2 { margin: 0; font-size: 1rem; }
+ol.history h2 { margin: 0; font-size: 15px; line-height: 24px; }
+ol.history p { margin: var(--space-1) 0; }
 
 /* ---- 動きを減らす設定 ---- */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  main { animation: none; }
-  *, *::before, *::after { transition: none !important; }
 }

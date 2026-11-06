@@ -17,12 +17,15 @@
   <input id="context_tag" name="context_tag" value="{{ f.get('context_tag', '') }}">
   <label for="scope_note">適用範囲の注記</label>
   <textarea id="scope_note" name="scope_note" rows="2">{{ f.get('scope_note', '') }}</textarea>
-  <label for="reading">読み</label>
-  <input id="reading" name="reading" value="{{ f.get('reading', '') }}">
-  <label for="english">英語</label>
-  <input id="english" name="english" value="{{ f.get('english', '') }}">
-  <label for="abbreviation">略語</label>
-  <input id="abbreviation" name="abbreviation" value="{{ f.get('abbreviation', '') }}">
+  <fieldset>
+    <legend>辞書向けの情報（任意）</legend>
+    <label for="reading">読み</label>
+    <input id="reading" name="reading" value="{{ f.get('reading', '') }}">
+    <label for="english">英語</label>
+    <input id="english" name="english" value="{{ f.get('english', '') }}">
+    <label for="abbreviation">略語</label>
+    <input id="abbreviation" name="abbreviation" value="{{ f.get('abbreviation', '') }}">
+  </fieldset>
   <button type="submit" class="primary">登録する</button>
   <a href="/terms">取り消して戻る</a>
 </form>

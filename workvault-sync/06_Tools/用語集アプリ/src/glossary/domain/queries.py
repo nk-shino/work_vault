@@ -159,7 +159,7 @@ class HistoryEntry:
 
 def _lines(snap: dict[str, Any]) -> list[str]:
     # 毎回変わる時刻と版番号は差分から外す。人が見たいのは中身の変化
-    skip = {"updated_at", "revision_number"}
+    skip = {"updated_at", "revision_number", "id", "created_at"}
     return [f"{k}: {snap[k]}" for k in sorted(snap) if k not in skip]
 
 

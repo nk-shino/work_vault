@@ -24,7 +24,7 @@ def edit_sense(
 ) -> Sense:
     sense = session.get(Sense, sense_id)
     if sense is None:
-        raise NotFound(f"語義が無い: {sense_id}")
+        raise NotFound("対象の語義が見つかりません")
     try:
         with edit_context(session, editor_name, change_reason):
             return sense_writer.update_sense(
@@ -49,7 +49,7 @@ def archive_term(
     """用語を消す代わりに archived にする。物理削除の経路は作らない。"""
     term = session.get(Term, term_id)
     if term is None:
-        raise NotFound(f"用語が無い: {term_id}")
+        raise NotFound("対象の用語が見つかりません")
     if term.status == "archived":
         raise ValidationFailed("既にアーカイブ済み")
     if term.revision_number != expected_revision:
@@ -74,13 +74,13 @@ def edit_term(
     """見出し・読み・英語・略語・状態を直す。アーカイブは archive_term から（理由を分けて残すため）。"""
     term = session.get(Term, term_id)
     if term is None:
-        raise NotFound(f"用語が無い: {term_id}")
+        raise NotFound("対象の用語が見つかりません")
     if set(changes) - set(TERM_EDITABLE):
         raise ValidationFailed(f"編集できない項目: {sorted(set(changes) - set(TERM_EDITABLE))}")
     if not str(changes.get("headword", term.headword)).strip():
         raise ValidationFailed("見出し語は空にできない")
     if changes.get("status") not in (None, "draft", "active", "disputed"):
-        raise ValidationFailed("状態は 草案・有効・係争中 のいずれか（アーカイブは専用の操作で）")
+        raise ValidationFailed("状態には 草案・有効・係争中 のいずれかを指定してください（アーカイブは専用の操作で行います）")
     if term.revision_number != expected_revision:
         raise ConflictError(snapshot(term), changes, expected_revision)
     try:

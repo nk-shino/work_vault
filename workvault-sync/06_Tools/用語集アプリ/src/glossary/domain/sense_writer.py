@@ -31,19 +31,19 @@ class EvidenceInput:
 
 def _check_evidences(evidences: list[EvidenceInput]) -> None:
     if not evidences:
-        raise ValidationFailed("用例が1件も無い定義は保存できない")
+        raise ValidationFailed("用例が 1 件もない定義は保存できません")
     for ev in evidences:
         if not ev.excerpt.strip():
-            raise ValidationFailed("空の用例は保存できない")
+            raise ValidationFailed("空の用例は保存できません")
         if len(ev.excerpt) > EXCERPT_MAX_LEN:
             raise ValidationFailed(f"用例は {EXCERPT_MAX_LEN} 文字まで（{len(ev.excerpt)} 文字）")
         if ev.source_type == "mail" and not ev.masked:
-            raise ValidationFailed("メール由来の用例はマスキング済みのものしか保存できない")
+            raise ValidationFailed("メール由来の用例は、マスキング済みのものだけを保存できます")
 
 
 def _check_fields(fields: dict[str, Any]) -> None:
     if "definition" in fields and not str(fields["definition"] or "").strip():
-        raise ValidationFailed("定義は空にできない")
+        raise ValidationFailed("定義を空にはできません")
     if "status" in fields and fields["status"] not in SENSE_STATUSES:
         raise ValidationFailed(f"語義の状態が不正: {fields['status']}")
 

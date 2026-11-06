@@ -60,8 +60,6 @@ LABELS = {
     "broader": "上位概念",
     "narrower": "下位概念",
     "confused_with": "混同注意",
-    "ai": "AI",
-    "human": "人手",
     "sense": "語義",
     "relation": "関係",
     "evidence": "用例の追加",
@@ -408,7 +406,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def proposal_edit_form(request: Request, db: Db, pid: str) -> HTMLResponse:
         p = db.get(Proposal, pid)
         if p is None or p.proposal_type != "sense":
-            raise NotFound("修正して採用できる語義の提案が無い")
+            raise NotFound("修正して採用できる語義の提案が見つかりません")
         payload = json.loads(p.payload_json)
         if p.model_name == MOCK_MODEL_NAME:
             payload["definition"] = ""  # 置き物の文を書き換え忘れて確定させないよう、空で出す
