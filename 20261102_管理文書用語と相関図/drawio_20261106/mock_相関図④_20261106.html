@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>mock — 相関図④ トラブルシューティング頁(2026-11-06)</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  html,body { margin:0; padding:16pt; background:#E8E8E8; font-family:"Meiryo UI","Meiryo",sans-serif; }
+  .doc-title { font-size:12pt; font-weight:bold; color:#333; margin:0 0 8pt 0; }
+  .doc-note { font-size:9pt; color:#555; margin:0 0 12pt 0; }
+  /* ===== A4 横 842×595pt の頁 ===== */
+  .page { position:relative; width:842pt; height:595pt; background:#fff; box-shadow:0 2pt 8pt rgba(0,0,0,.35); overflow:hidden; }
+  .el { position:absolute; box-sizing:border-box; }
+  /* ヘッダ(行1〜4+見出し行) — 構えの近似(実装は既存シートの様式を複製) */
+  .hd { border:0.75pt solid #808080; background:#fff; font-size:8pt; color:#000; }
+  .hd-title { font-size:14pt; font-weight:bold; text-align:center; letter-spacing:8pt; }
+  .hd-lbl { font-size:7.5pt; color:#404040; }
+  .hd-head { font-size:10pt; font-weight:bold; padding:4pt 6pt; border-top:none; }
+  /* 見出し帯 */
+  .band { background:#404040; color:#fff; font-size:10pt; font-weight:bold; padding:2pt 6pt; }
+  .band .sub { position:absolute; right:6pt; top:2pt; font-size:7.5pt; font-weight:normal; color:#fff; }
+  /* 区分ラベル帯 */
+  .lb { font-size:8.5pt; font-weight:bold; color:#404040; text-align:center; padding:1pt 0; }
+  .lb-k { background:#EDE6F5; border:0.75pt solid #7B5FA3; }
+  .lb-s { background:#EEF3E2; border:0.75pt solid #9BBB59; }
+  .lb-d { background:#F2F2F2; border:0.75pt solid #808080; }
+  /* 分類箱 */
+  .bx { background:#fff; font-size:8pt; color:#000; padding:2pt 3pt; line-height:12.5pt; }
+  .bx .nn { color:#5F5F5F; font-size:7.5pt; }
+  .bx-k { background:#EDE6F5; border:1.5pt solid #7B5FA3; }
+  .bx-s { border:1.5pt solid #9BBB59; }
+  .bx-d { background:#E8E8E8; border:1.5pt solid #808080; }
+  .bx svg.ic { position:absolute; left:5pt; top:4pt; }
+  .bx .tx { display:block; padding-left:0; }
+  .bx.withic .tx { padding-left:17pt; }
+  .bdg { position:absolute; top:2pt; }
+  /* 第4区分帯(要確認) */
+  .c4band { border:0.75pt dashed #969696; background:#F2F2F2; }
+  .c4band .t { font-size:7.5pt; font-weight:bold; color:#A94438; }
+  .c4mini { background:#F2F2F2; border:1pt dashed #969696; font-size:7.5pt; color:#000; padding:1pt 3pt; }
+  .c4note { font-size:7.5pt; color:#5F5F5F; }
+  .src { font-size:7.5pt; color:#5F5F5F; }
+  .upd { font-size:7.5pt; color:#5F5F5F; }
+  /* ②対応表 */
+  .th { background:#F2F2F2; border:0.75pt solid #969696; font-size:8pt; font-weight:bold; color:#404040; text-align:center; padding:1pt 0; }
+  .td { background:#fff; border:0.75pt solid #BFBFBF; font-size:8pt; color:#000; line-height:14.2pt; padding:2pt 3pt; overflow:hidden; }
+  a.lk { color:#46618F; text-decoration:underline; }
+  .yc { color:#A94438; font-weight:bold; }
+  .bessatsu { color:#5F5F5F; }
+  /* ③ツリー */
+  .tr-root { background:#F2F2F2; border:0.75pt solid #969696; font-size:8.5pt; font-weight:bold; color:#404040; text-align:center; padding:2pt 0; }
+  .tr-l1 { background:#fff; font-size:8pt; font-weight:bold; padding:2pt 3pt 2pt 18pt; }
+  .tr-leaf { background:#fff; border:0.75pt solid #BFBFBF; font-size:8pt; padding:1pt 3pt; line-height:14.2pt; }
+  .tr-leaf.yc-leaf { background:#F2F2F2; border:0.75pt dashed #969696; }
+  .tr-leaf.yc-leaf .yc { font-size:8pt; }
+  .lines { position:absolute; left:0; top:0; width:842pt; height:595pt; pointer-events:none; }
+  /* 差分パネル(印刷対象外) */
+  .diff { width:842pt; background:#fff; border:1pt dashed #969696; margin-top:16pt; padding:10pt 12pt; box-sizing:border-box; }
+  .diff h2 { font-size:11pt; margin:0 0 6pt 0; color:#333; }
+  .diff .rel { position:relative; width:620pt; height:288pt; }
+  .diff table { border-collapse:collapse; width:100%; font-size:8pt; }
+  .diff td, .diff th { border:0.75pt solid #BFBFBF; padding:2pt 3pt; vertical-align:top; line-height:14.2pt; }
+  .diff th { background:#F2F2F2; font-weight:bold; }
+  @media print { body { background:#fff; padding:0; } .doc-title,.doc-note,.diff { display:none; } .page { box-shadow:none; } }
+</style>
+</head>
+<body>
+<p class="doc-title">プレビュー — 相関図④ トラブルシューティング頁(pana 2-5 主面·2026-11-06)</p>
+<p class="doc-note">A4横実寸 842×595pt·設計仕様の pt 座標をそのまま描画。ヘッダ部(行1〜4+見出し行)は構えの近似(実装は既存シートの様式を複製)。lnb(2-6)版の差分は頁の下のパネル(印刷対象外)。</p>
+
+<div class="page">
+  <!-- ヘッダ(近似) -->
+  <div class="el hd" style="left:20pt; top:8pt; width:802pt; height:24pt; display:flex; align-items:center; justify-content:center;"><span class="hd-title">手 順 書</span></div>
+  <div class="el hd" style="left:20pt; top:32pt; width:802pt; height:14pt; padding:1pt 6pt;"><span class="hd-lbl">管理番号</span></div>
+  <div class="el hd" style="left:20pt; top:46pt; width:802pt; height:14pt; padding:1pt 6pt;"><span class="hd-lbl">型 名</span></div>
+  <div class="el hd" style="left:20pt; top:60pt; width:802pt; height:14pt; padding:1pt 6pt;"><span class="hd-lbl">工程番号</span></div>
+  <div class="el hd" style="left:20pt; top:74pt; width:802pt; height:12pt; padding:1pt 6pt;"><span class="hd-lbl">作業内容</span></div>
+  <div class="el hd hd-head" style="left:20pt; top:88pt; width:802pt; height:14pt;">2-5. 相関図④ トラブルシューティング</div>
+
+  <!-- ===== ① システム区分図 ===== -->
+  <div class="el band" style="left:20pt; top:104pt; width:802pt; height:16pt;">① システム区分図<span class="sub">役割の凡例</span></div>
+
+  <div class="el lb lb-k" style="left:20pt; top:126pt; width:200pt; height:14pt;">基幹システム</div>
+  <div class="el lb lb-s" style="left:228pt; top:126pt; width:240pt; height:14pt;">システム</div>
+  <div class="el lb lb-d" style="left:476pt; top:126pt; width:144pt; height:14pt;">内部データ</div>
+
+  <!-- 基幹 -->
+  <div class="el bx bx-k withic" style="left:26pt; top:144pt; width:188pt; height:32.5pt;">
+    <svg class="ic" width="14" height="12" viewBox="0 0 14 12"><rect x="0.5" y="0.5" width="13" height="11" fill="none" stroke="#595959"/><line x1="0.5" y1="4.5" x2="13.5" y2="4.5" stroke="#595959"/><line x1="0.5" y1="8.5" x2="13.5" y2="8.5" stroke="#595959"/></svg>
+    <span class="tx">PanaCIM環境(CIMC-SV·ESXi)<br><span class="nn">N01·N02·N03</span></span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg></span>
+    <span class="bdg" style="right:14pt;"><svg width="10" height="6" viewBox="0 0 10 6"><line x1="1" y1="3" x2="9" y2="3" stroke="#595959"/><path d="M1 3 L2.5 1.5 M1 3 L2.5 4.5 M9 3 L7.5 1.5 M9 3 L7.5 4.5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+  <div class="el bx bx-k withic" style="left:26pt; top:179pt; width:188pt; height:32.5pt;">
+    <svg class="ic" width="14" height="12" viewBox="0 0 14 12"><rect x="0.5" y="0.5" width="13" height="11" fill="none" stroke="#595959"/><line x1="0.5" y1="4.5" x2="13.5" y2="4.5" stroke="#595959"/><line x1="0.5" y1="8.5" x2="13.5" y2="8.5" stroke="#595959"/></svg>
+    <span class="tx">ライン設備(LNB·NPM)<br><span class="nn">N07·N08</span></span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="6" viewBox="0 0 10 6"><line x1="1" y1="3" x2="9" y2="3" stroke="#595959"/><path d="M1 3 L2.5 1.5 M1 3 L2.5 4.5 M9 3 L7.5 1.5 M9 3 L7.5 4.5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+
+  <!-- システム -->
+  <div class="el bx bx-s" style="left:234pt; top:144pt; width:110pt; height:18.5pt;">
+    <span class="tx">CIM-C PC(N16)</span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+  <div class="el bx bx-s" style="left:348pt; top:144pt; width:116pt; height:18.5pt;">
+    <span class="tx">CIM-A PC(N15)</span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+  <div class="el bx bx-s withic" style="left:234pt; top:164.5pt; width:110pt; height:32.5pt;">
+    <svg class="ic" width="14" height="12" viewBox="0 0 14 12"><rect x="0.5" y="0.5" width="13" height="8" fill="none" stroke="#595959"/><line x1="5" y1="8.5" x2="5" y2="11" stroke="#595959"/><line x1="9" y1="8.5" x2="9" y2="11" stroke="#595959"/><line x1="3.5" y1="11" x2="10.5" y2="11" stroke="#595959"/></svg>
+    <span class="tx">稼働モニタ(Power BI)<br><span class="nn">N10</span></span>
+    <span class="bdg" style="right:2pt;"><svg width="11" height="14" viewBox="0 0 11 14"><path d="M0.5 0.5 H7 L10.5 4 V13.5 H0.5 Z" fill="none" stroke="#595959"/><line x1="7" y1="0.5" x2="7" y2="4" stroke="#595959"/><line x1="7" y1="4" x2="10.5" y2="4" stroke="#595959"/><line x1="2.5" y1="7" x2="8.5" y2="7" stroke="#595959"/><line x1="2.5" y1="10" x2="8.5" y2="10" stroke="#595959"/></svg></span>
+  </div>
+  <div class="el bx bx-s" style="left:348pt; top:164.5pt; width:116pt; height:18.5pt;">
+    <span class="tx">アンドン(N09)</span>
+    <span class="bdg" style="right:2pt;"><svg width="11" height="14" viewBox="0 0 11 14"><path d="M0.5 0.5 H7 L10.5 4 V13.5 H0.5 Z" fill="none" stroke="#595959"/><line x1="7" y1="0.5" x2="7" y2="4" stroke="#595959"/><line x1="7" y1="4" x2="10.5" y2="4" stroke="#595959"/><line x1="2.5" y1="7" x2="8.5" y2="7" stroke="#595959"/><line x1="2.5" y1="10" x2="8.5" y2="10" stroke="#595959"/></svg></span>
+  </div>
+  <div class="el bx bx-s" style="left:234pt; top:199pt; width:110pt; height:18.5pt;">
+    <span class="tx">LWS(操作画面)(N11)</span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+  <div class="el bx bx-s" style="left:348pt; top:199pt; width:116pt; height:18.5pt;">
+    <span class="tx">無線スキャナー(N12)</span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+  <div class="el bx bx-s" style="left:234pt; top:219.5pt; width:110pt; height:18.5pt;">
+    <span class="tx">CIMA-SV(別系統)(N19)</span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="6" viewBox="0 0 10 6"><line x1="1" y1="3" x2="9" y2="3" stroke="#595959"/><path d="M1 3 L2.5 1.5 M1 3 L2.5 4.5 M9 3 L7.5 1.5 M9 3 L7.5 4.5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+
+  <!-- 内部データ -->
+  <div class="el bx bx-d withic" style="left:482pt; top:144pt; width:132pt; height:32.5pt;">
+    <svg class="ic" width="11" height="14" viewBox="0 0 11 14"><ellipse cx="5.5" cy="3" rx="5" ry="2.5" fill="none" stroke="#595959"/><path d="M0.5 3 V11 M10.5 3 V11" stroke="#595959" fill="none"/><path d="M0.5 11 A5 2.5 0 0 0 10.5 11" fill="none" stroke="#595959"/></svg>
+    <span class="tx">DB完全バックアップ(E:\BackUP_DB)<br><span class="nn">N17</span></span>
+    <span class="bdg" style="right:2pt;"><svg width="11" height="14" viewBox="0 0 11 14"><path d="M0.5 0.5 H7 L10.5 4 V13.5 H0.5 Z" fill="none" stroke="#595959"/><line x1="7" y1="0.5" x2="7" y2="4" stroke="#595959"/><line x1="7" y1="4" x2="10.5" y2="4" stroke="#595959"/><line x1="2.5" y1="7" x2="8.5" y2="7" stroke="#595959"/><line x1="2.5" y1="10" x2="8.5" y2="10" stroke="#595959"/></svg></span>
+  </div>
+  <div class="el bx bx-d withic" style="left:482pt; top:179pt; width:132pt; height:32.5pt;">
+    <svg class="ic" width="11" height="14" viewBox="0 0 11 14"><ellipse cx="5.5" cy="3" rx="5" ry="2.5" fill="none" stroke="#595959"/><path d="M0.5 3 V11 M10.5 3 V11" stroke="#595959" fill="none"/><path d="M0.5 11 A5 2.5 0 0 0 10.5 11" fill="none" stroke="#595959"/></svg>
+    <span class="tx">外部I/F出力<br><span class="nn">N18·XML/DB/ソケット</span></span>
+    <span class="bdg" style="right:2pt;"><svg width="10" height="6" viewBox="0 0 10 6"><line x1="1" y1="3" x2="9" y2="3" stroke="#595959"/><path d="M1 3 L2.5 1.5 M1 3 L2.5 4.5 M9 3 L7.5 1.5 M9 3 L7.5 4.5" stroke="#595959" fill="none"/></svg></span>
+  </div>
+
+  <!-- 役割の凡例(3行) -->
+  <div class="el" style="left:632pt; top:126pt; width:190pt; height:20pt; font-size:8pt;">
+    <svg style="position:absolute; left:0; top:4pt;" width="10" height="8" viewBox="0 0 10 8"><rect x="0.5" y="0.5" width="9" height="7" fill="none" stroke="#595959"/><line x1="3" y1="4" x2="7" y2="4" stroke="#595959"/><path d="M7 4 L5.5 3 M7 4 L5.5 5" stroke="#595959" fill="none"/></svg>
+    <div style="padding-left:16pt;"><b>アクセス可能なシステム</b><br><span style="font-size:7.5pt; color:#5F5F5F;">実施者が画面で操作·点検できる。</span></div>
+  </div>
+  <div class="el" style="left:632pt; top:148pt; width:190pt; height:20pt; font-size:8pt;">
+    <svg style="position:absolute; left:0; top:4pt;" width="10" height="6" viewBox="0 0 10 6"><line x1="1" y1="3" x2="9" y2="3" stroke="#595959"/><path d="M1 3 L2.5 1.5 M1 3 L2.5 4.5 M9 3 L7.5 1.5 M9 3 L7.5 4.5" stroke="#595959" fill="none"/></svg>
+    <div style="padding-left:16pt;"><b>関係性のあるシステム</b><br><span style="font-size:7.5pt; color:#5F5F5F;">データのやり取りのみで直接操作しない。</span></div>
+  </div>
+  <div class="el" style="left:632pt; top:170pt; width:190pt; height:20pt; font-size:8pt;">
+    <svg style="position:absolute; left:0; top:2pt;" width="10" height="13" viewBox="0 0 11 14"><path d="M0.5 0.5 H7 L10.5 4 V13.5 H0.5 Z" fill="none" stroke="#595959"/><line x1="2.5" y1="7" x2="8.5" y2="7" stroke="#595959"/><line x1="2.5" y1="10" x2="8.5" y2="10" stroke="#595959"/></svg>
+    <div style="padding-left:16pt;"><b>参照できる情報</b><br><span style="font-size:7.5pt; color:#5F5F5F;">表示·出力を読み取る対象。</span></div>
+  </div>
+
+  <!-- 第4区分帯 -->
+  <div class="el c4band" style="left:632pt; top:196pt; width:190pt; height:58pt;">
+    <div class="t" style="margin:2pt 0 0 6pt;">要確認(境界候補·推定機器)</div>
+    <div class="el c4mini" style="left:6pt; top:14pt; width:89pt; height:14pt;">NPM-DGS(N06)</div>
+    <div class="el c4mini" style="left:99pt; top:14pt; width:89pt; height:14pt;">メンテナンスサーバー(N04)</div>
+    <div class="el c4mini" style="left:6pt; top:31pt; width:89pt; height:14pt;">アクセスポイント(N13)</div>
+    <div class="el c4mini" style="left:99pt; top:31pt; width:89pt; height:14pt;">Androidタブレット(N14)</div>
+    <div class="el c4note" style="left:6pt; top:47pt; width:178pt; height:10pt;">NPM-DGS=No.12(pana)/No.21(lnb)·N04=No.33</div>
+  </div>
+
+  <div class="el src" style="left:20pt; top:240pt; width:600pt; height:13pt;">出典: 相関図①②③の実在箱(b5_current_state.json·2026-11-06 再確認)。区分の出典=利用者指示(2026-11-06)</div>
+
+  <!-- ===== ② 問題対応表(pana) ===== -->
+  <div class="el band" style="left:20pt; top:262pt; width:540pt; height:16pt;">② 問題対応表</div>
+  <div class="el th" style="left:20pt; top:284pt; width:170pt; height:14pt;">事象</div>
+  <div class="el th" style="left:194pt; top:284pt; width:200pt; height:14pt;">対処法</div>
+  <div class="el th" style="left:398pt; top:284pt; width:162pt; height:14pt;">参照先(リンク)</div>
+
+  <div class="el td" style="left:20pt; top:302pt; width:170pt; height:46.5pt;">アンドンに異常の色が表示される</div>
+  <div class="el td" style="left:194pt; top:302pt; width:200pt; height:46.5pt;">作業を止め、第3章の管理体制に記載された者へ連絡する(7-2)。連絡先は未確定 <span class="yc">要確認(No.8)</span></div>
+  <div class="el td" style="left:398pt; top:302pt; width:162pt; height:46.5pt;"><a class="lk" href="#">異常時の対応 7-1 アンドンの色定義</a><br><a class="lk" href="#">異常時の対応 7-2 中断と連絡</a><br><a class="lk" href="#">要確認事項一覧 No.8 異常時の連絡先</a></div>
+
+  <div class="el td" style="left:20pt; top:350.5pt; width:170pt; height:46.5pt;">「生産情報が取得できません。」の表示</div>
+  <div class="el td" style="left:194pt; top:350.5pt; width:200pt; height:46.5pt;">異常時のサーバー再起動(手順1〜14)を実施する(7-4)</div>
+  <div class="el td" style="left:398pt; top:350.5pt; width:162pt; height:46.5pt;"><a class="lk" href="#">異常時の対応 7-4 異常時のサーバー再起動</a><br><a class="lk" href="#">チェックシート(月次・異常時) 8-3 異常時の再起動チェックシート(第7章7-4)</a></div>
+
+  <div class="el td" style="left:20pt; top:399pt; width:170pt; height:32.5pt;">稼働モニタの表示が正常画面と異なる</div>
+  <div class="el td" style="left:194pt; top:399pt; width:200pt; height:32.5pt;"><span class="yc">要確認(No.4)</span> 判定基準(正常画面名)が未確定。再起動で扱う対応は候補(7-1)</div>
+  <div class="el td" style="left:398pt; top:399pt; width:162pt; height:32.5pt;"><a class="lk" href="#">要確認事項一覧 No.4 点検の判定基準</a></div>
+
+  <div class="el td" style="left:20pt; top:433.5pt; width:170pt; height:32.5pt;">バックアップの失敗·保存領域不足·通信異常</div>
+  <div class="el td" style="left:194pt; top:433.5pt; width:200pt; height:32.5pt;">記録番号を付して申し送る(7-2)。復旧操作とサーバ構成の変更は本手順の範囲外 <span class="yc">要確認(No.10)</span></div>
+  <div class="el td" style="left:398pt; top:433.5pt; width:162pt; height:32.5pt;"><a class="lk" href="#">異常時の対応 7-3 不具合の記録</a><br><a class="lk" href="#">要確認事項一覧 No.10 復旧</a></div>
+
+  <div class="el td" style="left:20pt; top:468pt; width:170pt; height:32.5pt;">MES·CIMC·DB·PT I/F·スキャナー等のログ取得が必要</div>
+  <div class="el td" style="left:194pt; top:468pt; width:200pt; height:32.5pt;">付録A-5のQ-1〜Q-6の手順で取得する</div>
+  <div class="el td" style="left:398pt; top:468pt; width:162pt; height:32.5pt;"><a class="lk" href="#">付録 引用元と確認範囲 A-5 異常時のログ取得手順</a></div>
+
+  <div class="el td" style="left:20pt; top:502.5pt; width:170pt; height:32.5pt;">PanaCIM関連サービスが停止している</div>
+  <div class="el td" style="left:194pt; top:502.5pt; width:200pt; height:32.5pt;"><span class="yc">要確認(No.36)</span> 起動·停止·再起動の手順(7-5仮)の採否が未決</div>
+  <div class="el td" style="left:398pt; top:502.5pt; width:162pt; height:32.5pt;"><a class="lk" href="#">要確認事項一覧 No.36 7-5(仮)の採否</a></div>
+
+  <div class="el src" style="left:20pt; top:541pt; width:540pt; height:13pt;">出典: 異常時の対応(第7章)·チェックシート(月次・異常時)(第8章)·付録 引用元と確認範囲 A-5·要確認事項一覧</div>
+  <div class="el upd" style="left:20pt; top:556pt; width:540pt; height:13pt;">要確認事項一覧の解決時に本頁の該当枠を更新する</div>
+
+  <!-- ===== ③ 成果物データの区分ツリー ===== -->
+  <div class="el band" style="left:576pt; top:262pt; width:246pt; height:16pt;">③ 成果物データの区分ツリー</div>
+  <div class="el tr-root" style="left:584pt; top:286pt; width:130pt; height:18pt;">成果物データの区分</div>
+
+  <div class="el tr-l1" style="left:614pt; top:312pt; width:150pt; height:16pt; border:1pt solid #7B5FA3;">
+    <svg style="position:absolute; left:3pt; top:1pt;" width="11" height="14" viewBox="0 0 11 14"><path d="M0.5 0.5 H7 L10.5 4 V13.5 H0.5 Z" fill="none" stroke="#595959"/><line x1="7" y1="0.5" x2="7" y2="4" stroke="#595959"/><line x1="7" y1="4" x2="10.5" y2="4" stroke="#595959"/></svg>PanaCIM管理書</div>
+  <div class="el tr-l1" style="left:614pt; top:388pt; width:150pt; height:16pt; border:1pt solid #808080;">
+    <svg style="position:absolute; left:3pt; top:1pt;" width="12" height="14" viewBox="0 0 12 14"><rect x="0.5" y="0.5" width="11" height="13" fill="none" stroke="#595959"/><line x1="2.5" y1="4" x2="9.5" y2="4" stroke="#595959"/><line x1="2.5" y1="7" x2="9.5" y2="7" stroke="#595959"/><line x1="2.5" y1="10" x2="9.5" y2="10" stroke="#595959"/></svg>チェックシート</div>
+  <div class="el tr-l1" style="left:614pt; top:496pt; width:150pt; height:16pt; border:1pt solid #808080;">
+    <svg style="position:absolute; left:3pt; top:4pt;" width="14" height="8" viewBox="0 0 14 8"><ellipse cx="3" cy="4" rx="2.5" ry="2.5" fill="none" stroke="#595959"/><line x1="5.5" y1="4" x2="13.5" y2="4" stroke="#595959"/><line x1="10" y1="4" x2="10" y2="7" stroke="#595959"/><line x1="12.5" y1="4" x2="12.5" y2="6.5" stroke="#595959"/></svg>パスワード</div>
+
+  <div class="el tr-leaf yc-leaf" style="left:654pt; top:332pt; width:162pt; height:16pt;"><span class="yc">管理書(別冊·要確認)</span></div>
+  <div class="el tr-leaf" style="left:654pt; top:352pt; width:162pt; height:32.5pt;">手順書(本冊)<br><a class="lk" href="#">目次 2．構成と管理情報</a></div>
+  <div class="el tr-leaf yc-leaf" style="left:654pt; top:408pt; width:162pt; height:16pt;"><span class="yc">週次(要確認·未実装)</span></div>
+  <div class="el tr-leaf" style="left:654pt; top:428pt; width:162pt; height:32.5pt;">月次<br><a class="lk" href="#">チェックシート(月次・異常時) 8-2 月次再起動チェックシート(第4章)</a></div>
+  <div class="el tr-leaf yc-leaf" style="left:654pt; top:464pt; width:162pt; height:16pt;"><span class="yc">年次(要確認·未実装)</span></div>
+  <div class="el tr-leaf" style="left:654pt; top:516pt; width:162pt; height:32.5pt;">パスワードリスト(別紙管理)<br><a class="lk" href="#">要確認事項一覧 No.26 認証情報の保管先</a></div>
+
+  <!-- 枝線 -->
+  <svg class="lines" viewBox="0 0 842 595">
+    <line x1="600" y1="304" x2="600" y2="516" stroke="#808080" stroke-width="0.75"/>
+    <line x1="600" y1="320" x2="614" y2="320" stroke="#808080" stroke-width="0.75"/>
+    <line x1="600" y1="396" x2="614" y2="396" stroke="#808080" stroke-width="0.75"/>
+    <line x1="600" y1="504" x2="614" y2="504" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="328" x2="636" y2="368" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="340" x2="654" y2="340" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="368" x2="654" y2="368" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="404" x2="636" y2="472" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="416" x2="654" y2="416" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="444" x2="654" y2="444" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="472" x2="654" y2="472" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="512" x2="636" y2="532" stroke="#808080" stroke-width="0.75"/>
+    <line x1="636" y1="532" x2="654" y2="532" stroke="#808080" stroke-width="0.75"/>
+  </svg>
+
+  <div class="el src" style="left:576pt; top:551pt; width:246pt; height:26pt;">出典: 目次·チェックシート(月次・異常時)·要確認事項一覧 No.26<br>異常時·日次の記録様式は②の対応表から参照する</div>
+</div>
+
+<!-- ===== lnb(2-6) 差分パネル(印刷対象外) ===== -->
+<div class="diff">
+  <h2>lnb(2-6)版の差分(②③) — 印刷対象外·参考</h2>
+  <p style="font-size:8pt; color:#5F5F5F; margin:0 0 6pt 0;">① システム区分図は両冊同一(相関図①②③が同一内容のため)。ヘッダ見出しは「2-6. 相関図④ トラブルシューティング」。目次備考セル(r19c10·r21c10)は元の行と同行を維持(AC2)。</p>
+  <table>
+    <tr><th style="width:24%;">事象</th><th style="width:38%;">対処法</th><th style="width:38%;">参照先(リンク)</th></tr>
+    <tr><td>LNB接続状態(無線スキャナーとの接続)の表示が異常</td><td>点検を中断して連絡する(8-2)。判定基準と連絡先は未確定 <span class="yc">要確認(No.14·No.18)</span></td><td><a class="lk" href="#">チェックシート(日次) 9. 日次チェックシート</a> / <a class="lk" href="#">異常時の対応 8-2. 中断と連絡</a></td></tr>
+    <tr><td>LWS再起動ページの3ボタンの使い分けを判断できない</td><td><span class="yc">要確認(No.30·No.37)</span> 「LNB再起動」「LNB-PC電源OFF」「LNB-PCリブート」の対応付けは推定</td><td><a class="lk" href="#">要確認事項一覧 No.30 再起動2種の使い分け</a> / <span class="bessatsu">Pana-CIM管理手順書 §7-1(別冊·要確認)※リンクなし</span></td></tr>
+    <tr><td>点検中に異常を検知した</td><td>最初の連絡先へ連絡する(8-2)。連絡先欄は未記入 <span class="yc">要確認(No.18)</span></td><td><a class="lk" href="#">異常時の対応 8-2. 中断と連絡</a></td></tr>
+    <tr><td>自社の範囲を超える不具合が発生した</td><td>8-3 ベンダーへの依頼。依頼方法·対応時間帯·自社とベンダーの境界は未記入 <span class="yc">要確認(No.7·No.8)</span></td><td><a class="lk" href="#">異常時の対応 8-3. ベンダーへの依頼</a></td></tr>
+    <tr><td>点検中にサービスが停止した</td><td>8-2 の「点検中にサービスが停止した場合の応急処置」に従う。欄は未記入 <span class="yc">要確認(No.18)</span></td><td><a class="lk" href="#">異常時の対応 8-2. 中断と連絡</a></td></tr>
+    <tr><td>異常·連絡の記録を残す必要がある</td><td>画面に出ていた文言をそのまま記入する(10-2の記入方法)</td><td><a class="lk" href="#">チェックシート(月次・異常時) 10-2. 異常・連絡の記録</a></td></tr>
+  </table>
+  <p style="font-size:8pt; margin:6pt 0 0 0;">③ツリーの差分: 月次の葉=<a class="lk" href="#">チェックシート(月次・異常時) 10-1. 月次チェックシート</a> / パスワードリストの葉=行1「パスワードリスト」·行2 リンク<a class="lk" href="#">認証情報一覧(値は本書に書かない)</a> / ③出典=「出典: 目次(一時掲載。正本は各管理書(md))·チェックシート各シート·申し送り(認証情報)·認証情報一覧」</p>
+  <p class="src" style="margin:4pt 0 0 0;">出典行②: 異常時の対応(第8章)·日次点検·チェックシート(日次)(第9章)·チェックシート(月次・異常時)(第10章)·要確認事項一覧</p>
+</div>
+</body>
+</html>
