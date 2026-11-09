@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-09T19:23:40",
+ "generated": "2026-11-09T19:42:20",
  "books": {
   "(cross)": {
    "C10_err_regression": {
@@ -73,16 +73,16 @@
    },
    "C3_text_fit": {
     "status": "FAIL",
-    "n_viol": 9,
-    "n_warn": 98,
+    "n_viol": 72,
+    "n_warn": 76,
     "subchecks": {
      "tail_cjk_ordered": {
       "status": "FAIL",
-      "evidence": null
+      "evidence": "loss=20 extra(dup/addition)=3 k4_accepted/undecided=0"
      },
      "tail_ascii_separate": {
       "status": "FAIL",
-      "evidence": "k4-suspect=10"
+      "evidence": "loss=49 k4=4 (loss は changed/fixed 以外でも FAIL -- 第2次是正)"
      },
      "frame_height_multi_para": {
       "status": "PASS",
@@ -91,6 +91,10 @@
      "autosize_fixed_leaves": {
       "status": "PASS",
       "evidence": null
+     },
+     "wrap_estimate": {
+      "status": "PASS",
+      "evidence": "unexpected extra wrap (changed/fixed)=0"
      }
     }
    },
@@ -131,7 +135,7 @@
    "C8_pdf_roundtrip": {
     "status": "FAIL",
     "n_viol": 1,
-    "n_warn": 4,
+    "n_warn": 5,
     "subchecks": {
      "landscape_1page": {
       "status": "PASS",
@@ -147,7 +151,11 @@
      },
      "mapping_residual_explained": {
       "status": "FAIL",
-      "evidence": "unexplained_cjk=85"
+      "evidence": "unexplained_cjk=82"
+     },
+     "mapping_residual_attribution": {
+      "status": "RECORDED",
+      "evidence": "attribution-undetermined cjk=479 (own窓に無く他図形帰属·未帰属スパンで充足される文字。合格根拠にしない。人力裁定待ち)"
      }
     }
    },
@@ -160,9 +168,13 @@
       "status": "PASS",
       "evidence": "missing=0"
      },
+     "baseline_reverse_scope_sheet1": {
+      "status": "NOT-RUN",
+      "evidence": "sheet1 (相関図①) not collected by this harness; baseline exists in b5 (24 shapes/book); reverse comparison not run (scope, corrected in 2nd pass)"
+     },
      "changed_text_asbuilt": {
       "status": "PASS",
-      "evidence": null
+      "evidence": "entries=7"
      },
      "t4_expected_act": {
       "status": "PASS",
@@ -235,16 +247,16 @@
    },
    "C3_text_fit": {
     "status": "FAIL",
-    "n_viol": 8,
-    "n_warn": 113,
+    "n_viol": 75,
+    "n_warn": 74,
     "subchecks": {
      "tail_cjk_ordered": {
       "status": "FAIL",
-      "evidence": null
+      "evidence": "loss=17 extra(dup/addition)=5 k4_accepted/undecided=0"
      },
      "tail_ascii_separate": {
       "status": "FAIL",
-      "evidence": "k4-suspect=13"
+      "evidence": "loss=53 k4=3 (loss は changed/fixed 以外でも FAIL -- 第2次是正)"
      },
      "frame_height_multi_para": {
       "status": "PASS",
@@ -253,6 +265,10 @@
      "autosize_fixed_leaves": {
       "status": "PASS",
       "evidence": null
+     },
+     "wrap_estimate": {
+      "status": "PASS",
+      "evidence": "unexpected extra wrap (changed/fixed)=0"
      }
     }
    },
@@ -287,13 +303,13 @@
    "C7_orphans_wrap": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 39,
+    "n_warn": 40,
     "subchecks": {}
    },
    "C8_pdf_roundtrip": {
     "status": "FAIL",
     "n_viol": 1,
-    "n_warn": 5,
+    "n_warn": 6,
     "subchecks": {
      "landscape_1page": {
       "status": "PASS",
@@ -310,6 +326,10 @@
      "mapping_residual_explained": {
       "status": "FAIL",
       "evidence": "unexplained_cjk=50"
+     },
+     "mapping_residual_attribution": {
+      "status": "RECORDED",
+      "evidence": "attribution-undetermined cjk=477 (own窓に無く他図形帰属·未帰属スパンで充足される文字。合格根拠にしない。人力裁定待ち)"
      }
     }
    },
@@ -322,9 +342,13 @@
       "status": "PASS",
       "evidence": "missing=0"
      },
+     "baseline_reverse_scope_sheet1": {
+      "status": "NOT-RUN",
+      "evidence": "sheet1 (相関図①) not collected by this harness; baseline exists in b5 (24 shapes/book); reverse comparison not run (scope, corrected in 2nd pass)"
+     },
      "changed_text_asbuilt": {
       "status": "PASS",
-      "evidence": null
+      "evidence": "entries=7"
      },
      "t4_expected_act": {
       "status": "PASS",
@@ -336,27 +360,157 @@
  },
  "new_issues": [
   "lnb/C3_text_fit: 相関図② g2_bandhead: ASCII tail loss: 'T1:-9-/-10-'",
+  "lnb/C3_text_fit: 相関図② g2_n01_txt: ASCII tail loss: 'N04'",
   "lnb/C3_text_fit: 相関図② g2_n02_txt: ASCII tail loss: 'X02-'",
+  "lnb/C3_text_fit: 相関図② g2_n10_txt: ASCII tail loss: 'X01(-8-)'",
+  "lnb/C3_text_fit: 相関図② g2_n17_txt: ASCII tail loss: '-28-'",
+  "lnb/C3_text_fit: 相関図② g2_n15_txt: ASCII tail loss: 'CIM-APC(VMware'",
+  "lnb/C3_text_fit: 相関図② g2_e_e01_l: ASCII tail loss: 'T1:-7-'",
+  "lnb/C3_text_fit: 相関図② g2_e_e02_l: ASCII tail loss: 'T1:-7-/-8-'",
+  "lnb/C3_text_fit: 相関図② g2_e_e04_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図② g2_e_e08_l: ASCII tail loss: 'T1:-39-'",
+  "lnb/C3_text_fit: 相関図② g2_e_e15_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図② g2_e_e16_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図② g2_e_e17_l: ASCII tail loss: 'T1:-24-/-28-/-31-'",
+  "lnb/C3_text_fit: 相関図② g2_e_e18_l: ASCII tail loss: 'T1:-43-'",
+  "lnb/C3_text_fit: 相関図② g2_leg0: ASCII tail loss: 'Site'",
+  "lnb/C3_text_fit: 相関図② g2_leg2: ASCII tail loss: 'AM='",
+  "lnb/C3_text_fit: 相関図② g2_leg3: ASCII tail loss: '(2026-10-14'",
   "lnb/C3_text_fit: 相関図② g2_bandnote: ASCII tail loss: '2026-10-27'",
+  "lnb/C3_text_fit: 相関図③ g3_n08_txt: ASCII tail loss: 'SP70-1(2026-10-14LNB'",
   "lnb/C3_text_fit: 相関図③ g3_n12_txt: ASCII tail loss: '(A-2)'",
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK ordered tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK ordered tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK ordered tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK ordered tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b3_src: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C3_text_fit: 相関図③ g3_dgsr_txt: ASCII tail loss: 'NPM-DGS('",
+  "lnb/C3_text_fit: 相関図③ g3_e_e03_l: ASCII tail loss: 'T1:-7-'",
+  "lnb/C3_text_fit: 相関図③ g3_e_e04_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図③ g3_e_e05_l: ASCII tail loss: 'T1:-9-/-10-'",
+  "lnb/C3_text_fit: 相関図③ g3_e_e07_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図③ g3_e_e09_l: ASCII tail loss: 'Pana-CIM'",
+  "lnb/C3_text_fit: 相関図③ g3_e_e14_l: ASCII tail loss: 'T1b'",
+  "lnb/C3_text_fit: 相関図③ g3_leg0: ASCII tail loss: 'Site'",
+  "lnb/C3_text_fit: 相関図③ g3_leg2: ASCII tail loss: 'AM='",
+  "lnb/C3_text_fit: 相関図③ g3_leg3: ASCII tail loss: '(2026-10-14'",
+  "lnb/C3_text_fit: 相関図④ t4_head: ASCII tail loss: '2-6'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (loss)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (loss)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (loss)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_c4_n: ASCII tail loss: 'N04=No.33'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_c40: ASCII tail loss: 'NPM-DGS(N06)'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_c03: ASCII tail loss: 'CIM-CPC(N16)'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_c04: ASCII tail loss: 'CIM-APC(N15)'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_c10: ASCII tail loss: '(E:\\\\BackUP_DB)N17'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_src: ASCII tail loss: '(2026-11-06)'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r1_c3_l1: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r1_c3_l1: ASCII tail loss: ')9.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r1_c3_l2: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r1_c3_l2: ASCII tail loss: '8-2.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r2_c2: ASCII tail loss: 'LNB-PC'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r2_c3_l1: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r2_c3_l2: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r2_c3_l2: ASCII tail loss: '7-1('",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r3_c2: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r3_c2: ASCII tail loss: '(No.18)'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r3_c3_l1: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r3_c3_l1: ASCII tail loss: '8-2.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r4_c2: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r4_c2: ASCII tail loss: 'No.8)'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r4_c3_l1: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r4_c3_l1: ASCII tail loss: '8-3.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r5_c2: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r5_c2: ASCII tail loss: '(No.18)'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r5_c3_l1: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r5_c3_l1: ASCII tail loss: '8-2.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r6_c2: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r6_c2: ASCII tail loss: '(10-2'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r6_c3_l1: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b2_r6_c3_l1: ASCII tail loss: ')10-2.'",
+  "lnb/C3_text_fit: 相関図④ t4_b2_src: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_upd: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_g3: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l2a: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l2b: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l2c: last-line loss (attribution-undetermined)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (loss)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_src: last-line loss (loss)",
   "lnb/C4_clearance: 相関図②: text-text clearance 1.68pt < 3.75pt (new): g2_n10_txt x g2_n17_txt",
   "lnb/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
   "lnb/C4_clearance: 相関図③: text-text clearance 2.23pt < 3.75pt (new): g3_n08_txt x g3_n09_txt",
   "lnb/C4_clearance: 相関図③: text-text clearance 3.70pt < 3.75pt (new): g3_n12_txt x g3_e_e12_l",
-  "lnb/C8_pdf_roundtrip: unexplained CJK mapping residual: 85 chars (see strict_crops ledger)",
+  "lnb/C8_pdf_roundtrip: unexplained CJK mapping residual: 82 chars (see strict_crops ledger)",
   "pana/C3_text_fit: 相関図② g2_bandhead: ASCII tail loss: 'T1:-9-/-10-'",
+  "pana/C3_text_fit: 相関図② g2_n01_txt: ASCII tail loss: 'N04'",
   "pana/C3_text_fit: 相関図② g2_n02_txt: ASCII tail loss: 'X02-'",
+  "pana/C3_text_fit: 相関図② g2_n10_txt: ASCII tail loss: 'X01(-8-)'",
+  "pana/C3_text_fit: 相関図② g2_n17_txt: ASCII tail loss: '-28-'",
+  "pana/C3_text_fit: 相関図② g2_n15_txt: ASCII tail loss: 'CIM-APC(VMware'",
+  "pana/C3_text_fit: 相関図② g2_e_e01_l: ASCII tail loss: 'T1:-7-'",
+  "pana/C3_text_fit: 相関図② g2_e_e02_l: ASCII tail loss: 'T1:-7-/-8-'",
+  "pana/C3_text_fit: 相関図② g2_e_e04_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図② g2_e_e08_l: ASCII tail loss: 'T1:-39-'",
+  "pana/C3_text_fit: 相関図② g2_e_e15_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図② g2_e_e16_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図② g2_e_e17_l: ASCII tail loss: 'T1:-24-/-28-/-31-'",
+  "pana/C3_text_fit: 相関図② g2_e_e18_l: ASCII tail loss: 'T1:-43-'",
+  "pana/C3_text_fit: 相関図② g2_leg0: ASCII tail loss: 'Site'",
+  "pana/C3_text_fit: 相関図② g2_leg2: ASCII tail loss: 'AM='",
+  "pana/C3_text_fit: 相関図② g2_leg3: ASCII tail loss: '(2026-10-14'",
   "pana/C3_text_fit: 相関図② g2_bandnote: ASCII tail loss: '2026-10-27'",
+  "pana/C3_text_fit: 相関図③ g3_n08_txt: ASCII tail loss: 'SP70-1(2026-10-14LNB'",
   "pana/C3_text_fit: 相関図③ g3_n12_txt: ASCII tail loss: '(A-2)'",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK ordered tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK ordered tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK ordered tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK ordered tail mismatch)",
+  "pana/C3_text_fit: 相関図③ g3_dgsr_txt: ASCII tail loss: 'NPM-DGS('",
+  "pana/C3_text_fit: 相関図③ g3_e_e03_l: ASCII tail loss: 'T1:-7-'",
+  "pana/C3_text_fit: 相関図③ g3_e_e04_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図③ g3_e_e05_l: ASCII tail loss: 'T1:-9-/-10-'",
+  "pana/C3_text_fit: 相関図③ g3_e_e07_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図③ g3_e_e09_l: ASCII tail loss: 'Pana-CIM'",
+  "pana/C3_text_fit: 相関図③ g3_e_e14_l: ASCII tail loss: 'T1b'",
+  "pana/C3_text_fit: 相関図③ g3_leg0: ASCII tail loss: 'Site'",
+  "pana/C3_text_fit: 相関図③ g3_leg2: ASCII tail loss: 'AM='",
+  "pana/C3_text_fit: 相関図③ g3_leg3: ASCII tail loss: '(2026-10-14'",
+  "pana/C3_text_fit: 相関図④ t4_head: ASCII tail loss: '2-5'",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (loss)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (loss)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (loss)",
+  "pana/C3_text_fit: 相関図④ t4_b1_c4_n: ASCII tail loss: 'N04=No.33'",
+  "pana/C3_text_fit: 相関図④ t4_b1_c40: ASCII tail loss: 'NPM-DGS(N06)'",
+  "pana/C3_text_fit: 相関図④ t4_b1_c03: ASCII tail loss: 'CIM-CPC(N16)'",
+  "pana/C3_text_fit: 相関図④ t4_b1_c04: ASCII tail loss: 'CIM-APC(N15)'",
+  "pana/C3_text_fit: 相関図④ t4_b1_c10: ASCII tail loss: '(E:\\\\BackUP_DB)N17'",
+  "pana/C3_text_fit: 相関図④ t4_b1_src: ASCII tail loss: '(2026-11-06)'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r1_c3_l1: ASCII tail loss: '7-1'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r1_c3_l2: ASCII tail loss: '7-2'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r2_c2: ASCII tail loss: '(7-4)'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r2_c3_l1: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r2_c3_l1: ASCII tail loss: '7-4'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r2_c3_l2: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r2_c3_l2: ASCII tail loss: '7-4)'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r3_c2: ASCII tail loss: '(7-1)'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c2: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c2: ASCII tail loss: '(No.10)'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c3_l1: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c3_l1: ASCII tail loss: '7-3'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c3_l2: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r4_c3_l2: ASCII tail loss: 'No.10'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r5_c1: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r5_c2: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r5_c2: ASCII tail loss: 'Q-6'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r5_c3_l1: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r5_c3_l1: ASCII tail loss: 'A-5'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r6_c1: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r6_c2: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r6_c2: ASCII tail loss: '(7-5'",
+  "pana/C3_text_fit: 相関図④ t4_b2_r6_c3_l1: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_r6_c3_l1: ASCII tail loss: 'No.367-5('",
+  "pana/C3_text_fit: 相関図④ t4_b2_src: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b2_src: ASCII tail loss: 'A-5'",
+  "pana/C3_text_fit: 相関図④ t4_upd: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b3_g3: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l2a: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l2b: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l2b: ASCII tail loss: ')8-2'",
+  "pana/C3_text_fit: 相関図④ t4_b3_l2c: last-line loss (attribution-undetermined)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (loss)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l3: ASCII tail loss: 'No.26'",
+  "pana/C3_text_fit: 相関図④ t4_b3_src: CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)",
   "pana/C4_clearance: 相関図②: text-text clearance 1.68pt < 3.75pt (new): g2_n10_txt x g2_n17_txt",
   "pana/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
   "pana/C4_clearance: 相関図③: text-text clearance 2.23pt < 3.75pt (new): g3_n08_txt x g3_n09_txt",
@@ -369,5 +523,6 @@
   "P8: PDFテキスト抽出の化け(検証手法の注意·CJK等値で回避)"
  ],
  "k3": "resolved (refs crops + per-shape crops generated under strictverify/)",
- "note_f6": "subchecks are the authoritative granularity; C10 regression table is aggregated from them"
+ "note_f6": "subchecks are the authoritative granularity; C10 regression table is aggregated from them",
+ "note_pass2": "2nd correction pass: tail equality+extra-chars class, ASCII loss unconditional FAIL, attribution-connected C3/residual, render-state width+paragraph compare, frame calibration above_h correction, selftest (--selftest)"
 }

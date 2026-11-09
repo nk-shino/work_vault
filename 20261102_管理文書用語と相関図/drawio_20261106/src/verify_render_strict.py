@@ -21,14 +21,30 @@
 制約: 冊は ReadOnly で開き保存しない。コンソールに図形テキスト本文を出力しない
 (証跡JSONには記録する)。認証情報シートの値は読まない。
 
-Gate 1 是正 (F1〜F6, 2026-11-09):
-  F1 末尾判定を順序付きCJK等値へ回帰·ASCII末尾の別確認·高さ検査の折返し分離
-  F2 PDF枠線による独立較正+残差点検査·スパン単位帰属·クロップ台帳·右端あふれ拡張
-  F3 既存扱いは描画状態の一致で判定 (テキスト不変のみでは根拠にしない)
-  F4 C4豁免を固定ペア/ベースライン由来に限定·悪化差分を記録
-  F5 ②③ベースライン→現在の逆方向比較·read_tf失敗を無音除外しない
-  F6 C10回帰表と C6/C8 の状態表示を実サブチェックから集約 (RECORDED 導入)
-"""
+ Gate 1 是正 (F1〜F6, 2026-11-09):
+   F1 末尾判定を順序付きCJK等値へ回帰·ASCII末尾の別確認·高さ検査の折返し分離
+   F2 PDF枠線による独立較正+残差点検査·スパン単位帰属·クロップ台帳·右端あふれ拡張
+   F3 既存扱いは描画状態の一致で判定 (テキスト不変のみでは根拠にしない)
+   F4 C4豁免を固定ペア/ベースライン由来に限定·悪化差分を記録
+   F5 ②③ベースライン→現在の逆方向比較·read_tf失敗を無音除外しない
+   F6 C10回帰表と C6/C8 の状態表示を実サブチェックから集約 (RECORDED 導入)
+
+ Gate 1 第2次是正 (再審査 attempt 2 指摘, 2026-11-09):
+   F1 (ア) multiset 判定を等値に変更 — 重複·追加文字は 'extra-chars(dup/addition)'
+       として K4 疑いと別の異常クラスで報告
+       (イ) ASCII loss の警告降格を廃止 — changed/fixed 以外でも FAIL
+       (ウ) 末尾異常の severity·サブチェック分類を tail_severity() に集約し
+       負例検証が本番経路で N1/N2 を確認する
+   F2 (ア) 枠線独立較正に PrintArea 先頭行補正 (above_h) を適用し原点を統一
+       (ウ) attribute_spans を C3 本文比較に接続 — 広域窓だけで文字が見つかる
+       ケースは 'attribution-undetermined' (帰属未確定) とし tail_ok にしない
+       (エ) N6: 隣接図形の同文字列による末尾補填を本番 severity で検出
+   F3 classify_render_state に幅·改行/段落構造の比較を追加 — baseline 項目
+       欠落は 'render-state-not-comparable' (一致にしない)
+   F6 失敗注入の自己検証 (--selftest) を追加 — EXP_LINE2 不一致の changed 登録,
+       unexpected extra wrap のサブチェック反映, リンク NOT-RUN の非 PASS 集約,
+       enforce_aggregation_consistency でサブチェック FAIL をクラス PASS にしない
+ """
 import sys, io, os, re, json, math, zipfile, datetime, bisect
 
 class _SafeBuf(object):
@@ -422,19 +438,29 @@ def cjk_seq(s):
 def tail_check_ordered(exp_text, got_text):
     """F1: 末尾検査を順序付き CJK 等値に戻す。
     mode: 'ordered-equal' 完全一致 / 'multiset-only(k4-suspect)' 文字種はそろうが
-    順序不一致 (K4 化け疑い·描画証跡と警告で受容) / 'loss' 欠落 / 'empty' 期待CJKなし"""
-    ce, cg = cjk_seq(exp_text), cjk_seq(got_text)
-    if not ce:
+    順序不一致 (K4 化け疑い·描画証跡と警告で受容) /
+    'extra-chars(dup/addition)' 期待文字はすべて含むが重複·追加文字がある
+    (K4 疑いではなく別異常クラス: 隣接行混入·抽出重複として報告) /
+    'loss' 欠落 / 'empty' 期待CJKなし。
+    第2次是正: multiset 判定を Counter>= (包含) から等値に変更した。
+    重複·追加は K4 疑いに吸収せず独立の異常クラスとして返す。"""
+    se, sg = cjk_seq(exp_text), cjk_seq(got_text)
+    if not se:
         return {'mode': 'empty', 'ordered_ok': True, 'multiset_ok': True}
-    ordered = (ce == cg)
-    multiset = all(Counter(cg)[ch] >= n for ch, n in Counter(ce).items())
+    ordered = (se == sg)
+    ce, cg = Counter(se), Counter(sg)
+    multiset = (ce == cg)                       # 第2次: 包含ではなく等値
+    extra = (not multiset) and not (ce - cg)    # 期待文字は全部ある·余分がある
     if ordered:
         mode = 'ordered-equal'
     elif multiset:
         mode = 'multiset-only(k4-suspect)'
+    elif extra:
+        mode = 'extra-chars(dup/addition)'
     else:
         mode = 'loss'
-    return {'mode': mode, 'ordered_ok': ordered, 'multiset_ok': multiset}
+    return {'mode': mode, 'ordered_ok': ordered, 'multiset_ok': multiset,
+            'extra': extra}
 
 def ascii_tail(text, minlen=3):
     """F1: 本文末尾側の ASCII 連続列 (>=minlen) を返す (ASCII末尾は別確認)"""
@@ -473,6 +499,117 @@ def ascii_tail_check(text, got_text):
 def ascii_tail_ok(text, got_text):
     return ascii_tail_check(text, got_text) != 'loss'
 
+# K4 (P8) 候補の裁定台帳: クロップによる人裁定が記録済みの図形
+# (Gate1是正パス報告 2026-11-09 §2(b): 描画は正常·抽出ドロップと裁定済み。
+# FAIL 自体は維持する。第2次是正 F1(ウ): 「人裁定未了」と「受容済み」を区別する)
+K4_ADJUDICATED = {'g2_bandhead', 'g2_bandnote', 'g3_n12_txt'}
+
+def tail_severity(nm, tc_mode, amode, exp_text, render_same=False):
+    """F1(第2次·ウ): 末尾異常の本番 severity·サブチェック分類。
+    main() の C3 判定と負例検証 (verify_render_strict_negtest.py)·selftest が
+    同じ関数を共有する (純関数の戻り値だけの確認を廃止し、本番の
+    severity·サブチェック経路で負例を確認する)。
+    戻り値: {'severity': 'FAIL'|'WARN', 'subcheck': ..., 'code': ..., 'message': ...} のリスト"""
+    out = []
+    is_cf = nm in FIXED_LEAVES or nm in CHANGED_TEXT
+    if tc_mode == 'multiset-only(k4-suspect)':
+        if is_cf:
+            k4_state = 'crop-adjudicated' if nm in K4_ADJUDICATED else 'undecided(awaiting-human-review)'
+            out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_k4_changed_fixed',
+                        'message': 'CJK tail order mismatch (multiset-only; k4-suspect; changed/fixed; %s)' % k4_state})
+        else:
+            k4_state = 'accepted(crop-adjudicated)' if nm in K4_ADJUDICATED else 'undecided(awaiting-human-review)'
+            out.append({'severity': 'WARN', 'subcheck': 'tail_cjk_ordered',
+                        'code': 'tail_k4_accepted' if nm in K4_ADJUDICATED else 'tail_k4_undecided',
+                        'message': 'CJK tail order mismatch (multiset-only; k4-suspect; %s; see crop)' % k4_state})
+    elif tc_mode == 'extra-chars(dup/addition)':
+        # F1(第2次·ア): 重複·追加は K4 疑いではなく別異常クラス
+        out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_extra_chars',
+                    'message': 'CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)'})
+    elif tc_mode in ('loss', 'attribution-undetermined'):
+        if render_same:
+            out.append({'severity': 'WARN', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_loss_preexisting',
+                        'message': 'last-line loss (%s; pre-existing, render state matches baseline)' % tc_mode})
+        else:
+            out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_loss',
+                        'message': 'last-line loss (%s)' % tc_mode})
+    # 'ordered-equal' / 'empty' / 'loss-window-precision' は CJK 側の異常なし
+    if amode == 'loss':
+        # F1(第2次·イ): 警告降格を廃止 -- changed/fixed 以外でも FAIL
+        out.append({'severity': 'FAIL', 'subcheck': 'tail_ascii_separate', 'code': 'ascii_loss',
+                    'message': 'ASCII tail loss: %r' % ascii_tail(exp_text)})
+    elif amode == 'k4-variant':
+        k4_state = 'accepted(crop-adjudicated)' if nm in K4_ADJUDICATED else 'undecided(awaiting-human-review)'
+        out.append({'severity': 'WARN', 'subcheck': 'tail_ascii_separate',
+                    'code': 'ascii_k4_accepted' if nm in K4_ADJUDICATED else 'ascii_k4_undecided',
+                    'message': 'ASCII tail %r only matches as k4-variant (glyph substitution; %s; see crop)'
+                               % (ascii_tail(exp_text), k4_state)})
+    return out
+
+def tail_rescue(exp_text, own_text, wide_spans):
+    """F2(第2次·ウ): 末尾欠落時の救済判定に帰属証拠を要求する。
+    own_text: 自図形の窓に帰属したスパン (attribute_spans の結果) から作った抽出文。
+    wide_spans: 広域窓 (±15/+30pt) に存在する (text, owner) のリスト。
+    owner は 'own' (自図形窓に帰属) / 'other' (他図形窓に帰属) / 'unattributed'。
+    欠落文字が:
+      - own 帰属スパンだけで充足される -> 'loss-window-precision' (tail_ok=True,
+        合格根拠は自図形への帰属証拠)
+      - 他図形帰属·未帰属スパンを必要とする -> 'attribution-undetermined'
+        (帰属未確定。tail_ok は False のまま -- 広域窓で文字が見つかっただけでは
+        合格にしない。独立した帰属証拠または人裁定を要求する)
+      - 広域窓にも存在しない -> 'loss' のまま (真の欠落)"""
+    tc = tail_check_ordered(exp_text, own_text)
+    res = {'mode': tc['mode'], 'tail_ok': tc['ordered_ok'], 'rescue_owners': [],
+           'missing_chars': ''}
+    if tc['mode'] != 'loss':
+        return res
+    ce, cg = Counter(cjk_seq(exp_text)), Counter(cjk_seq(own_text))
+    missing = ce - cg
+    if not missing:
+        return res
+    res['missing_chars'] = ''.join(sorted(missing.elements()))
+    own_cnt, other_cnt = Counter(), Counter()
+    for t, owner in wide_spans:
+        c = Counter(cjk_seq(t))
+        if owner == 'own':
+            own_cnt += c
+        else:
+            other_cnt += c
+    fully_own, present, owners = True, True, set()
+    for ch, n in missing.items():
+        if own_cnt[ch] >= n:
+            continue
+        if own_cnt[ch] + other_cnt[ch] >= n:
+            fully_own = False
+            owners.add('other' if other_cnt[ch] else 'unattributed')
+        else:
+            present = False
+    if not present:
+        return res                       # 'loss' のまま (真の欠落)
+    if fully_own:
+        res['mode'] = 'loss-window-precision'
+        res['tail_ok'] = True
+        res['rescue_owners'] = ['own']
+    else:
+        res['mode'] = 'attribution-undetermined'
+        res['tail_ok'] = False
+        res['rescue_owners'] = sorted(owners)
+    return res
+
+def rows_from_spans(spans):
+    """F2(第2次): 帰属スパンを視覚行に統合する (clusters_in の帰属版)。
+    spans: (x0,y0,x1,y1,text)。y近接 (<=2pt) のスパンを 1 行にまとめる"""
+    cls = []
+    for yy, xx0, xx1, tt in sorted((s[1], s[0], s[2], s[4]) for s in spans):
+        if cls and yy - cls[-1]['y'] <= 2.0:
+            c = cls[-1]
+            c['x0'] = min(c['x0'], xx0)
+            c['x1'] = max(c['x1'], xx1)
+            c['t'] += tt
+        else:
+            cls.append({'y': yy, 'x0': xx0, 'x1': xx1, 't': tt})
+    return cls
+
 def height_need_pt(nvis, fsz, name):
     """F1: 高さ必要量 = nvis * fsz * 1.65 + マージン。
     マージンの適用条件: +3.0pt = 既定 (枠余白の実測) ·
@@ -481,21 +618,32 @@ def height_need_pt(nvis, fsz, name):
     margin = 2.0 if re.search(r'_l\d+$', name or '') else 3.0
     return nvis * fsz * PITCH + margin, margin
 
-def classify_render_state(base_entry, cur_text, cur_h, cur_autosize, cur_wrap):
+def classify_render_state(base_entry, cur_text, cur_h, cur_w, cur_autosize, cur_wrap):
     """F3: 「既存扱い」の判定を描画状態の一致で行う。テキストが不変でも
-    高さ/AutoSize/折返しがベースラインと異なれば 'render-changed-origin-unknown'
-    (発生時点不明·要確認) を返し、既存扱いの根拠にしない。"""
+    高さ/幅/AutoSize/折返しがベースラインと異なれば 'render-changed-origin-unknown'
+    (発生時点不明·要確認) を返し、既存扱いの根拠にしない。
+    第2次是正:
+      - norm() は改行を除去するため '甲\\n乙' と '甲乙' が同一扱いになる問題を
+        修正 -- 段落構造 (改行で分割した各行の正規化列) を比較する
+      - 幅 (w) の比較を追加
+      - baseline に h/w/autosize/wordwrap のいずれかが欠ける場合は
+        'render-state-not-comparable' (比較不能) を返し「一致」としない"""
     if base_entry is None:
         return 'no-baseline'
-    if norm(base_entry.get('text', '')) != norm(cur_text or ''):
+    para_sig = lambda t: [norm(p) for p in (t or '').split('\n')]
+    if para_sig(base_entry.get('text', '')) != para_sig(cur_text or ''):
         return 'text-changed'
     bh = base_entry.get('h')
+    bw = base_entry.get('w')
     ba = base_entry.get('autosize')
-    bw = base_entry.get('wordwrap')
-    h_same = bh is None or abs(float(bh) - float(cur_h)) <= 0.5
-    a_same = ba is None or int(ba) == int(cur_autosize)
-    w_same = bw is None or int(bw) == int(cur_wrap)
-    if h_same and a_same and w_same:
+    bww = base_entry.get('wordwrap')
+    if any(v is None for v in (bh, bw, ba, bww)):
+        return 'render-state-not-comparable'
+    h_same = abs(float(bh) - float(cur_h)) <= 0.5
+    w_same = abs(float(bw) - float(cur_w)) <= 0.5
+    a_same = int(ba) == int(cur_autosize)
+    ww_same = int(bww) == int(cur_wrap)
+    if h_same and w_same and a_same and ww_same:
         return 'render-same'
     return 'render-changed-origin-unknown'
 
@@ -510,6 +658,125 @@ def reverse_baseline_missing(baseline_entries, current_names, current_texts=None
             if nm not in current_texts:
                 missing.append({'name': nm, 'reason': 'text-unreadable'})
     return missing
+
+# ---- F6(第2次): 集約の一貫性ヘルパー (main と --selftest が共有) ------------
+
+def register_changed_result(acc, key, ok, reason=None):
+    """F6(第2次): changed/EXP_LINE2 の成否を必ず acc['changed'] に登録する。
+    失敗を登録せず changed_text_asbuilt が PASS になる経路を構造的に塞ぐ"""
+    rec = {'ok': bool(ok)}
+    if reason:
+        rec['reason'] = reason
+    acc.setdefault('changed', {})[key] = rec
+    return rec
+
+def changed_text_status(acc):
+    """F6(第2次): changed_text_asbuilt サブチェックは実登録値から集約する。
+    登録が 1 件も無ければ NOT-RUN (PASS にしない)"""
+    if not acc.get('changed'):
+        return 'NOT-RUN'
+    return 'FAIL' if any(not v.get('ok') for v in acc['changed'].values()) else 'PASS'
+
+def link_rows_status(statuses):
+    """F6(第2次): リンク回帰行の集約。NOT-RUN を PASS にしない"""
+    if 'FAIL' in statuses:
+        return 'FAIL'
+    if 'NOT-RUN' in statuses or len(statuses) < 3:
+        return 'NOT-RUN'
+    return 'PASS'
+
+def wrap_estimate_status(cnt):
+    """F6(第2次): unexpected extra wrap のサブチェック反映"""
+    return 'FAIL' if cnt.get('wrap_extra') else 'PASS'
+
+def enforce_aggregation_consistency(results):
+    """F6(第2次): 集約の一貫性 -- サブチェックに FAIL があればクラスを PASS にしない。
+    戻り値: 修正した (bk, cls, old, new) のリスト (--selftest が注入で確認する)"""
+    fixes = []
+    for (bk, cls), r in results.items():
+        if r.get('status') == 'PASS' and any(
+                sv.get('status') == 'FAIL' for sv in r.get('subchecks', {}).values()):
+            fixes.append((bk, cls, 'PASS', 'FAIL'))
+            r['status'] = 'FAIL'
+    return fixes
+
+def run_selftest():
+    """F6(第2次): 失敗注入による集約追従の自己検証 (Excel·ブック不要)。
+    合成の失敗を注入し、クラス·サブチェック·回帰行の集約表示が追従することを
+    確認する。結果は reconsider/selftest_results.json にも記録する"""
+    checks = []
+    def check(sid, desc, ok, actual):
+        checks.append({'id': sid, 'desc': desc, 'ok': bool(ok), 'actual': actual})
+        print('%s %s -> %s' % (sid, desc, 'OK' if ok else 'NG'))
+        print('    actual: %s' % json.dumps(actual, ensure_ascii=False)[:220])
+
+    # ST1: EXP_LINE2 不一致を本番の登録関数で注入 -> changed_text_asbuilt は FAIL
+    acc1 = {'changed': {}}
+    register_changed_result(acc1, 'g2_bandhead', True)
+    register_changed_result(acc1, 'g3_n07_txt@相関図③', False, reason='line-2 replacement mismatch')
+    st1 = changed_text_status(acc1)
+    check('ST1', 'EXP_LINE2 mismatch -> changed_text_asbuilt=FAIL (旧実装は未登録で PASS の恐れ)',
+          st1 == 'FAIL', {'status': st1, 'registered': sorted(acc1['changed'])})
+
+    # ST2: changed 登録ゼロは NOT-RUN (PASS にしない)
+    st2 = changed_text_status({'changed': {}})
+    check('ST2', 'changed 登録ゼロ -> NOT-RUN (PASS にしない)', st2 == 'NOT-RUN', {'status': st2})
+
+    # ST3: unexpected extra wrap の注入 -> wrap_estimate サブチェック FAIL
+    st3 = wrap_estimate_status({'wrap_extra': 1})
+    st3b = wrap_estimate_status({'wrap_extra': 0})
+    check('ST3', 'extra wrap 注入 -> wrap_estimate=FAIL / 0件なら PASS',
+          st3 == 'FAIL' and st3b == 'PASS', {'injected': st3, 'clean': st3b})
+
+    # ST4: リンク回帰行 -- NOT-RUN を PASS に集約しない
+    st4a = link_rows_status(['PASS', 'NOT-RUN', 'PASS'])
+    st4b = link_rows_status(['FAIL', 'PASS', 'PASS'])
+    st4c = link_rows_status(['PASS', 'PASS', 'PASS'])
+    check('ST4', 'リンク回帰行: NOT-RUN は NOT-RUN のまま·FAIL は FAIL',
+          st4a == 'NOT-RUN' and st4b == 'FAIL' and st4c == 'PASS',
+          {'notrun': st4a, 'fail': st4b, 'allpass': st4c})
+
+    # ST5: サブチェック FAIL を持つクラスを PASS のままにしない (注入→enforce で FAIL 化)
+    results5 = {('pana', 'C9_data_accuracy'): {'status': 'PASS', 'violations': [],
+                                               'subchecks': {'changed_text_asbuilt': {'status': 'FAIL'}}}}
+    fixes5 = enforce_aggregation_consistency(results5)
+    check('ST5', 'サブチェック FAIL を含むクラスが PASS で残らない (enforce で FAIL 化)',
+          results5[('pana', 'C9_data_accuracy')]['status'] == 'FAIL' and len(fixes5) == 1,
+          {'fixes': fixes5})
+
+    # ST6: 本番 severity 経路 -- ASCII loss は changed/fixed 以外でも FAIL (警告降格廃止の確認)
+    sev6 = tail_severity('g2_e_e17_l', 'ordered-equal', 'loss', '確認 NR4030-0300-A3')
+    ok6 = any(i['severity'] == 'FAIL' and i['subcheck'] == 'tail_ascii_separate' for i in sev6)
+    check('ST6', 'ASCII loss (changed/fixed 以外) -> 本番 severity FAIL',
+          ok6, {'items': sev6})
+
+    # ST7: 本番 severity 経路 -- 重複·追加文字は別異常クラスで FAIL (K4 疑いにしない)
+    tc7 = tail_check_ordered('再起動の確認', '再起動の確認起動')
+    sev7 = tail_severity('g3_n08_txt', tc7['mode'], 'ok', '再起動の確認')
+    ok7 = (tc7['mode'] == 'extra-chars(dup/addition)'
+           and any(i['severity'] == 'FAIL' and i['code'] == 'tail_extra_chars' for i in sev7))
+    check('ST7', '重複·追加文字 -> extra-chars(dup/addition) 別異常クラス FAIL',
+          ok7, {'mode': tc7['mode'], 'items': sev7})
+
+    # ST8: K4 候補の受容済み/未裁定の区別 (受容済み=クロップ人裁定記録あり·FAIL は維持)
+    sev8a = tail_severity('g2_bandnote', 'multiset-only(k4-suspect)', 'ok', 'x')
+    sev8b = tail_severity('g3_n08_txt', 'multiset-only(k4-suspect)', 'ok', 'x')
+    ok8 = (any('crop-adjudicated' in i['message'] for i in sev8a)
+           and any('undecided(awaiting-human-review)' in i['message'] for i in sev8b))
+    check('ST8', 'K4 候補: 受容済み (台帳あり) と人裁定未了を区別して記録', ok8,
+          {'adjudicated': [i['message'] for i in sev8a], 'undecided': [i['message'] for i in sev8b]})
+
+    all_ok = all(c['ok'] for c in checks)
+    out = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
+           'n_checks': len(checks), 'n_ok': sum(1 for c in checks if c['ok']),
+           'all_ok': all_ok, 'checks': checks}
+    outdir = os.path.join(OUT, 'reconsider')
+    os.makedirs(outdir, exist_ok=True)
+    with io.open(os.path.join(outdir, 'selftest_results.json'), 'w', encoding='utf-8') as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+    print('SELFTEST: %d/%d OK -> %s' % (out['n_ok'], out['n_checks'],
+                                        os.path.join('reconsider', 'selftest_results.json')))
+    return 0 if all_ok else 1
 
 def attribute_spans(spans, windows, min_straddle=0.05):
     """F2: スパン単位の窓帰属。
@@ -572,9 +839,10 @@ def _near_dist(arr_sorted, v, tol):
 def line_calibration(pred_rects, segs, s_cands, offx_priors=(), offy_priors=(),
                      step=0.0005, tol=1.2, offwin=25.0):
     """F2: PDF 枠線による独立較正 (テキスト非依存) -- X/Y 各軸を独立に求める。
-    (2026-11-09 実測: この帳票の印刷は X/Y で異なる倍率になる
-    (pana② sx=0.9360 / sy=0.9709)。単一スケールの仮定は最大 17pt の窓ずれを
-    生むため、軸ごとに較正する)
+    (第2次是正: 呼び出し側で pred_rects の y から above_h (PrintArea 先頭行の
+    行高·約103.8pt) を差し引き、COM 幾何と PDF の原点を統一してから渡す。
+    前回「X/Y で異なる倍率になる (sx=0.936/sy=0.971)」という実測説明は
+    原点不一致を含んだ値であり、補正後の再評価結果で訂正する)
     s_cands: 印刷条件 (fit方程式·余白·PrintArea寸法) から導出したスケール候補。
     各軸ごとに、各 s でオフセットを (a) 差分ヒストグラム上位峰
     (b) 印刷原点の事前候補 から採り、整合した予測辺数が最大の (s, off) を選ぶ。
@@ -1084,16 +1352,21 @@ def main():
                 for nm, line2 in EXP_LINE2.items():
                     act = all_text['相関図③'].get(nm)
                     if act is None:
+                        # F6(第2次): 失敗も acc['changed'] に登録する (未登録のまま
+                        # changed_text_asbuilt が PASS になる経路を塞ぐ)
+                        register_changed_result(acc, nm + '@相関図③', False, reason='shape missing')
                         fail(bk, 'C9_data_accuracy', '相関図③: %s missing' % nm); continue
                     base = baseline_idx.get((bk, '相関図③', nm))
                     if not base:
+                        register_changed_result(acc, nm + '@相関図③', False, reason='not in baseline')
                         warn(bk, 'C9_data_accuracy', '相関図③: %s not in baseline' % nm); continue
                     bp = base['text'].split('\n')
                     expect = [bp[0], line2] + bp[2:]
                     if norm(act) != norm('\n'.join(expect)) or len(act.split('\n')) != len(expect):
+                        register_changed_result(acc, nm + '@相関図③', False, reason='line-2 replacement mismatch')
                         fail(bk, 'C9_data_accuracy', '相関図③: %s line-2 replacement mismatch' % nm)
                     else:
-                        acc['changed'][nm + '@相関図③'] = {'ok': True}
+                        register_changed_result(acc, nm + '@相関図③', True)
                 for cnm, exp_t in EXPECTED_ACT[bk].items():
                     act_t = all_text['相関図④'].get(cnm)
                     okv = act_t is not None and norm(act_t) == norm(exp_t)
@@ -1126,8 +1399,19 @@ def main():
                              % (sn, m5['name'], m5['reason']))
                 sub(bk, 'C9_data_accuracy', 'baseline_reverse_23', 'FAIL' if n_rev_fail else 'PASS',
                     'missing=%d' % n_rev_fail)
-                sub(bk, 'C9_data_accuracy', 'changed_text_asbuilt',
-                    'FAIL' if any(not v.get('ok') for v in acc['changed'].values()) else 'PASS')
+                # 記録訂正 (第2次): ①の除外理由を「b5に対応データが無い」から
+                # 「本ハーネスは①を収集していない (対象範囲)」に訂正する。
+                # b5_current_state.json には①の幾何·本文が実在する (各冊24図形)。
+                acc['baseline_reverse']['相関図①'] = {
+                    'status': 'not-collected',
+                    'note': '相関図①は本ハーネスの収集対象外 (SHEETS=相関図②③④)。'
+                            'b5ベースラインには①の幾何·本文が実在する (各冊24図形) が、'
+                            '現在側の収集が無いため逆比較は未実施'}
+                sub(bk, 'C9_data_accuracy', 'baseline_reverse_scope_sheet1', 'NOT-RUN',
+                    'sheet1 (相関図①) not collected by this harness; baseline exists in b5 '
+                    '(24 shapes/book); reverse comparison not run (scope, corrected in 2nd pass)')
+                sub(bk, 'C9_data_accuracy', 'changed_text_asbuilt', changed_text_status(acc),
+                    'entries=%d' % len(acc.get('changed', {})))
                 sub(bk, 'C9_data_accuracy', 't4_expected_act',
                     'FAIL' if acc['t4_table'] and not all(acc['t4_table'].values()) else 'PASS')
                 with io.open(os.path.join(OUT, 'strict_data_accuracy_%s.json' % bk), 'w', encoding='utf-8') as f:
@@ -1205,7 +1489,8 @@ def main():
                 orphans = []
                 crops_ledger = []
                 cnt = {'tail_loss': 0, 'tail_k4': 0, 'ascii_fail': 0, 'height_fail': 0,
-                       'ascii_k4': 0, 'tail_winprec': 0,
+                       'ascii_k4': 0, 'tail_winprec': 0, 'tail_extra': 0, 'attr_undet': 0,
+                       'wrap_extra': 0,
                        'autosize_fail': 0, 'page_fail': 0, 'calib_note': 0, 'unexplained': 0}
                 for sn in SHEETS:
                     doc = fitz.open(pdf_map[sn])
@@ -1299,7 +1584,14 @@ def main():
                         offx_priors.append(float(ps.LeftMargin) + (avail_w - rw * s_est) / 2.0)
                     if centerV and rh:
                         offy_priors.append(float(ps.TopMargin) + (avail_h - rh * s_est) / 2.0)
-                    calib_line = line_calibration(pred_rects, collect_pdf_lines(page), s_cands,
+                    # F2(第2次·ア): PrintArea 先頭行補正 -- COM 幾何の y はシート原点、
+                    # PDF の y はページ原点。本文窓と同じ (T - above_h) 変換で
+                    # 原点を統一してから較正する (above_h は②③で約103.8pt。
+                    # 補正前の比較は約100pt の原点差を含んでおり、オフセット探索
+                    # (±3pt) では吸収不能だった。前回の「異方性」説明はこの
+                    # 原点不一致の誤認の可能性があるため再評価する)
+                    pred_rects_corr = [(l, t - above_h, w, h) for (l, t, w, h) in pred_rects]
+                    calib_line = line_calibration(pred_rects_corr, collect_pdf_lines(page), s_cands,
                                                   offx_priors, offy_priors)
                     calib_mode = 'text-coverage(fallback)'
                     sx = sy = best_s
@@ -1339,6 +1631,8 @@ def main():
                                'coverage_text_calib': round(best_cov, 4),
                                'calib_mode': calib_mode,
                                'calib_line': calib_line, 'calib_agreement': agree,
+                               'frame_origin_correction': ('pred_rect y -= above_h (%.1fpt) applied; origin unified'
+                                                           % above_h),
                                'print_area_start_row': start_row, 'above_h': round(above_h, 1),
                                'centerH': centerH, 'centerV': centerV}
                     # F2: スパン単位帰属 (窓=図形の本文領域) + 残差の説明責任
@@ -1355,23 +1649,42 @@ def main():
                         warn(bk, 'C8_pdf_roundtrip', '%s: %d spans straddle >=2 text windows (adjacent-row mixing candidates)'
                              % (sn, n_strad_big))
                     unattr_cjk = sum(len(cjk(t)) for (_, _, _, _, t) in unattrib)
-                    # F2: 残差点検査 -- 「PDF 上の図形近傍に存在しない文字」だけを
-                    # 真の残差とする。窓の外にあってもページ近傍 (±15pt) に存在する
-                    # 文字は帰属/窓精度の問題 (expl-by-geometry) であって描画欠落ではない。
-                    # これにより「抽出は完全だが収蔵率が低い」不整合を
-                    # (a) 窓精度の問題として説明するか (b) 真の描画欠落として
-                    # FAIL するかを機械的に切り分ける。
+                    # F2(第2次·ウ): 残差点検査も自図形への帰属を根拠にする。
+                    # 「PDF 上の自図形の帰属スパンに存在しない文字」を残差とし:
+                    #   - 自帰属スパンだけで充足 -> 窓精度として説明 (合格根拠は帰属証拠)
+                    #   - 他図形帰属·未帰属スパンを必要とする -> 'attribution-undetermined'
+                    #     (帰属未確定。他図形の文字を合格根拠にしない)
+                    #   - ページ近傍 (±15pt) にも存在しない -> 'unexplained' (真の残差·FAIL)
+                    span_owner = {}
+                    for wnm, lst in attrib.items():
+                        for s5 in lst:
+                            span_owner[id(s5)] = wnm
                     for nm2, tf2, (L2, T2, W2, H2) in cal_items:
+                        ce = Counter(cjk(tf2['text']))
+                        cg = Counter(cjk(''.join(t for (_, _, _, _, t) in attrib.get(nm2, []))))
+                        miss = ce - cg
+                        if not miss:
+                            continue
                         wx0, wy0, wx1, wy1 = windows[nm2]
                         ex0, ey0, ex1, ey1 = wx0 - 15.0, wy0 - 15.0, wx1 + 15.0, wy1 + 15.0
-                        got_near = ''.join(t for (sx0, sy0, sx1, sy1, t) in spans
-                                           if sx0 < ex1 and sx1 > ex0 and sy0 < ey1 and sy1 > ey0)
-                        ce = Counter(cjk(tf2['text']))
-                        cg = Counter(cjk(got_near))
-                        n_miss = sum((ce - cg).values())
-                        if n_miss:
-                            cnt['unexplained'] += n_miss
-                            cnt.setdefault('unexplained_shapes', []).append('%s/%s:%d' % (sn, nm2, n_miss))
+                        own_extra, other = Counter(), Counter()
+                        for s5 in spans:
+                            if s5[0] < ex1 and s5[2] > ex0 and s5[1] < ey1 and s5[3] > ey0:
+                                if span_owner.get(id(s5)) == nm2:
+                                    own_extra += Counter(cjk(s5[4]))
+                                else:
+                                    other += Counter(cjk(s5[4]))
+                        for ch, n in miss.items():
+                            if own_extra[ch] >= n:
+                                continue
+                            if own_extra[ch] + other[ch] >= n:
+                                cnt['attr_undet'] += n
+                                cnt.setdefault('attr_undet_shapes', []).append('%s/%s:%s:%d'
+                                        % (sn, nm2, ch, n))
+                            else:
+                                cnt['unexplained'] += n
+                                cnt.setdefault('unexplained_shapes', []).append('%s/%s:%s:%d'
+                                        % (sn, nm2, ch, n))
 
                     pix = page.get_pixmap(matrix=fitz.Matrix(2.4, 2.4))
                     png_full = 'strict_%s_%s_full.png' % (bk, SN_TAG[sn])
@@ -1406,75 +1719,84 @@ def main():
                             x1 = (L + W - mR) * sx + offx + 2.0
                             y1 = (T + H - mB - above_h) * sy + offy + 3.0
 
-                            def clusters_in(wx0, wy0, wx1, wy1):
-                                # PDF行はx-gapで断片化するため、y近接(<=2pt)の断片を視覚行に統合する
-                                cls = []
-                                for (yy, xx0, xx1, tt) in sorted(r for r in jrows
-                                                                 if wy0 <= r[0] <= wy1 and r[1] < wx1 and r[2] > wx0):
-                                    if cls and yy - cls[-1]['y'] <= 2.0:
-                                        c = cls[-1]
-                                        c['x0'] = min(c['x0'], xx0)
-                                        c['x1'] = max(c['x1'], xx1)
-                                        c['t'] += tt
-                                    else:
-                                        cls.append({'y': yy, 'x0': xx0, 'x1': xx1, 't': tt})
-                                return cls
-
-                            clusters = clusters_in(x0, y0, x1, y1)
-                            nvis_act = len(clusters)
-                            got_cjk = cjk(''.join(c['t'] for c in clusters))
-                            # F1: 末尾検査は順序付き CJK 等値 (Counter>= と末尾4字部分一致を廃止)。
-                            # 順序不一致でも文字種がそろう場合は K4 化け疑いとして
-                            # 警告+クロップ証跡で受容する (changed/fixed 図形は FAIL)。
-                            tc = tail_check_ordered(tf['text'], got_cjk)
-                            tail_mode = tc['mode']
-                            tail_ok = tc['ordered_ok']
-                            # F2/F1: 'loss' でも窓を広げて (縦横 +12/+8pt) ページ上に
-                            # 文字が存在するかを確認する。窓の外にあれば窓/帰属精度の
-                            # 問題 (window-precision) であり、描画欠落ではない。
+                            # F2(第2次·ウ): C3 本文比較は attribute_spans の帰属結果を使う。
+                            # clusters_in の交差取得 (他図形の文字を合格根拠にできる) は廃止。
+                            if nm in windows:
+                                own_spans = sorted(attrib.get(nm, []), key=lambda s: (s[1], s[0]))
+                                attrib_basis = 'own-window'
+                            else:
+                                # タグ (縦書き) 等は帰属窓の対象外 -- 幾何窓で取得するが
+                                # 帰属証拠は無い (救済は attribution-undetermined 扱い)
+                                own_spans = sorted((s for s in spans
+                                                    if s[0] < x1 and s[2] > x0
+                                                    and s[1] < y1 and s[3] > y0),
+                                                   key=lambda s: (s[1], s[0]))
+                                attrib_basis = 'geometry-window(no-attribution)'
+                            rows_own = rows_from_spans(own_spans)
+                            nvis_act = len(rows_own)
+                            got_own = ''.join(r['t'] for r in rows_own)
+                            got_cjk = cjk(got_own)
+                            # F3(第2次): 描画状態の一致判定 (幅·改行/段落構造を含む) --
+                            # severity 判定の前に行う
+                            base0 = baseline_idx.get((bk, sn, nm))
+                            rstate = classify_render_state(base0, tf['text'], H, W, tf['autosize'], tf['wrap'])
+                            render_same = rstate == 'render-same'
+                            # F1/F2(第2次): 末尾検査は順序付き CJK 等値。'loss' の救済は
+                            # 帰属証拠付きで行い、他図形の文字では合格にしない
+                            tc = tail_check_ordered(tf['text'], got_own)
+                            tail_mode, tail_ok = tc['mode'], tc['ordered_ok']
+                            rescue_owners, missing_chars = [], ''
                             if tc['mode'] == 'loss':
-                                got_wide = cjk(''.join(c['t'] for c in
-                                                       clusters_in(x0 - 15.0, y0 - 15.0, x1 + 15.0, y1 + 30.0)))
-                                tc_w = tail_check_ordered(tf['text'], got_wide)
-                                if tc_w['multiset_ok']:
-                                    tail_mode = 'loss-window-precision'
-                                    tail_ok = True
+                                wide = []
+                                for s5 in spans:
+                                    if s5[0] < x1 + 15.0 and s5[2] > x0 - 15.0 \
+                                       and s5[1] < y1 + 30.0 and s5[3] > y0 - 15.0:
+                                        w5 = span_owner.get(id(s5))
+                                        wide.append((s5[4], 'own' if w5 == nm else
+                                                     ('other' if w5 else 'unattributed')))
+                                vr = tail_rescue(tf['text'], got_own, wide)
+                                tail_mode, tail_ok = vr['mode'], vr['tail_ok']
+                                rescue_owners, missing_chars = vr['rescue_owners'], vr['missing_chars']
+                                if tail_mode == 'loss-window-precision':
                                     cnt['tail_winprec'] += 1
-                                    warn(bk, 'C3_text_fit', '%s %s: tail chars present in widened window (window/attribution precision; see crop)' % (sn, nm))
-                            if tc['mode'] == 'multiset-only(k4-suspect)' and tail_mode != 'loss-window-precision':
-                                cnt['tail_k4'] += 1
-                                if nm in FIXED_LEAVES or nm in CHANGED_TEXT:
-                                    cnt['tail_loss'] += 1
-                                    fail(bk, 'C3_text_fit', '%s %s: CJK tail order mismatch (multiset-only; k4-suspect)' % (sn, nm))
+                                    warn(bk, 'C3_text_fit', '%s %s: tail chars rescued by own-attributed spans (window precision; evidence=own attribution)'
+                                         % (sn, nm))
+                                elif tail_mode == 'attribution-undetermined':
+                                    cnt['attr_undet'] += 1
+                                    warn(bk, 'C3_text_fit', '%s %s: missing tail chars %r found only in %s spans (attribution undetermined; no pass without independent evidence)'
+                                         % (sn, nm, missing_chars, '/'.join(rescue_owners) or 'nearby'))
+                            # F1(第2次): ASCII 末尾は CJK とは別に確認 (loss は無条件で FAIL)。
+                            # severity·サブチェック分類は本番経路 tail_severity に集約する
+                            amode = ascii_tail_check(tf['text'], got_own)
+                            for it in tail_severity(nm, tail_mode, amode, tf['text'], render_same=render_same):
+                                code = it['code']
+                                if it['severity'] == 'FAIL':
+                                    fail(bk, 'C3_text_fit', '%s %s: %s' % (sn, nm, it['message']))
+                                    if code == 'ascii_loss':
+                                        cnt['ascii_fail'] += 1
+                                    elif code == 'tail_extra_chars':
+                                        cnt['tail_extra'] += 1
+                                    elif code in ('tail_loss', 'tail_k4_changed_fixed'):
+                                        cnt['tail_loss'] += 1
                                 else:
-                                    warn(bk, 'C3_text_fit', '%s %s: CJK tail order mismatch (multiset-only; k4-suspect; see crop)' % (sn, nm))
-                            # F1: ASCII 末尾は CJK とは別に確認する (3 段階: ok/k4-variant/loss)。
-                            # k4-variant は K4 グリフ置換の疑いとして警告+クロップで受容し、
-                            # loss (どの比較でも不在) のみを changed/fixed 図形の FAIL とする。
-                            amode = ascii_tail_check(tf['text'], ''.join(c['t'] for c in clusters))
-                            if amode == 'k4-variant':
-                                cnt['ascii_k4'] += 1
-                                warn(bk, 'C3_text_fit', '%s %s: ASCII tail %r only matches as k4-variant (glyph substitution; see crop)'
-                                     % (sn, nm, ascii_tail(tf['text'])))
-                            elif amode == 'loss':
-                                if nm in FIXED_LEAVES or nm in CHANGED_TEXT or tail_mode == 'loss':
-                                    cnt['ascii_fail'] += 1
-                                    fail(bk, 'C3_text_fit', '%s %s: ASCII tail loss: %r' % (sn, nm, ascii_tail(tf['text'])))
-                                else:
-                                    warn(bk, 'C3_text_fit', '%s %s: ASCII tail missing %r (pre-existing text; k4 extraction risk)'
-                                         % (sn, nm, ascii_tail(tf['text'])))
-                            a_ok = amode == 'ok'
+                                    warn(bk, 'C3_text_fit', '%s %s: %s' % (sn, nm, it['message']))
+                                    if code in ('tail_k4_accepted', 'tail_k4_undecided'):
+                                        cnt['tail_k4'] += 1
+                                    elif code.startswith('ascii_k4'):
+                                        cnt['ascii_k4'] += 1
                             # F2: 右端あふれ (spill) -- 抽出は完全でもクロップ窓で切れる反例の検出
                             aspans = attrib.get(nm, [])
                             span_right = max([s5[2] for s5 in aspans] or [0])
                             spill = max(0.0, span_right - (x1 - 2.0))
                             rec = {'sheet': sn, 'name': nm, 'fsz': fsz, 'nvis_est': nvis_est,
                                    'nvis_pdf': nvis_act, 'tail_ok': tail_ok, 'tail_mode': tail_mode,
+                                   'attrib_basis': attrib_basis,
+                                   'rescue_owners': rescue_owners, 'missing_chars': missing_chars,
                                    'tail_exp20': cjk_seq(tf['text'])[-20:], 'tail_got20': cjk_seq(got_cjk)[-20:],
                                    'ascii_tail': ascii_tail(tf['text']), 'ascii_mode': amode,
                                    'spill_pt': round(spill, 2), 'rows_short': [],
                                    'rows_short_ascii': []}
-                            for c in clusters:
+                            for c in rows_own:
                                 vis = len(re.sub(r'\s+', '', c['t']))
                                 if vis <= 2:
                                     rec['rows_short'].append(c['t'])
@@ -1482,17 +1804,22 @@ def main():
                                     rec['rows_short_ascii'].append(c['t'])
                             fit3.append(rec)
                             # C7 orphans: 分類 = 既知P* / 既存同型(描画状態まで一致) /
-                            # 発生時点不明(テキスト不変だが描画状態が変化) / 本ラウンド退行
+                            # 発生時点不明(テキスト不変だが描画状態が変化) /
+                            # 比較不能(baseline項目欠落) / 本ラウンド退行
                             # F3: 「テキスト不変」だけでは既存扱いの根拠にしない
-                            base0 = baseline_idx.get((bk, sn, nm))
-                            rstate = classify_render_state(base0, tf['text'], H, tf['autosize'], tf['wrap'])
-                            render_same = rstate == 'render-same'
                             if rstate == 'render-changed-origin-unknown':
                                 orphans.append({'sheet': sn, 'name': nm, 'class': 'render-state-changed-origin-unknown',
                                                 'baseline_h': base0.get('h'), 'current_h': H,
+                                                'baseline_w': base0.get('w'), 'current_w': W,
                                                 'baseline_autosize': base0.get('autosize'), 'current_autosize': tf['autosize']})
-                                warn(bk, 'C7_orphans_wrap', '%s %s: render state changed without text change (h %s->%s, autosize %s->%s); origin unknown, verify'
-                                     % (sn, nm, base0.get('h'), H, base0.get('autosize'), tf['autosize']))
+                                warn(bk, 'C7_orphans_wrap', '%s %s: render state changed without text change (h %s->%s, w %s->%s, autosize %s->%s); origin unknown, verify'
+                                     % (sn, nm, base0.get('h'), H, base0.get('w'), W, base0.get('autosize'), tf['autosize']))
+                            elif rstate == 'render-state-not-comparable':
+                                # F3(第2次): baseline 項目欠落は「一致」にしない (比較不能として記録)
+                                orphans.append({'sheet': sn, 'name': nm, 'class': 'render-state-not-comparable',
+                                                'baseline_fields': {k: base0.get(k) for k in ('h', 'w', 'autosize', 'wordwrap')}})
+                                warn(bk, 'C7_orphans_wrap', '%s %s: render state not comparable (baseline lacks h/w/autosize/wordwrap); not treated as match'
+                                     % (sn, nm))
                             if nvis_act >= 2:
                                 for tt in rec['rows_short']:
                                     kd = KNOWN_DEFECT.get((sn, nm))
@@ -1504,6 +1831,9 @@ def main():
                                     elif rstate == 'render-changed-origin-unknown':
                                         orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'origin-unknown-verify'})
                                         warn(bk, 'C7_orphans_wrap', '%s %s: short row (render state changed, origin unknown)' % (sn, nm))
+                                    elif rstate == 'render-state-not-comparable':
+                                        orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'render-state-not-comparable'})
+                                        warn(bk, 'C7_orphans_wrap', '%s %s: short row (render state not comparable; baseline incomplete)' % (sn, nm))
                                     elif sn == '相関図④':
                                         # ④は変更前の基準が無い: 末尾が保たれていれば視覚確認候補(警告)にとどめる
                                         orphans.append({'sheet': sn, 'name': nm, 'row': tt,
@@ -1514,25 +1844,17 @@ def main():
                                         fail(bk, 'C7_orphans_wrap', '%s %s: orphan/short row (new candidate)' % (sn, nm))
                                 for tt in rec['rows_short_ascii']:
                                     orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'short-ascii-row(info)'})
-                            # C3 checks (k4-suspect は上で処理済み -- 二重報告しない)
-                            if not tail_ok and tc['mode'] != 'multiset-only(k4-suspect)':
-                                if nm in FIXED_LEAVES or nm in CHANGED_TEXT:
-                                    cnt['tail_loss'] += 1
-                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK ordered tail mismatch)' % (sn, nm))
-                                elif render_same:
-                                    warn(bk, 'C3_text_fit', '%s %s: last-line loss (pre-existing, render state matches baseline; ERR-004 family)' % (sn, nm))
-                                elif rstate == 'render-changed-origin-unknown':
-                                    cnt['tail_loss'] += 1
-                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (render state changed without text change; origin unknown)' % (sn, nm))
-                                else:
-                                    cnt['tail_loss'] += 1
-                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK ordered tail mismatch)' % (sn, nm))
+                            # C3 の末尾·ASCII の FAIL/WARN は上の tail_severity 適用で
+                            # 報告済み (二重報告しない)。以降は wrap·高さ·AutoSize
                             if wrap and nvis_act > nvis_est:
                                 kd = KNOWN_DEFECT.get((sn, nm))
                                 if kd:
                                     orphans.append({'sheet': sn, 'name': nm, 'class': 'known-%s(extra wrap)' % kd,
                                                     'nvis_est': nvis_est, 'nvis_pdf': nvis_act})
                                 elif nm in FIXED_LEAVES or nm in CHANGED_TEXT:
+                                    # F6(第2次): unexpected extra wrap の FAIL を
+                                    # wrap_estimate サブチェックに反映する
+                                    cnt['wrap_extra'] += 1
                                     fail(bk, 'C3_text_fit', '%s %s: unexpected extra wrap est %d pdf %d' % (sn, nm, nvis_est, nvis_act))
                                 elif render_same:
                                     warn(bk, 'C3_text_fit', '%s %s: wrap estimate off est %d pdf %d (pre-existing text)' % (sn, nm, nvis_est, nvis_act))
@@ -1565,13 +1887,27 @@ def main():
                             if aspans and span_right > cx1 - 0.2:
                                 cx1 = min(page.rect.x1, span_right + 2.0)
                                 widened = True
+                            # 第2次 (記録訂正4): 末尾·行の裁定が必要な図形はクロップ窓を
+                            # 上下に 1 行分広げる (crop_pana_s4_t4_b3_l3.png に2行目が
+                            # 含まれず裁定できなかった不備の修正)
+                            widened_v = False
+                            need_adjudication = (tail_mode not in ('ordered-equal', 'empty', 'loss-window-precision')
+                                                 or rec['rows_short'] or rec['rows_short_ascii'])
+                            if need_adjudication:
+                                line_h = fsz * 1.65 * sy + 4.0
+                                ny0, ny1 = cy0 - line_h, cy1 + line_h
+                                if ny0 < cy0 - 1.0 or ny1 > cy1 + 1.0:
+                                    cy0, cy1 = max(0.0, ny0), min(page.rect.y1, ny1)
+                                    widened_v = True
                             if cx1 - cx0 > 2 and cy1 - cy0 > 2:
                                 fname = 'crop_%s_%s_%s.png' % (bk, SN_TAG[sn], re.sub(r'[^A-Za-z0-9_-]', '_', nm))
                                 crops.append((nm, fitz.Rect(cx0, cy0, cx1, cy1), fname, widened, rec['tail_mode']))
                                 crops_ledger.append({'file': fname, 'sheet': sn, 'shape': nm,
                                                      'window': [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)],
                                                      'clip': [round(cx0, 1), round(cy0, 1), round(cx1, 1), round(cy1, 1)],
-                                                     'widened': widened, 'spill_pt': rec['spill_pt'],
+                                                     'widened': widened, 'widened_v': widened_v,
+                                                     'widened_reason': ('tail/row adjudication' if widened_v else ''),
+                                                     'spill_pt': rec['spill_pt'],
                                                      'text_match': rec['tail_mode']})
                     fit_all.extend(fit3)
                     # refs column crop (K3 fix)
@@ -1606,11 +1942,17 @@ def main():
                 R(bk, 'C7_orphans_wrap')['info']['known'] = sum(1 for o in orphans if o['class'].startswith('known'))
                 R(bk, 'C7_orphans_wrap')['info']['new'] = sum(1 for o in orphans if o['class'] == 'new-regression-candidate')
                 # F6: サブチェック状態の確定 (C10 回帰表はここから集約する)
-                sub(bk, 'C3_text_fit', 'tail_cjk_ordered', 'FAIL' if cnt['tail_loss'] else 'PASS')
+                sub(bk, 'C3_text_fit', 'tail_cjk_ordered',
+                    'FAIL' if (cnt['tail_loss'] or cnt['tail_extra']) else 'PASS',
+                    'loss=%d extra(dup/addition)=%d k4_accepted/undecided=%d'
+                    % (cnt['tail_loss'], cnt['tail_extra'], cnt['tail_k4']))
                 sub(bk, 'C3_text_fit', 'tail_ascii_separate', 'FAIL' if cnt['ascii_fail'] else 'PASS',
-                    'k4-suspect=%d' % cnt['tail_k4'])
+                    'loss=%d k4=%d (loss は changed/fixed 以外でも FAIL -- 第2次是正)'
+                    % (cnt['ascii_fail'], cnt['ascii_k4']))
                 sub(bk, 'C3_text_fit', 'frame_height_multi_para', 'FAIL' if cnt['height_fail'] else 'PASS')
                 sub(bk, 'C3_text_fit', 'autosize_fixed_leaves', 'FAIL' if cnt['autosize_fail'] else 'PASS')
+                sub(bk, 'C3_text_fit', 'wrap_estimate', wrap_estimate_status(cnt),
+                    'unexpected extra wrap (changed/fixed)=%d' % cnt['wrap_extra'])
                 sub(bk, 'C8_pdf_roundtrip', 'landscape_1page', 'FAIL' if cnt['page_fail'] else 'PASS')
                 sub(bk, 'C8_pdf_roundtrip', 'independent_calibration',
                     'RECORDED', 'mode=%s; notes=%d; detail in strict_full_results.json' % (calib_mode, cnt['calib_note']))
@@ -1618,10 +1960,17 @@ def main():
                     'n=%d; ledger=strict_crops_%s.json' % (len(crops_ledger), bk))
                 sub(bk, 'C8_pdf_roundtrip', 'mapping_residual_explained',
                     'FAIL' if cnt['unexplained'] else 'PASS', 'unexplained_cjk=%d' % cnt['unexplained'])
+                sub(bk, 'C8_pdf_roundtrip', 'mapping_residual_attribution', 'RECORDED',
+                    'attribution-undetermined cjk=%d (own窓に無く他図形帰属·未帰属スパンで'
+                    '充足される文字。合格根拠にしない。人力裁定待ち)' % cnt['attr_undet'])
+                if cnt['attr_undet']:
+                    warn(bk, 'C8_pdf_roundtrip', '%s-residual: %d CJK chars attribution-undetermined (found near window but not own-attributed; human review pending)'
+                         % (bk, cnt['attr_undet']))
                 if cnt['unexplained']:
                     fail(bk, 'C8_pdf_roundtrip', 'unexplained CJK mapping residual: %d chars (see strict_crops ledger)' % cnt['unexplained'])
                 R(bk, 'C8_pdf_roundtrip')['info']['residual'] = {k: v for k, v in cnt.items()
-                                                                 if k.startswith('unexplained') or k in ('tail_loss', 'tail_k4', 'ascii_fail', 'ascii_k4', 'tail_winprec')}
+                                                                 if k.startswith('unexplained') or k.startswith('attr_undet')
+                                                                 or k in ('tail_loss', 'tail_extra', 'tail_k4', 'ascii_fail', 'ascii_k4', 'tail_winprec', 'wrap_extra')}
                 R(bk, 'C3_text_fit')['info']['tail_counts'] = {k: v for k, v in cnt.items()
                                                                if k.startswith(('tail', 'ascii'))}
                 R(bk, 'C8_pdf_roundtrip')['info']['k3_refs_crops'] = 'generated'
@@ -1700,11 +2049,13 @@ def main():
                     'status': sub_status(bk, 'C8_pdf_roundtrip', 'landscape_1page'), 'evidence': 'strict_%s_s2/s3/s4.pdf' % bk})
         c10.append({'err': 'ダイジェストキー一致 (novalue)', 'check': 'cross-book names/geometry digest', 'book': bk,
                     'status': 'PASS' if ok_digest else 'FAIL', 'evidence': 'strict_digest_pana.json/strict_digest_lnb.json'})
+        c10.append({'err': 'unexpected extra wrap (F6第2次)', 'check': "C3 subcheck 'wrap_estimate'", 'book': bk,
+                    'status': sub_status(bk, 'C3_text_fit', 'wrap_estimate'), 'evidence': 'strict_text_fit_%s.json' % bk})
         c10.append({'err': 'リンク実測', 'check': "C10 subchecks 'link_count'+'link_map'+'link_targets_nonempty'", 'book': bk,
-                    'status': ('FAIL' if 'FAIL' in (sub_status(bk, 'C10_err_regression', 'link_count'),
-                                                    sub_status(bk, 'C10_err_regression', 'link_map'),
-                                                    sub_status(bk, 'C10_err_regression', 'link_targets_nonempty'))
-                               else 'PASS'), 'evidence': 'strict_links_%s.json' % bk})
+                    'status': link_rows_status([sub_status(bk, 'C10_err_regression', 'link_count'),
+                                                sub_status(bk, 'C10_err_regression', 'link_map'),
+                                                sub_status(bk, 'C10_err_regression', 'link_targets_nonempty')]),
+                    'evidence': 'strict_links_%s.json' % bk})
         c10.append({'err': '既存図形の逆方向比較 (F5)', 'check': "C9 subcheck 'baseline_reverse_23'", 'book': bk,
                     'status': sub_status(bk, 'C9_data_accuracy', 'baseline_reverse_23'), 'evidence': 'strict_data_accuracy_%s.json' % bk})
         c10.append({'err': 'C4豁免の記録と悪化差分 (F4)', 'check': "C4 subcheck 'exemptions_recorded' + worsened_baseline_pairs", 'book': bk,
@@ -1714,11 +2065,21 @@ def main():
     with io.open(os.path.join(OUT, 'strict_err_regression_table.json'), 'w', encoding='utf-8') as f:
         json.dump(c10, f, ensure_ascii=False, indent=1)
 
+    # ---- aggregation consistency (F6第2次) ----
+    # サブチェックに FAIL が残るクラスを PASS のままにしない (失敗注入の
+    # 自己検証は --selftest で実施する)
+    agg_fixes = enforce_aggregation_consistency(results)
+    for bk, cls, old, new in agg_fixes:
+        print('AGGREGATION FIX: %s/%s %s -> %s (subcheck FAIL present)' % (bk, cls, old, new))
+
     # ---- summary ----
     summary = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
                'books': {}, 'new_issues': [], 'known_issues': KNOWN_P_NOTES,
                'k3': 'resolved (refs crops + per-shape crops generated under strictverify/)',
-               'note_f6': 'subchecks are the authoritative granularity; C10 regression table is aggregated from them'}
+               'note_f6': 'subchecks are the authoritative granularity; C10 regression table is aggregated from them',
+               'note_pass2': '2nd correction pass: tail equality+extra-chars class, ASCII loss unconditional FAIL, '
+                             'attribution-connected C3/residual, render-state width+paragraph compare, '
+                             'frame calibration above_h correction, selftest (--selftest)'}
     for (bk, cls), r in sorted(results.items()):
         summary['books'].setdefault(bk, {})[cls] = {'status': r['status'],
                                                     'n_viol': len(r['violations']), 'n_warn': len(r['warnings']),
@@ -1744,4 +2105,6 @@ def main():
     print('STRICT VERIFY: ALL PASS')
 
 if __name__ == '__main__':
+    if '--selftest' in sys.argv:
+        sys.exit(run_selftest())
     main()
