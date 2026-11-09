@@ -1,0 +1,135 @@
+{
+ "generated": "2026-11-09T18:29:18",
+ "books": {
+  "(cross)": {
+   "C10_err_regression": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   }
+  },
+  "lnb": {
+   "C10_err_regression": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C1_page_setup": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C2_inventory": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 12
+   },
+   "C3_text_fit": {
+    "status": "FAIL",
+    "n_viol": 5,
+    "n_warn": 44
+   },
+   "C4_clearance": {
+    "status": "FAIL",
+    "n_viol": 1,
+    "n_warn": 0
+   },
+   "C5_collision": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C6_connectors": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C7_orphans_wrap": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 8
+   },
+   "C8_pdf_roundtrip": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 1
+   },
+   "C9_data_accuracy": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   }
+  },
+  "pana": {
+   "C10_err_regression": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C1_page_setup": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C2_inventory": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 12
+   },
+   "C3_text_fit": {
+    "status": "FAIL",
+    "n_viol": 4,
+    "n_warn": 52
+   },
+   "C4_clearance": {
+    "status": "FAIL",
+    "n_viol": 1,
+    "n_warn": 0
+   },
+   "C5_collision": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C6_connectors": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C7_orphans_wrap": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 7
+   },
+   "C8_pdf_roundtrip": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   },
+   "C9_data_accuracy": {
+    "status": "PASS",
+    "n_viol": 0,
+    "n_warn": 0
+   }
+  }
+ },
+ "new_issues": [
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_src: last-line loss (CJK tail mismatch)",
+  "lnb/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK tail mismatch)",
+  "pana/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l"
+ ],
+ "known_issues": [
+  "P1: ③g3_n11 タイトルとアイコンの重なり(適用前から·図形レベルのため本ハーネスでは再計測せず記録のみ)",
+  "P7: ②EE08線が n19 背後(R1·postAベースラインにも存在)",
+  "P8: PDFテキスト抽出の化け(検証手法の注意·CJK等値で回避)"
+ ],
+ "k3": "resolved (refs crops + per-shape crops generated under strictverify/)"
+}
