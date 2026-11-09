@@ -1,135 +1,373 @@
 {
- "generated": "2026-11-09T18:29:18",
+ "generated": "2026-11-09T19:23:40",
  "books": {
   "(cross)": {
    "C10_err_regression": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {}
    }
   },
   "lnb": {
    "C10_err_regression": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "link_count": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "link_map": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "link_targets_nonempty": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C1_page_setup": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "print_area": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "print_title_rows_unset": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "orientation_paper_fit_footer": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C2_inventory": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 12
+    "n_warn": 12,
+    "subchecks": {
+     "read_tf_no_silent_skip": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s2": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s3": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s4": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C3_text_fit": {
     "status": "FAIL",
-    "n_viol": 5,
-    "n_warn": 44
+    "n_viol": 9,
+    "n_warn": 98,
+    "subchecks": {
+     "tail_cjk_ordered": {
+      "status": "FAIL",
+      "evidence": null
+     },
+     "tail_ascii_separate": {
+      "status": "FAIL",
+      "evidence": "k4-suspect=10"
+     },
+     "frame_height_multi_para": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "autosize_fixed_leaves": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C4_clearance": {
     "status": "FAIL",
-    "n_viol": 1,
-    "n_warn": 0
+    "n_viol": 4,
+    "n_warn": 19,
+    "subchecks": {
+     "exemptions_recorded": {
+      "status": "RECORDED",
+      "evidence": "fixed=15 baseline=19 (reasons in strict_clearance_lnb.json)"
+     }
+    }
    },
    "C5_collision": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {}
    },
    "C6_connectors": {
-    "status": "PASS",
+    "status": "RECORDED",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "xml_com_connector_match": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C7_orphans_wrap": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 8
+    "n_warn": 40,
+    "subchecks": {}
    },
    "C8_pdf_roundtrip": {
-    "status": "PASS",
-    "n_viol": 0,
-    "n_warn": 1
+    "status": "FAIL",
+    "n_viol": 1,
+    "n_warn": 4,
+    "subchecks": {
+     "landscape_1page": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "independent_calibration": {
+      "status": "RECORDED",
+      "evidence": "mode=text-coverage(fallback); notes=3; detail in strict_full_results.json"
+     },
+     "crop_ledger": {
+      "status": "RECORDED",
+      "evidence": "n=132; ledger=strict_crops_lnb.json"
+     },
+     "mapping_residual_explained": {
+      "status": "FAIL",
+      "evidence": "unexplained_cjk=85"
+     }
+    }
    },
    "C9_data_accuracy": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "baseline_reverse_23": {
+      "status": "PASS",
+      "evidence": "missing=0"
+     },
+     "changed_text_asbuilt": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "t4_expected_act": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    }
   },
   "pana": {
    "C10_err_regression": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "link_count": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "link_map": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "link_targets_nonempty": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C1_page_setup": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "print_area": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "print_title_rows_unset": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "orientation_paper_fit_footer": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C2_inventory": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 12
+    "n_warn": 12,
+    "subchecks": {
+     "read_tf_no_silent_skip": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s2": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s3": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "xml_com_name_match_s4": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C3_text_fit": {
     "status": "FAIL",
-    "n_viol": 4,
-    "n_warn": 52
+    "n_viol": 8,
+    "n_warn": 113,
+    "subchecks": {
+     "tail_cjk_ordered": {
+      "status": "FAIL",
+      "evidence": null
+     },
+     "tail_ascii_separate": {
+      "status": "FAIL",
+      "evidence": "k4-suspect=13"
+     },
+     "frame_height_multi_para": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "autosize_fixed_leaves": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C4_clearance": {
     "status": "FAIL",
-    "n_viol": 1,
-    "n_warn": 0
+    "n_viol": 4,
+    "n_warn": 19,
+    "subchecks": {
+     "exemptions_recorded": {
+      "status": "RECORDED",
+      "evidence": "fixed=15 baseline=19 (reasons in strict_clearance_pana.json)"
+     }
+    }
    },
    "C5_collision": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {}
    },
    "C6_connectors": {
-    "status": "PASS",
+    "status": "RECORDED",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "xml_com_connector_match": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    },
    "C7_orphans_wrap": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 7
+    "n_warn": 39,
+    "subchecks": {}
    },
    "C8_pdf_roundtrip": {
-    "status": "PASS",
-    "n_viol": 0,
-    "n_warn": 0
+    "status": "FAIL",
+    "n_viol": 1,
+    "n_warn": 5,
+    "subchecks": {
+     "landscape_1page": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "independent_calibration": {
+      "status": "RECORDED",
+      "evidence": "mode=text-coverage(fallback); notes=3; detail in strict_full_results.json"
+     },
+     "crop_ledger": {
+      "status": "RECORDED",
+      "evidence": "n=134; ledger=strict_crops_pana.json"
+     },
+     "mapping_residual_explained": {
+      "status": "FAIL",
+      "evidence": "unexplained_cjk=50"
+     }
+    }
    },
    "C9_data_accuracy": {
     "status": "PASS",
     "n_viol": 0,
-    "n_warn": 0
+    "n_warn": 0,
+    "subchecks": {
+     "baseline_reverse_23": {
+      "status": "PASS",
+      "evidence": "missing=0"
+     },
+     "changed_text_asbuilt": {
+      "status": "PASS",
+      "evidence": null
+     },
+     "t4_expected_act": {
+      "status": "PASS",
+      "evidence": null
+     }
+    }
    }
   }
  },
  "new_issues": [
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK tail mismatch)",
-  "lnb/C3_text_fit: 相関図④ t4_b3_src: last-line loss (CJK tail mismatch)",
+  "lnb/C3_text_fit: 相関図② g2_bandhead: ASCII tail loss: 'T1:-9-/-10-'",
+  "lnb/C3_text_fit: 相関図② g2_n02_txt: ASCII tail loss: 'X02-'",
+  "lnb/C3_text_fit: 相関図② g2_bandnote: ASCII tail loss: '2026-10-27'",
+  "lnb/C3_text_fit: 相関図③ g3_n12_txt: ASCII tail loss: '(A-2)'",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C3_text_fit: 相関図④ t4_b3_src: last-line loss (CJK ordered tail mismatch)",
+  "lnb/C4_clearance: 相関図②: text-text clearance 1.68pt < 3.75pt (new): g2_n10_txt x g2_n17_txt",
   "lnb/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK tail mismatch)",
-  "pana/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK tail mismatch)",
-  "pana/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l"
+  "lnb/C4_clearance: 相関図③: text-text clearance 2.23pt < 3.75pt (new): g3_n08_txt x g3_n09_txt",
+  "lnb/C4_clearance: 相関図③: text-text clearance 3.70pt < 3.75pt (new): g3_n12_txt x g3_e_e12_l",
+  "lnb/C8_pdf_roundtrip: unexplained CJK mapping residual: 85 chars (see strict_crops ledger)",
+  "pana/C3_text_fit: 相関図② g2_bandhead: ASCII tail loss: 'T1:-9-/-10-'",
+  "pana/C3_text_fit: 相関図② g2_n02_txt: ASCII tail loss: 'X02-'",
+  "pana/C3_text_fit: 相関図② g2_bandnote: ASCII tail loss: '2026-10-27'",
+  "pana/C3_text_fit: 相関図③ g3_n12_txt: ASCII tail loss: '(A-2)'",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg1_t: last-line loss (CJK ordered tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg2_t: last-line loss (CJK ordered tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b1_leg3_t: last-line loss (CJK ordered tail mismatch)",
+  "pana/C3_text_fit: 相関図④ t4_b3_l3: last-line loss (CJK ordered tail mismatch)",
+  "pana/C4_clearance: 相関図②: text-text clearance 1.68pt < 3.75pt (new): g2_n10_txt x g2_n17_txt",
+  "pana/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
+  "pana/C4_clearance: 相関図③: text-text clearance 2.23pt < 3.75pt (new): g3_n08_txt x g3_n09_txt",
+  "pana/C4_clearance: 相関図③: text-text clearance 3.70pt < 3.75pt (new): g3_n12_txt x g3_e_e12_l",
+  "pana/C8_pdf_roundtrip: unexplained CJK mapping residual: 50 chars (see strict_crops ledger)"
  ],
  "known_issues": [
   "P1: ③g3_n11 タイトルとアイコンの重なり(適用前から·図形レベルのため本ハーネスでは再計測せず記録のみ)",
   "P7: ②EE08線が n19 背後(R1·postAベースラインにも存在)",
   "P8: PDFテキスト抽出の化け(検証手法の注意·CJK等値で回避)"
  ],
- "k3": "resolved (refs crops + per-shape crops generated under strictverify/)"
+ "k3": "resolved (refs crops + per-shape crops generated under strictverify/)",
+ "note_f6": "subchecks are the authoritative granularity; C10 regression table is aggregated from them"
 }

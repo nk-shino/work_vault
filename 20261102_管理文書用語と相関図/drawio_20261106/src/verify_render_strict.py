@@ -20,8 +20,16 @@
 
 制約: 冊は ReadOnly で開き保存しない。コンソールに図形テキスト本文を出力しない
 (証跡JSONには記録する)。認証情報シートの値は読まない。
+
+Gate 1 是正 (F1〜F6, 2026-11-09):
+  F1 末尾判定を順序付きCJK等値へ回帰·ASCII末尾の別確認·高さ検査の折返し分離
+  F2 PDF枠線による独立較正+残差点検査·スパン単位帰属·クロップ台帳·右端あふれ拡張
+  F3 既存扱いは描画状態の一致で判定 (テキスト不変のみでは根拠にしない)
+  F4 C4豁免を固定ペア/ベースライン由来に限定·悪化差分を記録
+  F5 ②③ベースライン→現在の逆方向比較·read_tf失敗を無音除外しない
+  F6 C10回帰表と C6/C8 の状態表示を実サブチェックから集約 (RECORDED 導入)
 """
-import sys, io, os, re, json, math, zipfile, datetime
+import sys, io, os, re, json, math, zipfile, datetime, bisect
 
 class _SafeBuf(object):
     """close() されても実バッファを閉じないスタブ。
@@ -253,9 +261,18 @@ def parse_drawing(z, part):
         tag = obj.tag.split('}')[1]
         nv = obj.find('.//' + XDR + 'cNvPr')
         name = nv.get('name') if nv is not None else '?'
+        # F2: 枠線保有フラグ (a:ln があり noFill でない) -- 独立較正の
+        # 予測矩形はこの図形に限定する (罫線は枠線図形からしか生まれない)
+        bordered = False
+        for pr in ('spPr', 'grpSpPr'):
+            spr = obj.find(XDR + pr)
+            if spr is not None:
+                ln = spr.find(ANS + 'ln')
+                if ln is not None and ln.find(ANS + 'noFill') is None:
+                    bordered = True
         entry = {'name': name, 'kind': tag,
                  'box': [round(l, 2), round(t, 2), round(w, 2), round(h, 2)],
-                 'flip': [fh != pflip[0], fv != pflip[1]]}
+                 'flip': [fh != pflip[0], fv != pflip[1]], 'bordered': bordered}
         if tag == 'grpSp' and x is not None:
             ext = x.find(ANS + 'ext'); choff = x.find(ANS + 'chOff'); chext = x.find(ANS + 'chExt')
             gsx = (int(ext.get('cx')) / int(chext.get('cx'))) if chext is not None and int(chext.get('cx')) else 1.0
@@ -297,6 +314,8 @@ def flatten(entries, out=None, parent=None):
 
 # ---------------------------------------------------------------- COM collection
 def read_tf(obj):
+    """F5: 取得失敗を無音で除外しない。例外は {'_error': ...} として呼び出し側に
+    返し、C2/C9 で失敗として扱う (HasText=False の図形は None のまま = 正常)"""
     try:
         tf2 = obj.TextFrame2
         if not tf2.HasText:
@@ -308,8 +327,11 @@ def read_tf(obj):
                 'boundW': round(float(tr.BoundWidth), 2), 'boundH': round(float(tr.BoundHeight), 2),
                 'fsz': round(float(tr.Font.Size), 2),
                 'autosize': int(tf2.AutoSize), 'wrap': int(tf2.WordWrap)}
-    except Exception:
-        return None
+    except Exception as ex:
+        return {'_error': repr(ex)}
+
+def tf_ok(tf):
+    return bool(tf) and '_error' not in tf
 
 def com_sheet_shapes(ws):
     tops = []
@@ -388,6 +410,240 @@ def find_anchor(jrows, frag, used_ys, exp_y=None):
         return min(hits, key=lambda r: abs(r[0] - exp_y))
     return hits[0] if len(hits) == 1 else None
 
+# ---------------------------------------------------------------- F1/F2/F3/F5 pure checks
+# Gate 1 是正 (F1〜F6) で追加。合成フィクスチャによる負例検証
+# (verify_render_strict_negtest.py) からも直接呼び出せるよう、
+# Excel/PDF に依存しない純粋関数として切り出している。
+
+def cjk_seq(s):
+    """順序を保持した CJK 列 (F1: 順序付き等値の主判定用)"""
+    return re.sub(r'[^\u4e00-\u9fff\u3040-\u30ff]', '', norm(s)) if s else ''
+
+def tail_check_ordered(exp_text, got_text):
+    """F1: 末尾検査を順序付き CJK 等値に戻す。
+    mode: 'ordered-equal' 完全一致 / 'multiset-only(k4-suspect)' 文字種はそろうが
+    順序不一致 (K4 化け疑い·描画証跡と警告で受容) / 'loss' 欠落 / 'empty' 期待CJKなし"""
+    ce, cg = cjk_seq(exp_text), cjk_seq(got_text)
+    if not ce:
+        return {'mode': 'empty', 'ordered_ok': True, 'multiset_ok': True}
+    ordered = (ce == cg)
+    multiset = all(Counter(cg)[ch] >= n for ch, n in Counter(ce).items())
+    if ordered:
+        mode = 'ordered-equal'
+    elif multiset:
+        mode = 'multiset-only(k4-suspect)'
+    else:
+        mode = 'loss'
+    return {'mode': mode, 'ordered_ok': ordered, 'multiset_ok': multiset}
+
+def ascii_tail(text, minlen=3):
+    """F1: 本文末尾側の ASCII 連続列 (>=minlen) を返す (ASCII末尾は別確認)"""
+    if not text:
+        return ''
+    m = re.findall(r'[!-~]{%d,}' % minlen, norm(text))
+    return m[-1] if m else ''
+
+# K4 (P8) のグリフ置換を吸収する等価表現: ダッシュ類·中点類は抽出時に
+# 別コードポイント (U+2010 等·中点) に置き換わる実測がある
+_ASCII_EQUIV = {0x2010: '-', 0x2011: '-', 0x2012: '-', 0x2013: '-', 0x2014: '-',
+                0x2015: '-', 0xFF0D: '-', 0x2212: '-',
+                0x00B7: '-', 0xFF65: '-', 0x30FB: '-', 0x2027: '-', 0x2022: '-'}
+
+def norm_ascii(s):
+    return ''.join(_ASCII_EQUIV.get(ord(c), c) for c in norm(s or ''))
+
+def ascii_tail_check(text, got_text):
+    """F1: ASCII 末尾の 3 段階判定
+    'ok'         : 抽出文に末尾がそのまま含まれる (K4 等価吸収後)
+    'k4-variant' : 英数字のみの比較なら含まれる (ダッシュ·丸付き数字隣接等の
+                   K4 グリフ置換の疑い。クロップ証跡で視覚確認する)
+    'loss'       : どの比較でも見つからない (描画欠落の疑い)"""
+    t = ascii_tail(text)
+    if not t:
+        return 'ok'
+    g8 = norm_ascii(got_text or '')
+    if norm_ascii(t) in g8:
+        return 'ok'
+    ta = re.sub(r'[^A-Za-z0-9]', '', t)
+    ga = re.sub(r'[^A-Za-z0-9]', '', g8)
+    if len(ta) >= 2 and ta in ga:
+        return 'k4-variant'
+    return 'loss'
+
+def ascii_tail_ok(text, got_text):
+    return ascii_tail_check(text, got_text) != 'loss'
+
+def height_need_pt(nvis, fsz, name):
+    """F1: 高さ必要量 = nvis * fsz * 1.65 + マージン。
+    マージンの適用条件: +3.0pt = 既定 (枠余白の実測) ·
+    +2.0pt = エッジラベル (名前が _l<数字> で終わる) のみ。
+    適用は wrap 有無によらず nvis>=2 で行う (複数段落は wrap='none' でも適用)。"""
+    margin = 2.0 if re.search(r'_l\d+$', name or '') else 3.0
+    return nvis * fsz * PITCH + margin, margin
+
+def classify_render_state(base_entry, cur_text, cur_h, cur_autosize, cur_wrap):
+    """F3: 「既存扱い」の判定を描画状態の一致で行う。テキストが不変でも
+    高さ/AutoSize/折返しがベースラインと異なれば 'render-changed-origin-unknown'
+    (発生時点不明·要確認) を返し、既存扱いの根拠にしない。"""
+    if base_entry is None:
+        return 'no-baseline'
+    if norm(base_entry.get('text', '')) != norm(cur_text or ''):
+        return 'text-changed'
+    bh = base_entry.get('h')
+    ba = base_entry.get('autosize')
+    bw = base_entry.get('wordwrap')
+    h_same = bh is None or abs(float(bh) - float(cur_h)) <= 0.5
+    a_same = ba is None or int(ba) == int(cur_autosize)
+    w_same = bw is None or int(bw) == int(cur_wrap)
+    if h_same and a_same and w_same:
+        return 'render-same'
+    return 'render-changed-origin-unknown'
+
+def reverse_baseline_missing(baseline_entries, current_names, current_texts=None):
+    """F5: ベースライン→現在の逆方向比較。戻り値: 欠落/読取失敗リスト"""
+    missing = []
+    for en in baseline_entries:
+        nm = en['path'].split('/')[-1]
+        if nm not in current_names:
+            missing.append({'name': nm, 'reason': 'shape-missing'})
+        elif current_texts is not None and (en.get('text') or '').strip():
+            if nm not in current_texts:
+                missing.append({'name': nm, 'reason': 'text-unreadable'})
+    return missing
+
+def attribute_spans(spans, windows, min_straddle=0.05):
+    """F2: スパン単位の窓帰属。
+    spans: (x0,y0,x1,y1,text) · windows: {name: (x0,y0,x1,y1)}。
+    戻り値: (attrib {name: [span]}, unattributed [span], straddles [rec])。
+    straddle = 複数窓にまたがるスパン (隣接行混入·隣接図形への食い込み検出用)"""
+    attrib = defaultdict(list)
+    un, strad = [], []
+    for (x0, y0, x1, y1, t) in spans:
+        aa = max(1e-6, (x1 - x0) * (y1 - y0))
+        ratios = {}
+        for nm, (wx0, wy0, wx1, wy1) in windows.items():
+            ox = min(x1, wx1) - max(x0, wx0)
+            oy = min(y1, wy1) - max(y0, wy0)
+            if ox > 0 and oy > 0:
+                ratios[nm] = (ox * oy) / aa
+        if not ratios:
+            un.append((x0, y0, x1, y1, t))
+            continue
+        best = max(ratios, key=lambda k: ratios[k])
+        attrib[best].append((x0, y0, x1, y1, t))
+        others = {k: v for k, v in ratios.items() if k != best and v >= min_straddle}
+        if others:
+            strad.append({'span': [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)],
+                          'text': t, 'assigned': best,
+                          'straddle_ratio': {k: round(v, 2) for k, v in others.items()}})
+    return attrib, un, strad
+
+def collect_pdf_lines(page):
+    """F2: PDF のベクター線分 (罫線·枠線) を収集する。
+    戻り値: ('h'|'v', a0, a1, fixed) のリスト。fixed = 水平線なら y / 垂直線なら x"""
+    segs = []
+    for dr in page.get_drawings():
+        for it in dr['items']:
+            if it[0] == 'l':
+                p1, p2 = it[1], it[2]
+                if abs(p1.y - p2.y) <= 0.5 and abs(p1.x - p2.x) > 2.0:
+                    segs.append(('h', min(p1.x, p2.x), max(p1.x, p2.x), (p1.y + p2.y) / 2.0))
+                elif abs(p1.x - p2.x) <= 0.5 and abs(p1.y - p2.y) > 2.0:
+                    segs.append(('v', min(p1.y, p2.y), max(p1.y, p2.y), (p1.x + p2.x) / 2.0))
+            elif it[0] == 're':
+                r = it[1]
+                segs.append(('h', r.x0, r.x1, r.y0))
+                segs.append(('h', r.x0, r.x1, r.y1))
+                segs.append(('v', r.y0, r.y1, r.x0))
+                segs.append(('v', r.y0, r.y1, r.x1))
+    return segs
+
+def _near_dist(arr_sorted, v, tol):
+    """arr_sorted 内で v±tol に収る最接近値の距離 (無ければ None)"""
+    i = bisect.bisect_left(arr_sorted, v - tol)
+    best = None
+    while i < len(arr_sorted) and arr_sorted[i] <= v + tol:
+        d = abs(arr_sorted[i] - v)
+        if best is None or d < best:
+            best = d
+        i += 1
+    return best
+
+def line_calibration(pred_rects, segs, s_cands, offx_priors=(), offy_priors=(),
+                     step=0.0005, tol=1.2, offwin=25.0):
+    """F2: PDF 枠線による独立較正 (テキスト非依存) -- X/Y 各軸を独立に求める。
+    (2026-11-09 実測: この帳票の印刷は X/Y で異なる倍率になる
+    (pana② sx=0.9360 / sy=0.9709)。単一スケールの仮定は最大 17pt の窓ずれを
+    生むため、軸ごとに較正する)
+    s_cands: 印刷条件 (fit方程式·余白·PrintArea寸法) から導出したスケール候補。
+    各軸ごとに、各 s でオフセットを (a) 差分ヒストグラム上位峰
+    (b) 印刷原点の事前候補 から採り、整合した予測辺数が最大の (s, off) を選ぶ。
+    戻り値: dict(sx, ox, sy, oy, n_edges_x/y, matched_x/y, residual_max_pt)"""
+    hy = sorted(set(round(s3[3], 1) for s3 in segs if s3[0] == 'h'))
+    vx = sorted(set(round(s3[3], 1) for s3 in segs if s3[0] == 'v'))
+    if not hy or not vx or not pred_rects:
+        return None
+    ss = set()
+    for b in s_cands:
+        if b is None:
+            continue
+        k = -16
+        while k <= 16:
+            ss.add(round(b + k * step, 5))
+            k += 1
+    ss = sorted(ss)
+
+    def fit_axis(edges_pred, det, priors):
+        # オフセットは印刷原点の事前候補 (余白·センタリング) から ±3pt に限定する
+        # (centerH/V が偽なら原点は余白に一致する)。を広げると線分密度ゆえの
+        # 偽一致 (どの s でも半数近くが ±1pt 内に何か引っかかる) で収束しない
+        off_cands = set()
+        for p in priors:
+            k = -6
+            while k <= 6:
+                off_cands.add(round(p + k * 0.5, 2))
+                k += 1
+        best = None
+        for s in ss:
+            for off in off_cands:
+                matched = 0
+                resmax = 0.0
+                for ep in edges_pred:
+                    r = _near_dist(det, ep * s + off, tol)
+                    if r is not None:
+                        matched += 1
+                        resmax = max(resmax, r)
+                if best is None or matched > best['matched']:
+                    best = {'s': round(s, 4), 'off': round(off, 2), 'matched': matched,
+                            'residual_max_pt': round(resmax, 2)}
+        return best
+
+    ex, ey = [], []
+    for (l, t, w, h) in pred_rects:
+        ex += [l, l + w]
+        ey += [t, t + h]
+    fx = fit_axis(ex, vx, offx_priors)
+    fy = fit_axis(ey, hy, offy_priors)
+    if not fx or not fy:
+        return None
+    return {'sx': fx['s'], 'ox': fx['off'], 'sy': fy['s'], 'oy': fy['off'],
+            'n_edges_x': len(ex), 'matched_x': fx['matched'],
+            'n_edges_y': len(ey), 'matched_y': fy['matched'],
+            'matched_ratio_x': round(fx['matched'] / max(1, len(ex)), 3),
+            'matched_ratio_y': round(fy['matched'] / max(1, len(ey)), 3),
+            'residual_max_pt': max(fx['residual_max_pt'], fy['residual_max_pt'])}
+
+def pdf_spans(page):
+    """F2: スパン単位の生テキスト (帰属と残差検査用)"""
+    out = []
+    for blk in page.get_text('dict')['blocks']:
+        for ln in blk.get('lines', []):
+            for sp in ln['spans']:
+                if sp['text'].strip():
+                    x0, y0, x1, y1 = sp['bbox']
+                    out.append((x0, y0, x1, y1, sp['text']))
+    return out
+
 # ---------------------------------------------------------------- shared state
 DIGEST = {}
 COMSTORE = {}
@@ -395,7 +651,13 @@ COMSTORE = {}
 def main():
     results = {}
     def R(bk, cls):
-        return results.setdefault((bk, cls), {'status': 'PASS', 'violations': [], 'warnings': [], 'info': {}, 'evidence': []})
+        return results.setdefault((bk, cls), {'status': 'PASS', 'violations': [], 'warnings': [],
+                                              'info': {}, 'evidence': [], 'subchecks': {}})
+    def sub(bk, cls, name, status, evidence=None):
+        """F6: サブチェック単位の状態を記録する (C10 回帰表はクラス全体の
+        status を転記せず、この実サブチェックから集約する)"""
+        r = R(bk, cls)
+        r['subchecks'][name] = {'status': status, 'evidence': evidence}
     def fail(bk, cls, msg):
         r = R(bk, cls); r['status'] = 'FAIL'; r['violations'].append(msg)
     def warn(bk, cls, msg):
@@ -438,18 +700,23 @@ def main():
 
                 # ---------------- C1 page setup ----------------
                 ev1 = {'footer': {}, 'print_title_rows': {}}
+                n_pa_fail = n_ptr_fail = n_other_fail = 0
                 for sn in SHEETS:
                     ps = sheets[sn].PageSetup
                     pa_want = PA4 if sn == '相関図④' else PA23[bk][0 if sn == '相関図②' else 1]
                     pa_act = ps.PrintArea or ''
                     if norm(pa_act) != norm(pa_want):
                         fail(bk, 'C1_page_setup', '%s: PrintArea %r != %r' % (sn, pa_act, pa_want))
+                        n_pa_fail += 1
                     if int(ps.Orientation) != 2:
                         fail(bk, 'C1_page_setup', '%s: orientation=%s' % (sn, ps.Orientation))
+                        n_other_fail += 1
                     if int(ps.PaperSize) != 9:
                         fail(bk, 'C1_page_setup', '%s: paper=%s' % (sn, ps.PaperSize))
+                        n_other_fail += 1
                     if not (int(ps.FitToPagesWide) == 1 and int(ps.FitToPagesTall) == 1 and not ps.Zoom):
                         fail(bk, 'C1_page_setup', '%s: fit/zoom=%s/%s/%s' % (sn, ps.Zoom, ps.FitToPagesWide, ps.FitToPagesTall))
+                        n_other_fail += 1
                     try:
                         ptr = ps.PrintTitleRows or ''
                     except Exception:
@@ -457,10 +724,15 @@ def main():
                     ev1['print_title_rows'][sn] = ptr
                     if ptr not in ('', None):
                         fail(bk, 'C1_page_setup', '%s: PrintTitleRows set: %r' % (sn, ptr))
+                        n_ptr_fail += 1
                     ftr = {'C': ps.CenterFooter or '', 'L': ps.LeftFooter or '', 'R': ps.RightFooter or ''}
                     ev1['footer'][sn] = ftr
                     if FOOTER_KEY not in (ftr['C'] + ftr['L'] + ftr['R']):
                         fail(bk, 'C1_page_setup', '%s: footer lacks %s' % (sn, FOOTER_KEY))
+                        n_other_fail += 1
+                sub(bk, 'C1_page_setup', 'print_area', 'FAIL' if n_pa_fail else 'PASS')
+                sub(bk, 'C1_page_setup', 'print_title_rows_unset', 'FAIL' if n_ptr_fail else 'PASS')
+                sub(bk, 'C1_page_setup', 'orientation_paper_fit_footer', 'FAIL' if n_other_fail else 'PASS')
                 with io.open(os.path.join(OUT, 'strict_page_setup_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump(ev1, f, ensure_ascii=False, indent=1)
                 R(bk, 'C1_page_setup')['evidence'].append('strict_page_setup_%s.json' % bk)
@@ -468,6 +740,18 @@ def main():
                 # ---------------- COM shapes ----------------
                 com = {sn: com_sheet_shapes(sheets[sn]) for sn in SHEETS}
                 COMSTORE[bk] = com
+                # F5: read_tf 失敗の無音除外を禁止 -- 失敗は C2 の違反として扱う
+                com_tf_errors = []
+                for sn in SHEETS:
+                    for e in com[sn]:
+                        if e.get('tf') and '_error' in e['tf']:
+                            com_tf_errors.append((sn, e['name']))
+                            fail(bk, 'C2_inventory', '%s: read_tf failed on %s: %s' % (sn, e['name'], e['tf']['_error']))
+                        for c in e.get('children', []):
+                            if c.get('tf') and '_error' in c['tf']:
+                                com_tf_errors.append((sn, c['name']))
+                                fail(bk, 'C2_inventory', '%s: read_tf failed on %s: %s' % (sn, c['name'], c['tf']['_error']))
+                sub(bk, 'C2_inventory', 'read_tf_no_silent_skip', 'FAIL' if com_tf_errors else 'PASS')
                 for sn in SHEETS:
                     com_names = {e['name'] for e in com[sn]}
                     com_names |= {c['name'] for e in com[sn] for c in e.get('children', [])}
@@ -495,6 +779,8 @@ def main():
                         warn(bk, 'C2_inventory', '%s: COM-only shapes: %s' % (sn, ','.join(miss_xml[:8])))
                     if real_miss_com:
                         fail(bk, 'C2_inventory', '%s: XML-only shapes: %s' % (sn, ','.join(real_miss_com[:8])))
+                    sub(bk, 'C2_inventory', 'xml_com_name_match_%s' % SN_TAG[sn],
+                        'FAIL' if real_miss_com else 'PASS')
                     drift = 0
                     for e in com[sn]:
                         xe = inv_flat[sn].get(e['name'])
@@ -517,7 +803,7 @@ def main():
                              'w': e['w'], 'h': e['h'], 'children': [], 'conn': e.get('conn')}
                         xe = inv_flat[sn].get(e['name'])
                         d['flipH'], d['flipV'] = xe['flip'] if xe else (False, False)
-                        if e.get('tf'):
+                        if tf_ok(e.get('tf')):
                             tf = e['tf']
                             d['tf'] = {'mL': tf['mL'], 'mR': tf['mR'], 'mT': tf['mT'], 'mB': tf['mB'],
                                        'boundW': tf['boundW'], 'boundH': tf['boundH']}
@@ -528,7 +814,7 @@ def main():
                                        'boundW': 2.49, 'boundH': 13.43}
                         for c in e.get('children', []):
                             cd = {'name': c['name'], 'l': c['l'], 't': c['t'], 'w': c['w'], 'h': c['h']}
-                            if c.get('tf'):
+                            if tf_ok(c.get('tf')):
                                 tf = c['tf']
                                 cd['tf'] = {'mL': tf['mL'], 'mR': tf['mR'], 'mT': tf['mT'], 'mB': tf['mB'],
                                             'boundW': tf['boundW'], 'boundH': tf['boundH']}
@@ -541,85 +827,52 @@ def main():
                 # ---------------- C4 clearance (テキストボックス間 3.75pt) ----------------
                 base_clear = json.load(io.open(os.path.join(BASE, 'clearance_report.json'), encoding='utf-8'))
                 postA_file = json.load(io.open(os.path.join(BASE, 'collision_report_postA3.json'), encoding='utf-8'))
-                # 設計上の豁免: (1) 同一ノード内 (2) 帯ヘッダーx帯注記 (3) 所属ノード同士が
-                # 重なり設計(例: n17がn10の下に潜る) (4) 接続エッジのラベルと接続先ノード部品
-                def owner_of(nm):
-                    for sh in tops23[sn]:
-                        if int(sh['type']) == 6:
-                            if sh['name'] == nm or any(c['name'] == nm for c in sh.get('children', [])):
-                                return sh['name'], sh
-                        elif sh['name'] == nm:
-                            return nm, sh
-                    return nm, None
+                # F4: 豁免は「固定ペア」と「ベースライン(postA3 c-list)由来」に限定する。
+                # 旧実装の動的豁免 ((1) 同一オーナー内 (3) 所属ノード同士の重なり設計
+                # (4) エッジラベルの埋め込み) は新規違反を自動解除するため廃止。
+                # 動的ルールで豁免されていたペアのうちベースラインに無いものは、
+                # 以降は新規違反として記録され、人間の判断を待つ。
+                FIXED_CLR_PAIRS = [{'g2_bandhead', 'g2_bandnote'}, {'g3_bandhead', 'g3_bandnote'}]
                 lbl_edge = re.compile(r'^(g\d_e_e\d+)_l$')
                 clr_out = {}
+                n_exempt_fixed = n_exempt_baseline = 0
                 for sn in ('相関図②', '相関図③'):
-                    conn_by_edge = {sh['name']: [c for c in (sh.get('conn') or []) if c] for sh in tops23[sn]}
                     # リーフテキスト矩形 (グループ子 + 非グループtop)
                     ltexts = []
                     for sh in tops23[sn]:
                         if int(sh['type']) == 6:
                             for c in sh.get('children', []):
-                                if c.get('tf'):
+                                if tf_ok(c.get('tf')):
                                     ltexts.append((c['name'], (c['l'], c['t'], c['w'], c['h'])))
-                        elif sh.get('tf'):
+                        elif tf_ok(sh.get('tf')):
                             ltexts.append((sh['name'], (sh['l'], sh['t'], sh['w'], sh['h'])))
-                    rect_by_name = dict(ltexts)
-                    top_rect = {sh['name']: (sh['l'], sh['t'], sh['w'], sh['h']) for sh in tops23[sn]}
                     base_c_pairs = {(min(v['a'], v['b']), max(v['a'], v['b']))
                                     for v in postA_file['books'][bk][sn]['violations']['c']}
+                    # 同一ノードの _txt/_tag はタグがノード箱の右上に重なる設計であり、
+                    # ギャップ 0 が常態。名前パターンから導出する固定ペアとして扱う
+                    # (幾何から導出する動的豁免ではない。理由は証跡 JSON に記録する)
+                    owner = {}
+                    for sh in tops23[sn]:
+                        for c in sh.get('children', []):
+                            owner[c['name']] = sh['name']
 
-                    def design_exempt(na, nb):
-                        own_a = owner_of(na)
-                        own_b = owner_of(nb)
-                        # (1) 同一ノード内の部品 (txt x tag など)
-                        if own_a[0] == own_b[0]:
-                            return True
-                        # (2) 帯ヘッダー x 帯注記 (積層設計 3.0pt)
-                        if {na, nb} in ({'g2_bandhead', 'g2_bandnote'}, {'g3_bandhead', 'g3_bandnote'}):
-                            return True
-                        # (3) 所属ノード同士が重なり設計ならその部品ペアは豁免
-                        ta, tb = top_rect.get(own_a[0]), top_rect.get(own_b[0])
-                        if ta and tb:
-                            ox = min(ta[0] + ta[2], tb[0] + tb[2]) - max(ta[0], tb[0])
-                            oy = min(ta[1] + ta[3], tb[1] + tb[3]) - max(ta[1], tb[1])
-                            if ox > 1 and oy > 1:
-                                return True
-                        # (4) エッジラベル x 接続先ノードの部品
-                        for lbl, other in ((na, nb), (nb, na)):
-                            m = lbl_edge.match(lbl)
-                            if not m:
-                                continue
-                            conns = conn_by_edge.get(m.group(1)) or []
-                            other_owner, other_sh = owner_of(other)
-                            hit = any(c and (c == other_owner or other_owner.startswith(c)
-                                             or c.startswith(other_owner)) for c in conns)
-                            if not hit:
-                                # 座標指定線: 端点が相手ノードの可視部に埋め込まれていれば接続設計
-                                edge_top = next((x for x in tops23[sn] if x['name'] == m.group(1)), None)
-                                if edge_top is not None:
-                                    pts = []
-                                    if int(edge_top['type']) == 9:
-                                        seg = cc.line_seg(edge_top, (bool(edge_top.get('flipH')), bool(edge_top.get('flipV'))))
-                                        pts = list(seg)
-                                    else:
-                                        for c3 in edge_top.get('children', []):
-                                            l3, t3, w3, h3 = c3['l'], c3['t'], c3['w'], c3['h']
-                                            pts += [(l3, t3), (l3 + w3, t3 + h3), (l3 + w3, t3), (l3, t3 + h3)]
-                                    if int((other_sh or {}).get('type') or 0) == 6:
-                                        parts = [(c3['l'], c3['t'], c3['w'], c3['h'])
-                                                 for c3 in other_sh.get('children', [])] or \
-                                                [(other_sh['l'], other_sh['t'], other_sh['w'], other_sh['h'])]
-                                    elif other_sh is not None:
-                                        parts = [(other_sh['l'], other_sh['t'], other_sh['w'], other_sh['h'])]
-                                    else:
-                                        parts = []
-                                    hit = any(clc.pt_rect_dist(p, pr) <= 2.0 for p in pts for pr in parts)
-                            if hit:
-                                return True
-                        return False
+                    def same_node_txt_tag(na, nb):
+                        oa, ob = owner.get(na), owner.get(nb)
+                        return (oa is not None and oa == ob and oa not in
+                                ('g2_band', 'g3_band')
+                                and {na.rsplit('_', 1)[-1], nb.rsplit('_', 1)[-1]} == {'txt', 'tag'})
 
-                    viols, known = [], []
+                    def baseline_gap(pk):
+                        """F4: 既存ペアの悪化差分算出用に、ベースライン幾何 (b5) から
+                        当時のギャップを再計算する"""
+                        ea = baseline_idx.get((bk, sn, pk[0]))
+                        eb = baseline_idx.get((bk, sn, pk[1]))
+                        if not ea or not eb or any(k not in e for e in (ea, eb) for k in ('l', 't', 'w', 'h')):
+                            return None
+                        return clc.rect_rect_dist((ea['l'], ea['t'], ea['w'], ea['h']),
+                                                  (eb['l'], eb['t'], eb['w'], eb['h']))
+
+                    viols, known, worsened = [], [], []
                     for i in range(len(ltexts)):
                         for j in range(i + 1, len(ltexts)):
                             (na, ra), (nb, rb) = ltexts[i], ltexts[j]
@@ -627,16 +880,42 @@ def main():
                             if g >= CLEAR_PT:
                                 continue
                             ent = {'a': na, 'b': nb, 'gap_pt': round(g, 2)}
-                            if (min(na, nb), max(na, nb)) in base_c_pairs or design_exempt(na, nb):
+                            pk = (min(na, nb), max(na, nb))
+                            if any({na, nb} == fp for fp in FIXED_CLR_PAIRS):
+                                ent['exempt_reason'] = 'fixed-design-pair'
+                                n_exempt_fixed += 1
+                                known.append(ent)
+                            elif same_node_txt_tag(na, nb):
+                                ent['exempt_reason'] = 'fixed-design-pair(same-node txt/tag)'
+                                n_exempt_fixed += 1
+                                known.append(ent)
+                            elif pk in base_c_pairs:
+                                ent['exempt_reason'] = 'baseline(postA3 c-list)'
+                                n_exempt_baseline += 1
+                                bg = baseline_gap(pk)
+                                if bg is None:
+                                    ent['baseline_gap_pt'] = 'unknown'
+                                else:
+                                    ent['baseline_gap_pt'] = round(bg, 2)
+                                    if g < bg - 1.0:
+                                        ent['worsened_by_pt'] = round(bg - g, 2)
+                                        worsened.append(dict(ent))
                                 known.append(ent)
                             else:
+                                ent['exempt_reason'] = None
                                 viols.append(ent)
                     base_cnt = base_clear['books'][bk]['sheets'][sn]['count']
                     clr_out[sn] = {'leaf_texts': len(ltexts), 'violations_new': viols,
-                                   'baseline_known_overlaps': known, 'clearance_report_baseline_count': base_cnt}
+                                   'baseline_known_overlaps': known, 'worsened_baseline_pairs': worsened,
+                                   'clearance_report_baseline_count': base_cnt}
                     for v in viols:
                         fail(bk, 'C4_clearance', '%s: text-text clearance %.2fpt < 3.75pt (new): %s x %s'
                              % (sn, v['gap_pt'], v['a'], v['b']))
+                    for w in worsened:
+                        warn(bk, 'C4_clearance', '%s: baseline pair worsened %.2fpt -> %.2fpt: %s x %s'
+                             % (sn, w['baseline_gap_pt'], w['gap_pt'], w['a'], w['b']))
+                sub(bk, 'C4_clearance', 'exemptions_recorded', 'RECORDED',
+                    'fixed=%d baseline=%d (reasons in strict_clearance_%s.json)' % (n_exempt_fixed, n_exempt_baseline, bk))
                 with io.open(os.path.join(OUT, 'strict_clearance_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump(clr_out, f, ensure_ascii=False, indent=1)
                 R(bk, 'C4_clearance')['evidence'].append('strict_clearance_%s.json' % bk)
@@ -663,10 +942,10 @@ def main():
                         cls = cc.cls_of(sh['name'], sh['type'])
                         if int(sh['type']) == 6:
                             for c in sh.get('children', []):
-                                if c.get('tf'):
+                                if tf_ok(c.get('tf')):
                                     k = 'txt' if c['name'].endswith('_txt') else ('tag' if c['name'].endswith('_tag') else 'membertext')
                                     texts.append((c['name'], cc.R(c), sh['name'], k, c['tf']))
-                        elif sh.get('tf'):
+                        elif tf_ok(sh.get('tf')):
                             texts.append((sh['name'], cc.R(sh), sh['name'], cls, sh['tf']))
                     items = [(eid, sid, seg) for eid, segs in edges.items() for sid, seg in segs]
                     e_out, e_wl = [], []
@@ -738,7 +1017,11 @@ def main():
                 R(bk, 'C5_collision')['evidence'].append('strict_collision_%s.json' % bk)
 
                 # ---------------- C6 connectors ----------------
+                # F6: C6 は「記録のみ」を PASS と表示せず RECORDED とし、
+                # 期待比較 (XML/COM の接続線集合と箱の一致) を実施する。
+                # ラベル重なりの分類は C5 分類c、EE08/n19(R1) は既知例外として記録。
                 conn_out = {}
+                conn_mismatch = []
                 for sn in SHEETS:
                     rec = []
                     for e in com[sn]:
@@ -747,6 +1030,13 @@ def main():
                             rec.append({'name': e['name'], 'box': [e['l'], e['t'], e['w'], e['h']],
                                         'flip': xe.get('flip'), 'conn': e.get('conn'),
                                         'orient': 'h' if e['h'] <= 0.5 else ('v' if e['w'] <= 0.5 else 'multi')})
+                            if not xe:
+                                conn_mismatch.append('%s: connector %s absent in drawing XML' % (sn, e['name']))
+                            else:
+                                d = max(abs(e['l'] - xe['box'][0]), abs(e['t'] - xe['box'][1]),
+                                        abs(e['w'] - xe['box'][2]), abs(e['h'] - xe['box'][3]))
+                                if d > 0.5:
+                                    conn_mismatch.append('%s: connector %s XML/COM box drift %.2fpt' % (sn, e['name'], d))
                     conn_out[sn] = rec
                 for v in coll_out['相関図②']['violations']['b']:
                     ids = v.get('a', '') + ' ' + v.get('b', '')
@@ -755,7 +1045,12 @@ def main():
                 with io.open(os.path.join(OUT, 'strict_connectors_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump(conn_out, f, ensure_ascii=False, indent=1)
                 R(bk, 'C6_connectors')['evidence'].append('strict_connectors_%s.json' % bk)
-                R(bk, 'C6_connectors')['info']['R1_EE08'] = 'known exception (recorded only, P7)'
+                for mmsg in conn_mismatch:
+                    fail(bk, 'C6_connectors', mmsg)
+                R(bk, 'C6_connectors')['status'] = 'FAIL' if conn_mismatch else 'RECORDED'
+                sub(bk, 'C6_connectors', 'xml_com_connector_match', 'FAIL' if conn_mismatch else 'PASS')
+                R(bk, 'C6_connectors')['info']['expectation'] = ('connectors recorded with flip/orient/conn; '
+                                                                 'XML vs COM box <=0.5pt; label overlaps judged in C5-c; EE08/n19=R1 recorded (P7)')
 
                 # ---------------- C8 PDF export ----------------
                 pdf_map = {}
@@ -770,10 +1065,10 @@ def main():
                 for sn in SHEETS:
                     tx = {}
                     for e in com[sn]:
-                        if e.get('tf'):
+                        if tf_ok(e.get('tf')):
                             tx[e['name']] = e['tf']['text']
                         for c in e.get('children', []):
-                            if c.get('tf'):
+                            if tf_ok(c.get('tf')):
                                 tx[c['name']] = c['tf']['text']
                     all_text[sn] = tx
                 acc = {'changed': {}, 'unchanged_diff': [], 'unchanged_missing_baseline': [], 't4_table': {}}
@@ -816,6 +1111,25 @@ def main():
                         if norm(base['text']) != norm(txt):
                             acc['unchanged_diff'].append({'sheet': sn, 'name': nm})
                             fail(bk, 'C9_data_accuracy', '%s: unchanged-shape text drift: %s' % (sn, nm))
+                # F5: ベースライン→現在の逆方向比較 (②③)。
+                # 既存図形の欠落·テキスト読取失敗を網羅する。④は変更前基準が無いため対象外。
+                acc['baseline_reverse'] = {}
+                n_rev_fail = 0
+                for sn in ('相関図②', '相関図③'):
+                    cur_names = (set(inv_flat[sn]) | {e['name'] for e in com[sn]}
+                                 | {c['name'] for e in com[sn] for c in e.get('children', [])})
+                    miss = reverse_baseline_missing(baselines[bk][sn], cur_names, all_text[sn])
+                    acc['baseline_reverse'][sn] = miss
+                    for m5 in miss:
+                        n_rev_fail += 1
+                        fail(bk, 'C9_data_accuracy', '%s: baseline shape missing/unreadable in current book: %s (%s)'
+                             % (sn, m5['name'], m5['reason']))
+                sub(bk, 'C9_data_accuracy', 'baseline_reverse_23', 'FAIL' if n_rev_fail else 'PASS',
+                    'missing=%d' % n_rev_fail)
+                sub(bk, 'C9_data_accuracy', 'changed_text_asbuilt',
+                    'FAIL' if any(not v.get('ok') for v in acc['changed'].values()) else 'PASS')
+                sub(bk, 'C9_data_accuracy', 't4_expected_act',
+                    'FAIL' if acc['t4_table'] and not all(acc['t4_table'].values()) else 'PASS')
                 with io.open(os.path.join(OUT, 'strict_data_accuracy_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump(acc, f, ensure_ascii=False, indent=1)
                 R(bk, 'C9_data_accuracy')['evidence'].append('strict_data_accuracy_%s.json' % bk)
@@ -824,8 +1138,10 @@ def main():
                 # ---------------- hyperlinks (④) ----------------
                 ws4 = sheets['相関図④']
                 nhl = len(ws4.Hyperlinks)
+                n_link_fail = 0
                 if nhl != WANT_LINKS[bk]:
                     fail(bk, 'C10_err_regression', '④ hyperlinks %d != %d' % (nhl, WANT_LINKS[bk]))
+                    n_link_fail += 1
                 exp_links = None
                 try:
                     with io.open(os.path.join(BASE, 'phaseB_report_%s.json' % bk), encoding='utf-8') as f:
@@ -842,10 +1158,12 @@ def main():
                     except Exception:
                         pass
                 map_ok = None
+                n_target_fail = 0
                 if exp_links is not None:
                     map_ok = (act_links == exp_links)
                     if not map_ok:
                         fail(bk, 'C10_err_regression', '④ link map mismatch (%d act vs %d exp)' % (len(act_links), len(exp_links)))
+                        n_link_fail += 1
                     for nm, tgt in exp_links.items():
                         sheet, cell = tgt.rsplit('!', 1)
                         if sheet in CRED_SHEETS:
@@ -854,9 +1172,14 @@ def main():
                             v = wb.Worksheets(sheet).Range(cell).Value
                         except Exception:
                             fail(bk, 'C10_err_regression', '%s target %s!%s unreadable' % (nm, sheet, cell))
+                            n_target_fail += 1
                             continue
                         if v is None or norm(str(v)) == '':
                             fail(bk, 'C10_err_regression', '%s target %s!%s empty' % (nm, sheet, cell))
+                            n_target_fail += 1
+                sub(bk, 'C10_err_regression', 'link_count', 'FAIL' if nhl != WANT_LINKS[bk] else 'PASS')
+                sub(bk, 'C10_err_regression', 'link_map', 'FAIL' if map_ok is False else ('PASS' if map_ok else 'NOT-RUN'))
+                sub(bk, 'C10_err_regression', 'link_targets_nonempty', 'FAIL' if n_target_fail else 'PASS')
                 with io.open(os.path.join(OUT, 'strict_links_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump({'count': nhl, 'want': WANT_LINKS[bk], 'map_ok': map_ok,
                                'n_measured': len(act_links)}, f, ensure_ascii=False, indent=1)
@@ -875,25 +1198,31 @@ def main():
                     json.dump(DIGEST[bk], f, ensure_ascii=False, indent=1)
 
                 # ---------------- C3/C7: PDF analysis ----------------
+                # F2: 較正は PDF 枠線 (ベクター線) で独立に行い、テキスト依存の
+                # 収蔵率較正は交差検証に降格する。帰属はスパン単位で行い、
+                # 残差 (どの図形で何文字抽出できなかったか) を説明責任付きで記録する。
                 fit_all = []
                 orphans = []
+                crops_ledger = []
+                cnt = {'tail_loss': 0, 'tail_k4': 0, 'ascii_fail': 0, 'height_fail': 0,
+                       'ascii_k4': 0, 'tail_winprec': 0,
+                       'autosize_fail': 0, 'page_fail': 0, 'calib_note': 0, 'unexplained': 0}
                 for sn in SHEETS:
                     doc = fitz.open(pdf_map[sn])
                     if doc.page_count != 1:
                         fail(bk, 'C8_pdf_roundtrip', '%s: pdf pages %d != 1' % (sn, doc.page_count))
+                        cnt['page_fail'] += 1
                     page = doc[0]
                     if page.rect.width <= page.rect.height:
                         fail(bk, 'C8_pdf_roundtrip', '%s: pdf not landscape (%.0fx%.0f)' % (sn, page.rect.width, page.rect.height))
+                        cnt['page_fail'] += 1
                     jrows = pdf_rows(page)
-                    cands = {'相関図②': ['g2_expl', 'g2_bandhead', 'g2_leg0', 'g2_e_e01_l'],
-                             '相関図③': ['g3_expl', 'g3_leg0', 'g3_e_e03_l'],
-                             '相関図④': ['t4_head', 't4_b1_src', 't4_b2_src', 't4_upd', 't4_b3_src']}[sn]
                     txmap = {}
                     for e in com[sn]:
-                        if e.get('tf'):
+                        if tf_ok(e.get('tf')):
                             txmap[e['name']] = e
                         for c in e.get('children', []):
-                            if c.get('tf'):
+                            if tf_ok(c.get('tf')):
                                 txmap[c['name']] = c
                     ps = sheets[sn].PageSetup
                     pa = ps.PrintArea or ''
@@ -920,19 +1249,19 @@ def main():
                     # 較正対象: タグ(縦書き)以外の tf 図形
                     cal_items = []
                     for e2 in com[sn]:
-                        if e2.get('tf') and not e2['name'].endswith('_tag'):
+                        if tf_ok(e2.get('tf')) and not e2['name'].endswith('_tag'):
                             cal_items.append((e2['name'], e2['tf'], (e2['l'], e2['t'], e2['w'], e2['h'])))
                         for c2 in e2.get('children', []):
-                            if c2.get('tf') and not c2['name'].endswith('_tag'):
+                            if tf_ok(c2.get('tf')) and not c2['name'].endswith('_tag'):
                                 cal_items.append((c2['name'], c2['tf'], (c2['l'], c2['t'], c2['w'], c2['h'])))
 
-                    def coverage_at(s, offx, offy, need_list=None):
+                    def coverage_at(sx, sy, offx, offy, need_list=None):
                         tot = 0.0
                         for nm2, tf2, (L2, T2, W2, H2) in cal_items:
-                            x0 = (L2 + tf2['mL']) * s + offx - 2.0
-                            y0 = (T2 + tf2['mT'] - above_h) * s + offy - 3.0
-                            x1 = (L2 + W2 - tf2['mR']) * s + offx + 2.0
-                            y1 = (T2 + H2 - tf2['mB'] - above_h) * s + offy + 3.0
+                            x0 = (L2 + tf2['mL']) * sx + offx - 2.0
+                            y0 = (T2 + tf2['mT'] - above_h) * sy + offy - 3.0
+                            x1 = (L2 + W2 - tf2['mR']) * sx + offx + 2.0
+                            y1 = (T2 + H2 - tf2['mB'] - above_h) * sy + offy + 3.0
                             got = ''.join(t for (yy, rx0, rx1, t) in jrows
                                           if y0 <= yy <= y1 and rx0 < x1 and rx1 > x0)
                             ce, cg = Counter(cjk(tf2['text'])), Counter(cjk(got))
@@ -942,36 +1271,124 @@ def main():
                                 need_list.append((nm2, round(cov, 3)))
                         return tot / max(1, len(cal_items))
 
-                    best_s, best_cov = s_est, coverage_at(s_est, offx0, offy0)
+                    best_s, best_cov = s_est, coverage_at(s_est, s_est, offx0, offy0)
                     s_try = 0.80
                     while s_try <= 1.0001:
-                        cov = coverage_at(s_try, float(ps.LeftMargin), float(ps.TopMargin))
+                        cov = coverage_at(s_try, s_try, float(ps.LeftMargin), float(ps.TopMargin))
                         if cov > best_cov + 1e-9:
                             best_s, best_cov = s_try, cov
                         s_try = round(s_try + 0.001, 4)
+                    # F2: 独立較正 (PDF 枠線·テキスト非依存) -- 主判定に使用する。
+                    # スケール候補は印刷条件 (fit方程式·余白·PrintArea寸法) から導出し、
+                    # 予測矩形は枠線を持つ図形 (XML a:ln 有効) に限定する。
+                    pred_rects = []
+                    for e3 in com[sn]:
+                        xe3 = inv_flat[sn].get(e3['name']) or {}
+                        if xe3.get('bordered') and e3['w'] > 5 and e3['h'] > 5:
+                            pred_rects.append((e3['l'], e3['t'], e3['w'], e3['h']))
+                        for c3 in e3.get('children', []):
+                            xe4 = inv_flat[sn].get(c3['name']) or {}
+                            if xe4.get('bordered') and c3['w'] > 5 and c3['h'] > 5:
+                                pred_rects.append((c3['l'], c3['t'], c3['w'], c3['h']))
+                    s_cands = [s_est]
+                    if rw and rh:
+                        s_cands += [avail_w / rw, avail_h / rh]
+                    offx_priors = [float(ps.LeftMargin)]
+                    offy_priors = [float(ps.TopMargin)]
+                    if centerH and rw:
+                        offx_priors.append(float(ps.LeftMargin) + (avail_w - rw * s_est) / 2.0)
+                    if centerV and rh:
+                        offy_priors.append(float(ps.TopMargin) + (avail_h - rh * s_est) / 2.0)
+                    calib_line = line_calibration(pred_rects, collect_pdf_lines(page), s_cands,
+                                                  offx_priors, offy_priors)
+                    calib_mode = 'text-coverage(fallback)'
                     sx = sy = best_s
                     offx, offy = offx0, offy0
+                    agree = None
+                    # 採用条件: 各軸の整合率 35% 以上 · 残差 (coverage) がテキスト較正の
+                    # 0.9 倍以上 (cross-check)。不採用のときは黙ってテキスト較正を使わず
+                    # 'calibration-unresolved' を記録する (偽合格の隠蔽を避ける)。
+                    # 注: テキスト較正 (単一スケール) は X/Y 異方性を表現できないため、
+                    # 一致判定は行わず coverage の cross-check のみを用いる。
+                    strong = (calib_line and calib_line['matched_ratio_x'] >= 0.6
+                              and calib_line['matched_ratio_y'] >= 0.6)
+                    if strong:
+                        cov_line = coverage_at(calib_line['sx'], calib_line['sy'],
+                                               calib_line['ox'], calib_line['oy'])
+                        if cov_line >= 0.9 * best_cov:
+                            calib_mode = 'pdf-frame-lines'
+                            sx, offx = calib_line['sx'], calib_line['ox']
+                            sy, offy = calib_line['sy'], calib_line['oy']
+                            agree = {'dsx_vs_text': round(abs(calib_line['sx'] - best_s), 4),
+                                     'dsy_vs_text': round(abs(calib_line['sy'] - best_s), 4)}
+                        else:
+                            cnt['calib_note'] += 1
+                            warn(bk, 'C8_pdf_roundtrip',
+                                 '%s: calibration-unresolved: frame-line cov=%.3f vs text cov=%.3f (text-coverage used)'
+                                 % (sn, cov_line, best_cov))
+                    else:
+                        cnt['calib_note'] += 1
+                        warn(bk, 'C8_pdf_roundtrip',
+                             '%s: frame-line calibration weak (rx=%r ry=%r); fell back to text coverage calibration'
+                             % (sn, calib_line['matched_ratio_x'] if calib_line else None,
+                                calib_line['matched_ratio_y'] if calib_line else None))
+                    cov_primary = coverage_at(sx, sy, offx, offy)
                     mapping = {'sx': round(sx, 4), 'sy': round(sy, 4), 'offx': round(offx, 1),
                                'offy': round(offy, 1), 'scale_est_print': round(s_est, 4),
-                               'coverage': round(best_cov, 4),
+                               'coverage': round(cov_primary, 4),
+                               'coverage_text_calib': round(best_cov, 4),
+                               'calib_mode': calib_mode,
+                               'calib_line': calib_line, 'calib_agreement': agree,
                                'print_area_start_row': start_row, 'above_h': round(above_h, 1),
                                'centerH': centerH, 'centerV': centerV}
-                    if best_cov < 0.90:
-                        warn(bk, 'C8_pdf_roundtrip', '%s: PDF mapping coverage low (%.2f at s=%.4f)' % (sn, best_cov, best_s))
+                    # F2: スパン単位帰属 (窓=図形の本文領域) + 残差の説明責任
+                    spans = pdf_spans(page)
+                    windows = {}
+                    for nm2, tf2, (L2, T2, W2, H2) in cal_items:
+                        windows[nm2] = ((L2 + tf2['mL']) * sx + offx,
+                                        (T2 + tf2['mT'] - above_h) * sy + offy,
+                                        (L2 + W2 - tf2['mR']) * sx + offx,
+                                        (T2 + H2 - tf2['mB'] - above_h) * sy + offy)
+                    attrib, unattrib, strads = attribute_spans(spans, windows)
+                    n_strad_big = sum(1 for s4 in strads if max(s4['straddle_ratio'].values()) >= 0.3)
+                    if n_strad_big:
+                        warn(bk, 'C8_pdf_roundtrip', '%s: %d spans straddle >=2 text windows (adjacent-row mixing candidates)'
+                             % (sn, n_strad_big))
+                    unattr_cjk = sum(len(cjk(t)) for (_, _, _, _, t) in unattrib)
+                    # F2: 残差点検査 -- 「PDF 上の図形近傍に存在しない文字」だけを
+                    # 真の残差とする。窓の外にあってもページ近傍 (±15pt) に存在する
+                    # 文字は帰属/窓精度の問題 (expl-by-geometry) であって描画欠落ではない。
+                    # これにより「抽出は完全だが収蔵率が低い」不整合を
+                    # (a) 窓精度の問題として説明するか (b) 真の描画欠落として
+                    # FAIL するかを機械的に切り分ける。
+                    for nm2, tf2, (L2, T2, W2, H2) in cal_items:
+                        wx0, wy0, wx1, wy1 = windows[nm2]
+                        ex0, ey0, ex1, ey1 = wx0 - 15.0, wy0 - 15.0, wx1 + 15.0, wy1 + 15.0
+                        got_near = ''.join(t for (sx0, sy0, sx1, sy1, t) in spans
+                                           if sx0 < ex1 and sx1 > ex0 and sy0 < ey1 and sy1 > ey0)
+                        ce = Counter(cjk(tf2['text']))
+                        cg = Counter(cjk(got_near))
+                        n_miss = sum((ce - cg).values())
+                        if n_miss:
+                            cnt['unexplained'] += n_miss
+                            cnt.setdefault('unexplained_shapes', []).append('%s/%s:%d' % (sn, nm2, n_miss))
 
                     pix = page.get_pixmap(matrix=fitz.Matrix(2.4, 2.4))
                     png_full = 'strict_%s_%s_full.png' % (bk, SN_TAG[sn])
                     pix.save(os.path.join(OUT, png_full))
-                    fit_info = {'pages': doc.page_count, 'mapping': mapping, 'png_full': png_full}
+                    fit_info = {'pages': doc.page_count, 'mapping': mapping, 'png_full': png_full,
+                                'spans_total': len(spans), 'spans_unattributed': len(unattrib),
+                                'unattributed_cjk_chars': unattr_cjk,
+                                'straddle_spans': strads[:40]}
 
                     fit3 = []
                     crops = []
                     for e in com[sn]:
                         tfitems = []
-                        if e.get('tf'):
+                        if tf_ok(e.get('tf')):
                             tfitems.append((e['name'], e['tf'], (e['l'], e['t'], e['w'], e['h'])))
                         for c in e.get('children', []):
-                            if c.get('tf'):
+                            if tf_ok(c.get('tf')):
                                 tfitems.append((c['name'], c['tf'], (c['l'], c['t'], c['w'], c['h'])))
                         for nm, tf, (L, T, W, H) in tfitems:
                             xe = inv_flat[sn].get(nm) or {}
@@ -988,29 +1405,74 @@ def main():
                             y0 = (T + mT - above_h) * sy + offy - 3.0
                             x1 = (L + W - mR) * sx + offx + 2.0
                             y1 = (T + H - mB - above_h) * sy + offy + 3.0
-                            sel = [r for r in jrows if y0 <= r[0] <= y1 and r[1] < x1 and r[2] > x0]
-                            # PDF行はx-gapで断片化するため、y近接(<=2pt)の断片を視覚行に統合する
-                            clusters = []
-                            for (yy, xx0, xx1, tt) in sorted(sel):
-                                if clusters and yy - clusters[-1]['y'] <= 2.0:
-                                    c = clusters[-1]
-                                    c['x0'] = min(c['x0'], xx0)
-                                    c['x1'] = max(c['x1'], xx1)
-                                    c['t'] += tt
-                                else:
-                                    clusters.append({'y': yy, 'x0': xx0, 'x1': xx1, 't': tt})
+
+                            def clusters_in(wx0, wy0, wx1, wy1):
+                                # PDF行はx-gapで断片化するため、y近接(<=2pt)の断片を視覚行に統合する
+                                cls = []
+                                for (yy, xx0, xx1, tt) in sorted(r for r in jrows
+                                                                 if wy0 <= r[0] <= wy1 and r[1] < wx1 and r[2] > wx0):
+                                    if cls and yy - cls[-1]['y'] <= 2.0:
+                                        c = cls[-1]
+                                        c['x0'] = min(c['x0'], xx0)
+                                        c['x1'] = max(c['x1'], xx1)
+                                        c['t'] += tt
+                                    else:
+                                        cls.append({'y': yy, 'x0': xx0, 'x1': xx1, 't': tt})
+                                return cls
+
+                            clusters = clusters_in(x0, y0, x1, y1)
                             nvis_act = len(clusters)
                             got_cjk = cjk(''.join(c['t'] for c in clusters))
-                            exp_cjk = cjk(tf['text'])
-                            tail_ok = True
-                            if exp_cjk:
-                                ce, cg = Counter(exp_cjk), Counter(got_cjk)
-                                tail_ok = all(cg[ch] >= n for ch, n in ce.items())
-                                last4 = exp_cjk[-4:]
-                                if tail_ok and last4 and last4 not in got_cjk:
-                                    tail_ok = False
+                            # F1: 末尾検査は順序付き CJK 等値 (Counter>= と末尾4字部分一致を廃止)。
+                            # 順序不一致でも文字種がそろう場合は K4 化け疑いとして
+                            # 警告+クロップ証跡で受容する (changed/fixed 図形は FAIL)。
+                            tc = tail_check_ordered(tf['text'], got_cjk)
+                            tail_mode = tc['mode']
+                            tail_ok = tc['ordered_ok']
+                            # F2/F1: 'loss' でも窓を広げて (縦横 +12/+8pt) ページ上に
+                            # 文字が存在するかを確認する。窓の外にあれば窓/帰属精度の
+                            # 問題 (window-precision) であり、描画欠落ではない。
+                            if tc['mode'] == 'loss':
+                                got_wide = cjk(''.join(c['t'] for c in
+                                                       clusters_in(x0 - 15.0, y0 - 15.0, x1 + 15.0, y1 + 30.0)))
+                                tc_w = tail_check_ordered(tf['text'], got_wide)
+                                if tc_w['multiset_ok']:
+                                    tail_mode = 'loss-window-precision'
+                                    tail_ok = True
+                                    cnt['tail_winprec'] += 1
+                                    warn(bk, 'C3_text_fit', '%s %s: tail chars present in widened window (window/attribution precision; see crop)' % (sn, nm))
+                            if tc['mode'] == 'multiset-only(k4-suspect)' and tail_mode != 'loss-window-precision':
+                                cnt['tail_k4'] += 1
+                                if nm in FIXED_LEAVES or nm in CHANGED_TEXT:
+                                    cnt['tail_loss'] += 1
+                                    fail(bk, 'C3_text_fit', '%s %s: CJK tail order mismatch (multiset-only; k4-suspect)' % (sn, nm))
+                                else:
+                                    warn(bk, 'C3_text_fit', '%s %s: CJK tail order mismatch (multiset-only; k4-suspect; see crop)' % (sn, nm))
+                            # F1: ASCII 末尾は CJK とは別に確認する (3 段階: ok/k4-variant/loss)。
+                            # k4-variant は K4 グリフ置換の疑いとして警告+クロップで受容し、
+                            # loss (どの比較でも不在) のみを changed/fixed 図形の FAIL とする。
+                            amode = ascii_tail_check(tf['text'], ''.join(c['t'] for c in clusters))
+                            if amode == 'k4-variant':
+                                cnt['ascii_k4'] += 1
+                                warn(bk, 'C3_text_fit', '%s %s: ASCII tail %r only matches as k4-variant (glyph substitution; see crop)'
+                                     % (sn, nm, ascii_tail(tf['text'])))
+                            elif amode == 'loss':
+                                if nm in FIXED_LEAVES or nm in CHANGED_TEXT or tail_mode == 'loss':
+                                    cnt['ascii_fail'] += 1
+                                    fail(bk, 'C3_text_fit', '%s %s: ASCII tail loss: %r' % (sn, nm, ascii_tail(tf['text'])))
+                                else:
+                                    warn(bk, 'C3_text_fit', '%s %s: ASCII tail missing %r (pre-existing text; k4 extraction risk)'
+                                         % (sn, nm, ascii_tail(tf['text'])))
+                            a_ok = amode == 'ok'
+                            # F2: 右端あふれ (spill) -- 抽出は完全でもクロップ窓で切れる反例の検出
+                            aspans = attrib.get(nm, [])
+                            span_right = max([s5[2] for s5 in aspans] or [0])
+                            spill = max(0.0, span_right - (x1 - 2.0))
                             rec = {'sheet': sn, 'name': nm, 'fsz': fsz, 'nvis_est': nvis_est,
-                                   'nvis_pdf': nvis_act, 'tail_ok': tail_ok, 'rows_short': [],
+                                   'nvis_pdf': nvis_act, 'tail_ok': tail_ok, 'tail_mode': tail_mode,
+                                   'tail_exp20': cjk_seq(tf['text'])[-20:], 'tail_got20': cjk_seq(got_cjk)[-20:],
+                                   'ascii_tail': ascii_tail(tf['text']), 'ascii_mode': amode,
+                                   'spill_pt': round(spill, 2), 'rows_short': [],
                                    'rows_short_ascii': []}
                             for c in clusters:
                                 vis = len(re.sub(r'\s+', '', c['t']))
@@ -1019,17 +1481,29 @@ def main():
                                 elif vis <= 5 and not cjk(c['t']):
                                     rec['rows_short_ascii'].append(c['t'])
                             fit3.append(rec)
-                            # C7 orphans: 分類 = 既知P* / 既存同型(ベースラインと同テキスト) / 本ラウンド退行
+                            # C7 orphans: 分類 = 既知P* / 既存同型(描画状態まで一致) /
+                            # 発生時点不明(テキスト不変だが描画状態が変化) / 本ラウンド退行
+                            # F3: 「テキスト不変」だけでは既存扱いの根拠にしない
                             base0 = baseline_idx.get((bk, sn, nm))
-                            unchanged = base0 is not None and norm(base0['text']) == norm(tf['text'])
+                            rstate = classify_render_state(base0, tf['text'], H, tf['autosize'], tf['wrap'])
+                            render_same = rstate == 'render-same'
+                            if rstate == 'render-changed-origin-unknown':
+                                orphans.append({'sheet': sn, 'name': nm, 'class': 'render-state-changed-origin-unknown',
+                                                'baseline_h': base0.get('h'), 'current_h': H,
+                                                'baseline_autosize': base0.get('autosize'), 'current_autosize': tf['autosize']})
+                                warn(bk, 'C7_orphans_wrap', '%s %s: render state changed without text change (h %s->%s, autosize %s->%s); origin unknown, verify'
+                                     % (sn, nm, base0.get('h'), H, base0.get('autosize'), tf['autosize']))
                             if nvis_act >= 2:
                                 for tt in rec['rows_short']:
                                     kd = KNOWN_DEFECT.get((sn, nm))
                                     if kd:
                                         orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'known-' + kd})
-                                    elif unchanged:
+                                    elif render_same:
                                         orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'preexisting-baseline-isomorphic'})
                                         warn(bk, 'C7_orphans_wrap', '%s %s: short row (baseline-isomorphic, pre-existing)' % (sn, nm))
+                                    elif rstate == 'render-changed-origin-unknown':
+                                        orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'origin-unknown-verify'})
+                                        warn(bk, 'C7_orphans_wrap', '%s %s: short row (render state changed, origin unknown)' % (sn, nm))
                                     elif sn == '相関図④':
                                         # ④は変更前の基準が無い: 末尾が保たれていれば視覚確認候補(警告)にとどめる
                                         orphans.append({'sheet': sn, 'name': nm, 'row': tt,
@@ -1040,44 +1514,65 @@ def main():
                                         fail(bk, 'C7_orphans_wrap', '%s %s: orphan/short row (new candidate)' % (sn, nm))
                                 for tt in rec['rows_short_ascii']:
                                     orphans.append({'sheet': sn, 'name': nm, 'row': tt, 'class': 'short-ascii-row(info)'})
-                            # C3 checks
-                            if not tail_ok:
+                            # C3 checks (k4-suspect は上で処理済み -- 二重報告しない)
+                            if not tail_ok and tc['mode'] != 'multiset-only(k4-suspect)':
                                 if nm in FIXED_LEAVES or nm in CHANGED_TEXT:
-                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK tail mismatch)' % (sn, nm))
-                                elif base0 is not None and norm(base0['text']) == norm(tf['text']):
-                                    warn(bk, 'C3_text_fit', '%s %s: last-line loss (pre-existing, unchanged text; ERR-004 family)' % (sn, nm))
+                                    cnt['tail_loss'] += 1
+                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK ordered tail mismatch)' % (sn, nm))
+                                elif render_same:
+                                    warn(bk, 'C3_text_fit', '%s %s: last-line loss (pre-existing, render state matches baseline; ERR-004 family)' % (sn, nm))
+                                elif rstate == 'render-changed-origin-unknown':
+                                    cnt['tail_loss'] += 1
+                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (render state changed without text change; origin unknown)' % (sn, nm))
                                 else:
-                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK tail mismatch)' % (sn, nm))
+                                    cnt['tail_loss'] += 1
+                                    fail(bk, 'C3_text_fit', '%s %s: last-line loss (CJK ordered tail mismatch)' % (sn, nm))
                             if wrap and nvis_act > nvis_est:
                                 kd = KNOWN_DEFECT.get((sn, nm))
-                                base = baseline_idx.get((bk, sn, nm))
-                                preexisting = base is not None and norm(base['text']) == norm(tf['text'])
                                 if kd:
                                     orphans.append({'sheet': sn, 'name': nm, 'class': 'known-%s(extra wrap)' % kd,
                                                     'nvis_est': nvis_est, 'nvis_pdf': nvis_act})
                                 elif nm in FIXED_LEAVES or nm in CHANGED_TEXT:
                                     fail(bk, 'C3_text_fit', '%s %s: unexpected extra wrap est %d pdf %d' % (sn, nm, nvis_est, nvis_act))
-                                elif preexisting:
+                                elif render_same:
                                     warn(bk, 'C3_text_fit', '%s %s: wrap estimate off est %d pdf %d (pre-existing text)' % (sn, nm, nvis_est, nvis_act))
                                 else:
                                     warn(bk, 'C3_text_fit', '%s %s: extra wrap vs estimate est %d pdf %d' % (sn, nm, nvis_est, nvis_act))
                             if wrap and nvis_act < nvis_est and tail_ok:
                                 warn(bk, 'C3_text_fit', '%s %s: benign print merge est %d pdf %d' % (sn, nm, nvis_est, nvis_act))
-                            if wrap and max(nvis_est, nvis_act) >= 2:
-                                need = max(nvis_est, nvis_act) * fsz * PITCH + (2.0 if re.search(r'_l\d+$', nm) else 3.0)
+                            # F1: 高さ検査は折返し設定と分離 (複数段落は wrap='none' でも適用)。
+                            # マージンの適用条件: +3.0 既定 / +2.0 エッジラベル(_l<数字>)のみ
+                            if (wrap or len(paras) >= 2) and max(nvis_est, nvis_act) >= 2:
+                                need, margin_used = height_need_pt(max(nvis_est, nvis_act), fsz, nm)
                                 if H < need - 0.01:
                                     if tail_ok:
-                                        warn(bk, 'C3_text_fit', '%s %s: frame height tight h %.1f < need %.1f (render OK)' % (sn, nm, H, need))
+                                        warn(bk, 'C3_text_fit', '%s %s: frame height tight h %.1f < need %.1f (render OK, margin +%s)'
+                                             % (sn, nm, H, need, margin_used))
                                     elif nm in FIXED_LEAVES or nm in CHANGED_TEXT:
-                                        fail(bk, 'C3_text_fit', '%s %s: frame height too small h %.1f < need %.1f' % (sn, nm, H, need))
+                                        cnt['height_fail'] += 1
+                                        fail(bk, 'C3_text_fit', '%s %s: frame height too small h %.1f < need %.1f (margin +%s)'
+                                             % (sn, nm, H, need, margin_used))
                                     else:
-                                        warn(bk, 'C3_text_fit', '%s %s: frame height below analytic need h %.1f < need %.1f (pre-existing shape)' % (sn, nm, H, need))
+                                        warn(bk, 'C3_text_fit', '%s %s: frame height below analytic need h %.1f < need %.1f (pre-existing shape, margin +%s)'
+                                             % (sn, nm, H, need, margin_used))
                             if nm in FIXED_LEAVES and tf['autosize'] != 0:
+                                cnt['autosize_fail'] += 1
                                 fail(bk, 'C3_text_fit', '%s %s: fixed leaf autosize=%d' % (sn, nm, tf['autosize']))
+                            # F2: クロップはスパン実測右端を含むよう拡張し、台帳に記録する
                             cx0, cy0 = max(0, x0 + 0.5), max(0, y0 + 1.0)
                             cx1, cy1 = min(page.rect.x1, x1 - 0.5), min(page.rect.y1, y1 - 1.0)
+                            widened = False
+                            if aspans and span_right > cx1 - 0.2:
+                                cx1 = min(page.rect.x1, span_right + 2.0)
+                                widened = True
                             if cx1 - cx0 > 2 and cy1 - cy0 > 2:
-                                crops.append((nm, fitz.Rect(cx0, cy0, cx1, cy1)))
+                                fname = 'crop_%s_%s_%s.png' % (bk, SN_TAG[sn], re.sub(r'[^A-Za-z0-9_-]', '_', nm))
+                                crops.append((nm, fitz.Rect(cx0, cy0, cx1, cy1), fname, widened, rec['tail_mode']))
+                                crops_ledger.append({'file': fname, 'sheet': sn, 'shape': nm,
+                                                     'window': [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)],
+                                                     'clip': [round(cx0, 1), round(cy0, 1), round(cx1, 1), round(cy1, 1)],
+                                                     'widened': widened, 'spill_pt': rec['spill_pt'],
+                                                     'text_match': rec['tail_mode']})
                     fit_all.extend(fit3)
                     # refs column crop (K3 fix)
                     if sn == '相関図④':
@@ -1092,10 +1587,9 @@ def main():
                             page.get_pixmap(matrix=fitz.Matrix(4.0, 4.0), clip=cr).save(
                                 os.path.join(OUT, 'strict_%s_s4_refscol.png' % bk))
                             fit_info['png_refscol'] = 'strict_%s_s4_refscol.png' % bk
-                    for nm, cr in crops:
+                    for nm, cr, fname, widened, tmode in crops:
                         try:
-                            page.get_pixmap(matrix=fitz.Matrix(4.0, 4.0), clip=cr).save(
-                                os.path.join(OUT, 'crop_%s_%s_%s.png' % (bk, SN_TAG[sn], re.sub(r'[^A-Za-z0-9_-]', '_', nm))))
+                            page.get_pixmap(matrix=fitz.Matrix(4.0, 4.0), clip=cr).save(os.path.join(OUT, fname))
                         except Exception:
                             pass
                     R(bk, 'C8_pdf_roundtrip')['info'][sn] = fit_info
@@ -1104,10 +1598,32 @@ def main():
                     json.dump(fit_all, f, ensure_ascii=False, indent=1)
                 with io.open(os.path.join(OUT, 'strict_orphans_%s.json' % bk), 'w', encoding='utf-8') as f:
                     json.dump(orphans, f, ensure_ascii=False, indent=1)
+                with io.open(os.path.join(OUT, 'strict_crops_%s.json' % bk), 'w', encoding='utf-8') as f:
+                    json.dump(crops_ledger, f, ensure_ascii=False, indent=1)
                 R(bk, 'C3_text_fit')['evidence'].append('strict_text_fit_%s.json' % bk)
                 R(bk, 'C7_orphans_wrap')['evidence'].append('strict_orphans_%s.json' % bk)
+                R(bk, 'C8_pdf_roundtrip')['evidence'].append('strict_crops_%s.json' % bk)
                 R(bk, 'C7_orphans_wrap')['info']['known'] = sum(1 for o in orphans if o['class'].startswith('known'))
                 R(bk, 'C7_orphans_wrap')['info']['new'] = sum(1 for o in orphans if o['class'] == 'new-regression-candidate')
+                # F6: サブチェック状態の確定 (C10 回帰表はここから集約する)
+                sub(bk, 'C3_text_fit', 'tail_cjk_ordered', 'FAIL' if cnt['tail_loss'] else 'PASS')
+                sub(bk, 'C3_text_fit', 'tail_ascii_separate', 'FAIL' if cnt['ascii_fail'] else 'PASS',
+                    'k4-suspect=%d' % cnt['tail_k4'])
+                sub(bk, 'C3_text_fit', 'frame_height_multi_para', 'FAIL' if cnt['height_fail'] else 'PASS')
+                sub(bk, 'C3_text_fit', 'autosize_fixed_leaves', 'FAIL' if cnt['autosize_fail'] else 'PASS')
+                sub(bk, 'C8_pdf_roundtrip', 'landscape_1page', 'FAIL' if cnt['page_fail'] else 'PASS')
+                sub(bk, 'C8_pdf_roundtrip', 'independent_calibration',
+                    'RECORDED', 'mode=%s; notes=%d; detail in strict_full_results.json' % (calib_mode, cnt['calib_note']))
+                sub(bk, 'C8_pdf_roundtrip', 'crop_ledger', 'RECORDED',
+                    'n=%d; ledger=strict_crops_%s.json' % (len(crops_ledger), bk))
+                sub(bk, 'C8_pdf_roundtrip', 'mapping_residual_explained',
+                    'FAIL' if cnt['unexplained'] else 'PASS', 'unexplained_cjk=%d' % cnt['unexplained'])
+                if cnt['unexplained']:
+                    fail(bk, 'C8_pdf_roundtrip', 'unexplained CJK mapping residual: %d chars (see strict_crops ledger)' % cnt['unexplained'])
+                R(bk, 'C8_pdf_roundtrip')['info']['residual'] = {k: v for k, v in cnt.items()
+                                                                 if k.startswith('unexplained') or k in ('tail_loss', 'tail_k4', 'ascii_fail', 'ascii_k4', 'tail_winprec')}
+                R(bk, 'C3_text_fit')['info']['tail_counts'] = {k: v for k, v in cnt.items()
+                                                               if k.startswith(('tail', 'ascii'))}
                 R(bk, 'C8_pdf_roundtrip')['info']['k3_refs_crops'] = 'generated'
 
                 wb.Close(SaveChanges=False)
@@ -1157,40 +1673,56 @@ def main():
     cross['evidence'].append('strict_digest_pana.json / strict_digest_lnb.json')
 
     # ---- C10 table ----
-    def cls_status(bk, cls):
-        return results.get((bk, cls), {}).get('status', 'NOT-RUN')
+    # F6: 回帰表はクラス全体の status を転記せず、実サブチェックから集約する。
+    # 要約 (クラス別 status) と回帰表の矛盾を構造的に排除する。
+    def sub_status(bk, cls, name):
+        r = results.get((bk, cls), {})
+        return r.get('subchecks', {}).get(name, {}).get('status', 'NOT-RUN')
     c10 = []
     for bk in ('pana', 'lnb'):
-        c10.append({'err': 'autosize refit (ERR-005族)', 'check': 'C3(c) fixed leaves AutoSize=0', 'book': bk,
-                    'status': cls_status(bk, 'C3_text_fit'), 'evidence': 'strict_text_fit_%s.json' % bk})
-        c10.append({'err': 'フレーム高不足 (ERR-004族)', 'check': 'C3(b) height >= rows*fsz*1.65+3', 'book': bk,
-                    'status': cls_status(bk, 'C3_text_fit'), 'evidence': 'strict_text_fit_%s.json' % bk})
-        c10.append({'err': 'BoundWidth過小評価 (ERR-012)', 'check': 'C3(a) nvis margin 10.0 + CJK tail equality', 'book': bk,
-                    'status': cls_status(bk, 'C3_text_fit'), 'evidence': 'strict_text_fit_%s.json' % bk})
-        c10.append({'err': 'PDF抽出偽陰性の構造回避 (ERR-004/K4)', 'check': 'C8 geometric + CJK-tolerant checks only', 'book': bk,
-                    'status': cls_status(bk, 'C8_pdf_roundtrip'), 'evidence': 'strict_%s_s2/s3/s4.pdf' % bk})
-        c10.append({'err': 'pywin32 gen_py 回避 (ERR-005)', 'check': 'C2 drawing XML direct read', 'book': bk,
-                    'status': cls_status(bk, 'C2_inventory'), 'evidence': 'strict_inventory_%s.json' % bk})
-        c10.append({'err': 'PrintTitleRows干渉', 'check': 'C1 PrintTitleRows unset on ②③④', 'book': bk,
-                    'status': cls_status(bk, 'C1_page_setup'), 'evidence': 'strict_page_setup_%s.json' % bk})
-        c10.append({'err': 'PrintArea (A9/B4/④)', 'check': 'C1 PrintArea $A$5:.. / $A$1:$BA$66', 'book': bk,
-                    'status': cls_status(bk, 'C1_page_setup'), 'evidence': 'strict_page_setup_%s.json' % bk})
-        c10.append({'err': 'fit往復', 'check': 'C8 landscape 1 page + scale recorded', 'book': bk,
-                    'status': cls_status(bk, 'C8_pdf_roundtrip'), 'evidence': 'strict_%s_s2/s3/s4.pdf' % bk})
+        c10.append({'err': 'autosize refit (ERR-005族)', 'check': "C3 subcheck 'autosize_fixed_leaves'", 'book': bk,
+                    'status': sub_status(bk, 'C3_text_fit', 'autosize_fixed_leaves'), 'evidence': 'strict_text_fit_%s.json' % bk})
+        c10.append({'err': 'フレーム高不足 (ERR-004族)', 'check': "C3 subcheck 'frame_height_multi_para' (wrap非依存·段落数>=2)", 'book': bk,
+                    'status': sub_status(bk, 'C3_text_fit', 'frame_height_multi_para'), 'evidence': 'strict_text_fit_%s.json' % bk})
+        c10.append({'err': 'BoundWidth過小評価 (ERR-012)', 'check': "C3 subcheck 'tail_cjk_ordered' (順序付きCJK等値)", 'book': bk,
+                    'status': sub_status(bk, 'C3_text_fit', 'tail_cjk_ordered'), 'evidence': 'strict_text_fit_%s.json' % bk})
+        c10.append({'err': 'ASCII末尾 (F1追加)', 'check': "C3 subcheck 'tail_ascii_separate'", 'book': bk,
+                    'status': sub_status(bk, 'C3_text_fit', 'tail_ascii_separate'), 'evidence': 'strict_text_fit_%s.json' % bk})
+        c10.append({'err': 'PDF抽出偽陰性の構造回避 (ERR-004/K4)', 'check': "C8 subcheck 'independent_calibration' (PDF枠線較正) + 'mapping_residual_explained'", 'book': bk,
+                    'status': sub_status(bk, 'C8_pdf_roundtrip', 'mapping_residual_explained'), 'evidence': 'strict_crops_%s.json' % bk})
+        c10.append({'err': 'pywin32 gen_py 回避 (ERR-005)', 'check': "C2 subcheck 'read_tf_no_silent_skip' + XML直読み", 'book': bk,
+                    'status': sub_status(bk, 'C2_inventory', 'read_tf_no_silent_skip'), 'evidence': 'strict_inventory_%s.json' % bk})
+        c10.append({'err': 'PrintTitleRows干渉', 'check': "C1 subcheck 'print_title_rows_unset'", 'book': bk,
+                    'status': sub_status(bk, 'C1_page_setup', 'print_title_rows_unset'), 'evidence': 'strict_page_setup_%s.json' % bk})
+        c10.append({'err': 'PrintArea (A9/B4/④)', 'check': "C1 subcheck 'print_area'", 'book': bk,
+                    'status': sub_status(bk, 'C1_page_setup', 'print_area'), 'evidence': 'strict_page_setup_%s.json' % bk})
+        c10.append({'err': 'fit往復', 'check': "C8 subcheck 'landscape_1page' + mapping recorded", 'book': bk,
+                    'status': sub_status(bk, 'C8_pdf_roundtrip', 'landscape_1page'), 'evidence': 'strict_%s_s2/s3/s4.pdf' % bk})
         c10.append({'err': 'ダイジェストキー一致 (novalue)', 'check': 'cross-book names/geometry digest', 'book': bk,
                     'status': 'PASS' if ok_digest else 'FAIL', 'evidence': 'strict_digest_pana.json/strict_digest_lnb.json'})
-        c10.append({'err': 'リンク実測', 'check': 'ws.Hyperlinks enumeration + target non-empty', 'book': bk,
-                    'status': cls_status(bk, 'C10_err_regression'), 'evidence': 'strict_links_%s.json' % bk})
+        c10.append({'err': 'リンク実測', 'check': "C10 subchecks 'link_count'+'link_map'+'link_targets_nonempty'", 'book': bk,
+                    'status': ('FAIL' if 'FAIL' in (sub_status(bk, 'C10_err_regression', 'link_count'),
+                                                    sub_status(bk, 'C10_err_regression', 'link_map'),
+                                                    sub_status(bk, 'C10_err_regression', 'link_targets_nonempty'))
+                               else 'PASS'), 'evidence': 'strict_links_%s.json' % bk})
+        c10.append({'err': '既存図形の逆方向比較 (F5)', 'check': "C9 subcheck 'baseline_reverse_23'", 'book': bk,
+                    'status': sub_status(bk, 'C9_data_accuracy', 'baseline_reverse_23'), 'evidence': 'strict_data_accuracy_%s.json' % bk})
+        c10.append({'err': 'C4豁免の記録と悪化差分 (F4)', 'check': "C4 subcheck 'exemptions_recorded' + worsened_baseline_pairs", 'book': bk,
+                    'status': sub_status(bk, 'C4_clearance', 'exemptions_recorded'), 'evidence': 'strict_clearance_%s.json' % bk})
+        c10.append({'err': 'C6接続線の期待比較 (F6)', 'check': "C6 subcheck 'xml_com_connector_match' (status=RECORDED)", 'book': bk,
+                    'status': sub_status(bk, 'C6_connectors', 'xml_com_connector_match'), 'evidence': 'strict_connectors_%s.json' % bk})
     with io.open(os.path.join(OUT, 'strict_err_regression_table.json'), 'w', encoding='utf-8') as f:
         json.dump(c10, f, ensure_ascii=False, indent=1)
 
     # ---- summary ----
     summary = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
                'books': {}, 'new_issues': [], 'known_issues': KNOWN_P_NOTES,
-               'k3': 'resolved (refs crops + per-shape crops generated under strictverify/)'}
+               'k3': 'resolved (refs crops + per-shape crops generated under strictverify/)',
+               'note_f6': 'subchecks are the authoritative granularity; C10 regression table is aggregated from them'}
     for (bk, cls), r in sorted(results.items()):
         summary['books'].setdefault(bk, {})[cls] = {'status': r['status'],
-                                                    'n_viol': len(r['violations']), 'n_warn': len(r['warnings'])}
+                                                    'n_viol': len(r['violations']), 'n_warn': len(r['warnings']),
+                                                    'subchecks': r.get('subchecks', {})}
         for v in r['violations']:
             summary['new_issues'].append('%s/%s: %s' % (bk, cls, v))
     with io.open(os.path.join(WORK, 'verify_strict_summary.json'), 'w', encoding='utf-8') as f:
@@ -1202,6 +1734,8 @@ def main():
     nfail = 0
     for (bk, cls), r in sorted(results.items()):
         print('%-7s %-18s %s (viol=%d warn=%d)' % (bk, cls, r['status'], len(r['violations']), len(r['warnings'])))
+        for sname, sv in sorted(r.get('subchecks', {}).items()):
+            print('         - %-30s %s' % (sname, sv['status']))
         nfail += len(r['violations'])
     print('TOTAL VIOLATIONS: %d' % nfail)
     print('SUMMARY -> verify_strict_summary.json')
