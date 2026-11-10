@@ -66,4 +66,4 @@ status: done
 
 - 前週: [[Weekly Review 2026-W43]]
 - 日次: [[Daily Report 2026-10-26]] / [[Daily Report 2026-10-27]] / [[Daily Report 2026-10-28]] / [[Daily Report 2026-10-29]] / [[Daily Report 2026-10-30]]
-- 翌週: [[Weekly Review 2026-W45]](未作成)
+- 翌週: [[Weekly Review 2026-W45]]
