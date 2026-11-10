@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""verify_render_strict_negtest.py -- Gate 1 第2次是正の負例検証 (N1-N6).
+"""verify_render_strict_negtest.py -- Gate 1 是正の負例検証 (N1-N6b).
 
 第2次是正 (再審査 attempt 2 指摘) により:
   - N1/N2 は純関数の戻り値だけでなく、本番の severity·サブチェック分類
@@ -8,6 +8,15 @@
   - N6 を新設: 対象図形の末尾欠落を隣接図形の同じ文字列が補填するケース。
     旧実装 (広域窓の multiset>= 救済) は通し、新実装は 'attribution-undetermined'
     (帰属未確定) として遮断する (F2·エ)。本番 severity で確認する
+
+第3次是正 (再審査 attempt 3 指摘) により:
+  - N6 を本番の帰属経路 (attribute_spans -> span_owner -> tail_rescue ->
+    tail_severity) を exercise する形に変更した。旧 N6 は帰属を手作業で
+    模倣していたため、帰属識別子の切断 (修正1: attribute_spans が新しい
+    tuple を生成し span_owner の id 検索が不能になる不具合) を検出できなかった
+  - N6b を新設: baseline 一致 (render_same=True) でも帰属未確定が FAIL を
+    維持すること (修正2)。旧実装は loss と attribution-undetermined を同一
+    分岐で WARN に降格していた
 
 結果: strictverify/reconsider/negative_test_results.json
 終了コード: 全件検出=0 / 未検出あり=1
@@ -152,39 +161,80 @@ results.append({
                  and assign.get('shapeA', 0) >= 2 and assign.get('shapeB', 0) >= 1 and n_clean == 2),
 })
 
-# ---- N6 (F2·新設): 隣接図形の同文字列による末尾補填を遮断 -----------------
-# 対象図形 A の末尾「先」が描画で欠落し、隣接図形 B の窓内の「先」が
-# 広域窓救済で A の末尾のように扱われるケース。
-# 旧実装 (第1次): 広域窓の文字列で multiset>= が満たされ tail_ok=True (通過)。
-# 新実装: 「先」は B 帰属スパンにしかない -> 'attribution-undetermined' (帰属未確定)
-# となり tail_ok=False。本番 severity では FAIL (changed/fixed でない図形も)。
+# ---- N6 (F2·第3次改訂): 本番の帰属経路で隣接図形の同文字列による末尾補填を遮断
+# 旧 N6 は「A の窓に帰属した抽出」を手作業で合成していたため、本番の帰属経路の
+# 接続不良 (修正1: attribute_spans が新しい tuple を生成し span_owner の id 検索
+# が元 spans に対して不能になる) を検出できなかった。第3次では本番と同じ経路
+# attribute_spans -> span_owner (id キー) -> tail_rescue -> tail_severity を
+# exercise し、帰属識別子が元 spans から後段まで安定していることを同時に確認する
 exp_a = '認証情報の保管先'
-own_span_a = [(110.0, 105.0, 290.0, 115.0, '認証情報の保管')]     # A 窓内·末尾「先」を欠く
-other_span_b = [(110.0, 175.0, 290.0, 185.0, '先の確認を要する')]  # B 窓内·「先」を含む
-# A の窓に帰属した抽出 (attribute_spans と同じ帰属を模した合成)
-own_text_a = ''.join(s[4] for s in own_span_a)
-wide_spans = [(own_span_a[0][4], 'own'), (other_span_b[0][4], 'other')]
-vr6 = vrs.tail_rescue(exp_a, own_text_a, wide_spans)
+wins6 = {'g3_legA': (100.0, 100.0, 300.0, 120.0), 'g3_legB': (100.0, 122.0, 300.0, 142.0)}
+spans6 = [
+    (110.0, 105.0, 290.0, 115.0, '認証情報の保管'),     # A 窓内 (末尾「先」を欠く)
+    (110.0, 128.0, 290.0, 138.0, '先の確認を要する'),   # B 窓内 (「先」を含む·A の広域窓にも入る)
+]
+attrib6, un6, strad6 = vrs.attribute_spans(spans6, wins6)
+# 本番 (verify_render_strict.py main) と同一の span_owner 構築
+span_owner6 = {}
+for wnm, lst in attrib6.items():
+    for s5 in lst:
+        span_owner6[id(s5)] = wnm
+# 修正1の検証: 元 spans の id で owner を引ける (識別子が安定している)
+own_is_stable = (span_owner6.get(id(spans6[0])) == 'g3_legA'
+                 and span_owner6.get(id(spans6[1])) == 'g3_legB')
+own_spans6 = sorted(attrib6.get('g3_legA', []), key=lambda s: (s[1], s[0]))
+# A の本文窓 ±15 / 下 +30pt の広域窓 (本番と同じ条件)
+wide6 = []
+for s5 in spans6:
+    if s5[0] < 315.0 and s5[2] > 85.0 and s5[1] < 150.0 and s5[3] > 85.0:
+        w5 = span_owner6.get(id(s5))
+        wide6.append((s5, 'own' if w5 == 'g3_legA' else ('other' if w5 else 'unattributed')))
+vr6 = vrs.tail_rescue(exp_a, own_spans6, wide6)
 sev6 = vrs.tail_severity('g3_n12_txt', vr6['mode'], 'ok', exp_a, render_same=False)
-old_rescue6 = old_wide_rescue(exp_a, own_text_a,
-                              own_span_a[0][4] + other_span_b[0][4])
+old_rescue6 = old_wide_rescue(exp_a, ''.join(r['t'] for r in vrs.rows_from_spans(own_spans6)),
+                              ''.join(s5[4] for s5 in spans6))
 results.append({
-    'id': 'N6', 'target_fix': 'F2 (隣接図形の同文字列による末尾補填の遮断·帰属未確定)',
-    'path': 'production tail_rescue + tail_severity (本番経路)',
-    'fixture': {'exp_text_A': exp_a, 'own_window_text': own_text_a,
-                'adjacent_window_text': other_span_b[0][4],
-                'note': 'A の末尾「先」は描画で欠落·B の窓内の「先」が広域窓に存在する'},
-    'expected': "tail_rescue mode='attribution-undetermined' (tail_ok=False) + 本番 severity FAIL",
-    'actual': {'tail_rescue': vr6, 'severity_items': sev6},
+    'id': 'N6', 'target_fix': 'F2+修正1/3 (本番の帰属経路で隣接図形の同文字列による末尾補填を遮断)',
+    'path': 'production attribute_spans -> span_owner -> tail_rescue -> tail_severity',
+    'fixture': {'exp_text_A': exp_a, 'windows': wins6,
+                'spans': [list(s) for s in spans6],
+                'note': 'A の末尾「先」は描画で欠落·B 窓内の「先」を含むスパンが A の広域窓にも存在する'},
+    'expected': "span_owner が元 spans の id で成立 (修正1) + tail_rescue "
+                "mode='attribution-undetermined' (tail_ok=False) + 本番 severity FAIL",
+    'actual': {'span_owner_stable': own_is_stable, 'tail_rescue': vr6, 'severity_items': sev6},
     'old_behavior_would_pass': bool(old_rescue6),   # 旧: 広域窓 multiset>= で tail_ok=True
-    'detected': (vr6['mode'] == 'attribution-undetermined' and vr6['tail_ok'] is False
+    'detected': (own_is_stable and vr6['mode'] == 'attribution-undetermined'
+                 and vr6['tail_ok'] is False
                  and any(i['severity'] == 'FAIL' and i['subcheck'] == 'tail_cjk_ordered' for i in sev6)),
+})
+
+# ---- N6b (第3次·修正2): baseline 一致でも帰属未確定は FAIL を維持 -----------
+# 旧実装は loss と attribution-undetermined を同一分岐で処理し、render_same=True
+# の場合に双方 WARN へ降格していた。baseline (描画設定) の一致は「現在の文字が
+# 対象図形に帰属する」証拠にならないため、帰属未確定は降格しない
+sev6b = vrs.tail_severity('g2_leg0', 'attribution-undetermined', 'ok', exp_a, render_same=True)
+# 対照: mode='loss' + render_same=True は従来どおり既存 WARN (tail_loss_preexisting)
+sev6c = vrs.tail_severity('g2_n02_txt', 'loss', 'ok', exp_a, render_same=True)
+n6b_fail = [i for i in sev6b if i['severity'] == 'FAIL' and i['code'] == 'tail_attribution_undetermined']
+results.append({
+    'id': 'N6b', 'target_fix': '修正2 (帰属未確定のseverity分離·baseline一致でもFAIL維持)',
+    'path': 'production severity (tail_severity)',
+    'fixture': {'tc_mode': 'attribution-undetermined', 'render_same': True,
+                'contrast_tc_mode': 'loss', 'contrast_render_same': True,
+                'note': 'baseline の描画状態一致は「自図形に帰属する」証拠にならない'},
+    'expected': "attribution-undetermined: severity FAIL / code tail_attribution_undetermined "
+                "(render_same=True でも降格しない)。対照: loss + render_same=True は従来どおり WARN (tail_loss_preexisting)",
+    'actual': {'attr_undet_items': sev6b, 'loss_contrast_items': sev6c},
+    'old_behavior_would_pass': True,   # 旧実装: render_same=True で双方 WARN に降格
+    'detected': (bool(n6b_fail)
+                 and all(i['severity'] == 'WARN' and i['code'] == 'tail_loss_preexisting'
+                         for i in sev6c if i['subcheck'] == 'tail_cjk_ordered')),
 })
 
 # ---- 出力 ----------------------------------------------------------------
 all_detected = all(r['detected'] for r in results)
 out = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
-       'harness': 'verify_render_strict.py (Gate1第2次是正 F1/F2/F3/F5)',
+       'harness': 'verify_render_strict.py (Gate1第3次是正 修正1/2/3 + 第2次 F1/F2/F3/F5)',
        'n_fixtures': len(results), 'n_detected': sum(1 for r in results if r['detected']),
        'all_detected': all_detected, 'results': results}
 path = os.path.join(OUTDIR, 'negative_test_results.json')

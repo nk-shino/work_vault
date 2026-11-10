@@ -44,7 +44,19 @@
    F6 失敗注入の自己検証 (--selftest) を追加 — EXP_LINE2 不一致の changed 登録,
        unexpected extra wrap のサブチェック反映, リンク NOT-RUN の非 PASS 集約,
        enforce_aggregation_consistency でサブチェック FAIL をクラス PASS にしない
- """
+
+ Gate 1 第3次是正 (再審査 attempt 3 指摘, 2026-11-09):
+   (1) 帰属識別子の安定化 — attribute_spans は元 spans と同一オブジェクトを
+       格納し, 帰属が owner 検索 -> tail_rescue -> severity まで一続きで伝搬する
+   (2) 帰属未確定 (attribution-undetermined) の severity 分離 — baseline (描画
+       設定) の一致は帰属の証拠にならないため, render_same でも FAIL を維持
+   (3) own 救済の文字再利用排除 — tail_rescue は own_text 未含まの own 帰属
+       スパンだけで全文を再構成し, 同じ順序付き等値検査を再適用する
+   (4) 終了コードと ALL PASS 表示をクラス FAIL を含む実状態に連動
+       (enforce_aggregation_consistency が違反メッセージを登録する)
+   (5) 分類集計の単位分離 — 残差 (CJK 文字数) と C3 末尾救済 (図形件数) を
+       別単位で計上·表示する
+  """
 import sys, io, os, re, json, math, zipfile, datetime, bisect
 
 class _SafeBuf(object):
@@ -526,13 +538,23 @@ def tail_severity(nm, tc_mode, amode, exp_text, render_same=False):
         # F1(第2次·ア): 重複·追加は K4 疑いではなく別異常クラス
         out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_extra_chars',
                     'message': 'CJK extra/duplicate chars vs expected (dup/addition anomaly; not a K4 variant)'})
-    elif tc_mode in ('loss', 'attribution-undetermined'):
+    elif tc_mode == 'loss':
         if render_same:
             out.append({'severity': 'WARN', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_loss_preexisting',
-                        'message': 'last-line loss (%s; pre-existing, render state matches baseline)' % tc_mode})
+                        'message': 'last-line loss (loss; pre-existing, render state matches baseline)'})
         else:
             out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered', 'code': 'tail_loss',
-                        'message': 'last-line loss (%s)' % tc_mode})
+                        'message': 'last-line loss (loss)'})
+    elif tc_mode == 'attribution-undetermined':
+        # 第3次是正 (修正2): baseline (描画設定) の一致は「現在の文字が対象図形に
+        # 帰属する」証拠にならない。帰属未確定は loss と同一分岐にせず、独立した
+        # 帰属証拠または人裁定で解決するまで render_same の有無にかかわらず FAIL
+        # を維持する (既存/発生時点の分類は orphans 側で別途記録する)
+        out.append({'severity': 'FAIL', 'subcheck': 'tail_cjk_ordered',
+                    'code': 'tail_attribution_undetermined',
+                    'message': 'last-line loss (attribution-undetermined; baseline match is '
+                               'not attribution evidence; independent attribution evidence '
+                               'or human review required)'})
     # 'ordered-equal' / 'empty' / 'loss-window-precision' は CJK 側の異常なし
     if amode == 'loss':
         # F1(第2次·イ): 警告降格を廃止 -- changed/fixed 以外でも FAIL
@@ -546,54 +568,66 @@ def tail_severity(nm, tc_mode, amode, exp_text, render_same=False):
                                % (ascii_tail(exp_text), k4_state)})
     return out
 
-def tail_rescue(exp_text, own_text, wide_spans):
+def tail_rescue(exp_text, own_spans, wide_spans):
     """F2(第2次·ウ): 末尾欠落時の救済判定に帰属証拠を要求する。
-    own_text: 自図形の窓に帰属したスパン (attribute_spans の結果) から作った抽出文。
-    wide_spans: 広域窓 (±15/+30pt) に存在する (text, owner) のリスト。
+    own_spans: 自図形の窓に帰属したスパン (attribute_spans の結果·元 spans と
+    同一オブジェクト)。
+    wide_spans: 広域窓 (±15/+30pt) に存在する (span, owner) のリスト。
     owner は 'own' (自図形窓に帰属) / 'other' (他図形窓に帰属) / 'unattributed'。
-    欠落文字が:
-      - own 帰属スパンだけで充足される -> 'loss-window-precision' (tail_ok=True,
-        合格根拠は自図形への帰属証拠)
+    欠落文字の扱い:
+      - 自帰属スパンだけで全文が順序付き等値になる -> 'loss-window-precision'
+        (tail_ok=True。合格根拠は自図形への帰属証拠。第3次是正 (修正3): 救済に
+        使える own スパンは own_text の構成元に**含まれない**スパンに限定し、
+        重複排除済みのスパン集合から全文を再構成した上で、own_text に適用した
+        のと同じ順序付き等値検査を再適用する。既に own_text に含めた同じ文字の
+        再利用 (反例: 期待「確認確認」取得「確認」+広域own「確認」が通過する)
+        を構造的に排除する)
       - 他図形帰属·未帰属スパンを必要とする -> 'attribution-undetermined'
         (帰属未確定。tail_ok は False のまま -- 広域窓で文字が見つかっただけでは
         合格にしない。独立した帰属証拠または人裁定を要求する)
       - 広域窓にも存在しない -> 'loss' のまま (真の欠落)"""
+    own_text = ''.join(r['t'] for r in rows_from_spans(own_spans))
     tc = tail_check_ordered(exp_text, own_text)
     res = {'mode': tc['mode'], 'tail_ok': tc['ordered_ok'], 'rescue_owners': [],
            'missing_chars': ''}
     if tc['mode'] != 'loss':
         return res
+    # 修正3: own_text の構成元スパンを救済候補から除外 (同じ文字の再利用を排除)
+    seen = set(id(s) for s in own_spans)
+    extra_own = [s for (s, o) in wide_spans if o == 'own' and id(s) not in seen]
+    other_cnt = Counter()
+    for s, o in wide_spans:
+        if o != 'own' and id(s) not in seen:
+            other_cnt += Counter(cjk_seq(s[4]))
+    if extra_own:
+        # 重複排除済みスパン集合から全文を再構成し、同じ順序付き等値検査を再適用
+        merged_text = ''.join(r['t'] for r in rows_from_spans(list(own_spans) + extra_own))
+        tc2 = tail_check_ordered(exp_text, merged_text)
+        if tc2['ordered_ok']:
+            res['mode'] = 'loss-window-precision'
+            res['tail_ok'] = True
+            res['rescue_owners'] = ['own']
+            return res
     ce, cg = Counter(cjk_seq(exp_text)), Counter(cjk_seq(own_text))
     missing = ce - cg
     if not missing:
         return res
     res['missing_chars'] = ''.join(sorted(missing.elements()))
-    own_cnt, other_cnt = Counter(), Counter()
-    for t, owner in wide_spans:
-        c = Counter(cjk_seq(t))
-        if owner == 'own':
-            own_cnt += c
-        else:
-            other_cnt += c
-    fully_own, present, owners = True, True, set()
+    own_extra_cnt = Counter(cjk_seq(''.join(s[4] for s in extra_own)))
+    present, owners = True, set()
     for ch, n in missing.items():
-        if own_cnt[ch] >= n:
+        rem = n - own_extra_cnt[ch]
+        if rem <= 0:
             continue
-        if own_cnt[ch] + other_cnt[ch] >= n:
-            fully_own = False
+        if other_cnt[ch] >= rem:
             owners.add('other' if other_cnt[ch] else 'unattributed')
         else:
             present = False
     if not present:
         return res                       # 'loss' のまま (真の欠落)
-    if fully_own:
-        res['mode'] = 'loss-window-precision'
-        res['tail_ok'] = True
-        res['rescue_owners'] = ['own']
-    else:
-        res['mode'] = 'attribution-undetermined'
-        res['tail_ok'] = False
-        res['rescue_owners'] = sorted(owners)
+    res['mode'] = 'attribution-undetermined'
+    res['tail_ok'] = False
+    res['rescue_owners'] = sorted(owners) or ['own']
     return res
 
 def rows_from_spans(spans):
@@ -691,6 +725,10 @@ def wrap_estimate_status(cnt):
 
 def enforce_aggregation_consistency(results):
     """F6(第2次): 集約の一貫性 -- サブチェックに FAIL があればクラスを PASS にしない。
+    第3次是正 (修正4): FAIL 化のときに違反メッセージも登録する。違反メッセージを
+    追加しないままクラスだけ FAIL にすると、終了判定 (violations 件数) と ALL PASS
+    表示が実際の FAIL 状態と乖離する (EXP_LINE2 の baseline 欠落で「失敗登録+
+    警告のみ」の経路が実在した)。
     戻り値: 修正した (bk, cls, old, new) のリスト (--selftest が注入で確認する)"""
     fixes = []
     for (bk, cls), r in results.items():
@@ -698,7 +736,24 @@ def enforce_aggregation_consistency(results):
                 sv.get('status') == 'FAIL' for sv in r.get('subchecks', {}).values()):
             fixes.append((bk, cls, 'PASS', 'FAIL'))
             r['status'] = 'FAIL'
+            r.setdefault('violations', []).append(
+                'aggregation consistency: class status was PASS while a subcheck is FAIL '
+                '(auto-corrected; violation registered so exit code / ALL PASS follow the real state)')
     return fixes
+
+def aggregate_fail_state(results):
+    """第3次是正 (修正4): 終了コードと ALL PASS 表示の材料を実 FAIL 状態
+    (クラス status を含む) から集約する。違反メッセージ件数だけでは、
+    enforce_aggregation_consistency によるクラス FAIL 化を取りこぼす経路が
+    あったため、クラス FAIL 数を併せて返す。
+    戻り値: (違反メッセージ総数, status=FAIL のクラス数)"""
+    nviol = 0
+    ncls_fail = 0
+    for r in results.values():
+        nviol += len(r.get('violations', []))
+        if r.get('status') == 'FAIL':
+            ncls_fail += 1
+    return nviol, ncls_fail
 
 def run_selftest():
     """F6(第2次): 失敗注入による集約追従の自己検証 (Excel·ブック不要)。
@@ -766,6 +821,20 @@ def run_selftest():
     check('ST8', 'K4 候補: 受容済み (台帳あり) と人裁定未了を区別して記録', ok8,
           {'adjudicated': [i['message'] for i in sev8a], 'undecided': [i['message'] for i in sev8b]})
 
+    # ST9 (第3次是正·修正4): 違反0+サブチェックFAIL -- enforce によるクラス FAIL 化
+    # が終了コードと ALL PASS 表示に反映されること (修正前は「クラス FAIL 表示+
+    # STRICT VERIFY: ALL PASS+終了コード 0」が起こり得た)
+    results9 = {('pana', 'C9_data_accuracy'): {'status': 'PASS', 'violations': [], 'warnings': [],
+                                               'subchecks': {'changed_text_asbuilt': {'status': 'FAIL'}}}}
+    fixes9 = enforce_aggregation_consistency(results9)
+    nviol9, ncls9 = aggregate_fail_state(results9)
+    exit9 = 1 if (nviol9 or ncls9) else 0
+    display9 = 'FAIL' if (nviol9 or ncls9) else 'ALL PASS'
+    check('ST9', '違反0+サブチェックFAIL -> enforce でクラス FAIL 化+違反登録され、終了コード 0 / ALL PASS 表示にならない',
+          exit9 == 1 and nviol9 == 1 and ncls9 == 1 and display9 == 'FAIL' and len(fixes9) == 1,
+          {'violations': nviol9, 'class_fail': ncls9, 'exit_code': exit9, 'display': display9,
+           'registered': results9[('pana', 'C9_data_accuracy')]['violations']})
+
     all_ok = all(c['ok'] for c in checks)
     out = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
            'n_checks': len(checks), 'n_ok': sum(1 for c in checks if c['ok']),
@@ -782,10 +851,15 @@ def attribute_spans(spans, windows, min_straddle=0.05):
     """F2: スパン単位の窓帰属。
     spans: (x0,y0,x1,y1,text) · windows: {name: (x0,y0,x1,y1)}。
     戻り値: (attrib {name: [span]}, unattributed [span], straddles [rec])。
-    straddle = 複数窓にまたがるスパン (隣接行混入·隣接図形への食い込み検出用)"""
+    straddle = 複数窓にまたがるスパン (隣接行混入·隣接図形への食い込み検出用)。
+    第3次是正 (修正1): attrib/unattributed には**元 spans と同一の tuple
+    オブジェクト**を格納する (新しい tuple を生成しない)。後段の span_owner
+    (id キー) 検索が元 spans に対して成立し、帰属識別子が
+    attribute_spans -> owner 検索 -> tail_rescue -> severity まで一続きで安定する"""
     attrib = defaultdict(list)
     un, strad = [], []
-    for (x0, y0, x1, y1, t) in spans:
+    for s in spans:
+        x0, y0, x1, y1, t = s
         aa = max(1e-6, (x1 - x0) * (y1 - y0))
         ratios = {}
         for nm, (wx0, wy0, wx1, wy1) in windows.items():
@@ -794,10 +868,10 @@ def attribute_spans(spans, windows, min_straddle=0.05):
             if ox > 0 and oy > 0:
                 ratios[nm] = (ox * oy) / aa
         if not ratios:
-            un.append((x0, y0, x1, y1, t))
+            un.append(s)
             continue
         best = max(ratios, key=lambda k: ratios[k])
-        attrib[best].append((x0, y0, x1, y1, t))
+        attrib[best].append(s)
         others = {k: v for k, v in ratios.items() if k != best and v >= min_straddle}
         if others:
             strad.append({'span': [round(x0, 1), round(y0, 1), round(x1, 1), round(y1, 1)],
@@ -1488,8 +1562,13 @@ def main():
                 fit_all = []
                 orphans = []
                 crops_ledger = []
+                # 第3次是正 (修正5): 文字数と図形件数を別単位で計上する。
+                # attr_undet_chars = 残差検査の CJK 文字数 / attr_undet_cases =
+                # C3 末尾救済の図形件数 / tail_attr_undet = C3 severity FAIL の図形件数。
+                # 単位の異なる数値を合算して「CJK chars」と表示しない
                 cnt = {'tail_loss': 0, 'tail_k4': 0, 'ascii_fail': 0, 'height_fail': 0,
-                       'ascii_k4': 0, 'tail_winprec': 0, 'tail_extra': 0, 'attr_undet': 0,
+                       'ascii_k4': 0, 'tail_winprec': 0, 'tail_extra': 0,
+                       'tail_attr_undet': 0, 'attr_undet_chars': 0, 'attr_undet_cases': 0,
                        'wrap_extra': 0,
                        'autosize_fail': 0, 'page_fail': 0, 'calib_note': 0, 'unexplained': 0}
                 for sn in SHEETS:
@@ -1678,8 +1757,9 @@ def main():
                             if own_extra[ch] >= n:
                                 continue
                             if own_extra[ch] + other[ch] >= n:
-                                cnt['attr_undet'] += n
-                                cnt.setdefault('attr_undet_shapes', []).append('%s/%s:%s:%d'
+                                # 修正5: 残差は「文字数」単位で計上する
+                                cnt['attr_undet_chars'] += n
+                                cnt.setdefault('attr_undet_entries', []).append('%s/%s:%s:%d'
                                         % (sn, nm2, ch, n))
                             else:
                                 cnt['unexplained'] += n
@@ -1752,9 +1832,12 @@ def main():
                                     if s5[0] < x1 + 15.0 and s5[2] > x0 - 15.0 \
                                        and s5[1] < y1 + 30.0 and s5[3] > y0 - 15.0:
                                         w5 = span_owner.get(id(s5))
-                                        wide.append((s5[4], 'own' if w5 == nm else
+                                        wide.append((s5, 'own' if w5 == nm else
                                                      ('other' if w5 else 'unattributed')))
-                                vr = tail_rescue(tf['text'], got_own, wide)
+                                # 修正1/3 (第3次): 自帰属スパン (元 spans と同一
+                                # オブジェクト) を渡し、救済は own_text 未含まの
+                                # own スパンに限定して順序付き等値を再適用する
+                                vr = tail_rescue(tf['text'], attrib.get(nm, []), wide)
                                 tail_mode, tail_ok = vr['mode'], vr['tail_ok']
                                 rescue_owners, missing_chars = vr['rescue_owners'], vr['missing_chars']
                                 if tail_mode == 'loss-window-precision':
@@ -1762,7 +1845,8 @@ def main():
                                     warn(bk, 'C3_text_fit', '%s %s: tail chars rescued by own-attributed spans (window precision; evidence=own attribution)'
                                          % (sn, nm))
                                 elif tail_mode == 'attribution-undetermined':
-                                    cnt['attr_undet'] += 1
+                                    # 修正5: 図形件数単位で計上 (文字数とは合算しない)
+                                    cnt['attr_undet_cases'] += 1
                                     warn(bk, 'C3_text_fit', '%s %s: missing tail chars %r found only in %s spans (attribution undetermined; no pass without independent evidence)'
                                          % (sn, nm, missing_chars, '/'.join(rescue_owners) or 'nearby'))
                             # F1(第2次): ASCII 末尾は CJK とは別に確認 (loss は無条件で FAIL)。
@@ -1778,6 +1862,10 @@ def main():
                                         cnt['tail_extra'] += 1
                                     elif code in ('tail_loss', 'tail_k4_changed_fixed'):
                                         cnt['tail_loss'] += 1
+                                    elif code == 'tail_attribution_undetermined':
+                                        # 修正2/5 (第3次): 帰属未確定は独立の FAIL
+                                        # コード。図形件数単位で計上する
+                                        cnt['tail_attr_undet'] += 1
                                 else:
                                     warn(bk, 'C3_text_fit', '%s %s: %s' % (sn, nm, it['message']))
                                     if code in ('tail_k4_accepted', 'tail_k4_undecided'):
@@ -1943,9 +2031,9 @@ def main():
                 R(bk, 'C7_orphans_wrap')['info']['new'] = sum(1 for o in orphans if o['class'] == 'new-regression-candidate')
                 # F6: サブチェック状態の確定 (C10 回帰表はここから集約する)
                 sub(bk, 'C3_text_fit', 'tail_cjk_ordered',
-                    'FAIL' if (cnt['tail_loss'] or cnt['tail_extra']) else 'PASS',
-                    'loss=%d extra(dup/addition)=%d k4_accepted/undecided=%d'
-                    % (cnt['tail_loss'], cnt['tail_extra'], cnt['tail_k4']))
+                    'FAIL' if (cnt['tail_loss'] or cnt['tail_extra'] or cnt['tail_attr_undet']) else 'PASS',
+                    'loss=%d extra(dup/addition)=%d attribution_undetermined=%d k4_accepted/undecided=%d'
+                    % (cnt['tail_loss'], cnt['tail_extra'], cnt['tail_attr_undet'], cnt['tail_k4']))
                 sub(bk, 'C3_text_fit', 'tail_ascii_separate', 'FAIL' if cnt['ascii_fail'] else 'PASS',
                     'loss=%d k4=%d (loss は changed/fixed 以外でも FAIL -- 第2次是正)'
                     % (cnt['ascii_fail'], cnt['ascii_k4']))
@@ -1960,12 +2048,18 @@ def main():
                     'n=%d; ledger=strict_crops_%s.json' % (len(crops_ledger), bk))
                 sub(bk, 'C8_pdf_roundtrip', 'mapping_residual_explained',
                     'FAIL' if cnt['unexplained'] else 'PASS', 'unexplained_cjk=%d' % cnt['unexplained'])
+                # 修正5 (第3次): 文字数 (残差) と図形件数 (C3 末尾救済) を別単位で
+                # 表示する。単位の異なる数値を合算して「CJK chars」と表示しない
                 sub(bk, 'C8_pdf_roundtrip', 'mapping_residual_attribution', 'RECORDED',
-                    'attribution-undetermined cjk=%d (own窓に無く他図形帰属·未帰属スパンで'
-                    '充足される文字。合格根拠にしない。人力裁定待ち)' % cnt['attr_undet'])
-                if cnt['attr_undet']:
-                    warn(bk, 'C8_pdf_roundtrip', '%s-residual: %d CJK chars attribution-undetermined (found near window but not own-attributed; human review pending)'
-                         % (bk, cnt['attr_undet']))
+                    'attribution-undetermined: residual=%d CJK chars (own窓に無く他図形帰属·'
+                    '未帰属スパンで充足される文字) + tail_cases=%d shapes (C3 末尾救済の'
+                    '図形件数)。単位が異なるため合算しない。合格根拠にしない。人力裁定待ち'
+                    % (cnt['attr_undet_chars'], cnt['attr_undet_cases']))
+                if cnt['attr_undet_chars'] or cnt['attr_undet_cases']:
+                    warn(bk, 'C8_pdf_roundtrip',
+                         '%s-residual: attribution-undetermined = %d CJK chars (residual, char unit) '
+                         '+ %d shapes (tail cases, shape unit); units counted separately (not summed); human review pending'
+                         % (bk, cnt['attr_undet_chars'], cnt['attr_undet_cases']))
                 if cnt['unexplained']:
                     fail(bk, 'C8_pdf_roundtrip', 'unexplained CJK mapping residual: %d chars (see strict_crops ledger)' % cnt['unexplained'])
                 R(bk, 'C8_pdf_roundtrip')['info']['residual'] = {k: v for k, v in cnt.items()
@@ -2092,15 +2186,19 @@ def main():
         json.dump({'%s/%s' % k: v for k, v in results.items()}, f, ensure_ascii=False, indent=1)
 
     print('==== RESULT ====')
-    nfail = 0
     for (bk, cls), r in sorted(results.items()):
         print('%-7s %-18s %s (viol=%d warn=%d)' % (bk, cls, r['status'], len(r['violations']), len(r['warnings'])))
         for sname, sv in sorted(r.get('subchecks', {}).items()):
             print('         - %-30s %s' % (sname, sv['status']))
-        nfail += len(r['violations'])
+    # 修正4 (第3次): 終了コードと ALL PASS 表示を実際の FAIL 状態 (クラス status
+    # を含む) に連動させる。違反メッセージ件数のみの判定は、enforce による
+    # クラス FAIL 化 (違反メッセージなし経路) を取りこぼしていた
+    nfail, ncls_fail = aggregate_fail_state(results)
     print('TOTAL VIOLATIONS: %d' % nfail)
+    print('CLASS FAIL COUNT: %d' % ncls_fail)
     print('SUMMARY -> verify_strict_summary.json')
-    if nfail:
+    if nfail or ncls_fail:
+        print('STRICT VERIFY: FAIL (class FAIL=%d, violations=%d)' % (ncls_fail, nfail))
         sys.exit(1)
     print('STRICT VERIFY: ALL PASS')
 
