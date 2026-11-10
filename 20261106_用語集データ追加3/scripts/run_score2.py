@@ -1,27 +1,25 @@
 # -*- coding: utf-8 -*-
 """単語データ作成: 専門性×文書分散の採点と、合格語の提案キューへの登録（パラメータ化版）。
 
-v2（2026-11-10・Gate 1 是正後）。旧 %TEMP%\\run_score2.py からの変更点:
-- M5: 入力jsonl・CSV出力先・summary出力先・トピック名を引数で指定する。
-      既存出力の上書きは --force なしでは拒否する。
-      summary に入力識別情報（パスの SHA-256 上位16桁）と文書数を記録する。
-- M3: 採点・出力より前にプライバシー検査を実施する。疑わしい語（7桁以上の数字・
-      メール/電話様・URL/パス残存・マスクトークン・敬称結合 等）は値を一切出力せず、
-      理由別件数のみを CSV・summary・標準出力へ記録する。合格語（headword）は出力してよい。
-- M2: --commit 時は DB 登録の前に抜粋・出典（文書本文）の安全性走査を行う
-      （scan_docs_privacy）。1件でも疑わしければ DB は書き換えない。
-- 採点式（ストップワード・スコア・合格ゲート・カテゴリ）自体は変更しない。
+v3（2026-11-10・Gate 1 再レビュー attempt 2 対応）。v2 からの変更点:
+- R1: DBへ保存する用例（抜粋）にも安全性検査を適用する。
+      snippet に用例検査を重ね、番号・メール・電話・URL・パスの残存と、
+      役割・敬称の直前にマスクトークン以外の人名らしい並びがある抜粋を除外する。
+      安全な用例が1つも無い候補は登録しない。除外理由は件数のみ記録（値は出力しない）。
+- R2: DB登録は同一トランザクション内で flush 後に件数検証をしてから commit する
+      （pending増分・総数増分・提案数＝登録対象数・auto_adopted==0・evidence_added==0）。
+      不一致は rollback して非ゼロ終了する。
+- minor: summary に入力ファイル内容の SHA-256 を記録し、登録実行時に同一内容か照合する
+      （不一致なら中止する）。
+- ストップワード補足: ドライラン上位200語の点検に基づき、汎用的な操作・管理語を
+      EXTRA_STOPWORDS に追加（正規化キーの完全一致でのみ除外・dfやスコアの新下限は設けない）。
 
-採点仕様（2026-11-06 確定版・勝手に変えない）
-  1. 抽出は glossary.stats.candidates.extract（Sudachi A モードで名詞系を連結、
-     略語・カタカナの正規表現、config/stopwords.txt で除外）
-  2. 専門性フラグ: ①複合（構成形態素2つ以上）②カタカナ比率0.5以上
-     ③型番パターン（英字1-4文字＋数字3桁以上）④ASCIIのみで型番でない語は除外
-  3. ストップワード: TASK_STOPWORDS（確定リスト）＋ EXTRA_STOPWORDS（補足の一般語）
-  4. スコア = 2*log2(df) + 専門性ボーナス（型番3/複合2/カタカナ2 の最大値）+ min(log2(freq),3)
-  5. 合格ゲート: df>=3 かつ 専門性フラグ1つ以上 かつ ストップワード外 かつ 2文字以上
-  6. カテゴリは CATEGORY_RULES のキーワード部分一致（上に書いたものほど優先）
-  7. DB の proposals（全状態）と terms の既存語は除外して登録（表記ゆれは正規化キーで照合）
+v2 からの変更点（Gate 1 attempt 1 是正）:
+- M5: 入力jsonl・CSV出力先・summary出力先・トピック名を引数で指定。上書きは --force 必須。
+      summary に入力識別情報（パスの SHA-256 上位16桁）と文書数を記録。
+- M3: 採点・出力より前にプライバシー検査を実施。疑わしい語は値を一切出力せず理由別件数のみ。
+- M2: --commit 時は DB 登録の前に抜粋・出典（文書本文）の安全性走査を行う。
+- 採点式（ストップワード定義・スコア・合格ゲート・カテゴリ）の計算式自体は変更しない。
 
 使い方:
     python run_score2.py --input <jsonl> --csv-out <csv> --summary-out <json> \
@@ -46,7 +44,10 @@ APP = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\06_Tools\�
 
 sys.path.insert(0, os.path.join(APP, "src"))
 os.chdir(APP)
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+# 標準出力を UTF-8 にする。既に UTF-8 のときはラップしない（二重ラップで閉じるのを防ぐ）
+if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                  errors="replace", line_buffering=True)
 
 # 実行条件を前回バッチに合わせて固定する（アプリ側のコード・設定ファイルは変えない）
 os.environ["LLM_BACKEND"] = "mock"
@@ -58,7 +59,8 @@ from glossary.db.session import make_engine, make_session_factory  # noqa: E402
 from glossary.factory import make_llm  # noqa: E402
 from glossary.preprocess.masking import Masker  # noqa: E402
 from glossary.preprocess.pipeline import load_jsonl  # noqa: E402
-from glossary.propose import AdoptionRules, propose_and_adopt  # noqa: E402
+import glossary.propose as _gp  # noqa: E402
+from glossary.propose import SNIPPET_LEN, AdoptionRules, Outcome, propose_and_adopt  # noqa: E402
 from glossary.settings import load_settings  # noqa: E402
 from glossary.stats.candidates import extract, load_stopwords  # noqa: E402
 from glossary.stats.normalize import normalize_key  # noqa: E402
@@ -87,6 +89,18 @@ EXTRA_STOPWORDS = [
     "従来通り", "サイズ", "配布先", "セット", "判断", "エラー", "株式会社",
     "特記事項", "トラブル", "テーブル", "消費税", "社内", "運用", "コピー",
     "ボタン", "フロー", "プロセス",
+    # v3補足（2026-11-10・ドライラン上位200語の点検に基づく）。理由は統計メモに記載。
+    # 完全一致でのみ除外するため、複合語（セットアップレポート等）には影響しない
+    "ユーザー", "利用者", "成果物", "テスト", "ツール", "リンク", "レビュー",
+    "ステータス", "ルール", "グループ", "リスク", "アクション", "ケース",
+    "ステップ", "モード", "レベル", "タイミング", "時点", "現時点", "具体的",
+    "スタート", "ノート", "サイト", "メモ", "レポート", "ファイル名",
+    "保存先", "参照先", "移動先", "対象外",
+    "未確認", "未確定", "未実施", "未承認", "未検証", "確認済み", "確定済み",
+    "要確認", "反映済み",
+    "実施者", "確認者", "承認者",
+    "実施日", "実行前", "注意点", "実データ",
+    "パスワード", "認証情報",
 ]
 
 # カテゴリ判定（キーワード部分一致・上に書いたものほど優先）
@@ -109,9 +123,9 @@ _KATA = re.compile(r"[ァ-ヶー]")
 # 型番・コードパターン: 英字1-4文字＋数字3桁以上（例: UR-4501）
 _MODEL = re.compile(r"^[A-Za-z]{1,4}-?[0-9]{3,}$")
 
-# ---------------------------------------------------------------- プライバシー検査（M3）
+# ---------------------------------------------------------------- プライバシー検査（M3・R1）
 
-# 疑わしい形。これに当たった語は値を出力せず、理由別件数だけを記録する
+# 候補語の疑わしい形。これに当たった語は値を出力せず、理由別件数だけを記録する
 _PRIVACY_PATTERNS = [
     ("電話番号形", re.compile(r"(?<!\d)0\d{1,4}-\d{1,4}-\d{3,4}(?!\d)")),
     ("郵便番号形", re.compile(r"(?<!\d)\d{3}-\d{4}(?!\d)")),
@@ -127,6 +141,7 @@ _HONORIFIC_TAIL = re.compile(
     r"(?:さん|さま|様|殿|くん|ちゃん|氏|部長|課長|係長|主任|社長|会長|理事|監査役)$"
 )
 
+# 文書本文（出典）の疑わしい形
 _DOC_PRIVACY_PATTERNS = [
     ("番号列", re.compile(r"(?<!\d)\d{7,}(?!\d)")),
     ("メールアドレス形", re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")),
@@ -134,6 +149,21 @@ _DOC_PRIVACY_PATTERNS = [
     ("URL残存", re.compile(r"https?://|file://", re.I)),
     ("パス残存", re.compile(r"\\\\")),
 ]
+
+# R1: 用例（抜粋）の人名疑い。役割・敬称の直前に、マスクトークン（<PERSON> など・
+# 「>」で終わる）以外の人名らしい並びが続く抜粋は疑わしいとみなす（保守的）。
+# 直前が一般語（お客様・皆様・ユーザー様など）の敬称は除外しない
+_ROLE_WORDS = r"(?:さん|さま|様|殿|くん|氏|部長|課長|係長|主任|社長|会長|理事)"
+_NON_PERSON_BEFORE = [
+    "お客", "各位", "皆", "同", "多", "仕", "お得意", "ご担当", "当方", "先方",
+    "ユーザ", "ユーザー", "利用者", "各", "元", "副", "現",
+]
+_ROLE_SUSPECT = re.compile(
+    r"(?<!>)"
+    + "".join(f"(?<!{w})" for w in _NON_PERSON_BEFORE)
+    + r"(?:[一-龥々]{1,6}|[ァ-ヶー]{2,8}|[A-Za-z][A-Za-z\-]{1,15})"
+    + r"(?=[ 　]?" + _ROLE_WORDS + r")"
+)
 
 
 def privacy_flag(term: str) -> str | None:
@@ -146,6 +176,55 @@ def privacy_flag(term: str) -> str | None:
     return None
 
 
+def snippet_privacy_verdict(snip: str) -> str | None:
+    """DBへ保存する用例（抜粋）の安全性検査（R1）。疑わしい場合は理由名を返す。"""
+    for name, pat in _DOC_PRIVACY_PATTERNS:
+        if pat.search(snip):
+            return name
+    if _ROLE_SUSPECT.search(snip):
+        return "人名疑い(敬称・役割)"
+    return None
+
+
+def make_safe_snippet(orig_snippet, reasons: Counter | None = None):
+    """元の snippet に用例検査を重ねた snippet 関数を作る（R1②・除外で対応）。
+
+    疑わしい抜粋は値を返さない（None）。propose 側は用例が空の候補を登録しないため、
+    安全な用例が1つも無い候補は自然に登録から漏れる（R1③）。
+    """
+    def _safe(text: str, word: str, width: int = SNIPPET_LEN):
+        if word not in text:
+            return None
+        snip = orig_snippet(text, word, width)
+        if snip is None:
+            return None
+        v = snippet_privacy_verdict(snip)
+        if v is not None:
+            if reasons is not None:
+                reasons[v] += 1
+            return None
+        return snip
+    return _safe
+
+
+def safe_evidence_stats(term: str, docs) -> tuple[int, Counter]:
+    """候補語ごとに、安全な用例を持つ文書数と、除外した抜粋の理由別件数を数える。"""
+    n = 0
+    reasons: Counter[str] = Counter()
+    for d in docs:
+        if term not in d.text:
+            continue
+        snip = _gp.snippet(d.text, term)
+        if snip is None:
+            continue
+        v = snippet_privacy_verdict(snip)
+        if v is not None:
+            reasons[v] += 1
+        else:
+            n += 1
+    return n, reasons
+
+
 def scan_docs_privacy(docs) -> Counter:
     """DBへ渡す抜粋・出典（文書本文）の安全性走査。理由別件数のみを返す（M2）。"""
     hits: Counter[str] = Counter()
@@ -156,8 +235,17 @@ def scan_docs_privacy(docs) -> Counter:
     return hits
 
 
+def content_sha256(path: str) -> str:
+    """入力ファイル内容の SHA-256（minor）。"""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def path_id(path: str) -> str:
-    """入力識別情報。パスの SHA-256 上位16桁（パスそのものは summary に残す）。"""
+    """入力識別情報。パスの SHA-256 上位16桁（内容の識別は content_sha256 で行う）。"""
     norm = os.path.normcase(os.path.abspath(path))
     return hashlib.sha256(norm.encode("utf-8")).hexdigest()[:16]
 
@@ -211,6 +299,51 @@ def load_existing_headwords(db_path: str) -> tuple[set[str], set[str]]:
 def refuse_overwrite(path: str, force: bool) -> None:
     if os.path.exists(path) and not force:
         sys.exit(f"出力先が既に存在します（上書きするには --force を付ける）: {path}")
+
+
+# ---------------------------------------------------------------- DB登録（R2）
+
+
+def register_with_verification(db, propose_fn, cands, docs, *, rules, send_masker, llm):
+    """提案の登録を同一トランザクション内で検証してから commit する（R2）。
+
+    propose_fn(db, llm, cands, docs, limit=..., rules=..., send_masker=...) -> Outcome
+    検証: pending増分・総数増分・提案数＝登録対象数・auto_adopted==0・evidence_added==0。
+    不一致のときは rollback して (False, エラー一覧, 件数) を返す。DB は変更されない。
+    """
+    before_total = db.execute(text("SELECT count(*) FROM proposals")).scalar()
+    before_pending = db.execute(
+        text("SELECT count(*) FROM proposals WHERE status='pending'")
+    ).scalar()
+    o = propose_fn(db, llm, cands, docs, limit=len(cands), rules=rules,
+                   send_masker=send_masker)
+    db.flush()
+    after_total = db.execute(text("SELECT count(*) FROM proposals")).scalar()
+    after_pending = db.execute(
+        text("SELECT count(*) FROM proposals WHERE status='pending'")
+    ).scalar()
+    errs = []
+    if o.proposed != len(cands):
+        errs.append(f"提案数が登録対象数と不一致（{o.proposed}≠{len(cands)}）")
+    if after_total - before_total != o.proposed:
+        errs.append(f"proposals総数の増分が提案数と不一致（{after_total - before_total}≠{o.proposed}）")
+    if after_pending - before_pending != o.proposed:
+        errs.append(f"pendingの増分が提案数と不一致（{after_pending - before_pending}≠{o.proposed}）")
+    if o.auto_adopted != 0:
+        errs.append(f"自動採用が発生した（{o.auto_adopted}）")
+    if o.evidence_added != 0:
+        errs.append(f"既存語への用例追加が発生した（{o.evidence_added}）")
+    counts = {
+        "before_total": before_total, "before_pending": before_pending,
+        "after_total": after_total, "after_pending": after_pending,
+        "proposed": o.proposed, "auto_adopted": o.auto_adopted,
+        "held": o.held, "evidence_added": o.evidence_added,
+    }
+    if errs:
+        db.rollback()
+        return False, errs, counts
+    db.commit()
+    return True, errs, counts
 
 
 def main() -> None:
@@ -325,14 +458,10 @@ def main() -> None:
     # ---- 重複排除（提案済み・採用済み） ----
     to_insert = []
     duplicates = []
-    duplicates_privacy = 0
     for r in qualified:
         if r["term"] in existing or r["key"] in existing_keys:
             r["dup"] = True
-            if not r.get("suppressed"):
-                duplicates.append(r["term"])
-            else:
-                duplicates_privacy += 1
+            duplicates.append(r["term"])
         else:
             r["dup"] = False
             to_insert.append(r)
@@ -369,6 +498,22 @@ def main() -> None:
             prev_excl.append((w, "候補に現れず"))
             prev_reasons["候補に現れず"] += 1
 
+    # ---- 用例検査（R1③のドライラン計測。DB は書き換えない） ----
+    # 登録候補それぞれについて、安全な用例を持つ文書数を数える。
+    # 安全な用例が1つも無い候補は、登録時に propose 側で用例空のため除外される。
+    evidence_reasons: Counter[str] = Counter()
+    evidence_drop = 0
+    registered_rows = []
+    for r in to_insert:
+        n, rs = safe_evidence_stats(r["term"], docs)
+        evidence_reasons.update(rs)
+        if n == 0:
+            evidence_drop += 1
+        else:
+            registered_rows.append(r)
+    print(f"用例検査: 安全な用例なし {evidence_drop} 件を登録対象から除く"
+          f"（理由別: {dict(evidence_reasons)}）", flush=True)
+
     # ---- CSV（BOM 付き UTF-8・Excel でそのまま開ける）。疑わしい語の行は書かない ----
     def sort_key(r):
         return (0 if r["reason"] is None else 1, -r.get("score", 0.0), r["term"])
@@ -396,16 +541,22 @@ def main() -> None:
 
     summary = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
-        "version": "v2",
+        "version": "v3",
         "topic_name": args.topic_name,
         "input_path": src,
         "input_id": path_id(src),
+        "input_content_sha256": content_sha256(src),
         "doc_count": len(docs),
         "occurrence_total": sum(freq.values()),
         "distinct_keys": len(rows),
         "funnel": dict(funnel),
         "privacy_exclusion_counts": dict(priv_counts),
         "privacy_exclusion_total": sum(priv_counts.values()),
+        "evidence_check": {
+            "dropped_no_safe_evidence": evidence_drop,
+            "excluded_snippet_reasons": dict(evidence_reasons),
+            "registered_after_check": len(registered_rows),
+        },
         "ascii_only_non_model_excluded": funnel.get("専門性フラグなし(ASCIIのみ)", 0),
         "stopword_list": {
             "task": TASK_STOPWORDS,
@@ -420,12 +571,8 @@ def main() -> None:
         ],
         "category_distribution": dict(cat_dist),
         "flag_distribution": dict(flag_dist),
-        "duplicates": {
-            "count": len(duplicates) + duplicates_privacy,
-            "terms": duplicates,
-            "privacy_suppressed": duplicates_privacy,
-        },
-        "insert_candidates_count": len(to_insert),
+        "duplicates": {"count": len(duplicates), "terms": duplicates},
+        "insert_candidates_count": len(registered_rows),
         "prev200": {
             "total": len(prev),
             "requalified_count": len(prev_requal),
@@ -442,8 +589,8 @@ def main() -> None:
         json.dump(summary, f, ensure_ascii=False, indent=1)
     print(f"集計: {args.summary_out}", flush=True)
 
-    print(f"合格 {len(qualified)} / 重複除外 {summary['duplicates']['count']} "
-          f"/ 登録候補 {len(to_insert)} / プライバシー除外 {sum(priv_counts.values())}")
+    print(f"合格 {len(qualified)} / 重複除外 {len(duplicates)} / 登録候補 {len(registered_rows)}"
+          f" / プライバシー除外 {sum(priv_counts.values())} / 用例検査除外 {evidence_drop}")
     for r in qualified[:10]:
         print(f"  {r['term']}\t{r['category']}\tdf={r['df']}\tfreq={r['freq']}"
               f"\t{r['flags_ja']}\tscore={r['score']}")
@@ -452,27 +599,23 @@ def main() -> None:
         print("--commit を付けないため DB は書き換えません", flush=True)
         return
 
+    # ---- minor: 入力内容が summary 記録時と同一か照合する ----
+    with open(args.summary_out, encoding="utf-8") as f:
+        recorded = json.load(f)
+    if recorded.get("input_content_sha256") != content_sha256(src):
+        sys.exit("入力ファイルの内容が summary 記録時と一致しません（中止）")
+
     # ---- M2: DB登録前に抜粋・出典（文書本文）の安全性走査。1件でも疑わしければ中止 ----
     doc_hits = scan_docs_privacy(docs)
     if doc_hits:
         print(f"安全性走査で疑わしい文書を検出したため DB は書き換えません: {dict(doc_hits)}")
         return
 
-    # ---- DB 登録（run_propose.py と同じ経路・モックの仮定義で保留になる） ----
-    # propose_and_adopt 内の snippet は語を含まない文書も全文を文分割して走査するため、
-    # 語が本文に無い場合は元実装も None を返すので、その場合だけ str.contains で先回りして省略する。
-    import glossary.propose as _gp
+    # ---- R1: 用例検査を通った候補だけを登録する。snippet は検査つきに差し替える ----
+    cands = [{"surface": r["term"], "tfidf": r["score"]} for r in registered_rows]
+    snippet_reasons: Counter[str] = Counter()
+    _gp.snippet = make_safe_snippet(_gp.snippet, snippet_reasons)
 
-    _orig_snippet = _gp.snippet
-
-    def _fast_snippet(text: str, word: str, width: int = _gp.SNIPPET_LEN):
-        if word not in text:
-            return None
-        return _orig_snippet(text, word, width)
-
-    _gp.snippet = _fast_snippet
-
-    cands = [{"surface": r["term"], "tfidf": r["score"]} for r in to_insert]
     from alembic import command
     from alembic.config import Config
 
@@ -481,35 +624,24 @@ def main() -> None:
     command.upgrade(cfg, "head")
     factory = make_session_factory(make_engine(s.database_url))
     with factory() as db:
-        before_total = db.execute(text("SELECT count(*) FROM proposals")).scalar()
-        before_pending = db.execute(
-            text("SELECT count(*) FROM proposals WHERE status='pending'")
-        ).scalar()
-        o = propose_and_adopt(
-            db, make_llm(s), cands, docs, limit=len(cands),
+        ok, errs, counts = register_with_verification(
+            db, propose_and_adopt, cands, docs,
             rules=AdoptionRules.from_yaml(s.config_dir / "adoption.yaml"),
             send_masker=Masker.from_yaml(s.config_dir / "llm_send_masking.yaml"),
+            llm=make_llm(s),
         )
-        db.commit()
-        after_total = db.execute(text("SELECT count(*) FROM proposals")).scalar()
-        after_pending = db.execute(
-            text("SELECT count(*) FROM proposals WHERE status='pending'")
-        ).scalar()
-    print(f"提案 {o.proposed}（自動採用 {o.auto_adopted} / 保留 {o.held}）"
-          f" / 登録済みの語へ用例 {o.evidence_added}件")
-    print(f"proposals: {before_total} -> {after_total}（total）, "
-          f"{before_pending} -> {after_pending}（pending）")
-    ok = (after_total - before_total == o.proposed
-          and after_pending - before_pending == o.proposed)
-    print("検証:", "OK（pending の増分＝挿入件数）" if ok else "NG（増分が一致しない）")
+    if not ok:
+        print("件数検証が不一致のため rollback しました（DB は変更されていません）")
+        for e in errs:
+            print(f"  - {e}")
+        sys.exit(1)
+    print(f"検証 OK: 提案 {counts['proposed']}（保留 {counts['held']}）/ "
+          f"proposals {counts['before_total']} -> {counts['after_total']}（total）, "
+          f"{counts['before_pending']} -> {counts['after_pending']}（pending）")
+    print(f"用例検査で除外した抜粋: {dict(snippet_reasons)}")
 
-    summary["db"] = {
-        "before_total": before_total, "before_pending": before_pending,
-        "inserted": o.proposed, "auto_adopted": o.auto_adopted, "held": o.held,
-        "evidence_added": o.evidence_added,
-        "after_total": after_total, "after_pending": after_pending,
-        "verified": bool(ok),
-    }
+    summary["db"] = {**counts, "verified": True,
+                     "excluded_snippet_reasons": dict(snippet_reasons)}
     with open(args.summary_out, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=1)
 

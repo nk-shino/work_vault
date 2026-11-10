@@ -36,7 +36,10 @@ from pathlib import Path
 APP = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault\06_Tools\用語集アプリ"
 sys.path.insert(0, os.path.join(APP, "src"))
 os.chdir(APP)
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+# 標準出力を UTF-8 にする。既に UTF-8 のときはラップしない（二重ラップで閉じるのを防ぐ）
+if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                  errors="replace", line_buffering=True)
 
 from glossary.preprocess.masking import Masker, MaskingLeak  # noqa: E402
 from glossary.preprocess.pipeline import MaskedDocument, save_jsonl  # noqa: E402

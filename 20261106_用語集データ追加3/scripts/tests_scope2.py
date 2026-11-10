@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""回帰テスト（合成データ・個人情報なし）。v2 前処理パイプラインの検証。
+"""回帰テスト（合成データ・個人情報なし）。v3 前処理・採点パイプラインの検証。
 
 検証項目:
   ① 役割語に隣接する人名がマスクされる（keep 廃止の確認）
@@ -9,21 +9,32 @@
   ⑤ 罫線・「〜書きました」行で本文が打ち切られない（Cleaner 未適用の確認）
   ⑥ 7桁以上の数字で漏えいゲートが発火する
   ⑦ 不透明IDの安定性（同一パス→同一ID・接頭辞・16桁16進）
+  ⑧ R1: 疑わしい語を含む抜粋は用例検査で除外される（素のsnippetには残る=RED、
+     検査つきsnippetはNone=GREEN・安全な用例が無い候補は用例0で検出）
+  ⑨ R2: 合成DBで正常登録はcommit・不一致はrollback（DB不変）
+  ⑩ minor: 入力内容の SHA-256 は安定して計算できる
 
 使い方: glossary_venv の python で PYTHONIOENCODING=utf-8 を付けて実行する。
 人名には実在しない組み合わせの一般的な姓のみを使う（個人情報は含まない）。
 """
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import collect_scope2 as cs  # noqa: E402
+import run_score2 as rs  # noqa: E402
 
 # 標準出力のUTF-8化は collect_scope2 側のラップに任せる（二重ラップを避ける）
 
 from glossary.preprocess.masking import Masker  # noqa: E402
+from glossary.preprocess.pipeline import MaskedDocument  # noqa: E402
+from glossary.propose import Outcome, snippet as orig_snippet  # noqa: E402
 from glossary.stats.candidates import extract, load_stopwords  # noqa: E402
+from sqlalchemy import create_engine  # noqa: E402
+from sqlalchemy import text as sa_text  # noqa: E402
+from sqlalchemy.orm import sessionmaker  # noqa: E402
 
 
 def main() -> None:
@@ -97,6 +108,70 @@ def main() -> None:
           and len(suffix) == 16 and int(suffix, 16) >= 0)
     results["7_不透明IDの安定性"] = ok
     details["7_不透明IDの安定性"] = f"別パス衝突={id1 == id3}"
+
+    # ⑧ R1: 疑わしい語を含む抜粋の用例検査（RED→GREEN）
+    # 素の snippet には人名＋役割がそのまま残る（修正前はこのまま DB へ保存され得た）
+    leak_text = "スミス部長の指示でノズルを交換した。"
+    raw = orig_snippet(leak_text, "ノズル")
+    red_ok = raw is not None and "スミス部長" in raw          # 漏えい経路の存在確認（RED根拠）
+    v = rs.snippet_privacy_verdict(raw) if raw else None
+    green_verdict = v is not None and "人名" in v             # 用例検査が検出する
+    safe_fn = rs.make_safe_snippet(orig_snippet)
+    green_masked = safe_fn(leak_text, "ノズル") is None        # 疑わしい抜粋は返さない
+    normal = safe_fn("ノズルを交換した。記録を残す。", "ノズル")
+    green_normal = normal is not None and "ノズル" in normal   # 正常な抜粋はそのまま
+    doc = MaskedDocument("doc:0123456789abcdef", datetime.now(timezone.utc),
+                         "doc:0123456789abcdef", leak_text)
+    n_safe, drop_reasons = rs.safe_evidence_stats("ノズル", [doc])
+    green_noevidence = n_safe == 0 and sum(drop_reasons.values()) == 1  # 用例0で検出
+    results["8_用例検査(R1)"] = red_ok and green_verdict and green_masked and green_normal and green_noevidence
+    details["8_用例検査(R1)"] = (f"素のsnippetに残る={red_ok} 判定={green_verdict} "
+                                 f"除外={green_masked} 正常保持={green_normal} 用例0={green_noevidence}")
+
+    # ⑨ R2: 合成DBでのトランザクション検証（正常登録=commit・不一致=rollback）
+    def make_session(name):
+        p = os.path.join(cs.TMP, name)
+        if os.path.exists(p):
+            os.remove(p)
+        eng = create_engine(f"sqlite:///{p}", future=True)
+        with eng.begin() as c:
+            c.execute(sa_text("CREATE TABLE proposals (id integer primary key, status text)"))
+        return sessionmaker(bind=eng, future=True)()
+
+    def fake_propose(n_insert, proposed, auto=0, ev=0):
+        def _f(db, llm, cands, docs, limit=None, rules=None, send_masker=None):
+            for _ in range(n_insert):
+                db.execute(sa_text("INSERT INTO proposals (status) VALUES ('pending')"))
+            return Outcome(proposed=proposed, auto_adopted=auto, evidence_added=ev)
+        return _f
+
+    def count_rows(db):
+        return db.execute(sa_text("SELECT count(*) FROM proposals")).scalar()
+
+    db_ok = make_session("test_r2_ok.db")
+    ok1, _, _ = rs.register_with_verification(
+        db_ok, fake_propose(2, 2), [{}, {}], [], rules=None, send_masker=None, llm=None)
+    committed = count_rows(db_ok) == 2
+    db_ng = make_session("test_r2_ng.db")
+    ok2, _, _ = rs.register_with_verification(
+        db_ng, fake_propose(1, 1), [{}, {}], [], rules=None, send_masker=None, llm=None)
+    rolled_back = count_rows(db_ng) == 0        # rollback 後も DB は空のまま
+    db_auto = make_session("test_r2_auto.db")
+    ok3, _, _ = rs.register_with_verification(
+        db_auto, fake_propose(2, 2, auto=1), [{}, {}], [], rules=None, send_masker=None, llm=None)
+    rolled_back_auto = count_rows(db_auto) == 0
+    results["9_トランザクション検証(R2)"] = ok1 and committed and (not ok2) and rolled_back \
+        and (not ok3) and rolled_back_auto
+    details["9_トランザクション検証(R2)"] = (f"正常登録={ok1}/{committed} 不一致rollback={(not ok2) and rolled_back} "
+                                             f"自動採用rollback={(not ok3) and rolled_back_auto}")
+
+    # ⑩ minor: 入力内容の SHA-256 は安定して計算できる
+    p = os.path.join(cs.TMP, "test_content_hash.txt")
+    with open(p, "w", encoding="utf-8") as f:
+        f.write("hash test")
+    h1, h2 = rs.content_sha256(p), rs.content_sha256(p)
+    results["10_内容ハッシュ(minor)"] = h1 == h2 and len(h1) == 64
+    details["10_内容ハッシュ(minor)"] = f"安定={h1 == h2} 長さ={len(h1)}"
 
     passed = sum(1 for v in results.values() if v)
     print(f"tests: {passed}/{len(results)} passed")
