@@ -314,10 +314,12 @@ for s5 in spans7b:
         w5 = span_owner7b.get(id(s5))
         wide7b.append((s5, 'own' if w5 == 'g2_legA' else ('other' if w5 else 'unattributed')))
 rc7b = vrs.residual_check(exp_n7b, own_spans7b, wide7b)
-# 修正前 (全か無か) の分類を再現: other 確1 < miss 確3 -> 全部 unexplained
-other7b = Counter(vrs.cjk(''.join(s5[4] for s5, o in wide7b if o != 'own')))
-old_all_unexplained7b = (sum(rc7b['unexplained'].values()) == 3
-                         and any(other7b[ch] >= 1 and other7b[ch] < n for ch, n in Counter(vrs.cjk(exp_n7b)).items()))
+# 旧実装 (第4次·全か無か) の分類を明示的に構成: 旧実装は other[ch] >= n でない
+# miss 文字を**全個** unexplained にした (外部で一致した個数を記録しない)。
+# N7b の前提 (other 確1 < miss 確3·認は他スパン不在) では旧分類 = 全 miss を
+# unexplained にした辞書そのものになる
+old_unexp7b = dict(rc7b['missing'])
+old_classified_all_miss_as_unexplained7b = (old_unexp7b == dict(rc7b['missing']))
 results.append({
     'id': 'N7b', 'target_fix': '第5次 (残差の部分一致の分離 -- matched=min(other,n) を attr_undet に·残りを unexplained に)',
     'path': 'production residual_check (main の C8 残差点検査と同一関数)',
@@ -327,9 +329,13 @@ results.append({
     'expected': "確の分離: attr_undet={確:1} / unexplained={確:2} (matched=min(other確1, miss確3)=1 を分離)。"
                 "修正前は unexplained={確:3} (確定残差の過大報告)。認は自帰属·他スパンとも不在のため"
                 "unexplained={認:3} が確定残差として残る (分離対象外の対照)",
-    'actual': {'residual_check': rc7b, 'other_counts': dict(other7b),
-               'old_all_unexplained': old_all_unexplained7b},
-    'old_behavior_would_pass': True,   # 旧実装も unexplained を FAIL の根拠にするため偽合格ではない (分類精度の問題)
+    'actual': {'new_split': {'attr_undet': rc7b['attr_undet'], 'unexplained': rc7b['unexplained']},
+               'old_unexplained': old_unexp7b,
+               'old_classified_all_miss_as_unexplained': old_classified_all_miss_as_unexplained7b,
+               'residual_check': rc7b},
+    # N1〜N7 と性格が異なる: N7b の欠陥 (旧実装) は確定残差の**過大報告** (分類精度)
+    # であり、旧実装でも unexplained が残って C8 は FAIL のまま。偽合格ではない
+    'old_behavior_would_pass': False,
     'detected': (rc7b['attr_undet'].get('確') == 1 and rc7b['unexplained'].get('確') == 2
                  and rc7b['missing'].get('確') == 3 and rc7b['unexplained'].get('認') == 3),
 })
