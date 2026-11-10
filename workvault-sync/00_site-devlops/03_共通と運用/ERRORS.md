@@ -984,3 +984,10 @@ IntersectionObserver の rootMargin を "0px 0px -10% 0px" にした。ページ
 ### Resolution
 - **Resolved**: 2026-11-07（記録のみ）
 - **Notes**: Pattern-Key: `verify.cdp-measuring-traps`
+
+
+## ERR-20261109-021 (Recurrence-Count: 2)
+- Pattern: builtin スキル m365-read の利用で2種の静かな失敗が発生した。(1) PowerShell スクリプトファイルに日本語キーワードを直接書いて `$search="棚卸"` を組むと、bash 経由の実行でファイルが cp932 として解釈され文字化けし、検索結果が空配列で返る(0件を「該当なし」と誤認する危険)。(2) Teams チャット一覧の `$select` に存在しないプロパティ `lastMessageDateTime` を指定すると HTTP 400 で全体が失敗する(正しくは `lastUpdatedDateTime`)
+- Key: mcp.m365-read-uri-encoding-and-select-field-names
+- 解決法: 日本語を含む検索は URI に直接書かず percent-encode する(例: 棚卸=%E6%A3%9A%E5%8D%B8、鹿島=%E9%B9%BF%E5%B3%B6)。$select は推測せず、失敗時はエラー本文のプロパティ名で即修正する(chats は topic,lastMessagePreview,lastUpdatedDateTime)。空配列は成功と扱わず、ASCII キーワードでの対照検索と併用して「検索自体が壊れていない」ことを確認する。m365-read は .cache 配下の builtin のため SKILL.md を直接編集せず、本ファイルに記録する
+- resolved: 両方とも修正して再取得に成功(2026-11-09)
