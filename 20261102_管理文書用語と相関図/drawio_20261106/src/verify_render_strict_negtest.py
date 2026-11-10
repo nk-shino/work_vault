@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""verify_render_strict_negtest.py -- Gate 1 是正の負例検証 (N1-N6b).
+"""verify_render_strict_negtest.py -- Gate 1 是正の負例検証 (N1-N7b).
 
 第2次是正 (再審査 attempt 2 指摘) により:
   - N1/N2 は純関数の戻り値だけでなく、本番の severity·サブチェック分類
@@ -23,6 +23,12 @@
     自帰属スパン「確認」1個のみの静的反例を本番の残差分類 (residual_check) で
     確認し、unexplained 2文字として記録される (旧実装は own_extra 再計上により
     unexplained 0 の偽陰性)
+
+第5次是正 (Phase 2 独立レビュー P2 指摘) により:
+  - N7b を新設: 残差の部分一致の分離 (修正7) の検証。期待「確認確認確認」に
+    自帰属スパンなし·他図形帰属スパン「確」1文字の反例を本番の residual_check
+    で確認し、attr_undet 確:1·unexplained 確:2 に分離される (第4次実装は
+    other[ch] >= n の全か無か判定で unexplained 確:3 = 確定残差の過大報告)
 
 結果: strictverify/reconsider/negative_test_results.json
 終了コード: 全件検出=0 / 未検出あり=1
@@ -281,10 +287,57 @@ results.append({
     'detected': (n7_unexp == 2 and not rc7['attr_undet'] and not rc7['missing'] == {} and old_would_mask7),
 })
 
+# ---- N7b (第5次): 残差の部分一致の分離 -- 確定残差の過大報告を是正 -----------
+# 期待「確認確認確認」に対し自帰属スパンなし·拡張窓の他図形スパンに「確」1文字。
+# 第4次実装 (第5次修正前) の分類ループは other[ch] >= n か否かの全か無か判定で、
+# 一部一致 (1〜n-1個) の場合は全 n を unexplained に分類していた = 外部で一致した
+# 個数が記録されず、C8 の確定残差 (unexplained) を過大報告する (方向は保守的·
+# 偽合格ではないが分類精度の問題)。第5次実装: matched = min(other[ch], n) を
+# attribution-undetermined に、残り n - matched を unexplained に分離 (0は記録
+# しない)。期待: attr_undet 確:1·unexplained 確:2 (修正前は unexplained 確:3)
+exp_n7b = '確認確認確認'
+wins7b = {'g2_legA': (100.0, 100.0, 300.0, 120.0)}
+# 自帰属スパンなし。他図形 (g2_legB) 帰属スパン「確」1文字が A の拡張窓 (±15pt) に進入。
+# スパンは legA の本文窓の外 (y 122-130·+15pt 帯) に置き、legB 窓で完全包含する
+# (legA との重なり 0 なので attribute_spans は legB に帰属 = owner 'other')
+spans7b = [(110.0, 122.0, 290.0, 130.0, '確')]
+wins7b['g2_legB'] = (110.0, 120.0, 292.0, 132.0)
+attrib7b, un7b, strad7b = vrs.attribute_spans(spans7b, wins7b)
+span_owner7b = {}
+for wnm, lst in attrib7b.items():
+    for s5 in lst:
+        span_owner7b[id(s5)] = wnm
+own_spans7b = sorted(attrib7b.get('g2_legA', []), key=lambda s: (s[1], s[0]))
+wide7b = []
+for s5 in spans7b:
+    if s5[0] < 315.0 and s5[2] > 85.0 and s5[1] < 135.0 and s5[3] > 85.0:
+        w5 = span_owner7b.get(id(s5))
+        wide7b.append((s5, 'own' if w5 == 'g2_legA' else ('other' if w5 else 'unattributed')))
+rc7b = vrs.residual_check(exp_n7b, own_spans7b, wide7b)
+# 修正前 (全か無か) の分類を再現: other 確1 < miss 確3 -> 全部 unexplained
+other7b = Counter(vrs.cjk(''.join(s5[4] for s5, o in wide7b if o != 'own')))
+old_all_unexplained7b = (sum(rc7b['unexplained'].values()) == 3
+                         and any(other7b[ch] >= 1 and other7b[ch] < n for ch, n in Counter(vrs.cjk(exp_n7b)).items()))
+results.append({
+    'id': 'N7b', 'target_fix': '第5次 (残差の部分一致の分離 -- matched=min(other,n) を attr_undet に·残りを unexplained に)',
+    'path': 'production residual_check (main の C8 残差点検査と同一関数)',
+    'fixture': {'exp_text': exp_n7b, 'windows': {k: list(v) for k, v in wins7b.items()},
+                'spans': [list(s) for s in spans7b],
+                'note': '期待「確認確認確認」·自帰属スパンなし·他図形 (g2_legB) 帰属スパン「確」1文字が拡張窓内'},
+    'expected': "確の分離: attr_undet={確:1} / unexplained={確:2} (matched=min(other確1, miss確3)=1 を分離)。"
+                "修正前は unexplained={確:3} (確定残差の過大報告)。認は自帰属·他スパンとも不在のため"
+                "unexplained={認:3} が確定残差として残る (分離対象外の対照)",
+    'actual': {'residual_check': rc7b, 'other_counts': dict(other7b),
+               'old_all_unexplained': old_all_unexplained7b},
+    'old_behavior_would_pass': True,   # 旧実装も unexplained を FAIL の根拠にするため偽合格ではない (分類精度の問題)
+    'detected': (rc7b['attr_undet'].get('確') == 1 and rc7b['unexplained'].get('確') == 2
+                 and rc7b['missing'].get('確') == 3 and rc7b['unexplained'].get('認') == 3),
+})
+
 # ---- 出力 ----------------------------------------------------------------
 all_detected = all(r['detected'] for r in results)
 out = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
-       'harness': 'verify_render_strict.py (Gate1第4次是正 修正6 + 第3次 修正1/2/3 + 第2次 F1/F2/F3/F5)',
+       'harness': 'verify_render_strict.py (Gate1第5次是正 修正7 + 第4次 修正6 + 第3次 修正1/2/3 + 第2次 F1/F2/F3/F5)',
        'n_fixtures': len(results), 'n_detected': sum(1 for r in results if r['detected']),
        'all_detected': all_detected, 'results': results}
 path = os.path.join(OUTDIR, 'negative_test_results.json')

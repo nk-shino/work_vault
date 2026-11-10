@@ -62,9 +62,16 @@
        残差補填は cg (自帰属抽出文) の構成元スパンの再利用のため廃止。
        残差分類は純関数 residual_check に集約し, 負例 N7 (本番経路) で検証する
    (7) tail 救済経路 (loss-window-precision) は現接続では構造上到達不可能
-       (呼び出し側が全自帰属スパンを渡すため extra_own は常に空)。
-       配線の再設計はせず, コード内コメントと報告書の限界節に明示する
-  """
+        (呼び出し側が全自帰属スパンを渡すため extra_own は常に空)。
+        配線の再設計はせず, コード内コメントと報告書の限界節に明示する
+
+ Gate 1 第5次是正 (Phase 2 独立レビュー P2 指摘, 2026-11-10):
+   (8) 残差の部分一致の分離 — 期待文字が複数個欠落し他図形帰属·未帰属スパンが
+       一部 (1〜n-1個) しか含まない場合, 旧実装は全 n を unexplained に分類し
+       確定残差を過大報告していた。matched = min(other, n) を
+       attribution-undetermined に, 残りを unexplained に分離する。
+       負例 N7b (本番経路) で検証する
+   """
 import sys, io, os, re, json, math, zipfile, datetime, bisect
 
 class _SafeBuf(object):
@@ -663,6 +670,12 @@ def residual_check(exp_text, own_spans, wide_spans):
     に記録されない偽陰性)。補填根拠は own_spans とオブジェクト単位で排他な
     スパン (owner != 'own'·id 未使用) に限定し、識別子レベルで cg との重なりを
     排除する。負例 N7 (本番経路) で検証する。
+    第5次是正: 部分一致の分離。期待文字が複数個欠落し、他図形帰属·未帰属スパン
+    がその一部 (1〜n-1個) しか含まない場合、外部で一致した個数
+    matched = min(other[ch], n) を 'attribution-undetermined' に、残り
+    n - matched を 'unexplained' に分離する (旧実装は全 n を unexplained に
+    分類し、確定残差を過大報告していた。方向は保守的だが分類精度の問題)。
+    0 は両カウンタに記録しない。負例 N7b (本番経路) で検証する。
     戻り値: {'missing': {ch: n}, 'attr_undet': {ch: n}, 'unexplained': {ch: n}}"""
     ce = Counter(cjk(exp_text))
     cg = Counter(cjk(''.join(t for (_, _, _, _, t) in own_spans)))
@@ -677,10 +690,13 @@ def residual_check(exp_text, own_spans, wide_spans):
             other += Counter(cjk(s[4]))
     attr_undet, unexp = {}, {}
     for ch, n in miss.items():
-        if other[ch] >= n:
-            attr_undet[ch] = n
-        else:
-            unexp[ch] = n
+        # 第5次是正: 部分一致の分離 -- 外部で一致した個数だけ attr_undet に
+        # 計上し、残り (確定残差) のみ unexplained にする (0 は記録しない)
+        matched = min(other[ch], n)
+        if matched > 0:
+            attr_undet[ch] = matched
+        if n - matched > 0:
+            unexp[ch] = n - matched
     return {'missing': dict(miss), 'attr_undet': attr_undet, 'unexplained': unexp}
 
 def rows_from_spans(spans):
