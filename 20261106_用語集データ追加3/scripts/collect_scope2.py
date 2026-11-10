@@ -1,24 +1,29 @@
 # -*- coding: utf-8 -*-
 """Phase 1: 範囲切替コーパス（保管庫 Work_Vault とワークスペース）の収集と前処理。
 
-前回（デスクトップ data フォルダ）と同じパイプラインを再利用する。
-- 抽出・キャップ: 本スクリプト（既存スクリプトは改変しない）
-- クリーニング: glossary.preprocess.cleaner.Cleaner（config/cleaning_rules.yaml）
-- マスキング: glossary.preprocess.masking.Masker（config/masking_rules.yaml）
-  40,000バイト単位の分割は run_import.py と同じ方式（SudachiPy の入力上限対策）
+v2（2026-11-10・Gate 1 是正後）。v1 からの変更点:
+- M1: 未マスク本文ミラーを廃止。ディスクへ出すのは安全性検査通過後のマスク済み jsonl のみ
+- M2: 今回専用のマスキング設定（%TEMP%・アプリの config は変更しない）
+  ① 役割語と一緒に出る人名の keep を廃止（役割文脈の人名もマスク）
+  ② URL・file://・UNC パスを <URL>/<PATH> としてマスク（protect で残さない）
+  ③ thread_id / source_ref は元パスを含まない不透明ID（正規化パスの SHA-256 上位16桁・
+     doc: 接頭辞・同一パスは同一ID・対応表は永続化しない）
+- M4: 資料にメール用 Cleaner を適用しない（pipeline.py の設計に合わせる）
+  「〜書きました」行や罫線で本文が打ち切られないようにする
+- 7桁以上の連続数字の漏えいゲートは緩和せず維持
+- 生成後、jsonl 全行を再読込して検証する（結果は件数のみ・値は出力しない）
 
 処理の順序:
   1. ディレクトリ除外 → ファイル名除外 → 拡張子（.md/.txt）
   2. 読み込み（UTF-8 優先、失敗時 cp932）→ YAML フロントマター除去
-  3. 45,000バイトでキャップ（UTF-8）→ ミラーへ書き出し
-  4. クリーニング → マスキング（分割適用・マスキング漏れ例外は除外）
-  5. 漏えいゲート: 7桁以上の連続数字を含む文書を除外。
-     メールアドレス・電話番号様の残存も走査して件数を記録する（0件を確認）
-  6. マスキング済み jsonl を出力し、件数だけを集計 JSON と標準出力へ出す
+  3. 45,000バイトでキャップ（UTF-8）→ マスキング（分割適用・マスキング漏れ例外は除外）
+  4. 漏えいゲート: 7桁以上の連続数字・メール/電話/URL/パスの残存を含む文書を除外
+  5. マスキング済み jsonl を出力し、全行検証の結果と件数だけを標準出力へ出す
 
 個人情報そのもの（氏名・番号等）は出力しない。集計は件数のみ。
 98_Pass 配下と認証情報ファイルはディレクトリ／ファイル名の除外で開かない。
 """
+import hashlib
 import io
 import json
 import os
@@ -33,14 +38,13 @@ sys.path.insert(0, os.path.join(APP, "src"))
 os.chdir(APP)
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-from glossary.preprocess.cleaner import Cleaner
-from glossary.preprocess.masking import Masker, MaskingLeak
-from glossary.preprocess.pipeline import MaskedDocument, save_jsonl
+from glossary.preprocess.masking import Masker, MaskingLeak  # noqa: E402
+from glossary.preprocess.pipeline import MaskedDocument, save_jsonl  # noqa: E402
 
 VAULT = r"C:\Users\ss80751\OneDrive - NK\ドキュメント\Work_Vault"
 WORKSPACE = r"C:\Users\ss80751\kohden-code-workspace"
 TMP = r"C:\Users\ss80751\AppData\Local\Temp\kohden-code"
-MIRROR = os.path.join(TMP, "glossary_import_scope2")
+MASK_CFG = os.path.join(TMP, "masking_rules_scope2.yaml")
 OUT_JSONL = os.path.join(TMP, "masked_scope2.jsonl")
 STATS_JSON = os.path.join(TMP, "stats_scope2.json")
 
@@ -69,6 +73,79 @@ EMAIL_RESID = re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")
 PHONE_RESID = re.compile(
     r"(?<![\d\-])(?:\+81[\-\s]?|0)\d{1,4}[\-\s(（]?\d{1,4}[\-\s)）]?\d{3,4}(?![\d\-])"
 )
+URL_RESID = re.compile(r"https?://|file://", re.I)
+UNC_RESID = re.compile(r"\\\\")
+
+# ---------------------------------------------------------------- 今回専用マスキング設定
+
+# アプリの config/masking_rules.yaml を基に、今回の収集用に上書きした設定。
+# アプリ側のファイルは変更しない。この内容自体に個人情報は含まれない。
+MASK_CONFIG_TEMPLATE = r"""# 今回専用のマスキング設定（v2・Gate 1 是正後）。
+# アプリの config/masking_rules.yaml を基に collect_scope2.py が生成する。
+# 変更点: protect 廃止（URL・file://・UNC を <URL>/<PATH> でマスク）、
+#         役割語文脈の人名 keep（keep_before/keep_after）の廃止。
+rules:
+  - name: url
+    type: regex
+    pattern: '(?:https?|file)://[^\s<>"「」（）()]+'
+    token: '<URL>'
+
+  - name: unc_path
+    type: regex
+    pattern: '\\\\[^\s<>"「」（）()]+'
+    token: '<PATH>'
+
+  - name: email
+    type: regex
+    pattern: '[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}'
+    token: '<EMAIL>'
+
+  - name: serial
+    type: regex
+    pattern: '(?:(?:S/N|SN|シリアル(?:番号)?|製造番号)[:：\s]*[A-Za-z0-9][A-Za-z0-9\-]{3,})|\b(?=[A-Za-z0-9\-]*\d)(?=[A-Za-z0-9\-]*[A-Za-z])[A-Za-z0-9]{2,}(?:-[A-Za-z0-9]+){2,}\b'
+    token: '<SERIAL>'
+
+  - name: phone
+    type: regex
+    pattern: '(?<![\d\-])(?:\+81[\-\s]?|0)\d{1,4}[\-\s(（]?\d{1,4}[\-\s)）]?\d{3,4}(?![\d\-])'
+    token: '<PHONE>'
+
+  - name: money
+    type: regex
+    pattern: '[¥￥$]\s?[\d,，]+(?:\.\d+)?|[\d,，]+(?:\.\d+)?\s?(?:万|億|千)?円'
+    token: '<MONEY>'
+
+  - name: person_honorific
+    type: regex
+    pattern: '([一-龥々ァ-ヶー]{1,8}|(?<![ぁ-ん])[ぁ-ん]{2,4})(?=\s?(?:さん|さま|殿|くん|部長|課長|係長|主任|社長|様(?![々一-龥])|氏(?![一-龥])))'
+    group: 1
+    exclude: ['皆', 'みな', 'お客', '各位', 'お得意', 'ご担当者', '担当者', 'ご担当']
+    exclude_suffix: ['仕', '同', '模', '多', '異', '一', '有', '左', '斯']
+    token: '<PERSON>'
+
+  - name: person_self_intro
+    type: regex
+    pattern: '\A[ 　]*([一-龥々ァ-ヶー]{1,8}(?:[ 　][一-龥々ぁ-んァ-ヶー]{1,8})?)(?=[ 　]*(?:です|と申します)[。．]?[ 　]*$)'
+    group: 1
+    flags: [MULTILINE]
+    token: '<PERSON>'
+
+  - name: person_pos
+    type: pos
+    pos: ['名詞', '固有名詞', '人名']
+    token: '<PERSON>'
+"""
+
+
+def ensure_mask_config() -> str:
+    """今回専用のマスキング設定を %TEMP% に生成してパスを返す（毎回上書き）。"""
+    os.makedirs(TMP, exist_ok=True)
+    with open(MASK_CFG, "w", encoding="utf-8", newline="\n") as f:
+        f.write(MASK_CONFIG_TEMPLATE)
+    return MASK_CFG
+
+
+# ---------------------------------------------------------------- 収集と前処理
 
 
 def iter_files(root: str, source: str):
@@ -109,6 +186,12 @@ def cap_bytes(text: str, limit: int = MAX_BYTES):
     return b[:limit].decode("utf-8", errors="ignore"), True
 
 
+def opaque_id(path: str) -> str:
+    """元パスを含まない安定した不透明ID。正規化パスの SHA-256 上位16桁・doc: 接頭辞。"""
+    norm = os.path.normcase(os.path.abspath(path))
+    return "doc:" + hashlib.sha256(norm.encode("utf-8")).hexdigest()[:16]
+
+
 def mask_chunked(masker: Masker, body: str):
     """run_import.py と同じ分割方式。戻り値は (text, counts, 超長行の除外数)。"""
     if len(body.encode("utf-8")) <= CHUNK_BYTES:
@@ -136,11 +219,76 @@ def mask_chunked(masker: Masker, body: str):
     return text, total, dropped
 
 
+def process_document(text: str, masker: Masker):
+    """1文書を処理する。戻り値は (マスク後本文 or None, 除外理由 or None, meta)。
+
+    Cleaner は適用しない（M4）。meta は capped / chars / counts / long_lines_dropped。
+    """
+    body, capped = cap_bytes(text)
+    meta = {"capped": capped, "chars": len(body), "counts": Counter(),
+            "long_lines_dropped": 0}
+    if not body.strip():
+        return None, "empty_after_cap", meta
+    try:
+        masked, counts, dropped = mask_chunked(masker, body)
+    except MaskingLeak:
+        return None, "masking_exception", meta
+    meta["counts"] = counts
+    meta["long_lines_dropped"] = dropped
+    if DIGIT7.search(masked):
+        return None, "digit7", meta
+    if EMAIL_RESID.search(masked):
+        return None, "residual_email", meta
+    if PHONE_RESID.search(masked):
+        return None, "residual_phone", meta
+    if URL_RESID.search(masked) or UNC_RESID.search(masked):
+        return None, "residual_url_or_path", meta
+    return masked, None, meta
+
+
+def verify_jsonl(path: str) -> dict:
+    """生成後の jsonl 全行を検証する。値は出力せず、件数とbooleanのみを返す。"""
+    res = Counter()
+    seen: set[str] = set()
+    schema_ok = True
+    id_re = re.compile(r"\Adoc:[0-9a-f]{16}\Z")
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            res["rows"] += 1
+            if set(r.keys()) != {"thread_id", "occurred_at", "source_ref", "text"}:
+                schema_ok = False
+            t = r.get("text", "")
+            if not isinstance(t, str) or not t.strip():
+                res["empty_text"] += 1
+            ref = r.get("source_ref", "")
+            if ref in seen:
+                res["dup_source_ref"] += 1
+            seen.add(ref)
+            if not id_re.match(str(r.get("thread_id", ""))) or not id_re.match(ref):
+                res["bad_id_format"] += 1
+            if DIGIT7.search(t):
+                res["digit7"] += 1
+            if EMAIL_RESID.search(t):
+                res["email"] += 1
+            if PHONE_RESID.search(t):
+                res["phone"] += 1
+            if URL_RESID.search(t):
+                res["url"] += 1
+            if UNC_RESID.search(t):
+                res["unc_path"] += 1
+    res["schema_ok"] = int(schema_ok)
+    res["unique_source_ref"] = len(seen)
+    return dict(res)
+
+
 def main() -> None:
-    cleaner = Cleaner.from_yaml(Path(APP) / "config" / "cleaning_rules.yaml")
-    masker = Masker.from_yaml(Path(APP) / "config" / "masking_rules.yaml")
+    masker = Masker.from_yaml(Path(ensure_mask_config()))
 
     stats = {
+        "version": "v2",
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "sources": {},
         "mask_counts": {},
@@ -148,14 +296,9 @@ def main() -> None:
     }
     mask_counts: Counter[str] = Counter()
     docs: list[MaskedDocument] = []
-    residual_email = 0
-    residual_phone = 0
-    residual_docs = 0
-    digit7_docs = 0
-    masking_leak_docs = 0
+    gate_totals: Counter[str] = Counter()
+    chars_total = 0
     long_line_dropped = 0
-    cleaned_chars_before = 0
-    cleaned_chars_after = 0
 
     for source, root in (("vault", VAULT), ("workspace", WORKSPACE)):
         st = Counter()
@@ -176,49 +319,21 @@ def main() -> None:
             if not text.strip():
                 st["empty"] += 1
                 continue
-            text, capped = cap_bytes(text)
-            if capped:
+            masked, reason, meta = process_document(text, masker)
+            if meta["capped"]:
                 st["capped"] += 1
-            # ミラー（フロントマター除去・キャップ後）
-            dst = os.path.join(MIRROR, source, rel)
-            os.makedirs(os.path.dirname(dst), exist_ok=True)
-            with open(dst, "w", encoding="utf-8", newline="\n") as f:
-                f.write(text)
-            # クリーニング → マスキング
-            cleaned = cleaner.clean(text)
-            if len(cleaned) < len(text):
-                st["cleaned_shorter"] += 1
-            cleaned_chars_before += len(text)
-            cleaned_chars_after += len(cleaned)
-            if not cleaned.strip():
-                st["empty_after_clean"] += 1
+            chars_total += meta["chars"]
+            long_line_dropped += meta["long_lines_dropped"]
+            if reason is not None:
+                st[f"gate_{reason}"] += 1
+                gate_totals[reason] += 1
                 continue
-            try:
-                masked, counts, dropped = mask_chunked(masker, cleaned)
-            except MaskingLeak:
-                st["leak_masking_exception"] += 1
-                masking_leak_docs += 1
-                continue
-            long_line_dropped += dropped
-            # 漏えいゲート
-            if DIGIT7.search(masked):
-                st["leak_digit7"] += 1
-                digit7_docs += 1
-                continue
-            e = len(EMAIL_RESID.findall(masked))
-            p = len(PHONE_RESID.findall(masked))
-            residual_email += e
-            residual_phone += p
-            if e or p:
-                st["leak_residual"] += 1
-                residual_docs += 1
-                continue
-            mask_counts.update(counts)
-            rel_posix = rel.replace(os.sep, "/")
+            mask_counts.update(meta["counts"])
+            oid = opaque_id(full)
             docs.append(MaskedDocument(
-                thread_id=f"{source}:{rel_posix}",
+                thread_id=oid,
                 occurred_at=datetime.fromtimestamp(os.path.getmtime(full), tz=timezone.utc),
-                source_ref=f"{source}/{rel_posix}",
+                source_ref=oid,
                 text=masked,
             ))
             st["masked"] += 1
@@ -227,19 +342,11 @@ def main() -> None:
     save_jsonl(docs, Path(OUT_JSONL))
     stats["mask_counts"] = dict(sorted(mask_counts.items()))
     stats["total_masked_docs"] = len(docs)
-    stats["leak_gate"] = {
-        "masking_exception_docs": masking_leak_docs,
-        "digit7_docs": digit7_docs,
-        "residual_email_occurrences": residual_email,
-        "residual_phone_occurrences": residual_phone,
-        "residual_docs": residual_docs,
-    }
-    stats["cleaning"] = {
-        "chars_before": cleaned_chars_before,
-        "chars_after": cleaned_chars_after,
-        "long_lines_dropped": long_line_dropped,
-    }
-    stats["outputs"] = {"jsonl": OUT_JSONL, "mirror": MIRROR}
+    stats["leak_gate"] = dict(gate_totals)
+    stats["corpus"] = {"chars_after_cap": chars_total,
+                       "long_lines_dropped": long_line_dropped}
+    stats["outputs"] = {"jsonl": OUT_JSONL}
+    stats["verification"] = verify_jsonl(OUT_JSONL)
     with open(STATS_JSON, "w", encoding="utf-8") as f:
         json.dump(stats, f, ensure_ascii=False, indent=1)
 
@@ -249,7 +356,8 @@ def main() -> None:
     print(f"masked docs: {len(docs)}")
     print(f"mask counts: {dict(sorted(mask_counts.items()))}")
     print(f"leak gate: {stats['leak_gate']}")
-    print(f"cleaning: {stats['cleaning']}")
+    print(f"corpus: {stats['corpus']}")
+    print(f"verification: {stats['verification']}")
     print(f"jsonl: {OUT_JSONL}")
 
 
