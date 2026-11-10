@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-10T08:55:53",
+ "generated": "2026-11-10T09:27:06",
  "books": {
   "(cross)": {
    "C10_err_regression": {
@@ -151,11 +151,11 @@
      },
      "mapping_residual_explained": {
       "status": "FAIL",
-      "evidence": "unexplained_cjk=82"
+      "evidence": "unexplained_cjk=85"
      },
      "mapping_residual_attribution": {
       "status": "RECORDED",
-      "evidence": "attribution-undetermined: residual=446 CJK chars (own窓に無く他図形帰属·未帰属スパンで充足される文字) + tail_cases=24 shapes (C3 末尾救済の図形件数)。単位が異なるため合算しない。合格根拠にしない。人力裁定待ち"
+      "evidence": "attribution-undetermined: residual=452 CJK chars (own窓に無く他図形帰属·未帰属スパンで充足される文字) + tail_cases=24 shapes (C3 末尾救済の図形件数)。単位が異なるため合算しない。合格根拠にしない。人力裁定待ち"
      }
     }
    },
@@ -329,7 +329,7 @@
      },
      "mapping_residual_attribution": {
       "status": "RECORDED",
-      "evidence": "attribution-undetermined: residual=453 CJK chars (own窓に無く他図形帰属·未帰属スパンで充足される文字) + tail_cases=21 shapes (C3 末尾救済の図形件数)。単位が異なるため合算しない。合格根拠にしない。人力裁定待ち"
+      "evidence": "attribution-undetermined: residual=456 CJK chars (own窓に無く他図形帰属·未帰属スパンで充足される文字) + tail_cases=21 shapes (C3 末尾救済の図形件数)。単位が異なるため合算しない。合格根拠にしない。人力裁定待ち"
      }
     }
    },
@@ -444,7 +444,7 @@
   "lnb/C4_clearance: 相関図②: text-text clearance 2.70pt < 3.75pt (new): g2_n10_tag x g2_e_e17_l",
   "lnb/C4_clearance: 相関図③: text-text clearance 2.23pt < 3.75pt (new): g3_n08_txt x g3_n09_txt",
   "lnb/C4_clearance: 相関図③: text-text clearance 3.70pt < 3.75pt (new): g3_n12_txt x g3_e_e12_l",
-  "lnb/C8_pdf_roundtrip: unexplained CJK mapping residual: 82 chars (see strict_crops ledger)",
+  "lnb/C8_pdf_roundtrip: unexplained CJK mapping residual: 85 chars (see strict_crops ledger)",
   "pana/C3_text_fit: 相関図② g2_bandhead: ASCII tail loss: 'T1:-9-/-10-'",
   "pana/C3_text_fit: 相関図② g2_n01_txt: ASCII tail loss: 'N04'",
   "pana/C3_text_fit: 相関図② g2_n02_txt: ASCII tail loss: 'X02-'",

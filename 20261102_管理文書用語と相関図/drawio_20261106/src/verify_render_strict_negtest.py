@@ -18,6 +18,12 @@
     維持すること (修正2)。旧実装は loss と attribution-undetermined を同一
     分岐で WARN に降格していた
 
+第4次是正 (特例再審査 attempt 4 指摘) により:
+  - N7 を新設: 残差側 own 補填分岐の除去 (修正6) の検証。期待「確認確認」に
+    自帰属スパン「確認」1個のみの静的反例を本番の残差分類 (residual_check) で
+    確認し、unexplained 2文字として記録される (旧実装は own_extra 再計上により
+    unexplained 0 の偽陰性)
+
 結果: strictverify/reconsider/negative_test_results.json
 終了コード: 全件検出=0 / 未検出あり=1
 """
@@ -226,15 +232,59 @@ results.append({
                 "(render_same=True でも降格しない)。対照: loss + render_same=True は従来どおり WARN (tail_loss_preexisting)",
     'actual': {'attr_undet_items': sev6b, 'loss_contrast_items': sev6c},
     'old_behavior_would_pass': True,   # 旧実装: render_same=True で双方 WARN に降格
-    'detected': (bool(n6b_fail)
-                 and all(i['severity'] == 'WARN' and i['code'] == 'tail_loss_preexisting'
-                         for i in sev6c if i['subcheck'] == 'tail_cjk_ordered')),
+     'detected': (bool(n6b_fail)
+                  and all(i['severity'] == 'WARN' and i['code'] == 'tail_loss_preexisting'
+                          for i in sev6c if i['subcheck'] == 'tail_cjk_ordered')),
+})
+
+# ---- N7 (第4次): 残差側 own 補填分岐の除去 -- 消費済み文字の再利用を遮断 -----
+# 期待「確認確認」に対し自帰属スパン「確認」1個のみ (拡張窓内も同一スパン)。
+# 旧実装は miss = Counter(期待) - Counter(自帰属抽出文) を計算した後、拡張窓内の
+# 自帰属スパンを own_extra として再計上し「own 帰属で説明」(continue) にできた。
+# own_extra は cg (自帰属抽出文) の構成元スパンの部分集合 = 消費済み文字の再利用
+# であり、静的反例「確認確認/確認」が 2文字とも unexplained に記録されない偽陰性
+# だった。第4次実装: 残差分類を本番経路 residual_check に集約し、補填根拠は
+# own_spans と識別子レベル (id) で排他的なスパン (other/unattributed) に限定。
+# 期待: unexplained 2文字 (確1·認1)·attr_undet 0件
+exp_n7 = '確認確認'
+wins7 = {'g2_legA': (100.0, 100.0, 300.0, 120.0)}
+spans7 = [(110.0, 105.0, 290.0, 115.0, '確認')]   # A 窓内·自帰属スパン 1個のみ
+attrib7, un7, strad7 = vrs.attribute_spans(spans7, wins7)
+span_owner7 = {}
+for wnm, lst in attrib7.items():
+    for s5 in lst:
+        span_owner7[id(s5)] = wnm
+own_spans7 = sorted(attrib7.get('g2_legA', []), key=lambda s: (s[1], s[0]))
+# A の本文窓 ±15pt の拡張窓 (本番の残差点検査と同じ条件) -- 同一スパンのみ進入
+wide7 = []
+for s5 in spans7:
+    if s5[0] < 315.0 and s5[2] > 85.0 and s5[1] < 135.0 and s5[3] > 85.0:
+        w5 = span_owner7.get(id(s5))
+        wide7.append((s5, 'own' if w5 == 'g2_legA' else ('other' if w5 else 'unattributed')))
+rc7 = vrs.residual_check(exp_n7, own_spans7, wide7)
+# 旧実装 (own_extra 再計上) が反例を握りつぶしていたことの証明:
+# 拡張窓内の自帰属スパンで miss が全部埋まる (= 旧実装は unexplained 0)
+miss7 = Counter(vrs.cjk(exp_n7)) - Counter(vrs.cjk(''.join(t for (_, _, _, _, t) in own_spans7)))
+own_extra7 = Counter(vrs.cjk(''.join(s5[4] for s5, o in wide7 if o == 'own')))
+old_would_mask7 = bool(miss7) and all(own_extra7[ch] >= n for ch, n in miss7.items())
+n7_unexp = sum(rc7['unexplained'].values())
+results.append({
+    'id': 'N7', 'target_fix': '第4次 (残差側 own補填分岐の除去·消費済み文字の再利用を遮断)',
+    'path': 'production residual_check (main の C8 残差点検査と同一関数)',
+    'fixture': {'exp_text': exp_n7, 'windows': wins7, 'spans': [list(s) for s in spans7],
+                'note': '期待「確認確認」に対し自帰属スパン「確認」1個のみ。拡張窓内も同一スパン (own_extra = cg の部分集合)'},
+    'expected': "unexplained=2文字 (確1·認1) / attr_undet=0件 (own_extra 再計上の廃止)。"
+                "旧実装は 2文字とも continue で unexplained=0 (偽陰性)",
+    'actual': {'residual_check': rc7, 'missing': dict(miss7),
+               'old_own_extra_covers_missing': old_would_mask7},
+    'old_behavior_would_pass': old_would_mask7,   # 旧実装: unexplained 0 (偽陰性)
+    'detected': (n7_unexp == 2 and not rc7['attr_undet'] and not rc7['missing'] == {} and old_would_mask7),
 })
 
 # ---- 出力 ----------------------------------------------------------------
 all_detected = all(r['detected'] for r in results)
 out = {'generated': datetime.datetime.now().isoformat(timespec='seconds'),
-       'harness': 'verify_render_strict.py (Gate1第3次是正 修正1/2/3 + 第2次 F1/F2/F3/F5)',
+       'harness': 'verify_render_strict.py (Gate1第4次是正 修正6 + 第3次 修正1/2/3 + 第2次 F1/F2/F3/F5)',
        'n_fixtures': len(results), 'n_detected': sum(1 for r in results if r['detected']),
        'all_detected': all_detected, 'results': results}
 path = os.path.join(OUTDIR, 'negative_test_results.json')

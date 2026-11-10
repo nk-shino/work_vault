@@ -56,6 +56,14 @@
        (enforce_aggregation_consistency が違反メッセージを登録する)
    (5) 分類集計の単位分離 — 残差 (CJK 文字数) と C3 末尾救済 (図形件数) を
        別単位で計上·表示する
+
+ Gate 1 第4次是正 (特例再審査 attempt 4 指摘, 2026-11-10):
+   (6) 残差側 own 補填分岐の除去 — 拡張窓内の自帰属スパン (own_extra) による
+       残差補填は cg (自帰属抽出文) の構成元スパンの再利用のため廃止。
+       残差分類は純関数 residual_check に集約し, 負例 N7 (本番経路) で検証する
+   (7) tail 救済経路 (loss-window-precision) は現接続では構造上到達不可能
+       (呼び出し側が全自帰属スパンを渡すため extra_own は常に空)。
+       配線の再設計はせず, コード内コメントと報告書の限界節に明示する
   """
 import sys, io, os, re, json, math, zipfile, datetime, bisect
 
@@ -582,6 +590,14 @@ def tail_rescue(exp_text, own_spans, wide_spans):
         のと同じ順序付き等値検査を再適用する。既に own_text に含めた同じ文字の
         再利用 (反例: 期待「確認確認」取得「確認」+広域own「確認」が通過する)
         を構造的に排除する)
+        [第4次 NOTE] 現行の接続では、呼び出し側 (main の C3 末尾検査) が
+        attrib.get(nm, []) -- 自図形に帰属した**全**スパン -- を own_spans として
+        渡す。広域窓の own 帰属スパンは常にこの集合に含まれるため、下記の
+        extra_own は**常に空**であり、'loss-window-precision' 分岐は現接続では
+        構造上到達不可能 (tail_winprec は常に 0)。全自帰属スパンを初期比較に
+        含める現設計は意図的 (順序付き等値を初期判定で完了させる) であり、
+        第4次では救済配線の再設計·新設はしない。未実証の保証であることは
+        報告書の限界節に記載する)
       - 他図形帰属·未帰属スパンを必要とする -> 'attribution-undetermined'
         (帰属未確定。tail_ok は False のまま -- 広域窓で文字が見つかっただけでは
         合格にしない。独立した帰属証拠または人裁定を要求する)
@@ -629,6 +645,43 @@ def tail_rescue(exp_text, own_spans, wide_spans):
     res['tail_ok'] = False
     res['rescue_owners'] = sorted(owners) or ['own']
     return res
+
+def residual_check(exp_text, own_spans, wide_spans):
+    """F2(第2次·ウ) + 第4次是正: 残差 (自図形に帰属したスパンに存在しない
+    期待文字) の分類。
+    own_spans: 自図形の窓に帰属したスパン (attribute_spans の結果·元 spans と
+    同一オブジェクト)。cg (自帰属抽出文の Counter) の構成元。
+    wide_spans: 拡張窓 (±15pt) に存在する (span, owner) のリスト
+    (owner は tail_rescue と同じ 'own' / 'other' / 'unattributed')。
+    miss = Counter(期待CJK) - Counter(自帰属抽出文) に対し:
+      - 他図形帰属·未帰属スパンで充足 -> 'attribution-undetermined'
+      - それ以外 -> 'unexplained' (真の残差·FAIL)
+    第4次是正: 旧実装にあった「拡張窓内の自帰属スパン (own_extra) で miss を
+    補填する」分岐を除去した。own_extra は cg の構成元スパンの部分集合であり、
+    miss 計算時にすでに消費済みの文字の再利用だった (静的反例: 期待「確認確認」·
+    抽出「確認」(自帰属スパン1個·拡張窓内も同一スパン) が 2文字とも unexplained
+    に記録されない偽陰性)。補填根拠は own_spans とオブジェクト単位で排他な
+    スパン (owner != 'own'·id 未使用) に限定し、識別子レベルで cg との重なりを
+    排除する。負例 N7 (本番経路) で検証する。
+    戻り値: {'missing': {ch: n}, 'attr_undet': {ch: n}, 'unexplained': {ch: n}}"""
+    ce = Counter(cjk(exp_text))
+    cg = Counter(cjk(''.join(t for (_, _, _, _, t) in own_spans)))
+    miss = ce - cg
+    if not miss:
+        return {'missing': {}, 'attr_undet': {}, 'unexplained': {}}
+    # own_spans (cg の構成元) を識別子レベルで除外 -- 消費済み文字の再利用を排除
+    seen = set(id(s) for s in own_spans)
+    other = Counter()
+    for s, o in wide_spans:
+        if o != 'own' and id(s) not in seen:
+            other += Counter(cjk(s[4]))
+    attr_undet, unexp = {}, {}
+    for ch, n in miss.items():
+        if other[ch] >= n:
+            attr_undet[ch] = n
+        else:
+            unexp[ch] = n
+    return {'missing': dict(miss), 'attr_undet': attr_undet, 'unexplained': unexp}
 
 def rows_from_spans(spans):
     """F2(第2次): 帰属スパンを視覚行に統合する (clusters_in の帰属版)。
@@ -1728,43 +1781,39 @@ def main():
                         warn(bk, 'C8_pdf_roundtrip', '%s: %d spans straddle >=2 text windows (adjacent-row mixing candidates)'
                              % (sn, n_strad_big))
                     unattr_cjk = sum(len(cjk(t)) for (_, _, _, _, t) in unattrib)
-                    # F2(第2次·ウ): 残差点検査も自図形への帰属を根拠にする。
+                    # F2(第2次·ウ) + 第4次是正: 残差点検査は自図形への帰属を根拠にする。
                     # 「PDF 上の自図形の帰属スパンに存在しない文字」を残差とし:
-                    #   - 自帰属スパンだけで充足 -> 窓精度として説明 (合格根拠は帰属証拠)
-                    #   - 他図形帰属·未帰属スパンを必要とする -> 'attribution-undetermined'
+                    #   - 他図形帰属·未帰属スパンで充足 -> 'attribution-undetermined'
                     #     (帰属未確定。他図形の文字を合格根拠にしない)
-                    #   - ページ近傍 (±15pt) にも存在しない -> 'unexplained' (真の残差·FAIL)
+                    #   - 拡張窓 (±15pt) にも存在しない -> 'unexplained' (真の残差·FAIL)
+                    # 第4次是正: 旧実装の「拡張窓内の自帰属スパン (own_extra) で miss を
+                    # 補填する」分岐を除去した (own_extra は cg の構成元の部分集合 =
+                    # 消費済み文字の再利用。静的反例: 期待「確認確認」·抽出「確認」が
+                    # unexplained に記録されない偽陰性)。分類は本番経路 residual_check
+                    # (負例 N7 と共有) に集約する
                     span_owner = {}
                     for wnm, lst in attrib.items():
                         for s5 in lst:
                             span_owner[id(s5)] = wnm
                     for nm2, tf2, (L2, T2, W2, H2) in cal_items:
-                        ce = Counter(cjk(tf2['text']))
-                        cg = Counter(cjk(''.join(t for (_, _, _, _, t) in attrib.get(nm2, []))))
-                        miss = ce - cg
-                        if not miss:
-                            continue
                         wx0, wy0, wx1, wy1 = windows[nm2]
                         ex0, ey0, ex1, ey1 = wx0 - 15.0, wy0 - 15.0, wx1 + 15.0, wy1 + 15.0
-                        own_extra, other = Counter(), Counter()
+                        wide = []
                         for s5 in spans:
                             if s5[0] < ex1 and s5[2] > ex0 and s5[1] < ey1 and s5[3] > ey0:
-                                if span_owner.get(id(s5)) == nm2:
-                                    own_extra += Counter(cjk(s5[4]))
-                                else:
-                                    other += Counter(cjk(s5[4]))
-                        for ch, n in miss.items():
-                            if own_extra[ch] >= n:
-                                continue
-                            if own_extra[ch] + other[ch] >= n:
-                                # 修正5: 残差は「文字数」単位で計上する
-                                cnt['attr_undet_chars'] += n
-                                cnt.setdefault('attr_undet_entries', []).append('%s/%s:%s:%d'
-                                        % (sn, nm2, ch, n))
-                            else:
-                                cnt['unexplained'] += n
-                                cnt.setdefault('unexplained_shapes', []).append('%s/%s:%s:%d'
-                                        % (sn, nm2, ch, n))
+                                w5 = span_owner.get(id(s5))
+                                wide.append((s5, 'own' if w5 == nm2 else
+                                             ('other' if w5 else 'unattributed')))
+                        rc = residual_check(tf2['text'], attrib.get(nm2, []), wide)
+                        for ch, n in rc['attr_undet'].items():
+                            # 修正5: 残差は「文字数」単位で計上する
+                            cnt['attr_undet_chars'] += n
+                            cnt.setdefault('attr_undet_entries', []).append('%s/%s:%s:%d'
+                                    % (sn, nm2, ch, n))
+                        for ch, n in rc['unexplained'].items():
+                            cnt['unexplained'] += n
+                            cnt.setdefault('unexplained_shapes', []).append('%s/%s:%s:%d'
+                                    % (sn, nm2, ch, n))
 
                     pix = page.get_pixmap(matrix=fitz.Matrix(2.4, 2.4))
                     png_full = 'strict_%s_%s_full.png' % (bk, SN_TAG[sn])
@@ -1837,6 +1886,14 @@ def main():
                                 # 修正1/3 (第3次): 自帰属スパン (元 spans と同一
                                 # オブジェクト) を渡し、救済は own_text 未含まの
                                 # own スパンに限定して順序付き等値を再適用する
+                                # [第4次 NOTE] ここでは attrib.get(nm, []) -- 自図形に
+                                # 帰属した全スパン -- を渡している。広域窓の own 帰属
+                                # スパンは常にこの集合に含まれるため tail_rescue 側の
+                                # extra_own は常に空 = 'loss-window-precision' 分岐
+                                # (直下の tail_winprec 計上) は現接続では構造上到達
+                                # 不可能。全自帰属スパンを初期比較に含める現設計は
+                                # 意図的であり、第4次では救済配線の再設計はしない
+                                # (報告書 §7 限界節参照)
                                 vr = tail_rescue(tf['text'], attrib.get(nm, []), wide)
                                 tail_mode, tail_ok = vr['mode'], vr['tail_ok']
                                 rescue_owners, missing_chars = vr['rescue_owners'], vr['missing_chars']
