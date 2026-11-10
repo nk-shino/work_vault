@@ -12,7 +12,8 @@
   ⑧ R1: 疑わしい語を含む抜粋は用例検査で除外される（素のsnippetには残る=RED、
      検査つきsnippetはNone=GREEN・安全な用例が無い候補は用例0で検出）
   ⑨ R2: 合成DBで正常登録はcommit・不一致はrollback（DB不変）
-  ⑩ minor: 入力内容の SHA-256 は安定して計算できる
+  ⑩ minor: 入力内容の SHA-256 は安定して計算でき、内容変更は承認照合で拒否される
+  ⑪ R1修正1: 候補検査と用例検査で敬称・役職語の集合が一致する（ちゃん・監査役）
 
 使い方: glossary_venv の python で PYTHONIOENCODING=utf-8 を付けて実行する。
 人名には実在しない組み合わせの一般的な姓のみを使う（個人情報は含まない）。
@@ -165,13 +166,37 @@ def main() -> None:
     details["9_トランザクション検証(R2)"] = (f"正常登録={ok1}/{committed} 不一致rollback={(not ok2) and rolled_back} "
                                              f"自動採用rollback={(not ok3) and rolled_back_auto}")
 
-    # ⑩ minor: 入力内容の SHA-256 は安定して計算できる
+    # ⑩ minor: 入力内容の SHA-256 は安定して計算でき、内容変更は承認照合で拒否される
     p = os.path.join(cs.TMP, "test_content_hash.txt")
     with open(p, "w", encoding="utf-8") as f:
         f.write("hash test")
     h1, h2 = rs.content_sha256(p), rs.content_sha256(p)
-    results["10_内容ハッシュ(minor)"] = h1 == h2 and len(h1) == 64
-    details["10_内容ハッシュ(minor)"] = f"安定={h1 == h2} 長さ={len(h1)}"
+    ap = os.path.join(cs.TMP, "test_approved_input.json")
+    rs.save_approved_input(p, "test", ap)
+    ok_match = rs.approved_input_matches(p, ap)          # 同一内容は承認される
+    with open(p, "w", encoding="utf-8") as f:
+        f.write("tampered content")
+    ok_reject = not rs.approved_input_matches(p, ap)     # 内容変更は拒否される
+    results["10_内容ハッシュ(minor)"] = (h1 == h2 and len(h1) == 64
+                                         and ok_match and ok_reject)
+    details["10_内容ハッシュ(minor)"] = (f"安定={h1 == h2} 長さ={len(h1)} "
+                                         f"同一内容承認={ok_match} 内容変更拒否={ok_reject}")
+
+    # ⑪ R1修正1: 候補検査と用例検査で敬称・役職語の集合が一致する（ちゃん・監査役）
+    ok_a = (rs.privacy_flag("サンプルちゃん") == "敬称結合"
+            and rs.privacy_flag("サンプル監査役") == "敬称結合")   # (a) 候補検査で除外
+    t_chan = "サンプルちゃんの設定変更でノズルを交換した。"
+    t_kansa = "サンプル監査役の指示でノズルを交換した。"
+    safe_fn2 = rs.make_safe_snippet(orig_snippet)
+    # (b) 素の snippet には結合語が残る（RED根拠）が、検査つき snippet は除外する
+    ok_b = (orig_snippet(t_chan, "ノズル") is not None
+            and safe_fn2(t_chan, "ノズル") is None
+            and orig_snippet(t_kansa, "ノズル") is not None
+            and safe_fn2(t_kansa, "ノズル") is None)
+    # (c) 正常文の抜粋は保持される
+    ok_c = safe_fn2("ノズルを交換した。記録を残す。", "ノズル") is not None
+    results["11_敬称群一致(R1修正1)"] = ok_a and ok_b and ok_c
+    details["11_敬称群一致(R1修正1)"] = f"候補除外={ok_a} 抜粋除外={ok_b} 正常保持={ok_c}"
 
     passed = sum(1 for v in results.values() if v)
     print(f"tests: {passed}/{len(results)} passed")

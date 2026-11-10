@@ -136,10 +136,16 @@ _PRIVACY_PATTERNS = [
     ("パス残存", re.compile(r"\\\\")),
     ("マスクトークン", re.compile(r"<[A-Z]+>")),
 ]
-# 敬称と結合した語（人名の可能性が高い）
-_HONORIFIC_TAIL = re.compile(
-    r"(?:さん|さま|様|殿|くん|ちゃん|氏|部長|課長|係長|主任|社長|会長|理事|監査役)$"
+# 敬称・役職語の共有定数（R1修正1・attempt 3）。候補検査と用例検査の両方で
+# 同一の語集合を参照させる（片方だけに語を追加しても、もう片方が取りこぼさない）
+_ROLE_SUFFIXES = (
+    "さん", "さま", "様", "殿", "くん", "ちゃん", "氏",
+    "部長", "課長", "係長", "主任", "社長", "会長", "理事", "監査役",
 )
+_ROLE_WORDS_RE = "(?:" + "|".join(_ROLE_SUFFIXES) + ")"
+
+# 候補検査: 敬称と結合した語（人名の可能性が高い）
+_HONORIFIC_TAIL = re.compile(_ROLE_WORDS_RE + r"$")
 
 # 文書本文（出典）の疑わしい形
 _DOC_PRIVACY_PATTERNS = [
@@ -152,8 +158,8 @@ _DOC_PRIVACY_PATTERNS = [
 
 # R1: 用例（抜粋）の人名疑い。役割・敬称の直前に、マスクトークン（<PERSON> など・
 # 「>」で終わる）以外の人名らしい並びが続く抜粋は疑わしいとみなす（保守的）。
+# 敬称・役職語は候補検査と共有の _ROLE_WORDS_RE を使う（R1修正1）。
 # 直前が一般語（お客様・皆様・ユーザー様など）の敬称は除外しない
-_ROLE_WORDS = r"(?:さん|さま|様|殿|くん|氏|部長|課長|係長|主任|社長|会長|理事)"
 _NON_PERSON_BEFORE = [
     "お客", "各位", "皆", "同", "多", "仕", "お得意", "ご担当", "当方", "先方",
     "ユーザ", "ユーザー", "利用者", "各", "元", "副", "現",
@@ -162,7 +168,7 @@ _ROLE_SUSPECT = re.compile(
     r"(?<!>)"
     + "".join(f"(?<!{w})" for w in _NON_PERSON_BEFORE)
     + r"(?:[一-龥々]{1,6}|[ァ-ヶー]{2,8}|[A-Za-z][A-Za-z\-]{1,15})"
-    + r"(?=[ 　]?" + _ROLE_WORDS + r")"
+    + r"(?=[ 　]?" + _ROLE_WORDS_RE + r")"
 )
 
 
@@ -248,6 +254,41 @@ def path_id(path: str) -> str:
     """入力識別情報。パスの SHA-256 上位16桁（内容の識別は content_sha256 で行う）。"""
     norm = os.path.normcase(os.path.abspath(path))
     return hashlib.sha256(norm.encode("utf-8")).hexdigest()[:16]
+
+
+# minor（attempt 3・修正3）: 承認済みドライランの入力内容ハッシュを固定するファイル。
+# --commit 実行時は、自分が書いた summary でなく、この固定ハッシュと照合する
+TMP = r"C:\Users\ss80751\AppData\Local\Temp\kohden-code"
+APPROVED_INPUT_FILE = os.path.join(TMP, "scope2_approved_input.sha256")
+
+
+def save_approved_input(input_path: str, topic_name: str = "",
+                        out_file: str = APPROVED_INPUT_FILE) -> str:
+    """ドライラン確定時に入力内容の SHA-256 を固定ファイルへ保存する。"""
+    rec = {
+        "input_path": input_path,
+        "input_id": path_id(input_path),
+        "content_sha256": content_sha256(input_path),
+        "saved_at": datetime.now().isoformat(timespec="seconds"),
+        "topic_name": topic_name,
+    }
+    os.makedirs(os.path.dirname(os.path.abspath(out_file)), exist_ok=True)
+    with open(out_file, "w", encoding="utf-8") as f:
+        json.dump(rec, f, ensure_ascii=False, indent=1)
+    return out_file
+
+
+def approved_input_matches(input_path: str,
+                           approved_file: str = APPROVED_INPUT_FILE) -> bool:
+    """入力ファイルの実ハッシュが承認済み固定ハッシュと一致するか（値は出力しない）。"""
+    if not os.path.exists(approved_file):
+        return False
+    try:
+        with open(approved_file, encoding="utf-8") as f:
+            rec = json.load(f)
+    except Exception:
+        return False
+    return rec.get("content_sha256") == content_sha256(input_path)
 
 
 # ---------------------------------------------------------------- 集計と採点
@@ -353,6 +394,9 @@ def main() -> None:
     ap.add_argument("--summary-out", required=True, help="summary JSON の出力先")
     ap.add_argument("--topic-name", default="", help="トピック名（summary に記録）")
     ap.add_argument("--force", action="store_true", help="既存出力の上書きを許可する")
+    ap.add_argument("--approve-input", action="store_true",
+                    help="ドライランの入力内容を承認済みとして固定ファイルに保存する"
+                         "（--commit 時の照合先になる）")
     ap.add_argument("--commit", action="store_true", help="合格語を proposals に登録する")
     args = ap.parse_args()
 
@@ -588,6 +632,9 @@ def main() -> None:
     with open(args.summary_out, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=1)
     print(f"集計: {args.summary_out}", flush=True)
+    if args.approve_input:
+        p = save_approved_input(src, args.topic_name)
+        print(f"承認済み入力ハッシュを保存: {p}")
 
     print(f"合格 {len(qualified)} / 重複除外 {len(duplicates)} / 登録候補 {len(registered_rows)}"
           f" / プライバシー除外 {sum(priv_counts.values())} / 用例検査除外 {evidence_drop}")
@@ -599,7 +646,11 @@ def main() -> None:
         print("--commit を付けないため DB は書き換えません", flush=True)
         return
 
-    # ---- minor: 入力内容が summary 記録時と同一か照合する ----
+    # ---- minor: 承認済みドライランの固定ハッシュと照合する（不一致なら中止） ----
+    if not approved_input_matches(src):
+        sys.exit("入力ファイルが承認済みドライランの内容と一致しません（中止）")
+
+    # ---- minor（補助）: summary 記録分との照合（従来どおり） ----
     with open(args.summary_out, encoding="utf-8") as f:
         recorded = json.load(f)
     if recorded.get("input_content_sha256") != content_sha256(src):
