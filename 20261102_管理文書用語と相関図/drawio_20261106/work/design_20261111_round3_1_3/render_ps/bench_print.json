@@ -1,0 +1,1046 @@
+{
+ "fit1x1": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.824,
+   "sy": 0.857,
+   "ratio": 1.0401,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7778,
+   "sy": 0.7766,
+   "ratio": 0.9984,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 19,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e02_l",
+     "status": "欠け",
+     "missing": "〔T1:-7-/-8-〕"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.8091,
+   "sy": 0.8645,
+   "ratio": 1.0684,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ },
+ "zoom82": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.768,
+   "sy": 0.7924,
+   "ratio": 1.0318,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7778,
+   "sy": 0.7766,
+   "ratio": 0.9984,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 19,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e02_l",
+     "status": "欠け",
+     "missing": "〔T1:-7-/-8-〕"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7616,
+   "sy": 0.8136,
+   "ratio": 1.0684,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ },
+ "zoom80": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.752,
+   "sy": 0.7752,
+   "ratio": 1.0308,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7617,
+   "sy": 0.7604,
+   "ratio": 0.9983,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 19,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e02_l",
+     "status": "欠け",
+     "missing": "〔T1:-7-/-8-〕"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7456,
+   "sy": 0.7966,
+   "ratio": 1.0685,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ },
+ "zoom78": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.728,
+   "sy": 0.758,
+   "ratio": 1.0412,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7373,
+   "sy": 0.744,
+   "ratio": 1.0091,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 18,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "スク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7219,
+   "sy": 0.7796,
+   "ratio": 1.08,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ },
+ "zoom76": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.712,
+   "sy": 0.7407,
+   "ratio": 1.0404,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7211,
+   "sy": 0.7279,
+   "ratio": 1.0095,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 18,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.706,
+   "sy": 0.7626,
+   "ratio": 1.0802,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ },
+ "zoom74": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.696,
+   "sy": 0.7259,
+   "ratio": 1.043,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.7049,
+   "sy": 0.7117,
+   "ratio": 1.0097,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 12,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.6901,
+   "sy": 0.7455,
+   "ratio": 1.0803,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    }
+   ]
+  }
+ },
+ "fitW_only": {
+  "相関図①": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 1,
+   "sx": 0.936,
+   "sy": 0.9733,
+   "ratio": 1.0399,
+   "matched_rects": 9,
+   "shapes": 24,
+   "missing": 1,
+   "missing_list": [
+    {
+     "name": "g1_ea_txt",
+     "status": "欠け",
+     "missing": "IP172.25.253.10(図②·N06参照)"
+    }
+   ]
+  },
+  "相関図②": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 2,
+   "sx": 0.948,
+   "sy": 0.9543,
+   "ratio": 1.0067,
+   "matched_rects": 25,
+   "shapes": 34,
+   "missing": 18,
+   "missing_list": [
+    {
+     "name": "g2_bandhead",
+     "status": "欠け",
+     "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕"
+    },
+    {
+     "name": "g2_n01_txt",
+     "status": "欠け",
+     "missing": "内部にN02〜N04を収める"
+    },
+    {
+     "name": "g2_n02_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n03_txt",
+     "status": "欠け",
+     "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)"
+    },
+    {
+     "name": "g2_n04_txt",
+     "status": "欠け",
+     "missing": "当Site導入有無は未確認"
+    },
+    {
+     "name": "g2_n19_txt",
+     "status": "欠け",
+     "missing": "·PanaCIM(CIMC)環境·X02-⑪"
+    },
+    {
+     "name": "g2_n05_txt",
+     "status": "欠け",
+     "missing": "注記X02-③。"
+    },
+    {
+     "name": "g2_n10_txt",
+     "status": "欠け",
+     "missing": "条件は注記X01(-8-)"
+    },
+    {
+     "name": "g2_n17_txt",
+     "status": "欠け",
+     "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-"
+    },
+    {
+     "name": "g2_n15_txt",
+     "status": "欠け",
+     "missing": "口)異常時再起動対象"
+    },
+    {
+     "name": "g2_n16_txt",
+     "status": "欠け",
+     "missing": "順14)"
+    },
+    {
+     "name": "g2_n06r_txt",
+     "status": "欠け",
+     "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)"
+    },
+    {
+     "name": "g2_liner_txt",
+     "status": "欠け",
+     "missing": "図③参照"
+    },
+    {
+     "name": "g2_e_e04_l",
+     "status": "欠け",
+     "missing": "〔T1:-9-·T1b〕"
+    },
+    {
+     "name": "g2_e_e15_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e16_l",
+     "status": "欠け",
+     "missing": "〔T1b〕"
+    },
+    {
+     "name": "g2_e_e17_l",
+     "status": "欠け",
+     "missing": "〔T1b·T1:-24-/-28-/-31-〕"
+    },
+    {
+     "name": "g2_e_e18_l",
+     "status": "欠け",
+     "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕"
+    }
+   ]
+  },
+  "相関図③": {
+   "page_size": [
+    841.92,
+    595.32
+   ],
+   "pages": 2,
+   "sx": 0.9282,
+   "sy": 0.9997,
+   "ratio": 1.077,
+   "matched_rects": 13,
+   "shapes": 32,
+   "missing": 2,
+   "missing_list": [
+    {
+     "name": "g3_n08_txt",
+     "status": "欠け",
+     "missing": "LNB構成情報画面)"
+    },
+    {
+     "name": "g3_n14_txt",
+     "status": "欠け",
+     "missing": "当Site導入状況は未確認"
+    }
+   ]
+  }
+ }
+}
