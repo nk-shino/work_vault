@@ -10,12 +10,18 @@
 """
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
 import win32com.client as win32
 
 CONTAINER_NAMES = {"g2_band", "g2_bandhead", "Group 1"}
+
+
+def is_edge(name):
+    """エッジ（矢印）の名前か。シート接頭辞 g1_/g2_/g3_ に依存しない。"""
+    return re.match(r"^g\d+_e_", name) is not None
 
 
 def bbox(sh):
@@ -115,7 +121,11 @@ def rect_rect_dist(a, b):
 
 def shape_text(sh):
     try:
-        if sh.Type == 17 and sh.HasTable:
+        try:
+            has_table = bool(sh.HasTable)
+        except Exception:
+            has_table = False
+        if sh.Type == 17 and has_table:
             tbl = sh.Table
             rows = []
             for rr in range(1, tbl.Rows.Count + 1):
@@ -179,15 +189,15 @@ def main():
         contained = [o for o in shapes if o is not s and contains(
             (s["left"], s["top"], s["w"], s["h"]), (o["left"], o["top"], o["w"], o["h"]))
             and o["type"] != 9]
-        if s["type"] == 6 and contained and not s["name"].startswith(("g2_e_", "g2_n")):
+        if s["type"] == 6 and contained and not (is_edge(s["name"]) or re.match(r"^g\d+_n", s["name"])):
             continue
         elements.append(s)
 
     # ノード = グループ（エッジ除く）と単独ボックス
-    nodes = [e for e in elements if not e["name"].startswith("g2_e_") and e["type"] in (1, 6)]
+    nodes = [e for e in elements if not is_edge(e["name"]) and e["type"] in (1, 6)]
     arrows = []
     for s in elements:
-        if s["connector"] or (s["name"].startswith("g2_e_") and s["type"] == 6):
+        if s["connector"] or (is_edge(s["name"]) and s["type"] == 6):
             if s["type"] == 6 and "children" in s:
                 for c in s["children"]:
                     arrows.append({**c, "parent": s["name"]})
@@ -209,7 +219,7 @@ def main():
                 continue
             if contains(ar, br) or contains(br, ar):
                 continue
-            if a["connector"] or b["connector"] or a["name"].startswith("g2_e_") or b["name"].startswith("g2_e_"):
+            if a["connector"] or b["connector"] or is_edge(a["name"]) or is_edge(b["name"]):
                 continue
             overlaps.append({
                 "a": a["name"], "b": b["name"], "area": round(area, 2),
