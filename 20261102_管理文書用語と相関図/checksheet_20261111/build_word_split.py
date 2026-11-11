@@ -174,6 +174,7 @@ def finalize(name, count):
         t = wd.Tables(1)
         for i in range(count):
             t.Cell(ITEM_FIRST + i, 1).Range.Text = str(i + 1)
+        wd.Save()
         wd.SaveAs2(str(doc), 0)
         wd.ExportAsFixedFormat(str(pdf), 17)
     finally:
