@@ -1,0 +1,7 @@
+﻿[2026-11-11 15:59:29] free before: 24.45 GB
+[Temp >7d] entries removed: 1869 / freed: 0.96 GB
+[npm] freed: 1.06 GB
+[pip] freed: 0.59 GB
+[HF hub] freed: 4.7 GB
+[HF xet] freed: 0 GB
+free after: 31.77 GB / delta: 7.32 GB
