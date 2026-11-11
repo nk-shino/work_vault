@@ -1,0 +1,365 @@
+[
+ {
+  "name": "g2_expl",
+  "status": "一致",
+  "text": "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。",
+  "got": "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。",
+  "missing": "",
+  "lines": [
+   "PanaCIM環境のサーバー·端末と、データの退避·出力先を示す。C4モデルのコンテナ図に相当。確定している技術情報のみ記載。"
+  ]
+ },
+ {
+  "name": "g2_bandhead",
+  "status": "欠け",
+  "text": "PanaCIM管理側ネットワーク—上位網192.168.30.xx〔T1:-9-/-10-〕当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕",
+  "got": "PanaCIM管理側ネットワーク—上位網192.168.30.xx〔T1:-9-/-10-〕",
+  "missing": "当Site実測:制限セグメント172.25.253.0/24〔T1b:ネットワークイメージ.pptx·2026-10-27〕",
+  "lines": [
+   "PanaCIM管理側ネットワーク— 上位網192.168.30.xx〔T1:-9-/-10-〕"
+  ]
+ },
+ {
+  "name": "g2_n01_txt",
+  "status": "欠け",
+  "text": "【サーバ(物理)】ESXiホスト172.25.253.45内部にN02〜N04を収める",
+  "got": "【サーバ(物理)】ESXiホスト172.25.253.45",
+  "missing": "内部にN02〜N04を収める",
+  "lines": [
+   "【サーバ(物理)】ESXiホスト172.25.253.45"
+  ]
+ },
+ {
+  "name": "g2_n02_txt",
+  "status": "欠け",
+  "text": "【サーバ(VM)】PanaCIMアプリケーションサーバー当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)",
+  "got": "【サーバ(VM)】PanaCIMアプリケーションサーバー",
+  "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)",
+  "lines": [
+   "【サーバ(VM)】PanaCIMアプリケーションサーバー"
+  ]
+ },
+ {
+  "name": "g2_n02_tag",
+  "status": "一致",
+  "text": "N02",
+  "got": "N02",
+  "missing": "",
+  "lines": [
+   "N02"
+  ]
+ },
+ {
+  "name": "g2_n03_txt",
+  "status": "欠け",
+  "text": "【サーバ(VM)】PanaCIMコントローラーサーバー当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)",
+  "got": "【サーバ(VM)】PanaCIMコントローラーサーバー",
+  "missing": "当SiteはESXi上VM「CIMC-SV」として運用(PanaCIM(CIMA)環境·X02-⑪)",
+  "lines": [
+   "【サーバ(VM)】PanaCIMコントローラーサーバー"
+  ]
+ },
+ {
+  "name": "g2_n03_tag",
+  "status": "一致",
+  "text": "N03",
+  "got": "N03",
+  "missing": "",
+  "lines": [
+   "N03"
+  ]
+ },
+ {
+  "name": "g2_n04_txt",
+  "status": "欠け",
+  "text": "【サーバ】メンテナンスサーバー(要確認)当Site導入有無は未確認",
+  "got": "【サーバ】メンテナンスサーバー(要確認)",
+  "missing": "当Site導入有無は未確認",
+  "lines": [
+   "【サーバ】メンテナンスサーバー(要確認)"
+  ]
+ },
+ {
+  "name": "g2_n04_tag",
+  "status": "一致",
+  "text": "N04",
+  "got": "N04",
+  "missing": "",
+  "lines": [
+   "N04"
+  ]
+ },
+ {
+  "name": "g2_n19_txt",
+  "status": "欠け",
+  "text": "【サーバ(物理)】CIMA-SV172.25.253.42·ラック左7番目·PanaCIM(CIMC)環境·X02-⑪",
+  "got": "【サーバ(物理)】CIMA-SV172.25.253.42·ラック左7番目",
+  "missing": "·PanaCIM(CIMC)環境·X02-⑪",
+  "lines": [
+   "【サーバ(物理)】CIMA-SV",
+   "172.25.253.42·ラック左7番目"
+  ]
+ },
+ {
+  "name": "g2_n19_tag",
+  "status": "一致",
+  "text": "N19",
+  "got": "N19",
+  "missing": "",
+  "lines": [
+   "N19"
+  ]
+ },
+ {
+  "name": "g2_n05_txt",
+  "status": "欠け",
+  "text": "当Site運用:PanaCIM(CIMA)環境はESXi(172.25.253.45)上のVM「CIMC-SV」(RedHat·RHEL664bit)として稼働。別系統のPanaCIM(CIMC)環境サーバー「CIMA-SV」(172.25.253.42·物理)の存在を確認(2026-10-27照査·X02-⑪)。再起動の対象—月次:CIMC-SV/異常時:CIM-CPC·CIM-APC·ESXi·CIMC-SV(0494-912039(06)・管理書第3章)。再起動順序の詳細(LNBとの全体順)は未確定→注記X02-③。",
+  "got": "当Site運用:PanaCIM(CIMA)環境はESXi(172.25.253.45)上のVM「CIMC-SV」(RedHat·RHEL664bit)として稼働。別系統のPanaCIM(CIMC)環境サーバー「CIMA-SV」(172.25.253.42·物理)の存在を確認(2026-10-27照査·X02-⑪)。再起動の対象—月次:CIMC-SV/異常時:CIM-CPC·CIM-APC·ESXi·CIMC-SV(0494-912039(06)・管理書第3章)。再起動順序の詳細(LNBとの全体順)は未確定→",
+  "missing": "注記X02-③。",
+  "lines": [
+   "当Site運用: PanaCIM(CIMA)環境は",
+   "ESXi(172.25.253.45)上のVM「CIMC-SV」",
+   "(RedHat·RHEL 6 64bit)として稼働。別系統の",
+   "PanaCIM(CIMC)環境サーバー「CIMA-SV」",
+   "(172.25.253.42·物理)の存在を確認(2026-",
+   "10-27照査·X02-⑪)。",
+   "再起動の対象— 月次: CIMC-SV / 異常時: ",
+   "CIM-C PC·CIM-A PC·ESXi·CIMC-SV(0494-",
+   "912039(06)・管理書第3章)。",
+   "再起動順序の詳細(LNBとの全体順)は未確定→ "
+  ]
+ },
+ {
+  "name": "g2_n10_txt",
+  "status": "欠け",
+  "text": "【端末】稼働モニタ(PowerBI)稼働モニタークライアント設置条件は注記X01(-8-)",
+  "got": "【端末】稼働モニタ(PowerBI)稼働モニタークライアント設置",
+  "missing": "条件は注記X01(-8-)",
+  "lines": [
+   "【端末】稼働モニタ",
+   "(Power BI)",
+   "稼働モニタークライアント設置"
+  ]
+ },
+ {
+  "name": "g2_n10_tag",
+  "status": "一致",
+  "text": "N10",
+  "got": "N10",
+  "missing": "",
+  "lines": [
+   "N10"
+  ]
+ },
+ {
+  "name": "g2_n17_txt",
+  "status": "欠け",
+  "text": "【保存領域】DB完全バックアップE:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-",
+  "got": "【保存領域】DB完全バックアップ",
+  "missing": "E:\\BackUP_DB\\PANACIM_****_FULbak外部メディア保存は-28-",
+  "lines": [
+   "【保存領域】DB完全バック",
+   "アップ"
+  ]
+ },
+ {
+  "name": "g2_n17_tag",
+  "status": "一致",
+  "text": "N17",
+  "got": "N17",
+  "missing": "",
+  "lines": [
+   "N17"
+  ]
+ },
+ {
+  "name": "g2_n18_txt",
+  "status": "一致",
+  "text": "【外部】外部I/F出力(XML/DB/ソケット)対応表は本文で引用予定(要確認)",
+  "got": "【外部】外部I/F出力(XML/DB/ソケット)対応表は本文で引用予定(要確認)",
+  "missing": "",
+  "lines": [
+   "【外部】外部I/F出力",
+   "(XML/DB/ソケット)",
+   "対応表は本文で引用予定(要",
+   "確認)"
+  ]
+ },
+ {
+  "name": "g2_n18_tag",
+  "status": "一致",
+  "text": "N18",
+  "got": "N18",
+  "missing": "",
+  "lines": [
+   "N18"
+  ]
+ },
+ {
+  "name": "g2_n15_txt",
+  "status": "欠け",
+  "text": "【端末】CIM-APC(VMware管理画面入口)異常時再起動対象",
+  "got": "【端末】CIM-APC(VMware管理画面入",
+  "missing": "口)異常時再起動対象",
+  "lines": [
+   "【端末】CIM-A ",
+   "PC(VMware管理画面入"
+  ]
+ },
+ {
+  "name": "g2_n16_txt",
+  "status": "欠け",
+  "text": "【端末】CIM-CPC(異常時再起動の最初に停止)RouteEditer起動が最後(7-4手順14)",
+  "got": "【端末】CIM-CPC(異常時再起動の最初に停止)RouteEditer起動が最後(7-4手",
+  "missing": "順14)",
+  "lines": [
+   "【端末】CIM-C PC(異常時",
+   "再起動の最初に停止)",
+   "Route Editer起動が最後(7-4 手"
+  ]
+ },
+ {
+  "name": "g2_n06r_txt",
+  "status": "欠け",
+  "text": "【上位システム】NPM-DGS172.25.253.10複数台接続可(-8-)。物理位置は要確認(現行踏襲)・管理境界はLNB管理書§14No.8の前提タスク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)",
+  "got": "【上位システム】NPM-DGS172.25.253.10複数台接続可(-8-)。物理位置は要確認(現行踏襲)・管理境界はLNB管理書§14No.8の前提タス",
+  "missing": "ク·DGS-SV(\\\\DGS-SV\\share_dgs_data)との同一性はX02-⑫·nksv569停止時に接続不能の記録あり(詳細要確認)",
+  "lines": [
+   "【上位システム】NPM-DGS ",
+   "172.25.253.10",
+   "複数台接続可(-8-)。物理位置は要確認(現行踏",
+   "襲)・管理境界はLNB管理書§14 No.8の前提タス"
+  ]
+ },
+ {
+  "name": "g2_liner_txt",
+  "status": "欠け",
+  "text": "ライン設備(LNB·NPM)図③参照",
+  "got": "ライン設備(LNB·NPM)",
+  "missing": "図③参照",
+  "lines": [
+   "ライン設備(LNB·NPM)"
+  ]
+ },
+ {
+  "name": "g2_e_e02_l",
+  "status": "欠け",
+  "text": "EE02実装データの収集・上位送信〔T1:-7-/-8-〕",
+  "got": "EE02実装データの収集・上位送信",
+  "missing": "〔T1:-7-/-8-〕",
+  "lines": [
+   "EE02 実装データの収集・上位送信"
+  ]
+ },
+ {
+  "name": "g2_e_e04_l",
+  "status": "欠け",
+  "text": "EE04PanaCIMデータ参照・照合/稼働データ(上位側192.168.30.xx)〔T1:-9-·T1b〕",
+  "got": "EE04PanaCIMデータ参照・照合/稼働データ(上位側192.168.30.xx)",
+  "missing": "〔T1:-9-·T1b〕",
+  "lines": [
+   "EE04 PanaCIMデータ参照・照合/稼",
+   "働データ(上位側192.168.30.xx)"
+  ]
+ },
+ {
+  "name": "g2_e_e08_l",
+  "status": "一致",
+  "text": "EE08稼働モニタ表示〔T1b·T1:-39-〕",
+  "got": "EE08稼働モニタ表示〔T1b·T1:-39-〕",
+  "missing": "",
+  "lines": [
+   "EE08 稼働モニタ表示〔T1b·T1:-39-〕"
+  ]
+ },
+ {
+  "name": "g2_e_e15_l",
+  "status": "欠け",
+  "text": "EE15VMware管理画面(Web操作)〔T1b〕",
+  "got": "EE15VMware管理画面(Web操作)",
+  "missing": "〔T1b〕",
+  "lines": [
+   "EE15 VMware管理画面(Web操作)"
+  ]
+ },
+ {
+  "name": "g2_e_e16_l",
+  "status": "欠け",
+  "text": "EE16異常時再起動操作(最初に停止)〔T1b〕",
+  "got": "EE16異常時再起動操作(最初に停止)",
+  "missing": "〔T1b〕",
+  "lines": [
+   "EE16 異常時再起動操作(最初に停止)"
+  ]
+ },
+ {
+  "name": "g2_e_e17_l",
+  "status": "欠け",
+  "text": "EE17DB完全バックアップ(設定間隔·外部保管可)〔T1b·T1:-24-/-28-/-31-〕",
+  "got": "EE17DB完全バックアップ(設定間隔·外部保管可)",
+  "missing": "〔T1b·T1:-24-/-28-/-31-〕",
+  "lines": [
+   "EE17 DB完全バックアップ(設定間隔·外部保管可)"
+  ]
+ },
+ {
+  "name": "g2_e_e18_l",
+  "status": "欠け",
+  "text": "EE18外部I/F(XML/DB/ソケット)〔T1:-43-〕",
+  "got": "EE18外部",
+  "missing": "I/F(XML/DB/ソケット)〔T1:-43-〕",
+  "lines": [
+   "EE18 外部"
+  ]
+ },
+ {
+  "name": "g2_e_e01_l",
+  "status": "一致",
+  "text": "EE01サーバー間連携〔T1:-7-〕",
+  "got": "EE01サーバー間連携〔T1:-7-〕",
+  "missing": "",
+  "lines": [
+   "EE01 サーバー間連携〔T1:-7-〕"
+  ]
+ },
+ {
+  "name": "g2_leg0",
+  "status": "一致",
+  "text": "凡例:実線=確定した接続/グレー破線=推定(未確認)の接続/矢頭=データの向きが確定(一方向で表記)/枠の破線=推定機器(当Site未確認)/灰色破線枠=別図参照",
+  "got": "凡例:実線=確定した接続/グレー破線=推定(未確認)の接続/矢頭=データの向きが確定(一方向で表記)/枠の破線=推定機器(当Site未確認)/灰色破線枠=別図参照",
+  "missing": "",
+  "lines": [
+   "凡例: 実線=確定した接続/ グレー破線=推定(未確認)の接続/ 矢頭=データの向きが確定(一方向で表記) / 枠の破線=推定機器(当Site未確認) / 灰色破線枠=別図参照"
+  ]
+ },
+ {
+  "name": "g2_leg1",
+  "status": "一致",
+  "text": "分類:■サーバ系■端末系■設備系■推定□外部·参照",
+  "got": "分類:■サーバ系■端末系■設備系■推定□外部·参照",
+  "missing": "",
+  "lines": [
+   "分類: ■サーバ系■端末系■設備系■推定□外部·参照"
+  ]
+ },
+ {
+  "name": "g2_leg2",
+  "status": "一致",
+  "text": "略語:VM=仮想マシン/LWS=LNB操作画面(ブラウザ)/PDA=無線スキャナー端末/FA=生産設備用パソコン/LNB=LineNetworkBox/NPM·AM=実装機の機種名",
+  "got": "略語:VM=仮想マシン/LWS=LNB操作画面(ブラウザ)/PDA=無線スキャナー端末/FA=生産設備用パソコン/LNB=LineNetworkBox/NPM·AM=実装機の機種名",
+  "missing": "",
+  "lines": [
+   "略語: VM=仮想マシン/ LWS=LNB操作画面(ブラウザ) / PDA=無線スキャナー端末/ FA=生産設備用パソコン/ LNB=Line Network Box / NPM·AM=実装機の機種名"
+  ]
+ },
+ {
+  "name": "g2_leg3",
+  "status": "一致",
+  "text": "出典符:T1=PanaCIM-EE仕様説明書A680-004624(00)/T1b=社内確定資料·実機確認/T2=現場確認済み運用/T3=会議ホワイトボード(2026-10-14·証跡ではない)",
+  "got": "出典符:T1=PanaCIM-EE仕様説明書A680-004624(00)/T1b=社内確定資料·実機確認/T2=現場確認済み運用/T3=会議ホワイトボード(2026-10-14·証跡ではない)",
+  "missing": "",
+  "lines": [
+   "出典符: T1=PanaCIM-EE仕様説明書A680-004624(00) / T1b=社内確定資料·実機確認/ T2=現場確認済み運用/ T3=会議ホワイトボード(2026-10-14·証跡ではない)"
+  ]
+ }
+]

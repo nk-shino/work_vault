@@ -1,0 +1,62 @@
+{
+ "相関図①": {
+  "g1_expl": {
+   "before": {
+    "Left": 280.0,
+    "Top": 103.5,
+    "Width": 485.0,
+    "Height": 27.8
+   },
+   "after": {
+    "Left": 280.0,
+    "Top": 103.5,
+    "Width": 485.0,
+    "Height": 30.0
+   }
+  },
+  "g1_ea_txt": {
+   "before": {
+    "Left": 647.0,
+    "Top": 160.654,
+    "Width": 106.0,
+    "Height": 45.4
+   },
+   "after": {
+    "Left": 647.0,
+    "Top": 160.654,
+    "Width": 106.0,
+    "Height": 50.0
+   }
+  }
+ },
+ "相関図③": {
+  "g3_e_e07_l": {
+   "before": {
+    "Left": 335.773,
+    "Top": 191.138,
+    "Width": 115.482,
+    "Height": 15.5
+   },
+   "after": {
+    "Left": 335.773,
+    "Top": 191.138,
+    "Width": 118.0,
+    "Height": 17.0
+   }
+  },
+  "g3_e_e09_l": {
+   "before": {
+    "Left": 545.0,
+    "Top": 258.0,
+    "Width": 180.67,
+    "Height": 15.6
+   },
+   "after": {
+    "Left": 570.66,
+    "Top": 248.86,
+    "Width": 150.0,
+    "Height": 28.5
+   }
+  }
+ }
+}

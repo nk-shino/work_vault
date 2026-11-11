@@ -1,0 +1,30 @@
+{
+  "相関図①": {
+    "g1_expl": {"Height": 27.8},
+    "g1_p1_txt": {"Height": 31.4},
+    "g1_s1_txt": {"Height": 31.4},
+    "g1_eb_txt": {"Height": 31.4},
+    "g1_p2_txt": {"Height": 31.4},
+    "g1_s2_txt": {"Height": 31.4},
+    "g1_ea_txt": {"Height": 45.4},
+    "g1_n10_txt": {"Height": 45.4},
+    "g1_e_e02_l": {"Top": 149.0, "Height": 29.4}
+  },
+  "相関図③": {
+    "g3_expl": {"Height": 15.5},
+    "g3_pcr_txt": {"Height": 30.2},
+    "g3_dgsr_txt": {"Height": 30.2},
+    "g3_n12_txt": {"Height": 45.6},
+    "g3_n13_txt": {"Height": 61.3},
+    "g3_e_e03_l": {"Height": 26.8},
+    "g3_e_e04_l": {"Height": 26.8},
+    "g3_e_e05_l": {"Left": 160.0, "Top": 286.0, "Height": 39.3},
+    "g3_e_e06_l": {"Height": 26.8},
+    "g3_e_e07_l": {"Height": 15.5},
+    "g3_e_e09_l": {"Left": 545.0, "Top": 258.0, "Width": 180.67, "Height": 15.6},
+    "g3_e_e10_l": {"Height": 26.8},
+    "g3_e_e12_l": {"Height": 26.8},
+    "g3_e_e13_l": {"Height": 26.8},
+    "g3_e_e14_l": {"Height": 26.8}
+  }
+}

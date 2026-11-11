@@ -1,0 +1,342 @@
+{
+ "相関図①": {
+  "g1_expl": {
+   "before": {
+    "Left": 280.0,
+    "Top": 103.5,
+    "Width": 485.0,
+    "Height": 26.022
+   },
+   "after": {
+    "Left": 280.0,
+    "Top": 103.5,
+    "Width": 485.0,
+    "Height": 27.8
+   }
+  },
+  "g1_p1_txt": {
+   "before": {
+    "Left": 47.0,
+    "Top": 162.323,
+    "Width": 156.0,
+    "Height": 29.354
+   },
+   "after": {
+    "Left": 47.0,
+    "Top": 162.323,
+    "Width": 156.0,
+    "Height": 31.4
+   }
+  },
+  "g1_s1_txt": {
+   "before": {
+    "Left": 307.0,
+    "Top": 170.323,
+    "Width": 206.0,
+    "Height": 29.354
+   },
+   "after": {
+    "Left": 307.0,
+    "Top": 170.323,
+    "Width": 206.0,
+    "Height": 31.4
+   }
+  },
+  "g1_eb_txt": {
+   "before": {
+    "Left": 647.0,
+    "Top": 270.323,
+    "Width": 106.0,
+    "Height": 29.354
+   },
+   "after": {
+    "Left": 647.0,
+    "Top": 270.323,
+    "Width": 106.0,
+    "Height": 31.4
+   }
+  },
+  "g1_p2_txt": {
+   "before": {
+    "Left": 47.0,
+    "Top": 377.323,
+    "Width": 156.0,
+    "Height": 29.354
+   },
+   "after": {
+    "Left": 47.0,
+    "Top": 377.323,
+    "Width": 156.0,
+    "Height": 31.4
+   }
+  },
+  "g1_s2_txt": {
+   "before": {
+    "Left": 337.0,
+    "Top": 375.323,
+    "Width": 226.0,
+    "Height": 29.354
+   },
+   "after": {
+    "Left": 337.0,
+    "Top": 375.323,
+    "Width": 226.0,
+    "Height": 31.4
+   }
+  },
+  "g1_ea_txt": {
+   "before": {
+    "Left": 647.0,
+    "Top": 160.654,
+    "Width": 106.0,
+    "Height": 42.693
+   },
+   "after": {
+    "Left": 647.0,
+    "Top": 160.654,
+    "Width": 106.0,
+    "Height": 45.4
+   }
+  },
+  "g1_n10_txt": {
+   "before": {
+    "Left": 647.0,
+    "Top": 372.82,
+    "Width": 106.0,
+    "Height": 44.359
+   },
+   "after": {
+    "Left": 647.0,
+    "Top": 372.82,
+    "Width": 106.0,
+    "Height": 45.4
+   }
+  },
+  "g1_e_e02_l": {
+   "before": {
+    "Left": 525.0,
+    "Top": 156.0,
+    "Width": 110.0,
+    "Height": 27.688
+   },
+   "after": {
+    "Left": 525.0,
+    "Top": 149.0,
+    "Width": 110.0,
+    "Height": 29.4
+   }
+  }
+ },
+ "相関図③": {
+  "g3_expl": {
+   "before": {
+    "Left": 282.269,
+    "Top": 104.061,
+    "Width": 489.16,
+    "Height": 13.516
+   },
+   "after": {
+    "Left": 282.269,
+    "Top": 104.061,
+    "Width": 489.16,
+    "Height": 15.5
+   }
+  },
+  "g3_pcr_txt": {
+   "before": {
+    "Left": 22.183,
+    "Top": 152.357,
+    "Width": 237.904,
+    "Height": 28.122
+   },
+   "after": {
+    "Left": 22.183,
+    "Top": 152.357,
+    "Width": 237.904,
+    "Height": 30.2
+   }
+  },
+  "g3_dgsr_txt": {
+   "before": {
+    "Left": 606.977,
+    "Top": 170.2,
+    "Width": 132.139,
+    "Height": 28.018
+   },
+   "after": {
+    "Left": 606.977,
+    "Top": 170.2,
+    "Width": 132.139,
+    "Height": 30.2
+   }
+  },
+  "g3_n12_txt": {
+   "before": {
+    "Left": 328.64,
+    "Top": 417.593,
+    "Width": 169.468,
+    "Height": 42.627
+   },
+   "after": {
+    "Left": 328.64,
+    "Top": 417.593,
+    "Width": 169.468,
+    "Height": 45.6
+   }
+  },
+  "g3_n13_txt": {
+   "before": {
+    "Left": 570.664,
+    "Top": 412.129,
+    "Width": 78.702,
+    "Height": 58.281
+   },
+   "after": {
+    "Left": 570.664,
+    "Top": 412.129,
+    "Width": 78.702,
+    "Height": 61.3
+   }
+  },
+  "g3_e_e03_l": {
+   "before": {
+    "Left": 302.521,
+    "Top": 337.673,
+    "Width": 110.882,
+    "Height": 25.457
+   },
+   "after": {
+    "Left": 302.521,
+    "Top": 337.673,
+    "Width": 110.882,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e04_l": {
+   "before": {
+    "Left": 30.252,
+    "Top": 465.432,
+    "Width": 181.513,
+    "Height": 25.457
+   },
+   "after": {
+    "Left": 30.252,
+    "Top": 465.432,
+    "Width": 181.513,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e05_l": {
+   "before": {
+    "Left": 52.319,
+    "Top": 293.824,
+    "Width": 121.008,
+    "Height": 37.822
+   },
+   "after": {
+    "Left": 160.0,
+    "Top": 286.0,
+    "Width": 121.008,
+    "Height": 39.3
+   }
+  },
+  "g3_e_e06_l": {
+   "before": {
+    "Left": 290.395,
+    "Top": 306.738,
+    "Width": 104.882,
+    "Height": 25.598
+   },
+   "after": {
+    "Left": 290.395,
+    "Top": 306.738,
+    "Width": 104.882,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e07_l": {
+   "before": {
+    "Left": 335.773,
+    "Top": 191.138,
+    "Width": 115.482,
+    "Height": 13.233
+   },
+   "after": {
+    "Left": 335.773,
+    "Top": 191.138,
+    "Width": 115.482,
+    "Height": 15.5
+   }
+  },
+  "g3_e_e09_l": {
+   "before": {
+    "Left": 570.664,
+    "Top": 248.856,
+    "Width": 100.882,
+    "Height": 25.598
+   },
+   "after": {
+    "Left": 545.0,
+    "Top": 258.0,
+    "Width": 180.67,
+    "Height": 15.6
+   }
+  },
+  "g3_e_e10_l": {
+   "before": {
+    "Left": 290.395,
+    "Top": 368.467,
+    "Width": 76.63,
+    "Height": 25.598
+   },
+   "after": {
+    "Left": 290.395,
+    "Top": 368.467,
+    "Width": 76.63,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e12_l": {
+   "before": {
+    "Left": 407.277,
+    "Top": 375.326,
+    "Width": 119.008,
+    "Height": 25.598
+   },
+   "after": {
+    "Left": 407.277,
+    "Top": 375.326,
+    "Width": 119.008,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e13_l": {
+   "before": {
+    "Left": 623.168,
+    "Top": 365.608,
+    "Width": 95.756,
+    "Height": 25.457
+   },
+   "after": {
+    "Left": 623.168,
+    "Top": 365.608,
+    "Width": 95.756,
+    "Height": 26.8
+   }
+  },
+  "g3_e_e14_l": {
+   "before": {
+    "Left": 250.817,
+    "Top": 250.467,
+    "Width": 82.756,
+    "Height": 25.598
+   },
+   "after": {
+    "Left": 250.817,
+    "Top": 250.467,
+    "Width": 82.756,
+    "Height": 26.8
+   }
+  }
+ }
+}
